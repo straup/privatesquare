@@ -1,0 +1,95 @@
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `deleted` int(10) unsigned NOT NULL,
+  `created` int(10) unsigned NOT NULL,
+  `password` char(64) DEFAULT NULL,
+  `conf_code` char(24) DEFAULT NULL,
+  `confirmed` int(10) unsigned NOT NULL,
+  `cluster_id` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `by_email` (`email`),
+  UNIQUE KEY `by_username` (`username`,`deleted`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `users_password_reset`;
+
+CREATE TABLE `users_password_reset` (
+  `user_id` int(10) unsigned NOT NULL,
+  `reset_code` char(32) DEFAULT NULL,
+  `created` int(10) unsigned NOT NULL,
+  UNIQUE KEY `by_code` (`reset_code`),
+  KEY `by_user` (`user_id`),
+  KEY `by_timestamp` (`created`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `FoursquareUsers`;
+
+CREATE TABLE `FoursquareUsers` (
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `foursquare_id` varchar(20) NOT NULL,
+  `oauth_token` char(48) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `by_foursquareid` (`foursquare_id`),
+  KEY `by_token` (`oauth_token`)
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `FoursquareVenues`;
+
+CREATE TABLE `FoursquareVenues` (
+  `venue_id` VARCHAR(64),
+  `name` VARCHAR(255),
+  `data` TEXT,
+  `locality` INT(11) UNSIGNED NOT NULL,
+  `latitude` DECIMAL(9,6) DEFAULT NULL,
+  `longitude` DECIMAL(9,6) DEFAULT NULL,
+  PRIMARY KEY (`venue_id`),
+  KEY `by_location` (`latitude`, `longitude`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ApiKeys`;
+
+CREATE TABLE `ApiKeys` (
+  `id` BIGINT(20) unsigned NOT NULL,
+  `user_id` INT(11) unsigned NOT NULL,
+  `app_key` VARCHAR(40) NOT NULL,
+  `app_secret` VARCHAR(64) NOT NULL,
+  `app_callback` VARCHAR(255) NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `by_key` (`app_key`),
+  KEY `by_user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `AuthTokens`;
+
+CREATE TABLE `AuthTokens` (
+  `id` BIGINT(20) unsigned NOT NULL,
+  `user_id` INT(11) unsigned NOT NULL,
+  `app_id` BIGINT(20) unsigned NOT NULL,         
+  `app_secret` VARCHAR(64) NOT NULL,
+  `app_perms` TINYINT(3) UNSIGNED NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `by_app` (`app_id`, `user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `reverse_geoplanet`;
+
+CREATE TABLE `reverse_geoplanet` (
+  `latitude` decimal(6,3) DEFAULT NULL,
+  `longitude` decimal(6,3) DEFAULT NULL,
+  `geohash` char(12) CHARACTER SET latin1 NOT NULL,
+  `woeid` int(11) unsigned NOT NULL,
+  `locality` int(11) unsigned NOT NULL,
+  `region` int(11) unsigned NOT NULL,
+  `country` int(11) unsigned NOT NULL,
+  `created` int(10) unsigned NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `placetype` tinyint(3) unsigned NOT NULL,
+  UNIQUE KEY `by_geohash` (`geohash`),
+  KEY `by_woeid` (`woeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,22 @@
+#map-wrapper {
+	height: 100px !important;
+	margin-bottom: 10px;
+}
+
+.map {
+    height: 100px;
+}
+
+select {
+	width:100% !important;
+	display:block !important;
+}
+
+input[type=submit] {
+	display:block !important;
+}
+
+#again {
+    margin-top:50px !important;
+    text-align:right !important;
+}

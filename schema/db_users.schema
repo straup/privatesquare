@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS `PrivatesquareCheckins`;
+
+CREATE TABLE `PrivatesquareCheckins` (
+  `id` BIGINT(20) UNSIGNED NOT NULL,
+  `user_id` INT(11) UNSIGNED NOT NULL,
+  `status_id` TINYINT(3) UNSIGNED NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
+  `venue_id` VARCHAR(64),
+  `locality` INT(11) UNSIGNED NOT NULL,
+  `checkin_id` VARCHAR(64),
+  PRIMARY KEY (`id`),
+  KEY `by_status` (`user_id`, `status_id`),
+  KEY `by_venue` (`user_id`, `venue_id`),
+  UNIQUE KEY `by_checkin` (`created`, `venue_id`, `user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

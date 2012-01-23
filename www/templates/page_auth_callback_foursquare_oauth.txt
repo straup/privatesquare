@@ -1,0 +1,29 @@
+{include file="inc_head.txt"}
+
+{if $error|@count}
+
+<p class="error">
+
+{if $error.oauth_access_token}
+There was a problem getting the required auth-y bits (specifically an <code>access token</code>) from foursquare!
+
+{elseif $error.foursquare_userinfo}
+Ack! There was a problem getting your user account information from foursquare.
+
+{elseif $error.dberr_user}
+There was a database-related problem creating your account. Sad face.
+
+{elseif $error.dberr_foursquareuser}
+There was a database-related problem creating your account, specifically associating it with your foursquare account. Curses!
+
+{else}
+Ack! The INVISIBLE ERROR CAT hisses at you...
+{/if}
+</p>
+
+{else}
+{* you should never get here *}
+<!-- something is very wrong -->
+{/if}
+
+{include file="inc_foot.txt"}

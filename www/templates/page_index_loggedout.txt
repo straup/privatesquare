@@ -1,0 +1,7 @@
+{include file="inc_head.txt"}
+
+<div id="intro">
+<p>◻  this is privatesquare</p>
+</div>
+
+{include file="inc_foot.txt"}
