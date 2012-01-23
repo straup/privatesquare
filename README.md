@@ -15,6 +15,8 @@ They don't have to be.
   check-ins. It all just goes in to the database and there's no way to see it
   again without sticking your hands in there and getting dirty.**
 
+Meanwhile, [here's a blog post](http://nearfuturelaboratory.com/2012/01/22/privatesquare/).
+
 Installation
 --
 
