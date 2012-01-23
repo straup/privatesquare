@@ -31,6 +31,10 @@ specifics for databases and third-party APIs.
 
 	$GLOBALS['cfg']['foursquare_oauth_key'] = '';
 	$GLOBALS['cfg']['foursquare_oauth_secret'] = '';
+	
+	# Don't change this. If you do update the main .htaccess
+	# file accordingly.
+	
 	$GLOBALS['cfg']['foursquare_oauth_callback'] = 'auth/';
 
 	# You will need a valid Flickr API key *or* access to a running
@@ -44,8 +48,7 @@ specifics for databases and third-party APIs.
 	$GLOBALS['cfg']['flickr_api_key'] = '';
 
 	# You will need to setup a MySQL database and plug in the specifics
-	# here.
-	# See also: https://github.com/straup/privatesquare/blob/master/schema
+	# here: https://github.com/straup/privatesquare/blob/master/schema
 	# See also: https://github.com/straup/flamework-tools/blob/master/bin/setup-db.sh
 
 	$GLOBALS['cfg']['db_main'] = array(
@@ -58,6 +61,7 @@ specifics for databases and third-party APIs.
 
 	# You will need to set up secrets for the various parts of the site
 	# that need to be encrypted. Don't leave these empty. Really.
+	# You can create new secrets by typing `make secret`.
 	# See also: https://github.com/straup/privatesquare/blob/master/bin/generate_secret.php
 
 	$GLOBALS['cfg']['crypto_cookie_secret'] = '';
