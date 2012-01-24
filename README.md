@@ -24,7 +24,7 @@ privatesquare is built on top of [Flamework](https://github.com/exflickr/flamewo
 than a vanilla Apache + PHP + MySQL application. You can run it as a dedicated
 virtual host or as a subdirectory of an existing host.
 
-You will need to make a copy of the [config.php.example]() file and name it
+You will need to make a copy of the [config.php.example](https://github.com/straup/privatesquare/blob/master/www/include/config.php.example) file and name it
 `config.php`. You will need to update this new file and add the various
 specifics for databases and third-party APIs.
 
@@ -41,7 +41,7 @@ specifics for databases and third-party APIs.
 
 	# You will need a valid Flickr API key *or* access to a running
 	# instance of the 'reverse-geoplanet' web service. By default
-	# all the code that runs the reverse geocoder is includes with
+	# all the code that runs the reverse geocoder is included with
 	# privatesquare (hence the requirement for an API key)
 	# See also: https://github.com/straup/reverse-geoplanet
 	# See also: http://www.flickr.com/services/apps/create/apply/
