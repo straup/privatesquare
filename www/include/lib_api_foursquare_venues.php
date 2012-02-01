@@ -99,6 +99,7 @@
 			'intent' => 'browse',
 		);
 
+
 		$rsp = foursquare_api_call($method, $args);
 
 		if (! $rsp['ok']){
@@ -112,7 +113,7 @@
 			}
 		}
 
-		usort($venues, "_api_foursquare_venues_sort");
+		usort($venues, "_api_foursquare_venues_sort_by_distance");
 
 		# go!
 
@@ -130,6 +131,10 @@
 
 	function _api_foursquare_venues_sort($a, $b){
 		return strcmp(strtoupper($a["name"]), strtoupper($b["name"]));
+	}
+
+	function _api_foursquare_venues_sort_by_distance($a, $b){
+		return $a['location']['distance'] - $b['location']['distance'];
 	}
 
  	#################################################################
