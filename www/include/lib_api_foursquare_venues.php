@@ -11,7 +11,14 @@
 		$lat = request_float('latitude');
 		$lon = request_float('longitude');
 		$alt = request_float('altitude');
+
 		$query = request_str('query');
+
+		# See this? It's a quick and dirty shim until I can figure
+		# out how to pass 'sort' flags via the UI (20120201/straup)
+
+		# $sort = request_float('sort');
+		$sort = $GLOBALS['cfg']['foursquare_venues_sort'];
 
 		if ((! $lat) || (! geo_utils_is_valid_latitude($lat))){
 			api_output_error(999, "Missing or invalid latitude");
@@ -113,7 +120,13 @@
 			}
 		}
 
-		usort($venues, "_api_foursquare_venues_sort_by_distance");
+		$sort_func = "_api_foursquare_venues_sort_by_distance";
+
+		if ($sort == 'name'){
+			$sort_func = "_api_foursquare_venues_sort_by_name";
+		}
+
+		usort($venues, $sort_func);
 
 		# go!
 
@@ -129,7 +142,7 @@
 
  	#################################################################
 
-	function _api_foursquare_venues_sort($a, $b){
+	function _api_foursquare_venues_sort_by_name($a, $b){
 		return strcmp(strtoupper($a["name"]), strtoupper($b["name"]));
 	}
 
