@@ -19,7 +19,7 @@
 	$GLOBALS['cfg']['foursquare_oauth_callback'] = 'auth/';
 
 	# See notes in lib_api_foursquare_venues
-	$GLOBALS['cfg']['foursquare_venues_sort'] = 'distance';
+	$GLOBALS['cfg']['foursquare_venues_sort'] = 'name';
 
 	# You will need a valid Flickr API key or access to a running
 	# instance of the 'reverse-geoplanet' web service. By default

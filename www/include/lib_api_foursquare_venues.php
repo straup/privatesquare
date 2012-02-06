@@ -120,10 +120,10 @@
 			}
 		}
 
-		$sort_func = "_api_foursquare_venues_sort_by_distance";
+		$sort_func = "_api_foursquare_venues_sort_by_name";
 
-		if ($sort == 'name'){
-			$sort_func = "_api_foursquare_venues_sort_by_name";
+		if ($sort == 'distance'){
+			$sort_func = "_api_foursquare_venues_sort_by_distance";
 		}
 
 		usort($venues, $sort_func);
