@@ -20,6 +20,12 @@
 		# $sort = request_float('sort');
 		$sort = $GLOBALS['cfg']['foursquare_venues_sort'];
 
+		$sort_func = "_api_foursquare_venues_sort_by_name";
+
+		if ($sort == 'distance'){
+			$sort_func = "_api_foursquare_venues_sort_by_distance";
+		}
+
 		if ((! $lat) || (! geo_utils_is_valid_latitude($lat))){
 			api_output_error(999, "Missing or invalid latitude");
 		}
@@ -51,7 +57,7 @@
 			}
 
 			$venues = $rsp['rsp']['venues'];
-			usort($venues, "_api_foursquare_venues_sort");
+			usort($venues, $sort_func);
 
 			$out = array(
 				'venues' => $venues,
@@ -118,12 +124,6 @@
 			if (! in_array($v['id'], $seen)){
 				$venues[] = $v;
 			}
-		}
-
-		$sort_func = "_api_foursquare_venues_sort_by_name";
-
-		if ($sort == 'distance'){
-			$sort_func = "_api_foursquare_venues_sort_by_distance";
 		}
 
 		usort($venues, $sort_func);

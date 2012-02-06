@@ -1,6 +1,6 @@
 {capture assign="extra_head"}
 {* this should happen automatically in flamework... *}
-{assign var="version" value=1327272620}
+{assign var="version" value=1327272621}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
 {if $cfg.environment=='prod'}

@@ -222,11 +222,19 @@ function _privatesquare_checkin_onsuccess(rsp){
 
 function _privatesquare_api_error(rsp, action){
 
+	var msg = 'Oh noes. There was a problem completing your request. ';
+
 	var err = rsp['error'];
 
-	var msg = 'Oh noes. There was a problem completing your request. ';
-	msg += 'The robot monkeys report: ';
-	msg += err['error'] + ' (error code #' + err['code'] + '). ';
+	if (err){
+		msg += 'The robot monkeys report: ';
+		msg += err['error'] + ' (error code #' + err['code'] + '). ';
+	}
+
+	else {
+		msg += 'It appears to be a privatesquare problem rather than foursquare weirdness. ';
+	}
+
 	msg += '<a href="#" onclick="privatesquare_init();return false;">Try it again?</a>';
 
 	$("#status").html(msg);
