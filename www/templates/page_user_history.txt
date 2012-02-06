@@ -1,0 +1,28 @@
+{capture assign="page_title"}history{/capture}
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+{/capture}
+{include file="inc_head.txt"}
+
+{foreach from=$checkins item="row"}
+
+<div class="checkin" data-venue="{$row.venue_id|escape}">
+	<div class="venue">{$row.venue.name|escape}</div>
+	<div class="date" data-created="{$row.created|escape}">{$row.created|date_format:"%A, %B %e, %Y at %k:%M"|escape}</div>
+
+	<div class="map" data-zoom="14" data-center="{$row.venue.latitude|escape},{$row.venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker" data-location="{$row.venue.latitude|escape},{$row.venue.longitude|escape}">{$row.venue.name|escape}</div>
+	</div>
+</div>
+
+{/foreach}
+
+{include file="inc_pagination.txt"}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	$(".map").htmapl();
+{literal}}{/literal});
+</script>
+
+{include file="inc_foot.txt"}

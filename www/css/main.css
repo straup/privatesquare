@@ -177,3 +177,20 @@ q {
         opacity: 1;
     }
 }
+
+.checkin {
+    margin-bottom: 25px;
+}
+
+.checkin .venue{
+    font-weight: 700;
+}
+
+.checkin .date {
+    font-size: small;
+}
+
+.checkin .map {
+    border: solid thin;
+    margin-top: 5px;
+}

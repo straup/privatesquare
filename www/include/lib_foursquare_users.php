@@ -12,6 +12,16 @@
 
 	#################################################################
 
+	function foursquare_users_get_by_foursquare_id($fsq_id){
+
+		$enc_id = AddSlashes($fsq_id);
+
+		$sql = "SELECT * FROM FoursquareUsers WHERE foursquare_id='{$enc_id}'";
+		return db_single(db_fetch($sql));
+	}
+
+	#################################################################
+
 	function foursquare_users_get_by_user_id($user_id){
 
 		$enc_id = AddSlashes($user_id);
