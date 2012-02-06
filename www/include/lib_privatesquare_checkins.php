@@ -1,6 +1,7 @@
 <?php
 
 	loadlib("foursquare_venues");
+	loadlib("datetime_when");
 
  	#################################################################
 
@@ -55,7 +56,17 @@
 		$cluster_id = $user['cluster_id'];
 		$enc_user = AddSlashes($user['id']);
 
-		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' ORDER BY created DESC";
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+
+		if (isset($more['when'])){
+			list($start, $stop) = datetime_when_parse($more['when']);
+			$enc_start = AddSlashes(strtotime($start));
+			$enc_stop = AddSlashes(strtotime($stop));
+
+			$sql .= " AND created BETWEEN '{$enc_start}' AND '{$enc_stop}'";
+		}
+
+		$sql .= " ORDER BY created DESC";
 
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
 

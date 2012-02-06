@@ -33,6 +33,8 @@
 
 	if ($when = get_str("when")){
 		$more['when'] = $when;
+		$more['per_page'] = 100;
+		$history_url .= urlencode($when) . "/";
 	}
 
 	$rsp = privatesquare_checkins_for_user($GLOBALS['cfg']['user'], $more);
