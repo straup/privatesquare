@@ -194,3 +194,7 @@ q {
     border: solid thin;
     margin-top: 5px;
 }
+
+#pagination {
+    text-align:center;
+}

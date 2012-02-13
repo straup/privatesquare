@@ -10,6 +10,8 @@
 	{else}
 	     <span class="pag_inactive">Previous page</span>
 	{/if}
+
+	<span class="pag_middle">
 	
 	{* middle *}
 
@@ -77,10 +79,8 @@
 	
 	{/if}
 
-	
-	
-    
-    
+    </span>
+      
     {* next button *}
     {if $pagination.page < $pagination.page_count}
 		{if $pagination_page_as_queryarg}

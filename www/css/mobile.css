@@ -37,3 +37,7 @@ input[type=submit] {
     margin-top:50px !important;
     text-align:right !important;
 }
+
+.pag_middle {
+    display:none;
+}
