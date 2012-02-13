@@ -41,3 +41,7 @@ input[type=submit] {
 .pag_middle {
     display:none;
 }
+
+#login .youare {
+    display: none;
+}
