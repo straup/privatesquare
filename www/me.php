@@ -12,7 +12,7 @@
 		error_404();
 	}
 
-	$path = urlencode(get_str("path"));
+	$path = get_str("path");
 
 	$url = "{$GLOBALS['cfg']['abs_root_url']}user/{$fsq_user['foursquare_id']}/{$path}";
 

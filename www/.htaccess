@@ -76,5 +76,7 @@ RewriteRule  ^api/rest/(.*)/?$		api_rest.php?method=$1&%{QUERY_STRING}		[L]
 
 RewriteRule ^me(/(.*))?/?$			me.php?path=$2&%{QUERY_STRING}	[L]
 
+RewriteRule ^venue/([a-f0-9]+)/?$			venue.php?venue_id=$1&%{QUERY_STRING}	[L]
+
 RewriteRule ^user/([0-9]+)/history(/page([0-9]+))?/?$	user_history.php?foursquare_id=$1&page=$3&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/history/([0-9\-\;\:T]+)(/page([0-9]+))?/?$	user_history.php?foursquare_id=$1&when=$2&page=$4&%{QUERY_STRING}	[L]
