@@ -1,0 +1,219 @@
+
+body {
+	text-align: center;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	font-family:sans-serif;
+}
+
+#main {
+	margin: 0 auto;
+	text-align: left;
+	background-color: #fff;
+	padding: 0;
+}
+
+#nav {
+	background-color: #fff;
+	padding: 0.5em 1em;
+	border-bottom:solid thin;
+	padding-bottom:20px;
+	font-size:small;
+}
+
+#login a {
+    text-decoration:none;
+    color:#000;
+}
+
+#footer {
+	background-color: #fff;
+	padding: 0.5em 1em;
+	text-align: center;
+	color: #999;
+}
+
+#content {
+	padding: 2em;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+.admin-section {
+	background-image: url("/images/stripes_bg.gif");
+	border-top: 1px solid #BECCCC;
+	border-bottom: 1px solid #BECCCC;
+	padding: 40px;
+	position: relative;
+	text-align: left;
+}
+
+pre.admin-debug {
+	background: none repeat scroll 0 0 #000000;
+	color: #00FF00;
+	font-size: 14px;
+	margin: 0;
+	padding: 1em;
+}
+
+p.error {
+	background-color: #f99;
+}
+
+p.message {
+	background-color: #9f9;
+}
+
+
+/*pagination*/
+#pagination{
+
+}
+
+/* pagination header */
+.pag_head{margin:0 0 10px;text-align:center;border: 1px solid #fff;display:none;}
+
+/* pagination active items */
+.ds_pag{
+    text-decoration: none;
+    border: 1px solid #AAA;
+    padding: 0.3em 0.5em;
+    color: #0BBDFF;
+    margin: 0 2px;
+    background:#fff;
+}
+
+/* pagination inactive items */
+.pag_inactive{
+    border: 1px solid #AAA;
+    padding: 0.3em 0.5em;
+    color: #999;
+    margin: 0 2px;
+    background:#fff;
+}
+/* pagination ellipses */
+.pag_ellipses{
+    text-decoration: none;
+    border: 1px solid #fff;
+    padding: 0.1em 0.1em;
+    color: #999;
+    margin: 0;
+    background:#fff;
+}
+
+select {
+    font-size:1.3em;
+    margin-bottom:20px;
+}
+
+input[type=submit] {
+    font-size:1.5em;
+    margin-bottom:20px;
+    border:solid thin;
+}
+
+#status {
+    font-size:1.6em;
+    font-family:serif;
+}
+
+#again {
+    margin-top:20px;
+    font-style:italic;
+}
+
+q {
+    font-style: italic;
+}
+
+/* HTMAPL stuff */
+
+#map-wrapper {
+	height: 300px;
+	width: 100%;
+	display:none;
+	border: solid thin;
+	margin-bottom: 20px;
+}
+
+.map {
+    height: 300px;
+    width: 100%;
+}
+
+.marker {
+    background-color: #0bbdff;
+    border:2px solid #000;
+    padding:5px;
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+    /*
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+    */
+}
+
+.map-tile {
+    opacity: 0;
+}
+
+.map-tile-loaded {
+    -webkit-animation-name: 'fade-in';
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-duration: 0.2s;
+}
+
+@-webkit-keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.checkin {
+    margin-bottom: 25px;
+}
+
+.checkin .venue{
+    font-weight: 700;
+}
+
+.checkin .venue a{
+    color: #000;
+    text-decoration:none;
+}
+
+.checkin .date {
+    font-size: small;
+}
+
+.checkin .map {
+    border: solid thin;
+    margin-top: 5px;
+}
+
+#pagination {
+    text-align:center;
+}
+
+.abook {
+    margin-bottom: 10px;
+}
+
+.checkins {
+    margin: 0px;
+    padding: 0px;
+}
+
+.checkins li{
+    line-height: 1.5em;
+    list-style-type:none;
+}

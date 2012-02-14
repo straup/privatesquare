@@ -1,0 +1,52 @@
+{capture assign="page_title"}venues | {$venue.name}{/capture}
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+{/capture}
+{include file="inc_head.txt"}
+
+{* sudo reconcile me with user history pages *}
+
+<div class="checkin" data-venue="{$venue.venue_id|escape}">
+	<div class="venue" data-venue-id="{$venue.venue_id|escape}"><a href="{$cfg.abs_root_url}venue/{$venue.venue_id|escape}/">{$venue.name|escape}</a></div>
+
+	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
+	</div>
+</div>
+
+<div class="abook address">
+{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}
+</div>
+
+{if $venue.data.contact.formattedPhone|escape}
+<div class="abook phone">
+<a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
+</div>
+{/if}
+
+{if 0}
+<div class="abook woeid">
+<a href="{$cfg.abs_root_url}woeid/{$venue.locality|escape}/">...</a>
+</div>
+{/if}
+
+{if $venue.checkins|@count}
+
+<h4>You were here</h4>
+
+<ul class="checkins">
+{foreach from=$venue.checkins item="row"}
+{assign var="status_id" value=$row.status_id}
+<li>{if 0}<q>{$status_map.$status_id|escape}</q> – {/if}<a href="{$cfg.abs_root_url}me/history/{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a> <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}</span></li>
+{/foreach}
+</ul>
+
+{/if}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	$(".map").htmapl();
+{literal}}{/literal});
+</script>
+
+{include file="inc_foot.txt"}
