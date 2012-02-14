@@ -58,12 +58,19 @@
 
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 
+		# TO DO: indexes
+
 		if (isset($more['when'])){
 			list($start, $stop) = datetime_when_parse($more['when']);
 			$enc_start = AddSlashes(strtotime($start));
 			$enc_stop = AddSlashes(strtotime($stop));
 
 			$sql .= " AND created BETWEEN '{$enc_start}' AND '{$enc_stop}'";
+		}
+
+		else if (isset($more['venue_id'])){
+			$enc_venue = AddSlashes($more['venue_id']);
+			$sql .= " AND venue_id='{$enc_venue}'";
 		}
 
 		$sql .= " ORDER BY created DESC";

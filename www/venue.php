@@ -2,6 +2,7 @@
 
 	include("include/init.php");
 	loadlib("foursquare_venues");
+	loadlib("privatesquare_checkins");
 
 	login_ensure_loggedin($_SERVER['REQUEST_URI']);
 
@@ -15,7 +16,15 @@
 
 	$venue['data'] = json_decode($venue['data'], "as hash");
 
-	# TO DO: get user history for this place...
+	$more = array(
+		'venue_id' => $venue_id,
+	);
+
+	$checkins = privatesquare_checkins_for_user($GLOBALS['cfg']['user'], $more);
+	$venue['checkins'] = $checkins['rows'];
+
+	$status_map = privatesquare_checkins_status_map();
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 
 	$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 

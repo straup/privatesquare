@@ -30,6 +30,19 @@
 </div>
 {/if}
 
+{if $venue.checkins|@count}
+
+<h4>You were here</h4>
+
+<ul class="checkins">
+{foreach from=$venue.checkins item="row"}
+{assign var="status_id" value=$row.status_id}
+<li>{if 0}<q>{$status_map.$status_id|escape}</q> – {/if}<a href="{$cfg.abs_root_url}me/history/{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a> <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}</span></li>
+{/foreach}
+</ul>
+
+{/if}
+
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}
 	$(".map").htmapl();

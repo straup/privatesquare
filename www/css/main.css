@@ -207,3 +207,13 @@ q {
 .abook {
     margin-bottom: 10px;
 }
+
+.checkins {
+    margin: 0px;
+    padding: 0px;
+}
+
+.checkins li{
+    line-height: 1.5em;
+    list-style-type:none;
+}
