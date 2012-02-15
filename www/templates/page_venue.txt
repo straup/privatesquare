@@ -6,8 +6,10 @@
 
 {* sudo reconcile me with user history pages *}
 
+{* TO DO: if success, check most recent status and adjust "Success..." language accordingly *}
+
 <div class="checkin" data-venue="{$venue.venue_id|escape}">
-	<div class="venue" data-venue-id="{$venue.venue_id|escape}"><a href="{$cfg.abs_root_url}venue/{$venue.venue_id|escape}/">{$venue.name|escape}</a></div>
+	<div class="venue" data-venue-id="{$venue.venue_id|escape}"><a href="{$cfg.abs_root_url}venue/{$venue.venue_id|escape}/">{if $success}Success! You have checked in to {/if}{$venue.name|escape}</a></div>
 
 	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>

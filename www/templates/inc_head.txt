@@ -18,7 +18,7 @@
 	<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 	{/if}
 
-	{assign var="version" value="1329104490"}
+	{assign var="version" value="1329104491"}
 	<link rel="stylesheet" type="text/css" media="all" href="{$cfg.abs_root_url}css/main.css?version={$version|escape}" />
 	<link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="{$cfg.abs_root_url}css/mobile.css?version={$version|escape}" />
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
@@ -41,6 +41,8 @@ var _cfg={literal}{{/literal}
 {if $cfg.user.id}
 			<span class="youare">you are logged in as</span>
 		<strong>{$cfg.user.username|escape}</strong>
+		|
+		<a href="{$cfg.abs_root_url}">checkin</a>
 		|
 		<a href="{$cfg.abs_root_url}me/history/">history</a>
 		|
