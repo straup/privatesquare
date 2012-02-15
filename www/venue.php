@@ -28,6 +28,8 @@
 
 	$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 
+	$GLOBALS['smarty']->assign("success", get_str("success"));
+
 	$GLOBALS['smarty']->display("page_venue.txt");
 	exit();
 

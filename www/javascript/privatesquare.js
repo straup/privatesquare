@@ -214,10 +214,15 @@ function _privatesquare_checkin_onsuccess(rsp){
 		return;
 	}
 
+	var loc = _cfg['abs_root_url' ] + 'venue/' + rsp['checkin']['venue_id'] + '?success=1';
+	location.href = loc;
+
+	/*
 	var msg = "Success!";
 	msg += ' <a href="#" onclick="privatesquare_init();return false;">Do it again?</a>';
 
 	$("#status").html(msg);
+	*/
 }
 
 function _privatesquare_api_error(rsp, action){
