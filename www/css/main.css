@@ -184,6 +184,7 @@ q {
 
 .checkin .venue{
     font-weight: 700;
+    margin-bottom: 3px;
 }
 
 .checkin .venue a{
@@ -237,4 +238,10 @@ q {
 button {
     border: solid thin;
     padding: 5px;
+}
+
+#when {
+    text-align:right;
+    margin-top:0px;
+    color:#adadad;
 }

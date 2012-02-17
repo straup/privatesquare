@@ -42,6 +42,16 @@
 
 	$rsp = privatesquare_checkins_for_user($GLOBALS['cfg']['user'], $more);
 
+	# TO DO: oh god...timezones :-(
+
+	if ($when){
+		list($start, $stop) = datetime_when_parse($more['when']);
+
+		$GLOBALS['smarty']->assign("when", $when);
+		$GLOBALS['smarty']->assign("start", $start);
+		$GLOBALS['smarty']->assign("stop", $stop);
+	}
+
 	$GLOBALS['smarty']->assign("pagination_url", $GLOBALS['cfg']['abs_root_url'] . $history_url);
 
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);
