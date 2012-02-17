@@ -5,13 +5,14 @@ function privatesquare_init(){
 	navigator.geolocation.getCurrentPosition(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
 	$("#checkin").submit(privatesquare_submit);
 	$("#again").click(privatesquare_reset);
-	$("#status").html("Asking the sky where you are...");
+
+	privatesquare_set_status("Asking the sky where you are...");
 }
 
 function privatesquare_reset(){
 	$("#venues").hide();
-	$("#status").html();
 
+	privatesquare_unset_status();
 	_privatesquare_hide_map()
 	privatesquare_init();
 }
@@ -25,13 +26,13 @@ function privatesquare_submit(){
 		return false;
 	}
 
-	privatesquare_checkin(args, _privatesquare_checkin_onsuccess);
+	privatesquare_checkin(args, privatesquare_checkin_onsuccess);
 
 	$("#venues").hide();
 
 	_privatesquare_hide_map()
 
-	$("#status").html("Checking in...");
+	privatesquare_set_status("Checking in...");
 	return false;
 }
 
@@ -54,14 +55,14 @@ function privatesquare_gather_args(){
 	};
 }
 
-function privatesquare_checkin(args, onsuccess, onerror){
+function privatesquare_checkin(args, onsuccess){
 
 	if (checking_in){
 		return false;
 	}
 
 	if (! onsuccess){
-		onsuccess = _privatesquare_checkin_onsuccess;
+		onsuccess = privatesquare_checkin_onsuccess;
 	}
 
 	checking_in=true;
@@ -74,9 +75,7 @@ function privatesquare_checkin(args, onsuccess, onerror){
 		'data': args,
 		'error': function(rsp){
 			checking_in=false;
-			if (onerror){
-				onerror(rsp);
-			}
+			/* console.log("ERROR"); */
 		},
 		'success': function(rsp){
 			checking_in=false;
@@ -107,7 +106,7 @@ function privatesquare_search(){
 
 	if (! query){
 		var msg = 'Okay, I\'m giving up. <a href="#" onclick="privatesquare_init();return false;">Start over</a> if you want change your mind.';
-		$("#status").html(msg);
+		privatesquare_set_status(msg);
 		return false;
 	}
 
@@ -123,7 +122,7 @@ function privatesquare_search(){
 
 	navigator.geolocation.getCurrentPosition(_onsuccess, _onerror);
 
-	$("#status").html("Re-checking your location first...");
+	privatesquare_set_status("Re-checking your location first...");
 	return false;
 }
 
@@ -145,17 +144,14 @@ function privatesquare_fetch_venues(lat, lon, query){
 		'success': _foursquare_venues_onsuccess
 	});
  
-	$("#status").html("Fetching nearby places...");
+	privatesquare_set_status("Fetching nearby places...");
 }
 
 function _privatesquare_geolocation_onerror(rsp){
-	$("#status").html("Huh. I have no idea where you are...");
+	privatesquare_set_status("Huh. I have no idea where you are...");
 }
 
 function _foursquare_venues_onsuccess(rsp){
-
-	// see above
-	checking_in=false;
 
 	$("#status").html("");
 
@@ -175,7 +171,8 @@ function _foursquare_venues_onsuccess(rsp){
 
 		msg += '. <a href="#" onclick="privatesquare_search();return false;">Try again</a>';
 		msg += ' or <a href="#" onclick="privatesquare_init();return false;">start from scratch</a>?';
-		$("#status").html(msg);
+
+		privatesquare_set_status(msg);
 		return;
 	}
 
@@ -199,7 +196,7 @@ function _foursquare_venues_onsuccess(rsp){
 
 	_privatesquare_show_map(rsp['latitude'], rsp['longitude']);
 
-	$("#status").html("");
+	privatesquare_unset_status();
 	$("#venues").show();
 }
 
@@ -228,12 +225,16 @@ function _privatesquare_what_onchange(){
 	}
 }
 
-function _privatesquare_checkin_onsuccess(rsp){
+function privatesquare_checkin_onsuccess(rsp, tryagain_func){
 
 	$("#status").html("");
 
+	if (! tryagain_func){
+		tryagain_func = privatesquare_init;
+	}
+
 	if (rsp['stat'] != 'ok'){
-		_privatesquare_api_error(rsp);
+		privatesquare_api_error(rsp, tryagain_func);
 		return;
 	}
 
@@ -241,7 +242,7 @@ function _privatesquare_checkin_onsuccess(rsp){
 	location.href = loc;
 }
 
-function _privatesquare_api_error(rsp, action){
+function privatesquare_api_error(rsp, tryagain_func){
 
 	var msg = 'Oh noes. There was a problem completing your request. ';
 
@@ -256,9 +257,23 @@ function _privatesquare_api_error(rsp, action){
 		msg += 'It appears to be a privatesquare problem rather than foursquare weirdness. ';
 	}
 
-	msg += '<a href="#" onclick="privatesquare_init();return false;">Try it again?</a>';
+	if (tryagain_func){
+		msg += '<button id="tryagain">Try it again?</button>';
+		msg += '&#160;&#160;';
+		msg += '<button id="donot_tryagain">Forget it</button>';
+	}
 
-	$("#status").html(msg);
+	privatesquare_set_status(msg);
+
+	if (tryagain_func){
+		$("#tryagain").click(tryagain_func);
+
+		$("#donot_tryagain").click(function(){
+			$("#status").html("");
+			$("#status").hide();
+		});
+	}
+
 }
 
 function _privatesquare_show_map(lat, lon){
@@ -298,4 +313,14 @@ function _privatesquare_hide_map(){
 	var map = $(".map");
 	wrapper.hide();
 	map.remove();
+}
+
+function privatesquare_set_status(msg){
+	$("#status").html(msg);
+	$("#status").show();
+}
+
+function privatesquare_unset_status(){
+	$("#status").html("");
+	$("#status").hide();
 }

@@ -16,10 +16,12 @@
 	{else}
 	{$venue.name|escape}
 	{/if}
-	<button id="iamhere">I am here now</button>
 	</div>
 
+	<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
+
 	<div id="checkin_venue">
+
 		<form method="POST" id="checkin_form">
 
 		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="poo" />
@@ -44,6 +46,8 @@
 	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
+
+	<button id="iamhere">I am here now</button>
 </div>
 
 <div class="abook address">
@@ -80,17 +84,28 @@ $(document).ready(function(){
 
 	$(".map").htmapl();
 
-	$('#iamhere').click(function(){
+	var show_checkin_form = function(){
+		privatesquare_unset_status();
+
 		$('#iamhere').attr('disabled', 'disabled');
 		$('#checkin_venue').show();
-	});
+	};
+
+	$('#iamhere').click(show_checkin_form);
 
 	$('#checkin_form').submit(function(){
 
-		var args = privatesquare_gather_args();
-		privatesquare_checkin(args);
+		var _onsuccess = function(rsp){
+			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
+			$('#iamhere').removeAttr('disabled');
+		}
 
-		// $("#thishappened").attr("disabled", "disabled");
+		var args = privatesquare_gather_args();
+		privatesquare_checkin(args, _onsuccess);
+
+		$("#checkin_venue").hide();
+
+		privatesquare_set_status("Talking to the sky...");
 		return false;	
 	});
 

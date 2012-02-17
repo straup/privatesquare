@@ -33,7 +33,13 @@
 
 	$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 
-	$GLOBALS['smarty']->assign("success", get_str("success"));
+	$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
+	$GLOBALS['smarty']->assign("checkin_crumb", $checkin_crumb);
+
+	# did we arrive here from a checkin page?
+
+	$success = get_str("success") ? 1 : 0;	
+	$GLOBALS['smarty']->assign("success", $success);
 
 	$GLOBALS['smarty']->display("page_venue.txt");
 	exit();

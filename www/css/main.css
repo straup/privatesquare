@@ -226,10 +226,15 @@ q {
 #iamhere {
     display:none;
     border:solid thin;
-    margin-left:15px;
+    margin-top:15px;
 }
 
 #checkin_venue {
     margin-top: 20px;
     display:none;
+}
+
+button {
+    border: solid thin;
+    padding: 5px;
 }
