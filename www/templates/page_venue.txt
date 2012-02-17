@@ -1,7 +1,7 @@
 {capture assign="page_title"}venues | {$venue.name}{/capture}
 {capture assign="extra_head"}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js"></script> 
+<meta http-equiv="refresh" content="1190">
 {/capture}
 {include file="inc_head.txt"}
 
@@ -24,7 +24,7 @@
 
 		<form method="POST" id="checkin_form">
 
-		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="poo" />
+		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
 
 		<select id="what">
 {foreach from=$status_map item="label" key="id"}
@@ -47,7 +47,7 @@
 		<div class="marker marker-history" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
 
-	<button id="iamhere">I am here now</button>
+	<button id="iamhere">I am here again</button>
 </div>
 
 <div class="abook address">

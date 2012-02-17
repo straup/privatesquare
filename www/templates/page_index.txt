@@ -3,11 +3,6 @@
 {assign var="version" value=1327272621}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
-{if $cfg.environment=='prod'}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js?version={$version}"></script>
-{else}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js?version={$version}"></script>
-{/if}
 {/capture}
 {include file="inc_head.txt"}
 
