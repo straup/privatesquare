@@ -216,6 +216,11 @@ q {
 .checkins li{
     line-height: 1.5em;
     list-style-type:none;
+    font-size: small;
+}
+
+#youwerehere {
+    margin-bottom:8px;
 }
 
 #iamhere {

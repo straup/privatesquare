@@ -61,7 +61,7 @@
 </div>
 {/if}
 
-<h4>You were here</h4>
+<h4 id="youwerehere">You were here</h4>
 
 <ul class="checkins">
 {foreach from=$venue.checkins item="row"}
