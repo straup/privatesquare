@@ -18,8 +18,6 @@ function privatesquare_reset(){
 
 function privatesquare_submit(){
 
-	// this shouldn't be necessary, but is for now...
-
 	var args = privatesquare_gather_args();
 
 	if (args['venue_id'] == -1){
@@ -56,10 +54,14 @@ function privatesquare_gather_args(){
 	};
 }
 
-function privatesquare_checkin(args, onsuccess){
+function privatesquare_checkin(args, onsuccess, onerror){
 
 	if (checking_in){
 		return false;
+	}
+
+	if (! onsuccess){
+		onsuccess = _privatesquare_checkin_onsuccess;
 	}
 
 	checking_in=true;
@@ -70,6 +72,12 @@ function privatesquare_checkin(args, onsuccess){
 		'url': _cfg.abs_root_url + 'api/',
 		'type': 'POST',
 		'data': args,
+		'error': function(rsp){
+			checking_in=false;
+			if (onerror){
+				onerror(rsp);
+			}
+		},
 		'success': function(rsp){
 			checking_in=false;
 			onsuccess(rsp);

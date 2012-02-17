@@ -36,7 +36,7 @@
 {/foreach}
 		</select>
 
-		<input type="submit" value="THIS HAPPENED" />
+		<input type="submit" value="THIS HAPPENED" id="thishappened" />
 
 		</form>
 	</div>
@@ -88,11 +88,9 @@ $(document).ready(function(){
 	$('#checkin_form').submit(function(){
 
 		var args = privatesquare_gather_args();
+		privatesquare_checkin(args);
 
-		privatesquare_checkin(args, function(rsp){
-			console.log(rsp);
-		});
-
+		// $("#thishappened").attr("disabled", "disabled");
 		return false;	
 	});
 
