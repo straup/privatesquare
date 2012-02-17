@@ -1,7 +1,9 @@
 <?php
 
 	include("include/init.php");
+
 	loadlib("foursquare_venues");
+	loadlib("foursquare_checkins");
 	loadlib("privatesquare_checkins");
 
 	login_ensure_loggedin($_SERVER['REQUEST_URI']);
@@ -24,7 +26,10 @@
 	$venue['checkins'] = $checkins['rows'];
 
 	$status_map = privatesquare_checkins_status_map();
+	$broadcast_map = foursquare_checkins_broadcast_map();
+
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+	$GLOBALS['smarty']->assign_by_ref("broadcast_map", $broadcast_map);
 
 	$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 

@@ -217,3 +217,14 @@ q {
     line-height: 1.5em;
     list-style-type:none;
 }
+
+#iamhere {
+    display:none;
+    border:solid thin;
+    margin-left:15px;
+}
+
+#checkin_venue {
+    margin-top: 20px;
+    display:none;
+}
