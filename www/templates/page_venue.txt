@@ -1,6 +1,7 @@
 {capture assign="page_title"}venues | {$venue.name}{/capture}
 {capture assign="extra_head"}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js"></script> 
 {/capture}
 {include file="inc_head.txt"}
 
@@ -19,7 +20,7 @@
 	</div>
 
 	<div id="checkin_venue">
-		<form method="POST" id="checkin">
+		<form method="POST" id="checkin_form">
 
 		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="poo" />
 
@@ -79,20 +80,28 @@ $(document).ready(function(){
 
 	$(".map").htmapl();
 
-	/*
-
-	var delay = (is_checkin) ? 60000 : 0;
-
 	$('#iamhere').click(function(){
 		$('#iamhere').attr('disabled', 'disabled');
 		$('#checkin_venue').show();
 	});
 
+	$('#checkin_form').submit(function(){
+
+		var args = privatesquare_gather_args();
+
+		privatesquare_checkin(args, function(rsp){
+			console.log(rsp);
+		});
+
+		return false;	
+	});
+
+	var delay = (is_checkin) ? 60000 : 0;
+
 	setTimeout(function(){
+		$('#iamhere').removeAttr('disabled');
 		$('#iamhere').show();
 	}, delay);
-
-	*/
 
 });
 

@@ -20,9 +20,24 @@ function privatesquare_submit(){
 
 	// this shouldn't be necessary, but is for now...
 
-	if (checking_in){
+	var args = privatesquare_gather_args();
+
+	if (args['venue_id'] == -1){
+		privatesquare_search();
 		return false;
 	}
+
+	privatesquare_checkin(args, _privatesquare_checkin_onsuccess);
+
+	$("#venues").hide();
+
+	_privatesquare_hide_map()
+
+	$("#status").html("Checking in...");
+	return false;
+}
+
+function privatesquare_gather_args(){
 
 	var venue_id = $("#where").val();
 	var status_id = $("#what").val();
@@ -31,36 +46,36 @@ function privatesquare_submit(){
 	// not thrilled about this...
 	broadcast = (status_id==2) ? "" : broadcast;
 
-	if (venue_id == -1){
-		privatesquare_search();
-		return false;
-	}
-
-	checking_in=true;
-
 	var crumb = $("#where").attr("data-crumb");
 
-	var args = {
-		'method': 'privatesquare.venues.checkin',
+	return {
 		'crumb': crumb,
 		'venue_id': venue_id,
 		'status_id': status_id,
 		'broadcast': broadcast
 	};
+}
+
+function privatesquare_checkin(args, onsuccess){
+
+	if (checking_in){
+		return false;
+	}
+
+	checking_in=true;
+
+	args['method'] = 'privatesquare.venues.checkin';
 
 	$.ajax({
 		'url': _cfg.abs_root_url + 'api/',
 		'type': 'POST',
 		'data': args,
-		'success': _privatesquare_checkin_onsuccess
+		'success': function(rsp){
+			checking_in=false;
+			onsuccess(rsp);
+		}
 	});
 
-	$("#venues").hide();
-
-	_privatesquare_hide_map()
-
-	$("#status").html("Checking in...");
-	return false;
 }
 
 function _privatesquare_geolocation_onsuccess(rsp){
@@ -216,13 +231,6 @@ function _privatesquare_checkin_onsuccess(rsp){
 
 	var loc = _cfg['abs_root_url' ] + 'venue/' + rsp['checkin']['venue_id'] + '?success=1';
 	location.href = loc;
-
-	/*
-	var msg = "Success!";
-	msg += ' <a href="#" onclick="privatesquare_init();return false;">Do it again?</a>';
-
-	$("#status").html(msg);
-	*/
 }
 
 function _privatesquare_api_error(rsp, action){
