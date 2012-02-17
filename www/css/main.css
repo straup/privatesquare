@@ -184,6 +184,7 @@ q {
 
 .checkin .venue{
     font-weight: 700;
+    margin-bottom: 3px;
 }
 
 .checkin .venue a{
@@ -216,4 +217,31 @@ q {
 .checkins li{
     line-height: 1.5em;
     list-style-type:none;
+    font-size: small;
+}
+
+#youwerehere {
+    margin-bottom:8px;
+}
+
+#iamhere {
+    display:none;
+    border:solid thin;
+    margin-top:15px;
+}
+
+#checkin_venue {
+    margin-top: 20px;
+    display:none;
+}
+
+button {
+    border: solid thin;
+    padding: 5px;
+}
+
+#when {
+    text-align:right;
+    margin-top:0px;
+    color:#adadad;
 }
