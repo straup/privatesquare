@@ -11,17 +11,19 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	{if 0}
-	<meta http-equiv="refresh" content="1200">
 	<meta http-equiv="Pragma" content="no-cache">
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
-	{/if}
 
 	{assign var="version" value="1329104491"}
 	<link rel="stylesheet" type="text/css" media="all" href="{$cfg.abs_root_url}css/main.css?version={$version|escape}" />
 	<link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="{$cfg.abs_root_url}css/mobile.css?version={$version|escape}" />
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
+{if $cfg.environment=='prod'}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js?version={$version}"></script>
+{else}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js?version={$version}"></script>
+{/if}
 	<script type="text/javascript">
 var _cfg={literal}{{/literal}
 	'abs_root_url':'{$cfg.abs_root_url}'
