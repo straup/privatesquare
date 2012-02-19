@@ -37,7 +37,12 @@
 				'offset' => $offset,
 			);
 
-			$args['afterTimestamp'] = $user['created'];
+			# only sync updates since the user signed up for privatesquare
+			# > 1 (or "2") would mean pull in all a users' checkins.
+
+			if ($user['sync_foursquare'] == 1){
+				$args['afterTimestamp'] = $user['created'];
+			}
 
 			$rsp = foursquare_api_call($method, $args);
 
