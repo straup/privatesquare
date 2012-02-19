@@ -52,6 +52,9 @@
 		$GLOBALS['smarty']->assign("stop", $stop);
 	}
 
+	$status_map = privatesquare_checkins_status_map();
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
 	$GLOBALS['smarty']->assign("pagination_url", $GLOBALS['cfg']['abs_root_url'] . $history_url);
 
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);

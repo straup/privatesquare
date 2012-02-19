@@ -3,11 +3,10 @@
 
 <h1>Your account</h1>
 
-{if $smarty.get.password}<p class="message">Your password has been updated.</p>{/if}
+<h3>Foursquare</h3>
 
 <ul>
-	<li><a href="/account/password/">Change your password</a></li>
-	<li><a href="/account/delete/">Delete your account</a></li>
+	<li><a href="/account/foursquare/sync/">Sync missing or old foursquare checkins</a></li>
 </ul>
 
 {include file="inc_foot.txt"}

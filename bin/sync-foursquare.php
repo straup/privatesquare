@@ -21,6 +21,8 @@
 			return;
 		}
 
+		echo "sync checkins for '{$user['username']}' : {$user['sync_foursquare']}\n";
+
 		$status_map = privatesquare_checkins_status_map("string keys");
 
 		$method = 'users/self/checkins';
@@ -39,6 +41,8 @@
 
 			# only sync updates since the user signed up for privatesquare
 			# > 1 (or "2") would mean pull in all a users' checkins.
+
+			# see also: account_foursquare_sync.php
 
 			if ($user['sync_foursquare'] == 1){
 				$args['afterTimestamp'] = $user['created'];
