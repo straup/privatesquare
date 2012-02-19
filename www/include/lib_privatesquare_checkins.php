@@ -32,7 +32,10 @@
 		$cluster_id = $user['cluster_id'];
 
 		$checkin['id'] = dbtickets_create(64);
-		$checkin['created'] = time();
+
+		if (! isset($checkin['created'])){
+			$checkin['created'] = time();
+		}
 
 		$insert = array();
 
