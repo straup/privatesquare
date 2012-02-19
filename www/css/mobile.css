@@ -47,5 +47,5 @@ input[type=submit] {
 }
 
 #user_checkin_details {
-    display:none;
+    max-width:300px;
 }
