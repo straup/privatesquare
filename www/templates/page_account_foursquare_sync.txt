@@ -1,0 +1,47 @@
+{capture assign="page_title"}account | foursquare | sync{/capture}
+{include file="inc_head.txt"}
+
+<h2>Sync missing or old foursquare checkins</h2>
+
+{if $update}
+
+{if !$update_ok}
+<p class="error">{$update_error|@dumper}</p>
+{else}
+<p class="confirm">Okay! Your preferences have been updated.</p>
+{/if}
+
+{/if}
+
+<p>By default privatesquare only stores checkins that you've made here on the site itself. If you'd like to archive checkins that you've made elsewhere (another 4sq application, for example) you can update your account preferences so that the site to do so. There are three options that you can choose from at any time:</p>
+
+<ol>
+	<li><em>do not sync 4sq checkins</em> – which is what it says on the tin, what you do elsewhere is entirely your business and privatesquare doesn't need to know about it.</li>
+
+	<li><em>only sync recent 4sq checkins</em> – tell privatesquare to archive missing checkins but only those that have happened since you signed up (with privatesquare).</li>
+
+	<li><em>sync all 4sq checkins past and future</em> – this will tell privatesquare to archive your entire foursquare history.</li>
+</ol>
+
+<p>Okay!</p>
+
+<div style="text-align:center;margin:50px;">
+
+<form method="POST">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="done" value="1" />
+
+	<select name="sync">
+{foreach from=$sync_states item="label" key="id"}
+		<option value="{$id|escape}"{if $id==$cfg.user.sync_foursquare} selected="true"{/if}>{$label|escape}</option>
+{/foreach}
+	</select>
+
+	<input type="submit" value="UPDATE" />
+</form>
+
+</div>
+
+<p style="font-size:small;">Note: The <a href="https://github.com/straup/privatesquare/blob/master/bin/sync-foursquare.php">tool for syncing your foursquare checkins</a> does not yet run itself automatically so you may need to poke the person who is maintaining the copy of privatesquare you're using to update things.</p>
+
+{include file="inc_foot.txt"}

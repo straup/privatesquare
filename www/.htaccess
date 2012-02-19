@@ -65,6 +65,8 @@ RewriteRule  ^account/?$		account.php		[L]
 RewriteRule  ^account/password/?$	account_password.php	[L]
 RewriteRule  ^account/delete/?$		account_delete.php	[L]
 
+RewriteRule  ^account/foursquare/sync/?$	account_foursquare_sync.php?%{QUERY_STRING}	[L]
+
 # API
 
 RewriteRule  ^api/?$			api_rest.php		[L]
