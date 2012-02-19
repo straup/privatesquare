@@ -214,7 +214,7 @@ q {
     padding: 0px;
 }
 
-.checkins li{
+li{
     line-height: 1.5em;
     list-style-type:none;
     font-size: small;
@@ -244,4 +244,15 @@ button {
     text-align:right;
     margin-top:0px;
     color:#adadad;
+}
+
+.sq {
+    color: #000;
+    text-decoration:none;
+}
+
+#user_checkin_details ul {
+    font-size: small;
+    padding: 0px;
+    margin: 0px;
 }

@@ -18,6 +18,8 @@
 
 	$venue['data'] = json_decode($venue['data'], "as hash");
 
+	# TO DO: account for pagination and > n checkins
+
 	$more = array(
 		'venue_id' => $venue_id,
 	);

@@ -1,0 +1,2 @@
+CREATE INDEX `by_privatesquare_id` ON `PrivatesquareCheckins` (`user_id`, `id`);
+CREATE INDEX `by_foursquare_id` ON `PrivatesquareCheckins` (`user_id`, `checkin_id`);

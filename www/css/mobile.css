@@ -45,3 +45,7 @@ input[type=submit] {
 #login .youare {
     display: none;
 }
+
+#user_checkin_details {
+    max-width:300px;
+}

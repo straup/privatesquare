@@ -32,7 +32,10 @@
 		$cluster_id = $user['cluster_id'];
 
 		$checkin['id'] = dbtickets_create(64);
-		$checkin['created'] = time();
+
+		if (! isset($checkin['created'])){
+			$checkin['created'] = time();
+		}
 
 		$insert = array();
 
@@ -90,6 +93,46 @@
 		}
 
 		return $rsp;
+	}
+
+ 	#################################################################
+
+	# Note the need to pass $user because we don't have a lookup
+	# table for checkin IDs, maybe we should... (20120218/straup)
+
+	function privatesquare_checkins_get_by_id(&$user, $id){
+
+		if (is_numeric($id)){
+			return privatesquare_checkins_get_by_privatesquare_id($user, $id);
+		}
+
+		return privatesquare_checkins_get_by_foursquare_id($user, $id);
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_get_by_privatesquare_id(&$user, $id){
+
+		$cluster_id = $user['cluster_id'];
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_id = AddSlashes($id);
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND id='{$enc_id}'";
+		return db_single(db_fetch_users($cluster_id, $sql));
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_get_by_foursquare_id(&$user, $id){
+
+		$cluster_id = $user['cluster_id'];
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_id = AddSlashes($id);
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND checkin_id='{$enc_id}'";
+		return db_single(db_fetch_users($cluster_id, $sql));
 	}
 
  	#################################################################
