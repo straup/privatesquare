@@ -4,17 +4,17 @@
 {/capture}
 {include file="inc_head.txt"}
 
-{* TO DO: adjust the "you were here..." copy based on status_id *}
-
 {assign var="status_id" value=$checkin.status_id}
 
-<h2>
+<h2><a href="{$cfg.abs_root_url}venue/{$checkin.venue_id|escape}">{$checkin.venue.name|escape}</a></h2>
+
+<p style="font-size:small;">
 {if $is_own}
-You were at <a href="{$cfg.abs_root_url}venue/{$checkin.venue_id|escape}">{$checkin.venue.name|escape}</a> on {$checkin.created|date_format|escape}  at {$checkin.created|date_format:"%k:%M"|escape} 
+On <a href="">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.</p>
 {else}
-{$owner.username|escape} was at <a href="{$cfg.abs_root_url}venue/{$checkin.venue_id|escape}">{$checkin.venue.name|escape}</a> on {$checkin.created|date_format|escape}  at {$checkin.created|date_format:"%k:%M"|escape}
+On {$checkin.created|date_format|escape} at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
 {/if}
-</h2>
+</p>
 
 {* TO DO: merge/reuse all of the "i am here again" code from page_venue.txt *}
 
@@ -26,17 +26,21 @@ You were at <a href="{$cfg.abs_root_url}venue/{$checkin.venue_id|escape}">{$chec
 
 {* TO DO: next/previous *}
 
-<p><q>{$status_map.$status_id|escape}</q></p>
-
 {* TO DO: links *}
 
-<ul id="user_checkin_meta">
+<div id="user_checkin_details">
+
+<h3>Details</h3>
+
+<ul>
 <li><a href="">privatesquare:id={$checkin.id|escape}</a></li>
 {if $checkin.checkin_id}
 <li><a href="">foursquare:id={$checkin.checkin_id|escape}</a></li>
 {/if}
 <li><a href="">foursquare:venue={$checkin.venue_id|escape}</a></li>
 </ul>
+
+</div>
 
 <script type="text/javascript">
 

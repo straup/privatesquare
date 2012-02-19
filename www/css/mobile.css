@@ -46,6 +46,6 @@ input[type=submit] {
     display: none;
 }
 
-#user_checkin_meta {
-    display:none !important;
+#user_checkin_details {
+    display:none;
 }
