@@ -46,7 +46,7 @@ var _cfg={literal}{{/literal}
 		|
 		<a href="{$cfg.abs_root_url}">checkin</a>
 		|
-		<a href="{$cfg.abs_root_url}me/history/">history</a>
+		<a href="{$cfg.user|@urls_history_for_user}">history</a>
 		|
 			<a href="{$cfg.abs_root_url}signout/">logout</a>
 {else}

@@ -12,8 +12,8 @@
 {assign var="status_id" value=$row.status_id}
 
 <div class="checkin" data-venue="{$row.venue_id|escape}">
-	<div class="venue" data-venue-id="{$row.venue_id|escape}"><a href="{$cfg.abs_root_url}me/checkin/{$row.id|escape}/" class="sq">◻</a>&#160;<a href="{$cfg.abs_root_url}venue/{$row.venue_id|escape}/">{$row.venue.name|escape}</a></div>
-	<div class="date" data-created="{$row.created|escape}">{if $status_id}<q>{$status_map.$status_id|escape}</q>{else}<a href="{$cfg.abs_root_url}me/history/{$row.created|date_format:"%Y-%m-%d"|escape}" style="text-decoration:none;color:#000;">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> at {$row.created|date_format:"%k:%M"|escape}{/if}</div>
+	<div class="venue" data-venue-id="{$row.venue_id|escape}"><a href="{$row|@urls_checkin}" class="sq">◻</a>&#160;<a href="{$row.venue|@urls_venue}">{$row.venue.name|escape}</a></div>
+	<div class="date" data-created="{$row.created|escape}">{if $status_id}<q>{$status_map.$status_id|escape}</q>{else}<a href="{$owner|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}" style="text-decoration:none;color:#000;">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> at {$row.created|date_format:"%k:%M"|escape}{/if}</div>
 
 	<div class="map" data-zoom="14" data-center="{$row.venue.latitude|escape},{$row.venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$row.venue.latitude|escape},{$row.venue.longitude|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
