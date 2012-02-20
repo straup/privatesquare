@@ -249,6 +249,7 @@ button {
 .sq {
     color: #000;
     text-decoration:none;
+    margin-right: 5px;
 }
 
 #user_checkin_details ul {
