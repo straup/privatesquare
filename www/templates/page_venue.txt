@@ -1,6 +1,5 @@
 {capture assign="page_title"}venues | {$venue.name}{/capture}
 {capture assign="extra_head"}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
 <meta http-equiv="refresh" content="1190">
 {/capture}
 {include file="inc_head.txt"}
@@ -18,30 +17,7 @@
 	{/if}
 	</div>
 
-	<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
-
-	<div id="checkin_venue">
-
-		<form method="POST" id="checkin_form">
-
-		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
-
-		<select id="what">
-{foreach from=$status_map item="label" key="id"}
-			<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-		</select>
-
-		<select id="broadcast">
-{foreach from=$broadcast_map item="label" key="id"}
-			<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-		</select>
-
-		<input type="submit" value="THIS HAPPENED" id="thishappened" />
-
-		</form>
-	</div>
+	{include file="inc_checkin_venue.txt"}
 
 	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
@@ -81,6 +57,12 @@ var is_checkin={if $success}1{else}0{/if};
 {literal}
 
 $(document).ready(function(){
+
+	/*
+	  TO DO: merge with JS in page_user_checkin.txt ... maybe
+	  it's basically all the same but with tiny subtle
+	  differences ... so, something (20120220/straup)
+	*/
 
 	$(".map").htmapl();
 

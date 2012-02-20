@@ -1,9 +1,11 @@
 <?php
 
 	include("include/init.php");
+
 	loadlib("privatesquare_checkins");
 	loadlib("foursquare_users");
 	loadlib("foursquare_venues");
+	loadlib("foursquare_checkins");
 
 	$fsq_id = get_int32("foursquare_id");
 	$chk_id = get_str("checkin_id");
@@ -39,12 +41,18 @@
 	$checkin['venue'] = foursquare_venues_get_by_venue_id($checkin['venue_id']); 
 
 	$status_map = privatesquare_checkins_status_map();
+	$broadcast_map = foursquare_checkins_broadcast_map();
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("checkin", $checkin);
+
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+	$GLOBALS['smarty']->assign_by_ref("broadcast_map", $broadcast_map);
 
 	$GLOBALS['smarty']->assign("is_own", $is_own);
+
+	$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
+	$GLOBALS['smarty']->assign("checkin_crumb", $checkin_crumb);
 
 	$GLOBALS['smarty']->display("page_user_checkin.txt");
 	exit();

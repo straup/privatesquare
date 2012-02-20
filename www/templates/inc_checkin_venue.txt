@@ -1,0 +1,24 @@
+	<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
+
+	<div id="checkin_venue">
+
+		<form method="POST" id="checkin_form">
+
+		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
+
+		<select id="what">
+{foreach from=$status_map item="label" key="id"}
+			<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+		</select>
+
+		<select id="broadcast">
+{foreach from=$broadcast_map item="label" key="id"}
+			<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+		</select>
+
+		<input type="submit" value="THIS HAPPENED" id="thishappened" />
+
+		</form>
+	</div>
