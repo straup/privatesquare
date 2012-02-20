@@ -71,7 +71,7 @@
 <ul class="checkins">
 {foreach from=$venue.checkins item="row"}
 {assign var="status_id" value=$row.status_id}
-<li><a href="{$cfg.abs_root_url}me/checkin/{$row.id|escape}/" class="sq">◻</a>&#160;<a href="{$cfg.abs_root_url}me/history/{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a> <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}</span></li>
+<li><a href="{$row|@urls_checkin}" class="sq">◻</a>&#160;<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a> <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}</span></li>
 {/foreach}
 </ul>
 

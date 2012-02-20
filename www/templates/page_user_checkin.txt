@@ -8,14 +8,6 @@
 
 <h2 style="margin-top:0px;"><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a></h2>
 
-<p style="font-size:small;">
-{if $is_own}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}</p>
-{else}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
-{/if}
-</p>
-
 {* TO DO: merge/reuse all of the "i am here again" code from page_venue.txt *}
 
 <div class="checkin">
@@ -23,6 +15,14 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 		<div class="marker marker-history" data-location="{$checkin.venue.latitude|escape},{$checkin.venue.longitude|escape}"><span class="marker-history-text">{$checkin.venue.name|escape}</span></div>
 	</div>
 </div>
+
+<p style="font-size:small;">
+{if $is_own}
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}</p>
+{else}
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
+{/if}
+</p>
 
 {* TO DO: next/previous *}
 
