@@ -19,11 +19,16 @@
 	<link rel="stylesheet" type="text/css" media="all" href="{$cfg.abs_root_url}css/main.css?version={$version|escape}" />
 	<link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="{$cfg.abs_root_url}css/mobile.css?version={$version|escape}" />
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
+
+{if $cfg.user}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
 {if $cfg.environment=='prod'}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js?version={$version}"></script>
 {else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js?version={$version}"></script>
 {/if}
+{/if}
+
 	<script type="text/javascript">
 var _cfg={literal}{{/literal}
 	'abs_root_url':'{$cfg.abs_root_url}'
