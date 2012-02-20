@@ -6,15 +6,7 @@
 
 {assign var="status_id" value=$checkin.status_id}
 
-<h2 style="margin-top:0px;"><a href="{$cfg.abs_root_url}venue/{$checkin.venue_id|escape}">{$checkin.venue.name|escape}</a></h2>
-
-<p style="font-size:small;">
-{if $is_own}
-On <a href="">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}</p>
-{else}
-On {$checkin.created|date_format|escape} at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
-{/if}
-</p>
+<h2 style="margin-top:0px;"><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a></h2>
 
 {* TO DO: merge/reuse all of the "i am here again" code from page_venue.txt *}
 
@@ -23,6 +15,14 @@ On {$checkin.created|date_format|escape} at {$checkin.created|date_format:"%k:%M
 		<div class="marker marker-history" data-location="{$checkin.venue.latitude|escape},{$checkin.venue.longitude|escape}"><span class="marker-history-text">{$checkin.venue.name|escape}</span></div>
 	</div>
 </div>
+
+<p style="font-size:small;">
+{if $is_own}
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}</p>
+{else}
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
+{/if}
+</p>
 
 {* TO DO: next/previous *}
 
@@ -33,11 +33,11 @@ On {$checkin.created|date_format|escape} at {$checkin.created|date_format:"%k:%M
 <h3>Details</h3>
 
 <ul>
-<li><a href="">foursquare:venue={$checkin.venue_id|escape}</a></li>
+<li><a href="{$checkin.venue|@foursquare_urls_venue}">foursquare:venue={$checkin.venue_id|escape}</a></li>
 {if $checkin.checkin_id}
-<li><a href="">foursquare:id={$checkin.checkin_id|escape}</a></li>
+<li><a href="{$checkin|@foursquare_urls_checkin}">foursquare:id={$checkin.checkin_id|escape}</a></li>
 {/if}
-<li><a href="">privatesquare:id={$checkin.id|escape}</a></li>
+<li><a href="{$checkin|@urls_checkin}">privatesquare:id={$checkin.id|escape}</a></li>
 </ul>
 
 </div>

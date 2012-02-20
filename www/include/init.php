@@ -213,6 +213,8 @@
 	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
+	loadlib('urls');
+	loadlib('foursquare_urls');
 
 	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 

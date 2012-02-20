@@ -19,9 +19,12 @@
 		error_404();
 	}
 
+	$owner = users_get_by_id($fsq_user['user_id']);
+	$is_own = ($owner['id'] == $GLOBALS['cfg']['user']['id']) ? 1 : 0;
+
 	# for now...
 
-	if ($GLOBALS['cfg']['user']['id'] != $fsq_user['user_id']){
+	if (! $is_own){
 		error_403();
 	}
 
@@ -40,7 +43,7 @@
 		$more['per_page'] = 100;
 	}
 
-	$rsp = privatesquare_checkins_for_user($GLOBALS['cfg']['user'], $more);
+	$rsp = privatesquare_checkins_for_user($owner, $more);
 
 	# TO DO: oh god...timezones :-(
 
@@ -56,6 +59,9 @@
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 
 	$GLOBALS['smarty']->assign("pagination_url", $GLOBALS['cfg']['abs_root_url'] . $history_url);
+
+	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
+	$GLOBALS['smarty']->assign_by_ref("is_own", $is_own);
 
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);
 	$GLOBALS['smarty']->display("page_user_history.txt");
