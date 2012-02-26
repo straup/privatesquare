@@ -53,6 +53,8 @@ var _cfg={literal}{{/literal}
 		|
 		<a href="{$cfg.user|@urls_history_for_user}">history</a>
 		|
+		<a href="{$cfg.user|@urls_nearby_for_user}">nearby</a>
+		|
 			<a href="{$cfg.abs_root_url}signout/">logout</a>
 {else}
 	{if $cfg.enable_feature_signin}
