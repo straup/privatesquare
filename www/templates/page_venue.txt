@@ -26,12 +26,25 @@
 	<button id="iamhere">I am here again</button>
 </div>
 
-<div class="abook address">
+<div class="vcard adr">
+<div class="abook address street-address">
 {$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}
 </div>
 
+{if $venue.latitude and $venue.longitude}
+<div class"geo">
+    <span property="geo:name">
+    {if $venue.data.location.city}<span class="locality">{$venue.data.location.city}</span>,{/if}   
+    {if $venue.data.location.state}<span="region">{$venue.data.location.state},</span>{/if}
+    {if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
+    </span>
+    (<a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">nearby</a>)
+    <span property="geo:name"></span><span class="latitude" property="geo:lat" style="display:none;">{$venue.latitude}, </span><span class="longitude" property="geo:long" style="display:none;">{$venue.longitude}</span>
+</div>	
+{/if}
+
 {if $venue.data.contact.formattedPhone|escape}
-<div class="abook phone">
+<div class="abook phone tel">
 <a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
 </div>
 {/if}
@@ -41,6 +54,8 @@
 <a href="{$cfg.abs_root_url}woeid/{$venue.locality|escape}/">...</a>
 </div>
 {/if}
+
+</div>
 
 <h4 id="youwerehere">You were here</h4>
 
