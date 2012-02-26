@@ -121,14 +121,18 @@
 
 		return array($new_lat, $new_lon);
 	}
+
+	#################################################################
 	
-	function geo_utils_valid_unit($unit) {
+	function geo_utils_is_valid_unit($unit) {
+
 		if (isset($unit) and in_array($unit, array('m', 'km'))) {
 			return $unit;
-		} else {
-			return 0;
 		}
+
+		return 0;
 	}
+
 	#################################################################
 
 ?>

@@ -102,7 +102,9 @@
 		loadlib("geo_utils");
 		
 		$dist = (isset($more['dist'])) ? floatval($more['dist']) : 0.2;
-		$unit = (geo_utils_valid_unit($more['unit'])) ? $more['unit'] : 'm';
+		$unit = (geo_utils_is_valid_unit($more['unit'])) ? $more['unit'] : 'm';
+
+		# TO DO: sanity check to ensure max $dist
 
 		$bbox = geo_utils_bbox_from_point($lat, $lon, $dist, $unit);
 
