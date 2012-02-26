@@ -49,3 +49,11 @@ input[type=submit] {
 #user_checkin_details {
     max-width:300px;
 }
+
+#that {
+    max-width: 100% !important;
+}
+
+#that textarea {
+    height:75px !important;
+}
