@@ -43,6 +43,8 @@
 
 		if ($venue){
 			$checkin['locality'] = $venue['locality'];
+			$checkin['latitude'] = $venue['latitude'];
+			$checkin['longitude'] = $venue['longitude'];
 		}
 
 		# check to see if we're checking in to 4sq too
