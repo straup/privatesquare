@@ -62,8 +62,8 @@ RewriteRule ^reset/([a-zA-Z0-9]+)/?$	reset.php?reset=$1	[L,QSA]
 # Account stuff
 
 RewriteRule  ^account/?$		account.php		[L]
-RewriteRule  ^account/password/?$	account_password.php	[L]
-RewriteRule  ^account/delete/?$		account_delete.php	[L]
+# RewriteRule  ^account/password/?$	account_password.php	[L]
+# RewriteRule  ^account/delete/?$		account_delete.php	[L]
 
 RewriteRule  ^account/foursquare/sync/?$	account_foursquare_sync.php?%{QUERY_STRING}	[L]
 
@@ -81,6 +81,8 @@ RewriteRule ^me(/(.*))?/?$			me.php?path=$2&%{QUERY_STRING}	[L]
 RewriteRule ^venue/([a-f0-9]+)/?$			venue.php?venue_id=$1&%{QUERY_STRING}	[L]
 
 RewriteRule ^user/([0-9]+)/checkin(/([0-9a-f]+))/?$	user_checkin.php?foursquare_id=$1&checkin_id=$3&%{QUERY_STRING}	[L]
+
+RewriteRule ^user/([0-9]+)/history/nearby/?$		user_history_nearby.php?foursquare_id=$1&%{QUERY_STRING}	[L]
 
 RewriteRule ^user/([0-9]+)/history(/page([0-9]+))?/?$	user_history.php?foursquare_id=$1&page=$3&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/history/([0-9\-\;\:T]+)(/page([0-9]+))?/?$	user_history.php?foursquare_id=$1&when=$2&page=$4&%{QUERY_STRING}	[L]
