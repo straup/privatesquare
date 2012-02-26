@@ -20,6 +20,14 @@
 
  	#################################################################
 
+	function urls_nearby_for_user(&$user){
+
+		$history = urls_history_for_user($user);
+		return $history . "nearby/";
+	}
+
+ 	#################################################################
+
 	function urls_checkin(&$checkin){
 
 		$user = users_get_by_id($checkin['user_id']);
