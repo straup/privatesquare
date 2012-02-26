@@ -76,6 +76,8 @@
 					'venue_id' => $fsq_checkin['venue']['id'],
 					'created' => $fsq_checkin['createdAt'],
 					'status_id' => $status_map['i am here'],
+					'latitude' => $fsq_checkin['location']['lat'],
+					'longitude' => $fsq_checkin['location']['lng'],
 				);
 
 				$venue = foursquare_venues_get_by_venue_id($checkin['venue_id']);
@@ -94,6 +96,8 @@
 
 				if ($venue){
 					$checkin['locality'] = $venue['locality'];
+					$checkin['latitude'] = $venue['latitude'];
+					$checkin['longitude'] = $venue['longitude'];
 				}
 
 				$rsp = privatesquare_checkins_create($checkin);
