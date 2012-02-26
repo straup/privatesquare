@@ -4,11 +4,7 @@
 
 	##############################################################################
 
-	function export_geojson(&$checkins, $fh=null){
-
-		if (! $fh){
-			$fh = export_default_filehandle();
-		}
+	function export_geojson(&$fh, &$checkins){
 
 		$features = array();
 
@@ -47,7 +43,7 @@
 
 		fwrite($fh, json_encode($geojson));
 
-		return okay(array('fh' => $fh));
+		return okay();
 	}
 
 	##############################################################################
