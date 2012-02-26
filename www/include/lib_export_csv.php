@@ -4,11 +4,7 @@
 
 	##############################################################################
 
-	function export_csv(&$checkins, $fh=null){
-
-		if (! $fh){
-			$fh = export_default_filehandle();
-		}
+	function export_csv(&$fh, &$checkins){
 
 		fputcsv($fh, array_keys($checkins[0]));
 
@@ -17,7 +13,7 @@
 			fputcsv($fh, array_values($row));
 		}
 
-		return okay(array('fh' => $fh));
+		return okay();
 	}
 
 	##############################################################################
