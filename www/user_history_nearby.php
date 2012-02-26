@@ -38,6 +38,13 @@
 
 		$more = array();
 
+		if (get_float('dist')) {
+			$more['dist'] = get_float('dist');
+		}
+		if ( get_str('unit')) {
+			$more['unit'] = get_str('unit');
+		}
+
 		$rsp = privatesquare_checkins_for_user_nearby($owner, $lat, $lon, $more);
 
 		$GLOBALS['smarty']->assign_by_ref("owner", $owner);
