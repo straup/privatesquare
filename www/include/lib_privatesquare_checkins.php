@@ -97,6 +97,45 @@
 
  	#################################################################
 
+	function privatesquare_checkins_for_user_nearby(&$user, $lat, $lon, $more=array()){
+
+		loadlib("geo_utils");
+		$bbox = geo_utils_bbox_from_point($lat, $lon, .2);
+
+		$cluster_id = $user['cluster_id'];
+		$enc_user = AddSlashes($user['id']);
+
+		$sql = "SELECT venue_id, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+		$sql .= " AND latitude BETWEEN {$bbox[0]} AND {$bbox[2]} AND longitude BETWEEN {$bbox[1]} AND {$bbox[3]}";
+		$sql .= " GROUP BY venue_id";
+
+		$rsp = db_fetch_users($cluster_id, $sql, $more);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$tmp = array();
+
+		foreach ($rsp['rows'] as $row){
+			$tmp[$row['venue_id']] = $row['count'];
+		}
+
+		arsort($tmp);
+
+		$venues = array();
+
+		foreach ($tmp as $venue_id => $count){
+			$venue = foursquare_venues_get_by_venue_id($venue_id); 
+			$venue['count_checkins'] = $count;
+			$venues[] = $venue;
+		}
+
+		return okay(array('rows' => $venues));
+	}
+
+ 	#################################################################
+
 	# Note the need to pass $user because we don't have a lookup
 	# table for checkin IDs, maybe we should... (20120218/straup)
 
