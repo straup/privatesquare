@@ -107,7 +107,7 @@
 	# http://www.richardpeacock.com/sites/default/files/getDueCoords.php__0.txt
 
 	function geo_utils_move_point($lat, $lon, $bearing, $dist, $unit='m'){
-
+		
 		$radius = GEO_UTILS_R_M;
 
 		if ($unit == 'km'){
@@ -121,7 +121,14 @@
 
 		return array($new_lat, $new_lon);
 	}
-
+	
+	function geo_utils_valid_unit($unit) {
+		if (isset($unit) and in_array($unit, array('m', 'km'))) {
+			return $unit;
+		} else {
+			return 0;
+		}
+	}
 	#################################################################
 
 ?>
