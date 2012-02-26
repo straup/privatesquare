@@ -1,0 +1,53 @@
+{capture assign="page_title"}history | nearby{/capture}
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+{/capture}
+{include file="inc_head.txt"}
+
+{if $latitude and $longitude}
+
+{foreach from=$venues item="row"}
+
+<div class="checkin" data-venue="{$row.venue_id|escape}">
+	<div class="venue" data-venue-id="{$row.venue_id|escape}"><a href="{$row|@urls_venue}">{$row.name|escape}</a> – {if $row.count_checkins==1}you've been here once{else}you've been here {$row.count_checkins|escape} times{/if}</div>
+
+	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
+	</div>
+</div>
+
+{/foreach}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	$(".map").htmapl();
+{literal}}{/literal});
+</script>
+
+{else}
+
+<script type="text/javascript">
+
+{literal}
+$(document).ready(function(){
+
+	var _onsuccess = function(rsp){
+		var lat = rsp['coords']['latitude'];
+		var lon = rsp['coords']['longitude'];
+
+		var url = location.href + '?latitude=' + lat + '&longitude=' + lon;
+		location.href = url;
+	};
+
+	var _onfail = function(rsp){
+
+	};
+
+	navigator.geolocation.getCurrentPosition(_onsuccess, _onfail);
+});
+{/literal}
+</script>
+
+{/if}
+
+{include file="inc_foot.txt"}
