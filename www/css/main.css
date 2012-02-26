@@ -257,3 +257,21 @@ button {
     padding: 0px;
     margin: 0px;
 }
+
+#that {
+    max-width:50%;
+}
+
+#that input {
+    /* why why why, css? */
+    width: 99.5%;
+}
+
+#that textarea {
+    width: 100%;
+    height: 200px;
+}
+
+#that input[type=submit] {
+    width:auto;
+}
