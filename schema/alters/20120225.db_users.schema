@@ -1,0 +1,3 @@
+ALTER TABLE `PrivatesquareCheckins` ADD `latitude` decimal(6,3) DEFAULT NULL;
+ALTER TABLE `PrivatesquareCheckins` ADD `longitude` decimal(6,3) DEFAULT NULL;
+CREATE INDEX `by_location` ON `PrivatesquareCheckins` (`user_id`, `latitude`, `longitude`);
