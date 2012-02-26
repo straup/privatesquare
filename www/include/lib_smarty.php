@@ -57,4 +57,11 @@
 	$GLOBALS['smarty']->register_function('timings', 'smarty_timings');
 
 	#######################################################################################
+
+	function smarty_dump($params) {
+		dumper($params);
+	}
+
+	$GLOBALS['smarty']->register_function('dump', 'smarty_dump');
+
 ?>

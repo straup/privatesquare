@@ -100,7 +100,13 @@
 	function privatesquare_checkins_for_user_nearby(&$user, $lat, $lon, $more=array()){
 
 		loadlib("geo_utils");
-		$bbox = geo_utils_bbox_from_point($lat, $lon, .2);
+		
+		$dist = (isset($more['dist'])) ? floatval($more['dist']) : 0.2;
+		$unit = (geo_utils_is_valid_unit($more['unit'])) ? $more['unit'] : 'm';
+
+		# TO DO: sanity check to ensure max $dist
+
+		$bbox = geo_utils_bbox_from_point($lat, $lon, $dist, $unit);
 
 		$cluster_id = $user['cluster_id'];
 		$enc_user = AddSlashes($user['id']);
