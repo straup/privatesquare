@@ -60,7 +60,7 @@
 			'longitude' => $lon,
 			'timestamp' => time(),
 			'source' => 'google',
-			'condition' => $current,
+			'conditions' => $current,
 		);
 
 		return okay($rsp);
