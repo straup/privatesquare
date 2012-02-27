@@ -79,9 +79,9 @@
 			$rsp = weather_google_conditions($checkin['latitude'], $checkin['longitude']);
 
 			if ($rsp['ok']){
-				$condition = $rsp['condition'];
-				$condition['source'] = $rsp['source'];
-				$checkin['weather'] = json_encode($condition);
+				$conditions = $rsp['conditions'];
+				$conditions['source'] = $rsp['source'];
+				$checkin['weather'] = json_encode($conditions);
 			}
 		}
 
