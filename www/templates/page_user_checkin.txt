@@ -41,10 +41,6 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 
 </div>
 
-{if $cfg.enable_feature_pinwheel_notes and $pw_user and $pw_user.oauth_token}
-	{include file="inc_pinwheel_note.txt" venue=$checkin.venue}
-{/if}
-
 <script type="text/javascript">
 
 {literal}
