@@ -10,6 +10,7 @@ CREATE TABLE `PrivatesquareCheckins` (
   `venue_id` VARCHAR(64),
   `locality` INT(11) UNSIGNED NOT NULL,
   `checkin_id` VARCHAR(64),
+  `weather` TEXT,
   PRIMARY KEY (`id`),
   KEY `by_status` (`user_id`, `status_id`),
   KEY `by_venue` (`user_id`, `venue_id`),
