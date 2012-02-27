@@ -97,6 +97,43 @@
 
  	#################################################################
 
+	# Here's the thing: This will probably need to be cached and added
+	# to incrementally at some point in the not too distant future. How
+	# that's done remains an open question. MySQL blob? Write to disk?
+	# Dunno. On the other hand we're just going to enjoy not having to
+	# think about it for the moment. KTHXBYE (20120226/straup)
+
+	function privatesquare_checkins_export_for_user(&$user){
+
+		$rows = array();
+
+		$count_pages = null;
+
+		$args = array(
+			'page' => 1,
+			'per_page' => 100,
+		);
+
+		while ((! isset($count_pages)) || ($args['page'] <= $count_pages)){
+
+			if (! isset($count_pages)){
+				$count_pages = $rsp['pagination']['page_count'];
+			}
+
+			# per the above we may need to add a flag to *not* fetch
+			# the full venue listing out of the database (20120226/straup)
+
+			$rsp = privatesquare_checkins_for_user($user, $args);
+			$rows = array_merge($rows, $rsp['rows']);
+
+			$args['page'] += 1;
+		}
+
+		return okay(array('rows' => $rows));
+	}
+
+ 	#################################################################
+
 	function privatesquare_checkins_for_user_nearby(&$user, $lat, $lon, $more=array()){
 
 		loadlib("geo_utils");
