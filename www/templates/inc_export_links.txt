@@ -1,0 +1,7 @@
+{if $cfg.enable_feature_export}
+
+<div id="export_links">
+export as {foreach from=$export_formats item="fmt" name="export_formats"}<a href="{$owner|@urls_history_for_user}export.{$fmt|escape}{if $when}?when={$when|escape}{elseif $venue_id}?venue_id={$venue_id|escape}{/if}">{$fmt|escape}</a>{if !$smarty.foreach.export_formats.last} | {/if}{/foreach}
+</div>
+
+{/if}
