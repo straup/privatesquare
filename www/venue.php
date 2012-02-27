@@ -5,8 +5,12 @@
 	loadlib("foursquare_venues");
 	loadlib("foursquare_checkins");
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_export");
 
 	login_ensure_loggedin($_SERVER['REQUEST_URI']);
+
+	$owner = $GLOBALS['cfg']['user'];
+	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 
 	$venue_id = get_str("venue_id");
 
@@ -24,7 +28,7 @@
 		'venue_id' => $venue_id,
 	);
 
-	$checkins = privatesquare_checkins_for_user($GLOBALS['cfg']['user'], $more);
+	$checkins = privatesquare_checkins_for_user($owner, $more);
 	$venue['checkins'] = $checkins['rows'];
 
 	$status_map = privatesquare_checkins_status_map();
@@ -43,6 +47,11 @@
 	$success = get_str("success") ? 1 : 0;	
 	$GLOBALS['smarty']->assign("success", $success);
 
+	$GLOBALS['smarty']->assign("venue_id", $venue_id);
+
+	$export_formats = privatesquare_export_valid_formats();
+	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
+	
 	$GLOBALS['smarty']->display("page_venue.txt");
 	exit();
 
