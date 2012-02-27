@@ -103,7 +103,7 @@
 	# Dunno. On the other hand we're just going to enjoy not having to
 	# think about it for the moment. KTHXBYE (20120226/straup)
 
-	function privatesquare_checkins_export_for_user(&$user){
+	function privatesquare_checkins_export_for_user(&$user, $more=array()){
 
 		$rows = array();
 
@@ -114,6 +114,13 @@
 			'per_page' => 100,
 		);
 
+		# Note the order of things here: don't overwrite
+		# what we've set in $args above
+
+		if (count($more)){
+			$args = array_merge($more, $args);
+		}
+
 		while ((! isset($count_pages)) || ($args['page'] <= $count_pages)){
 
 			if (! isset($count_pages)){
@@ -123,7 +130,7 @@
 			# per the above we may need to add a flag to *not* fetch
 			# the full venue listing out of the database (20120226/straup)
 
-			$rsp = privatesquare_checkins_for_user($user, $args);
+			$rsp = privatesquare_checkins_for_user($user, $args, $more);
 			$rows = array_merge($rows, $rsp['rows']);
 
 			$args['page'] += 1;
