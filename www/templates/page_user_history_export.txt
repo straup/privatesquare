@@ -1,0 +1,14 @@
+{capture assign="page_title"}history | export{/capture}
+{include file="inc_head.txt"}
+
+<h2>Export</h2>
+
+<p>You may export all of your privatesquare checkins in one of the following formats:</p>
+
+<ul>
+{foreach from=$valid_formats item="ext"}
+<li><a href="{$owner|@urls_history_for_user}export.{$ext|escape}">{$ext|escape}</a></li>
+{/foreach}
+</ul>
+
+{include file="inc_foot.txt"}
