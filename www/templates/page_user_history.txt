@@ -24,6 +24,8 @@
 
 {include file="inc_pagination.txt"}
 
+{include file="inc_export_links.txt"}
+
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}
 	$(".map").htmapl();
