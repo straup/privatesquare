@@ -1,0 +1,1 @@
+ALTER TABLE `PrivatesquareCheckins` ADD `weather` TEXT;
