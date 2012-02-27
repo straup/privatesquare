@@ -2,6 +2,7 @@
 
 	include("include/init.php");
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_export");
 	loadlib("foursquare_users");
 
 	$fsq_id = get_int32("foursquare_id");
@@ -62,6 +63,9 @@
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("is_own", $is_own);
+
+	$export_formats = privatesquare_export_valid_formats();
+	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
 
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);
 	$GLOBALS['smarty']->display("page_user_history.txt");
