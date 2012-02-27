@@ -66,6 +66,8 @@
 {/foreach}
 </ul>
 
+{include file="inc_export_links.txt"}
+
 <script type="text/javascript">
 var is_checkin={if $success}1{else}0{/if};
 
