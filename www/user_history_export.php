@@ -50,18 +50,26 @@
 
 	loadlib($export_lib);
 
-	$more = array();
+	$fetch_more = array();
 		
-	if (get_isset('inline')){
-		$more['inline'] = 1;
+	if ($when = get_str('when')){
+		$fetch_more['when'] = $when;
 	}
 
-	$rsp = privatesquare_checkins_export_for_user($owner);
+	$rsp = privatesquare_checkins_export_for_user($owner, $fetch_more);
 	$checkins = $rsp['rows'];
+
+	#
 
 	$fh = privatesquare_export_filehandle();
 
-	call_user_func($export_func, $fh, $checkins, $more);
+	$export_more = array();
+		
+	if (get_str('inline')){
+		$export_more['inline'] = 1;
+	}
+
+	call_user_func($export_func, $fh, $checkins, $export_more);
 	exit();
 
 ?>
