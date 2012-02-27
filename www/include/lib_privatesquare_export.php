@@ -81,6 +81,18 @@
 			$row['venue'] = $row['venue']['name'];
 		}
 
+		if (isset($row['weather'])){
+
+			if ($data = json_decode($row['weather'], 'as hash')){
+
+				foreach ($data as $k => $v){
+					$row[ "weather_{$k}" ] = $v;
+				}
+			}
+
+			unset($row['weather']);			
+		}
+
 		# note the pass-by-ref
 	}
 
