@@ -26,6 +26,8 @@
 	}
 
 	$owner = users_get_by_id($fsq_user['user_id']);
+	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
+
 	$is_own = ($owner['id'] == $GLOBALS['cfg']['user']['id']) ? 1 : 0;
 
 	if (! $is_own){
@@ -35,7 +37,12 @@
 	$format = get_str("format");
 
 	if (! privatesquare_export_is_valid_format($format)){
-		error_404();
+
+		$map = privatesquare_export_valid_formats();
+
+		$GLOBALS['smarty']->assign("valid_formats", array_keys($map));
+		$GLOBALS['smarty']->display("page_user_history_export.txt");
+		exit();
 	}
 
 	$export_lib = "privatesquare_export_{$format}";
@@ -43,10 +50,18 @@
 
 	loadlib($export_lib);
 
-	$rsp = privatesquare_checkins_for_user($owner);
+	$more = array();
+		
+	if (get_isset('inline')){
+		$more['inline'] = 1;
+	}
+
+	$rsp = privatesquare_checkins_export_for_user($owner);
 	$checkins = $rsp['rows'];
 
 	$fh = privatesquare_export_filehandle();
 
-	call_user_func($export_func, $fh, $checkins);
+	call_user_func($export_func, $fh, $checkins, $more);
+	exit();
+
 ?>
