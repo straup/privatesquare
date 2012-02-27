@@ -15,7 +15,7 @@
 	<meta http-equiv="Cache-Control" content="no-cache">
 	<meta http-equiv="Expires" content="Sat, 01 Dec 2001 00:00:00 GMT">
 
-	{assign var="version" value="1329104491"}
+	{assign var="version" value="1329104492"}
 	<link rel="stylesheet" type="text/css" media="all" href="{$cfg.abs_root_url}css/main.css?version={$version|escape}" />
 	<link rel="stylesheet" type="text/css" media="screen and (max-device-width: 480px)" href="{$cfg.abs_root_url}css/mobile.css?version={$version|escape}" />
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
@@ -51,10 +51,14 @@ var _cfg={literal}{{/literal}
 		|
 		<a href="{$cfg.abs_root_url}">checkin</a>
 		|
-		<a href="{$cfg.user|@urls_history_for_user}">history</a>
-		|
 		<a href="{$cfg.user|@urls_nearby_for_user}">nearby</a>
 		|
+		<a href="{$cfg.user|@urls_history_for_user}">history</a>
+		|
+		<span class="export">
+		<a href="{$cfg.user|@urls_history_for_user}export/">export</a>
+		|
+		</span>
 			<a href="{$cfg.abs_root_url}signout/">logout</a>
 {else}
 	{if $cfg.enable_feature_signin}
