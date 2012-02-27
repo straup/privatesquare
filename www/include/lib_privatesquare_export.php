@@ -73,7 +73,7 @@
 
 	##############################################################################
 
-	function privatesquare_export_massage_checkin(&$row){
+	function privatesquare_export_massage_checkin(&$row, $more=array()){
 
 		# prefix keys with machinetag namespaces?
 
@@ -81,8 +81,7 @@
 			$row['venue'] = $row['venue']['name'];
 		}
 
-		/*
-		if (isset($row['weather'])){
+		if ((isset($row['weather'])) && (isset($more['inflate_weather']))){
 
 			if ($data = json_decode($row['weather'], 'as hash')){
 
@@ -93,7 +92,6 @@
 
 			unset($row['weather']);			
 		}
-		*/
 
 		# note the pass-by-ref
 	}
