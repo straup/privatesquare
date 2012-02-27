@@ -67,6 +67,8 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	$GLOBALS['cfg']['enable_feature_export'] = 1;
+
 	# Internals. Go ahead and tweak these if you want (and understand
 	# how Flamework projects are set up) but you don't need to.
 
