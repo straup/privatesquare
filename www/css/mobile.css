@@ -61,3 +61,7 @@ input[type=submit] {
 #login .export {
     display:none;
 }
+
+#export_links {
+    display:none;
+}
