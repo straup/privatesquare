@@ -275,3 +275,10 @@ button {
 #that input[type=submit] {
     width:auto;
 }
+
+#export_links {
+    text-align:right;
+    font-size:small;
+    margin-top:100px;
+    padding:10px;
+}
