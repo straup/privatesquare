@@ -22,7 +22,7 @@
 	function privatesquare_export_valid_formats($by_mimetype=0){
 
 		$map = array(
-			'csv' => 'text/csv',
+			'csv' => 'text/plain',
 			'geojson' => 'application/json',
 		);
 
@@ -40,14 +40,15 @@
 		rewind($fh);
 		$data = stream_get_contents($fh);
 
-		$headers['Content-length'] = strlen($export);
+		$headers['Content-length'] = strlen($data);
 
 		if ((! isset($more['filename'])) && (! isset($more['inline']))){
 
 			$map = privatesquare_export_valid_formats("by mimetype");
 			$ext = $map[$headers['Content-type']];
+			$hash = md5($data);
 
-			$more['filename'] = md5($data) . ".{$ext}";
+			$more['filename'] = "privatesquare-{$hash}.{$ext}";
 		}
 
 		privatesquare_export_send_headers($headers, $more);
@@ -74,7 +75,11 @@
 
 	function privatesquare_export_massage_checkin(&$row){
 
-		$row['venue'] = $row['venue']['name'];
+		# prefix keys with machinetag namespaces?
+
+		if (isset($row['venue'])){
+			$row['venue'] = $row['venue']['name'];
+		}
 
 		# note the pass-by-ref
 	}
