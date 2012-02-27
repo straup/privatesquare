@@ -57,3 +57,7 @@ input[type=submit] {
 #that textarea {
     height:75px !important;
 }
+
+#login .export {
+    display:none;
+}
