@@ -59,6 +59,7 @@
 			'latitude' => $lat,
 			'longitude' => $lon,
 			'timestamp' => time(),
+			'source' => 'google',
 			'condition' => $current,
 		);
 
