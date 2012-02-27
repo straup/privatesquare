@@ -72,6 +72,19 @@
 			# on error, then what?
 		}
 
+		if ($GLOBALS['cfg']['enable_feature_weather_tracking']){
+
+			loadlib("weather_google");
+
+			$rsp = weather_google_conditions($checkin['latitude'], $checkin['longitude']);
+
+			if ($rsp['ok']){
+				$condition = $rsp['condition'];
+				$condition['source'] = $rsp['source'];
+				$checkin['weather'] = json_encode($condition);
+			}
+		}
+
 		$rsp = privatesquare_checkins_create($checkin);
 
 		if (! $rsp['ok']){
