@@ -1,11 +1,12 @@
+<span class="weather">
 {if $short_form}
 
 {if $weather.source=='google'}
 
 {if $cfg.weather_tracking_measure=='US'}
-{$weather.temp_f|escape}° F {$weather.condition|strtolower|escape}
+<span class="weather_temp">{$weather.temp_f|escape}° F</span><span class="weather_condition"> {$weather.condition|strtolower|escape}</span>
 {else}
-{$weather.temp_c|escape}° C {$weather.condition|strtolower|escape}
+<span class="weather_temp">{$weather.temp_c|escape}° C</span><span class="weather_condition"> {$weather.condition|strtolower|escape}</span>
 {/if}
 
 {/if}
@@ -15,11 +16,12 @@
 {if $weather.source=='google'}
 
 {if $cfg.weather_tracking_measure=='US'}
-It was {$weather.temp_f|escape}° F and {$weather.condition|strtolower|escape}.
+<span class="weather_temp">It was {$weather.temp_f|escape}° F</span><span class="weather_condition"> and {$weather.condition|strtolower|escape}</span>
 {else}
-It was {$weather.temp_c|escape}° C and {$weather.condition|strtolower|escape}.
+<span class="weather_temp">It was {$weather.temp_c|escape}° C</span><span class="weather_condition"> and {$weather.condition|strtolower|escape}</span>
 {/if}
 
 {/if}
 
 {/if}
+</span>
