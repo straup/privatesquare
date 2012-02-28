@@ -38,8 +38,6 @@
 		error_404();
 	}
 
-	$checkin['venue'] = foursquare_venues_get_by_venue_id($checkin['venue_id']); 
-
 	$status_map = privatesquare_checkins_status_map();
 	$broadcast_map = foursquare_checkins_broadcast_map();
 
