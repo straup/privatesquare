@@ -15,10 +15,11 @@
 
 <p style="font-size:small;">
 {if $is_own}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}</p>
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
 {/if}
+{if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
 </p>
 
 <button id="iamhere">I am here again</button>
