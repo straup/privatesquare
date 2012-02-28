@@ -282,3 +282,13 @@ button {
     margin-top:100px;
     padding:10px;
 }
+
+.weather {
+    color:#ccc;
+    display:block;
+    margin-top:5px;
+}
+
+.checkins .weather {
+    display: inline !important;
+}
