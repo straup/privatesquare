@@ -1,0 +1,13 @@
+{if $short_form}
+
+{if $weather.source=='google'}
+{$weather.temp_c|escape}° C {$weather.condition|strtolower|escape}
+{/if}
+
+{else}
+
+{if $weather.source=='google'}
+It was {$weather.temp_c|escape}° C and {$weather.condition|strtolower|escape}.
+{/if}
+
+{/if}
