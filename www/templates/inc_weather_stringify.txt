@@ -1,13 +1,25 @@
 {if $short_form}
 
 {if $weather.source=='google'}
+
+{if $cfg.weather_tracking_measure=='US'}
+{$weather.temp_f|escape}° F {$weather.condition|strtolower|escape}
+{else}
 {$weather.temp_c|escape}° C {$weather.condition|strtolower|escape}
+{/if}
+
 {/if}
 
 {else}
 
 {if $weather.source=='google'}
+
+{if $cfg.weather_tracking_measure=='US'}
+It was {$weather.temp_f|escape}° F and {$weather.condition|strtolower|escape}.
+{else}
 It was {$weather.temp_c|escape}° C and {$weather.condition|strtolower|escape}.
+{/if}
+
 {/if}
 
 {/if}
