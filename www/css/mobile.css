@@ -65,3 +65,12 @@ input[type=submit] {
 #export_links {
     display:none;
 }
+
+.weather {
+    margin-top:2px;
+    margin-bottom:3px;
+}
+
+.checkins .weather .weather_condition {
+    display: none;
+}
