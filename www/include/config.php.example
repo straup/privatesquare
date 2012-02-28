@@ -68,7 +68,9 @@
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
 	$GLOBALS['cfg']['enable_feature_export'] = 1;
+
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;
+	$GLOBALS['cfg']['weather_tracking_measure'] = 'Metric';		# change to 'US' for degrees Farenheit
 
 	# Internals. Go ahead and tweak these if you want (and understand
 	# how Flamework projects are set up) but you don't need to.
