@@ -76,6 +76,11 @@
 			$sql .= " AND venue_id='{$enc_venue}'";
 		}
 
+		else if (isset($more['locality'])){
+			$enc_locality = AddSlashes($more['locality']);
+			$sql .= " AND locality='{$enc_locality}'";
+		}
+
 		$sql .= " ORDER BY created DESC";
 
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
@@ -91,6 +96,86 @@
 		}
 
 		return $rsp;
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_localities_for_user(&$user){
+
+		$cluster_id = $user['cluster_id'];
+		$enc_user = AddSlashes($user['id']);
+
+		# TO DO: indexes
+
+		$sql = "SELECT locality, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' GROUP BY locality";
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$tmp = array();
+
+		foreach ($rsp['rows'] as $row){
+
+			if (! $row['locality']){
+				continue;
+			}
+
+			$tmp[$row['locality']] = $row['count'];
+		}
+
+		arsort($tmp);
+
+		# TO DO: pagination (in memory) ?
+
+		$localities = array();
+
+		foreach ($tmp as $woeid => $count){
+
+			# This is a total hack. It should probably be moved in to
+			# lib_reverse_geoplanet but I'm going to leave it here so
+			# I remember to add the correct database indexes.
+			# (20120229/straup)
+
+			$enc_id = AddSlashes($woeid);
+			$sql = "SELECT * FROM reverse_geoplanet WHERE locality='{$enc_id}'";
+			$rsp = db_fetch($sql);
+			$row = db_single($rsp);
+
+			if (! $row){
+				continue;
+			}
+
+			if ($row['placetype'] == 22){
+
+				# This is a combination of my shitty code while I was
+				# at Flickr (sorry) and the part where reverse_geoplanet
+				# records the neighbourhood name even if it's only storing
+				# cities (because names were never critical and a bit of
+				# an afterthought... (20120229/straup)
+
+				$parts = explode(", ", $row['name']);
+				$country = array_pop($parts);
+				array_pop($parts);
+				array_shift($parts);
+
+				# argh...
+
+				if ($woeid == 2459115){
+					array_unshift($parts, "New York");
+				}
+
+				$parts[] = $country;
+
+				$row['name'] = implode(", ", $parts);
+			}
+
+			$row['count'] = $count;
+			$localities[] = $row;
+		}
+
+		return okay(array('rows' => $localities));
 	}
 
  	#################################################################
