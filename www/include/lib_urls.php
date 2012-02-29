@@ -20,6 +20,15 @@
 
  	#################################################################
 
+	function urls_places_for_user(&$user){
+
+		$fsq_user = foursquare_users_get_by_user_id($user['id']);
+
+		return $GLOBALS['cfg']['abs_root_url'] . "user/{$fsq_user['foursquare_id']}/places/";
+	}
+
+ 	#################################################################
+
 	function urls_nearby_for_user(&$user){
 
 		$history = urls_history_for_user($user);
