@@ -14,6 +14,7 @@ CREATE TABLE `PrivatesquareCheckins` (
   PRIMARY KEY (`id`),
   KEY `by_status` (`user_id`, `status_id`),
   KEY `by_venue` (`user_id`, `venue_id`),
+  KEY `by_locality` (`user_id`, `locality`),
   KEY `by_location` (`user_id`, `latitude`, `longitude`),
   KEY `by_privatesquare_id` (`user_id`, `id`),
   KEY `by_foursquare_id` (`user_id`, `checkin_id`),
