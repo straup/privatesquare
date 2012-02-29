@@ -172,10 +172,61 @@
 			}
 
 			$row['count'] = $count;
+
+			# Do we need to fetch this is $count is one?
+
+			$venues_more = array(
+				'locality' => $woeid,
+			);
+
+			$venues_rsp = privatesquare_checkins_venues_for_user($user, $venues_more);
+			$row['venues'] = $venues_rsp['rows'];
+
 			$localities[] = $row;
 		}
 
 		return okay(array('rows' => $localities));
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_venues_for_user(&$user, $more=array()){
+
+		$cluster_id = $user['cluster_id'];
+		$enc_user = AddSlashes($user['id']);
+
+		$sql = "SELECT venue_id, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+
+		if (isset($more['locality'])){
+			$enc_loc = AddSlashes($more['locality']);
+			$sql .= " AND locality='{$enc_loc}'";
+		}
+
+		$sql .= " GROUP BY venue_id";
+
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		$tmp = array();
+
+		foreach ($rsp['rows'] as $row){
+			$tmp[$row['venue_id']] = $row['count'];
+		}
+
+		arsort($tmp);
+
+		$rows = array();
+
+		foreach ($tmp as $venue_id => $count){
+
+			# TO DO: fetch the actual venue...
+			$venue = array();
+			$venue['venue_id'] = $venue_id;
+			$venue['count'] = $count;
+
+			$rows[] = $venue;
+		}
+
+		return okay(array('rows' => $rows));
 	}
 
  	#################################################################
@@ -331,38 +382,6 @@
 
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND checkin_id='{$enc_id}'";
 		return db_single(db_fetch_users($cluster_id, $sql));
-	}
-
- 	#################################################################
-
-	function privatesquare_checkins_venues_for_user(&$user, $more=array()){
-
-		$cluster_id = $user['cluster_id'];
-		$enc_user = AddSlashes($user['id']);
-
-		# please to be caching me; this will always filesort...
-
-		$sql = "SELECT venue_id, COUNT(id) AS cnt FROM PrivatesquareCheckins";
-		$sql .= " WHERE user_id='{$enc_user}'";
-		$sql .= " GROUP BY venue_id";
-		$sql .= " ORDER BY cnt DESC, created DESC";
-
-		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
-
-		if (! $rsp['ok']){
-			return $rsp;
-		}
-
-		$venues = array();
-
-		foreach ($rsp['rows'] as $row){
-			$venue = foursquare_venues_get_by_venue_id($row['venue_id']); 
-			$venue['count'] = $row['cnt'];
-			$venues[] = $venue;
-		}
-
-		$rsp['rows'] = $venues;
-		return $rsp;
 	}
 
  	#################################################################
