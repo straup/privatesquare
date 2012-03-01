@@ -1,0 +1,9 @@
+DROP INDEX `by_locality` FROM PrivatesquareCheckins;
+DROP INDEX `by_venue` FROM PrivatesquareCheckins;
+
+CREATE INDEX `by_locality` ON `PrivatesquareCheckins` (`user_id`, `locality`, `created`);
+CREATE INDEX `by_locality_venue` ON `PrivatesquareCheckins` (`user_id`, `locality`, `venue_id`);
+
+CREATE INDEX `by_venue` ON `PrivatesquareCheckins` (`user_id`, `venue_id`, `created`);
+
+CREATE INDEX `by_date` ON `PrivatesquareCheckins` (`user_id`, `created`);
