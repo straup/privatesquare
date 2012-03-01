@@ -181,6 +181,7 @@
 
 				$venues_more = array(
 					'locality' => $woeid,
+					'stats_mode' => 1,
 				);
 
 				$venues_rsp = privatesquare_checkins_venues_for_user($user, $venues_more);
@@ -199,6 +200,16 @@
  	#################################################################
 
 	function privatesquare_checkins_venues_for_user(&$user, $more=array()){
+
+		$defaults = array(
+			'stats_mode' => 0,
+			'per_page' => 10,
+			'page' => 1,
+		);
+
+		$more = array_merge($defaults, $more);
+
+		# TO DO: date ranges
 
 		$cluster_id = $user['cluster_id'];
 		$enc_user = AddSlashes($user['id']);
@@ -222,19 +233,60 @@
 
 		arsort($tmp);
 
+		$venue_ids = array_keys($tmp);
+		$total_count = count($venue_ids);
+
 		$rows = array();
+		$pagination = array();
 
-		foreach ($tmp as $venue_id => $count){
+		if ($more['stats_mode']){
+			# do not paginate
+		}
 
-			# TO DO: fetch the actual venue...
-			$venue = array();
-			$venue['venue_id'] = $venue_id;
+		else {
+
+			$page_count = ceil($total_count / $more['per_page']);
+			$last_page_count = $total_count - (($page_count - 1) * $more['per_page']);
+
+			$pagination = array(
+				'total_count' => $total_count,
+				'page' => $more['page'],
+				'per_page' => $more['per_page'],
+				'page_count' => $page_count,
+			);
+
+			if ($GLOBALS['cfg']['pagination_assign_smarty_variable']){
+				$GLOBALS['smarty']->assign('pagination', $pagination);
+			}
+
+			$offset = $more['per_page'] * ($more['page'] - 1);
+			$venue_ids = array_slice($venue_ids, $offset, $more['per_page']);
+		}
+
+		foreach ($venue_ids as $venue_id){
+
+			$count = $tmp[$venue_id];
+
+			if ($more['stats_mode']){
+
+				$venue = array(
+					'venue_id' => $venue_id,
+				);
+			}
+
+			else {
+				$venue = foursquare_venues_get_by_venue_id($venue_id);
+			}
+
 			$venue['count'] = $count;
 
 			$rows[] = $venue;
 		}
 
-		return okay(array('rows' => $rows));
+		return okay(array(
+			'rows' => $rows,
+			'pagination' => $pagination
+		));
 	}
 
  	#################################################################
