@@ -29,10 +29,19 @@
 		error_403();
 	}
 
-	$rsp = privatesquare_checkins_localities_for_user($owner);
+	$more = array();
+
+	if ($page = get_int32("page")){
+		$more['page'] = $page;
+	}
+
+	$rsp = privatesquare_checkins_localities_for_user($owner, $more);
 	$GLOBALS['smarty']->assign_by_ref("places", $rsp['rows']);
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
+
+	$pagination_url = urls_places_for_user($owner);
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$GLOBALS['smarty']->display("page_user_places.txt");
 	exit();
