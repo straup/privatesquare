@@ -1,7 +1,7 @@
 {capture assign="page_title"}{$owner.username} | places | {$locality.name}{/capture}
 {include file="inc_head.txt"}
 
-<h3>{$locality.name|escape}</h3>
+<h3 class="header-right">{$locality.name|escape}</h3>
 
 {foreach from=$venues item="row"}
 
@@ -21,6 +21,7 @@
 {/foreach}
 
 {include file="inc_pagination.txt"}
+{include file="inc_export_links.txt"}
 
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}
