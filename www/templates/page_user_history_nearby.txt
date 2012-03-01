@@ -8,8 +8,12 @@
 
 {foreach from=$venues item="row"}
 
+	<h3 class="header-left">
+	<a href="{$row|@urls_venue}">{$row.name|escape}</a>
+	<span class="header-loc">{if $row.count_checkins==1}you've been here once{else}you've been here {$row.count_checkins|escape} times{/if}</span>
+	</h3>
+
 <div class="checkin" data-venue="{$row.venue_id|escape}">
-	<div class="venue" data-venue-id="{$row.venue_id|escape}"><a href="{$row|@urls_venue}">{$row.name|escape}</a> – {if $row.count_checkins==1}you've been here once{else}you've been here {$row.count_checkins|escape} times{/if}</div>
 
 	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>

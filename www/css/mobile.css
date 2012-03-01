@@ -69,23 +69,23 @@ input[type=submit] {
 .weather {
     margin-top:2px;
     margin-bottom:3px;
-}
-
-.checkins .weather .weather_condition {
-    display: none;
-}
-
-.youve_been_here {
-    font-weight:100;
-    color:#ccc;
-    font-size:small;
     display:block;
 }
 
-.youve_been_here:before {
-    content: "";
+
+.header-right {
+    display:none;
 }
 
 .header-loc {
     font-size:small;
+    display: block;
+}
+
+#history .header-loc {
+    display:none;
+}
+
+.checkins .weather_condition {
+    display:none;
 }

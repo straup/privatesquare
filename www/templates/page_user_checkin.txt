@@ -40,6 +40,7 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 <li><a href="{$checkin|@urls_checkin}">privatesquare:id={$checkin.id|escape}</a></li>
 </ul>
 
+
 </div>
 
 <script type="text/javascript">

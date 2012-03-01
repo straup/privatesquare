@@ -312,18 +312,7 @@ button {
     margin-top:5px;
 }
 
-.weather :before {
-    content: "– ";
-}
-
 .checkins .weather {
     display: inline !important;
 }
 
-.youve_been_here {
-    color:#ccc;
-}
-
-.youve_been_here:before {
-    content: " / ";
-}

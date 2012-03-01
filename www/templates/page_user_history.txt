@@ -11,7 +11,7 @@
 {foreach from=$checkins item="row"}
 {assign var="status_id" value=$row.status_id}
 
-<div class="checkin" data-venue="{$row.venue_id|escape}">
+<div id="history" class="checkin" data-venue="{$row.venue_id|escape}">
 
 	{* TO DO: make the actual checkin link a float-y thing *}
 
