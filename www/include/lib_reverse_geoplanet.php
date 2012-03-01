@@ -137,6 +137,63 @@
 
 	########################################################################
 
+	function reverse_geoplanet_get_by_woeid($woeid, $placetype){
+
+		$cache_key = "reverse_geoplanet_woe_{$woeid}";
+
+		$cache = cache_get($cache_key);
+
+		if ($cache['ok']){
+			return $cache['data'];
+		}
+
+		$valid_placetypes = array(
+			'locality',
+		);
+
+		if (! in_array($placetype, $valid_placetypes)){
+			return not_okay("invalid placetype");
+		}
+
+		$enc_id = AddSlashes($woeid);
+
+		$sql = "SELECT * FROM reverse_geoplanet WHERE `{$placetype}`='{$enc_id}'";
+		$rsp = db_fetch($sql);
+		$row = db_single($rsp);
+
+		if (! $row){
+			return;
+		}
+
+		if ($row['placetype'] == 22){
+
+			# This is a combination of my shitty code while I was
+			# at Flickr (sorry) and the part where reverse_geoplanet
+			# records the neighbourhood name even if it's only storing
+			# cities (because names were never critical and a bit of
+			# an afterthought... (20120229/straup)
+
+			$parts = explode(", ", $row['name']);
+			$country = array_pop($parts);
+			array_pop($parts);
+			array_shift($parts);
+
+			# argh...
+
+			if (($woeid == 2459115) && ($parts[0] != 'New York')){
+				array_unshift($parts, "New York");
+			}
+
+			$parts[] = $country;
+			$row['name'] = implode(", ", $parts);
+		}
+
+		cache_set($cache_key, $row, "cache locally");
+		return $row;
+	}
+
+	########################################################################
+
 	# this is useful for pre-populating the database... I guess
 	# (20120121/straup)
 
