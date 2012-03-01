@@ -16,14 +16,15 @@
 	{* TO DO: make the actual checkin link a float-y thing *}
 
 	<h3 class="header-left" style="margin-bottom:5px;">
-		<a href="{$row|@urls_checkin}" class="sq">◻</a>
 		<a href="{$row.venue|@urls_venue}">{$row.venue.name|escape}</a>
 		<span class="header-loc"><a href="{$owner|@urls_places_for_user}{$row.locality.locality|escape}/">{$row.locality.name|escape}</a></span>
 	</h3>
 
 	<div class="date" data-created="{$row.created|escape}">
+		<!--<a href="{$row|@urls_checkin}" class="sq">◻</a> -->
+
 		{if $status_id}
-		<q>{$status_map.$status_id|escape}</q>
+		<q>you said {$status_map.$status_id|escape}</q>
 		{else}
 		<a href="{$owner|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}" style="text-decoration:none;color:#000;">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> at {$row.created|date_format:"%k:%M"|escape}
 		{/if}

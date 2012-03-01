@@ -194,7 +194,6 @@ q {
 
 .checkin .date {
     font-size: small;
-    margin-left:2%;
     margin-bottom:8px;
 }
 
@@ -263,7 +262,9 @@ button {
 .header-loc {
     color:#adadad;
     font-weight: 100;
+    margin-left:10px;
 }
+
 
 .header-loc a {
     text-decoration: none;
@@ -310,6 +311,7 @@ button {
 .weather {
     color:#ccc;
     margin-top:5px;
+    margin-left:5px;
 }
 
 .checkins .weather {
