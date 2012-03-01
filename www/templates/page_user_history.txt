@@ -5,7 +5,7 @@
 {include file="inc_head.txt"}
 
 {if $when}
-<h2 id="when">{$when|escape}</h2>
+<h3 class="header-right">{$when|escape}</h3>
 {/if}
 
 {foreach from=$checkins item="row"}
