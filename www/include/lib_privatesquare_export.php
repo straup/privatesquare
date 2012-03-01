@@ -1,5 +1,8 @@
 <?php
 
+	loadlib("privatesquare_checkins");
+	loadlib("reverse_geoplanet");
+
 	##############################################################################
 
 	function privatesquare_export_filehandle(){
@@ -75,10 +78,19 @@
 
 	function privatesquare_export_massage_checkin(&$row, $more=array()){
 
+		$status_map = privatesquare_checkins_status_map();
+		$row['status_name'] = $status_map[$row['status_id']];
+
 		# prefix keys with machinetag namespaces?
 
 		if (isset($row['venue'])){
-			$row['venue'] = $row['venue']['name'];
+			$row['venue_name'] = $row['venue']['name'];
+			unset($row['venue']);
+		}
+
+		if ($row['locality']){
+			$loc = reverse_geoplanet_get_by_woeid($row['locality'], 'locality');
+			$row['locality_name'] = $loc['name'];
 		}
 
 		if ((isset($row['weather'])) && (isset($more['inflate_weather']))){
