@@ -3,6 +3,7 @@
 	include("include/init.php");
 
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_export");
 	loadlib("foursquare_users");
 
 	$fsq_id = get_int32("foursquare_id");
@@ -53,6 +54,9 @@
 
 	$pagination_url = urls_places_for_user($owner) . "{$woeid}/";
 	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
+
+	$export_formats = privatesquare_export_valid_formats();
+	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
 
 	$GLOBALS['smarty']->display("page_user_place.txt");
 	exit();
