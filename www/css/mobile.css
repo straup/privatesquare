@@ -74,3 +74,14 @@ input[type=submit] {
 .checkins .weather .weather_condition {
     display: none;
 }
+
+.youve_been_here {
+    font-weight:100;
+    color:#ccc;
+    font-size:small;
+    display:block;
+}
+
+.youve_been_here:before {
+    content: "";
+}
