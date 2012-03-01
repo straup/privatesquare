@@ -6,6 +6,7 @@
 	loadlib("foursquare_checkins");
 	loadlib("privatesquare_checkins");
 	loadlib("privatesquare_export");
+	loadlib("reverse_geoplanet");
 
 	login_ensure_loggedin($_SERVER['REQUEST_URI']);
 
@@ -21,6 +22,7 @@
 	}
 
 	$venue['data'] = json_decode($venue['data'], "as hash");
+	$venue['locality'] = reverse_geoplanet_get_by_woeid($venue['locality'], 'locality');
 
 	# TO DO: account for pagination and > n checkins
 

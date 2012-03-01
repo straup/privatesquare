@@ -62,8 +62,6 @@
 
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 
-		# TO DO: indexes
-
 		if (isset($more['when'])){
 			list($start, $stop) = datetime_when_parse($more['when']);
 			$enc_start = AddSlashes(strtotime($start));
@@ -93,7 +91,7 @@
 		$count = count($rsp['rows']);
 
 		for ($i=0; $i < $count; $i++){
-			privatesquare_checkins_inflate_extras($rsp['rows'][$i]);
+			privatesquare_checkins_inflate_extras($rsp['rows'][$i], $more);
 		}
 
 		return $rsp;
@@ -291,7 +289,7 @@
 
  	#################################################################
 
-	function privatesquare_checkins_inflate_extras(&$row){
+	function privatesquare_checkins_inflate_extras(&$row, $more=array()){
 
 		$venue_id = $row['venue_id'];
 		$venue = foursquare_venues_get_by_venue_id($venue_id); 
@@ -304,9 +302,15 @@
 			}
 		}
 
-		if ($woeid = $row['locality']){
+		# This doesn't make any sense unless you've got something
+		# like memcache installed. The volume of DB calls that get
+		# made relative to the actual use of any data here is out
+		# of control. Leaving it as an FYI / nice to have...
+		# (20120301/straup)
+
+		if ((isset($more['inflate_locality'])) && ($woeid = $row['locality'])){
 			$loc = reverse_geoplanet_get_by_woeid($woeid, 'locality');
-			$row['locality'] = $loc;
+		 	$row['locality'] = $loc;
 		}
 
 		# note the pass by ref
@@ -371,6 +375,9 @@
 
 		$cluster_id = $user['cluster_id'];
 		$enc_user = AddSlashes($user['id']);
+
+		# TO DO: group by venue_id in memory since the following will always
+		# result in a filesort (20120301/straup)
 
 		$sql = "SELECT venue_id, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 		$sql .= " AND latitude BETWEEN {$bbox[0]} AND {$bbox[2]} AND longitude BETWEEN {$bbox[1]} AND {$bbox[3]}";

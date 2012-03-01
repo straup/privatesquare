@@ -13,10 +13,17 @@
 		# either a head scratch or a pain in the ass or both...
 		# (2012027/straup)
 
-		fputcsv($fh, array_keys($checkins[0]));
+		$header = 0;
 
 		foreach ($checkins as $row){
+			
 			privatesquare_export_massage_checkin($row);
+
+			if (! $header){
+				fputcsv($fh, array_keys($row));
+				$header = 1;
+			}
+
 			fputcsv($fh, array_values($row));
 		}
 

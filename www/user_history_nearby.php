@@ -31,9 +31,6 @@
 	$lat = get_float('latitude');
 	$lon = get_float('longitude');
 
-#	$lat = 37.756567;
-#	$lon = -122.422189;
-
 	if (($lat) && ($lon)){
 
 		$more = array();

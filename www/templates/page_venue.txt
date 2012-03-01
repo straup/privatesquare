@@ -11,6 +11,7 @@
 	{else}
 	{$venue.name|escape}
 	{/if}
+	<span class="header-loc"><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></span>
 	</h3>
 
 {* sudo reconcile me with user history pages *}

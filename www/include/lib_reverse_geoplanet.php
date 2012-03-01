@@ -137,7 +137,7 @@
 
 	########################################################################
 
-	function reverse_geoplanet_get_by_woeid($woeid, $placetype){
+	function reverse_geoplanet_get_by_woeid($woeid, $placetype='woeid'){
 
 		$cache_key = "reverse_geoplanet_woe_{$woeid}";
 
@@ -148,6 +148,7 @@
 		}
 
 		$valid_placetypes = array(
+			'woeid',
 			'locality',
 		);
 

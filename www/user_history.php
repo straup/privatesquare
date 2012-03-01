@@ -44,6 +44,8 @@
 		$more['per_page'] = 100;
 	}
 
+	$more['inflate_locality'] = 1;
+
 	$rsp = privatesquare_checkins_for_user($owner, $more);
 
 	# TO DO: oh god...timezones :-(

@@ -38,6 +38,8 @@
 		error_404();
 	}
 
+	$checkin['locality'] = reverse_geoplanet_get_by_woeid($checkin['locality'], 'locality');
+
 	$status_map = privatesquare_checkins_status_map();
 	$broadcast_map = foursquare_checkins_broadcast_map();
 

@@ -12,10 +12,14 @@
 {assign var="status_id" value=$row.status_id}
 
 <div class="checkin" data-venue="{$row.venue_id|escape}">
-	<div class="venue" data-venue-id="{$row.venue_id|escape}">
-		<a href="{$row|@urls_checkin}" class="sq">◻</a>&#160;<a href="{$row.venue|@urls_venue}">{$row.venue.name|escape}</a>
-	</div>
 
+	{* TO DO: make the actual checkin link a float-y thing *}
+
+	<h3 class="header-left" style="margin-bottom:5px;">
+		<a href="{$row|@urls_checkin}" class="sq">◻</a>
+		<a href="{$row.venue|@urls_venue}">{$row.venue.name|escape}</a>
+		<span class="header-loc"><a href="{$owner|@urls_places_for_user}{$row.locality.locality|escape}/">{$row.locality.name|escape}</a></span>
+	</h3>
 
 	<div class="date" data-created="{$row.created|escape}">
 		{if $status_id}
