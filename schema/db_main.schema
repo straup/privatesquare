@@ -92,5 +92,6 @@ CREATE TABLE `reverse_geoplanet` (
   `name` varchar(255) DEFAULT NULL,
   `placetype` tinyint(3) unsigned NOT NULL,
   UNIQUE KEY `by_geohash` (`geohash`),
-  KEY `by_woeid` (`woeid`)
+  KEY `by_woeid` (`woeid`),
+  KEY `by_locality` (`locality`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
