@@ -304,6 +304,11 @@
 			}
 		}
 
+		if ($woeid = $row['locality']){
+			$loc = reverse_geoplanet_get_by_woeid($woeid, 'locality');
+			$row['locality'] = $loc;
+		}
+
 		# note the pass by ref
 	}
 
