@@ -246,6 +246,28 @@ button {
     color:#adadad;
 }
 
+.header-left {
+    text-align:left;
+    margin-top:0px;
+    margin-bottom:10px;
+    color:#adadad;
+}
+
+.header-left a {
+    text-decoration: none;
+    color:#adadad;
+}
+
+.header-loc {
+    color:#adadad;
+    font-weight: 100;
+}
+
+.header-loc a {
+    text-decoration: none;
+    color:#adadad;
+}
+
 .sq {
     color: #000;
     text-decoration:none;

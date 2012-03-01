@@ -85,3 +85,7 @@ input[type=submit] {
 .youve_been_here:before {
     content: "";
 }
+
+.header-loc {
+    font-size:small;
+}

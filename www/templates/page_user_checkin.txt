@@ -1,7 +1,7 @@
 {capture assign="page_title"}{$owner.username} @ {$checkin.venue.name}{/capture}
 {include file="inc_head.txt"}
 
-<h3 style="margin-top:0px;"><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a></h3>
+<h3 class="header-left"><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a> <span class="header-loc"><a href="{$owner|@urls_places_for_user}{$checkin.locality.locality|escape}/">{$checkin.locality.name|escape}</a></span></h3>
 
 {include file="inc_checkin_venue.txt" venue=$checkin.venue}
 

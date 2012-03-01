@@ -4,18 +4,18 @@
 {/capture}
 {include file="inc_head.txt"}
 
-{* sudo reconcile me with user history pages *}
-
-<div class="checkin" data-venue="{$venue.venue_id|escape}">
-
-	<div class="venue" data-venue-id="{$venue.venue_id|escape}">
+	<h3 class="header-left" data-venue-id="{$venue.venue_id|escape}">
 	{if $success}
 	{* TO DO: if success, check most recent status and adjust "Success..." language accordingly *}
 	Success! You have checked in to {$venue.name|escape}
 	{else}
 	{$venue.name|escape}
 	{/if}
-	</div>
+	</h3>
+
+{* sudo reconcile me with user history pages *}
+
+<div class="checkin" data-venue="{$venue.venue_id|escape}">
 
 	{include file="inc_checkin_venue.txt"}
 
