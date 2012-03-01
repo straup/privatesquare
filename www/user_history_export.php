@@ -62,6 +62,10 @@
 		$fetch_more['venue_id'] = $venue_id;
 	}
 
+	else if ($locality = get_str('locality')){
+		$fetch_more['locality'] = $locality;
+	}
+
 	# TO DO: something about nearby here...
 
 	$rsp = privatesquare_checkins_export_for_user($owner, $fetch_more);
