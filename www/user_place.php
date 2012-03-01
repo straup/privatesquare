@@ -39,10 +39,20 @@
 		'locality' => $woeid,
 	);
 
+	if ($page = get_int32("page")){
+		$more['page'] = $page;
+	}
+
 	$rsp = privatesquare_checkins_venues_for_user($owner, $more);
 	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 
+	$locality = reverse_geoplanet_get_by_woeid($woeid, 'locality');
+	$GLOBALS['smarty']->assign_by_ref("locality", $locality);
+
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
+
+	$pagination_url = urls_places_for_user($owner) . "{$woeid}/";
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$GLOBALS['smarty']->display("page_user_place.txt");
 	exit();
