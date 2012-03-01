@@ -240,7 +240,7 @@ button {
     padding: 5px;
 }
 
-#when {
+.header-right {
     text-align:right;
     margin-top:0px;
     color:#adadad;
