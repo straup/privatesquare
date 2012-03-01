@@ -194,6 +194,8 @@ q {
 
 .checkin .date {
     font-size: small;
+    margin-left:2%;
+    margin-bottom:8px;
 }
 
 .checkin .map {
@@ -307,8 +309,11 @@ button {
 
 .weather {
     color:#ccc;
-    display:block;
     margin-top:5px;
+}
+
+.weather :before {
+    content: "– ";
 }
 
 .checkins .weather {
