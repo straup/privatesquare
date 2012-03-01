@@ -2,6 +2,7 @@
 
 	loadlib("foursquare_venues");
 	loadlib("datetime_when");
+	loadlib("reverse_geoplanet");
 
  	#################################################################
 
@@ -100,12 +101,22 @@
 
  	#################################################################
 
-	function privatesquare_checkins_localities_for_user(&$user){
+	function privatesquare_checkins_localities_for_user(&$user, $more=array()){
+
+		$defaults = array(
+			'page' => 1,
+			'per_page' => 10,
+		);
+
+		$more = array_merge($defaults, $more);
 
 		$cluster_id = $user['cluster_id'];
 		$enc_user = AddSlashes($user['id']);
 
 		# TO DO: indexes
+
+		# Note: we do pagination in memory because we're going to
+		# sort the results by count; this all happens below.
 
 		$sql = "SELECT locality, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' GROUP BY locality";
 		$rsp = db_fetch_users($cluster_id, $sql);
@@ -127,65 +138,62 @@
 
 		arsort($tmp);
 
-		# TO DO: pagination (in memory) ?
+		$woeids = array_keys($tmp);
+		$total_count = count($woeids);
+
+		#
+
+		$page_count = ceil($total_count / $more['per_page']);
+		$last_page_count = $total_count - (($page_count - 1) * $more['per_page']);
+
+		$pagination = array(
+			'total_count' => $total_count,
+			'page' => $more['page'],
+			'per_page' => $more['per_page'],
+			'page_count' => $page_count,
+		);
+
+		if ($GLOBALS['cfg']['pagination_assign_smarty_variable']){
+			$GLOBALS['smarty']->assign('pagination', $pagination);
+		}
+
+		#
+
+		$offset = $more['per_page'] * ($more['page'] - 1);
+		$woeids = array_slice($woeids, $offset, $more['per_page']);
 
 		$localities = array();
 
-		foreach ($tmp as $woeid => $count){
+		foreach ($woeids as $woeid){
 
-			# This is a total hack. It should probably be moved in to
-			# lib_reverse_geoplanet but I'm going to leave it here so
-			# I remember to add the correct database indexes.
-			# (20120229/straup)
+			$count = $tmp[$woeid];
 
-			$enc_id = AddSlashes($woeid);
-			$sql = "SELECT * FROM reverse_geoplanet WHERE locality='{$enc_id}'";
-			$rsp = db_fetch($sql);
-			$row = db_single($rsp);
+			$row = reverse_geoplanet_get_by_woeid($woeid, 'locality');
 
-			if (! $row){
-				continue;
-			}
-
-			if ($row['placetype'] == 22){
-
-				# This is a combination of my shitty code while I was
-				# at Flickr (sorry) and the part where reverse_geoplanet
-				# records the neighbourhood name even if it's only storing
-				# cities (because names were never critical and a bit of
-				# an afterthought... (20120229/straup)
-
-				$parts = explode(", ", $row['name']);
-				$country = array_pop($parts);
-				array_pop($parts);
-				array_shift($parts);
-
-				# argh...
-
-				if ($woeid == 2459115){
-					array_unshift($parts, "New York");
-				}
-
-				$parts[] = $country;
-
-				$row['name'] = implode(", ", $parts);
-			}
+			# what if ! $row? should never happen but...
 
 			$row['count'] = $count;
 
-			# Do we need to fetch this is $count is one?
+			# Maybe always get this? Filtering may just be a
+			# pointless optimization (20120229/straup)
 
-			$venues_more = array(
-				'locality' => $woeid,
-			);
+			if ($count > 1){
 
-			$venues_rsp = privatesquare_checkins_venues_for_user($user, $venues_more);
-			$row['venues'] = $venues_rsp['rows'];
+				$venues_more = array(
+					'locality' => $woeid,
+				);
+
+				$venues_rsp = privatesquare_checkins_venues_for_user($user, $venues_more);
+				$row['venues'] = $venues_rsp['rows'];
+			}
 
 			$localities[] = $row;
 		}
 
-		return okay(array('rows' => $localities));
+		return okay(array(
+			'rows' => $localities,
+			'pagination' => $pagination,
+		));
 	}
 
  	#################################################################
