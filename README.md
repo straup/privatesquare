@@ -11,10 +11,6 @@ Check-ins can be sent on to foursquare (and again re-broadcast to Twitter,
 etc. or to your followers or just "off the grid") but the important part is:
 They don't have to be.
 
-**Currently there is no export or even any historical views on your
-  check-ins. It all just goes in to the database and there's no way to see it
-  again without sticking your hands in there and getting dirty.**
-
 Meanwhile, [here's a blog post](http://nearfuturelaboratory.com/2012/01/22/privatesquare/).
 
 Installation
