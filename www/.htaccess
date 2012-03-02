@@ -44,6 +44,11 @@ ErrorDocument 403 /403.php
 # Get mod_rewrite fired up
 RewriteEngine on
 
+# Images
+
+RewriteRule	^favicon.ico		images/favicon.ico	[L]
+RewriteRule	^apple-touch-icon.png		images/apple-touch-icon.png	[L]
+
 # Login stuff
 
 # RewriteRule  ^signup/?$			signup.php		[L]
