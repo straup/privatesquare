@@ -229,6 +229,16 @@ li{
     display:none;
     border:solid thin;
     margin-top:15px;
+    margin-bottom:25px;
+}
+
+.geo {
+    line-height: 1.25em;
+}
+
+#nearby {
+    margin-top:20px;
+    font-size:small;
 }
 
 #checkin_venue {
@@ -278,6 +288,12 @@ button {
 }
 
 #user_checkin_details ul {
+    font-size: small;
+    padding: 0px;
+    margin: 0px;
+}
+
+#venue_details ul {
     font-size: small;
     padding: 0px;
     margin: 0px;
