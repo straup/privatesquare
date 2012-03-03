@@ -63,7 +63,15 @@
 <ul class="checkins">
 {foreach from=$venue.checkins item="row"}
 {assign var="status_id" value=$row.status_id}
-<li><a href="{$row|@urls_checkin}" class="sq">◻</a>&#160;<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a> <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}{if $row.weather}, {include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}</span></li>
+<li>
+	<a href="{$row|@urls_checkin}" class="sq">◻</a>&#160;
+{if $success}
+	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}" title="&lt;keanu&gt;Whoa...&lt/keanu&gt;">you <em>are</em> here</a>
+{else}
+	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a> <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}</span>
+{/if}
+{if $row.weather} {include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
+</li>
 {/foreach}
 </ul>
 
