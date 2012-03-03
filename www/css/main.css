@@ -318,3 +318,8 @@ button {
     display: inline !important;
 }
 
+.nearby {
+    display: block;
+    font-size:small;
+    margin-top:10px;
+}

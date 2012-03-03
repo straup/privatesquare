@@ -39,8 +39,9 @@
     {if $venue.data.location.state}<span="region">{$venue.data.location.state},</span>{/if}
     {if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
     </span>
-    (<a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">nearby</a>)
-    <span property="geo:name"></span><span class="latitude" property="geo:lat" style="display:none;">{$venue.latitude}, </span><span class="longitude" property="geo:long" style="display:none;">{$venue.longitude}</span>
+    <span class="nearby"><a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">Places you've been to, nearby.</a></span>
+    <span property="geo:name"></span>
+    <span class="coordinates" style="display:none;"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</span>
 </div>	
 {/if}
 
