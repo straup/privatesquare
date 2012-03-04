@@ -12,8 +12,7 @@ CREATE TABLE `users` (
   `sync_foursquare` tinyint(3) unsigned NOT NULL,
   `cluster_id` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `by_email` (`email`),
-  UNIQUE KEY `by_username` (`username`,`deleted`)
+  UNIQUE KEY `by_email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `users_password_reset`;
