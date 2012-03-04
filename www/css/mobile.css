@@ -91,3 +91,7 @@ input[type=submit] {
 .checkins .weather_condition {
     display:none;
 }
+
+#displaymap {
+    height: none;
+}

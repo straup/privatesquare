@@ -144,6 +144,12 @@ q {
     width: 100%;
 }
 
+#displaymap {
+    height: 150px;
+    margin-bottom: 30px;
+    border: solid thin;
+}
+
 .marker {
     background-color: #0bbdff;
     border:2px solid #000;
@@ -157,6 +163,19 @@ q {
     -khtml-border-radius: 20px;
     border-radius: 20px;
     */
+}
+
+.marker-header {
+    background-color: #0bbdff;
+    border:2px solid #000;
+    padding:5px;
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+    -moz-border-radius: 10px !important;
+    -webkit-border-radius: 10px !important;
+    -khtml-border-radius: 10px !important;
+    border-radius: 10px !important;
 }
 
 .map-tile {
