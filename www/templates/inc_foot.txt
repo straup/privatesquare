@@ -5,5 +5,18 @@
 
 </div>
 
+<script type="text/javascript">
+/* From http://stackoverflow.com/a/2899099 */
+{literal}
+var links = document.getElementsByTagName('a');
+for (var i = 0; i < links.length; i++) {
+    links[i].onclick = function() {
+        window.location = this.getAttribute('href');
+        return false;
+    }
+}
+</script>
+
+{/literal}
 </body>
 </html>
