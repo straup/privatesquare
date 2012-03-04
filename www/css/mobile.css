@@ -93,5 +93,5 @@ input[type=submit] {
 }
 
 #displaymap {
-    height: none;
+    height: 100px;
 }

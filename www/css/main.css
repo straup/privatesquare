@@ -147,7 +147,7 @@ q {
 #displaymap {
     height: 150px;
     margin-bottom: 30px;
-    border: solid thin;
+    border: 2px solid #000;
 }
 
 .marker {

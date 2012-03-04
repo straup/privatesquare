@@ -1,7 +1,9 @@
 <?php
 
 	include("include/init.php");
+
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_checkins_utils");
 	loadlib("privatesquare_export");
 	loadlib("foursquare_users");
 
@@ -68,6 +70,9 @@
 
 	$export_formats = privatesquare_export_valid_formats();
 	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
+
+	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);
 	$GLOBALS['smarty']->display("page_user_history.txt");
