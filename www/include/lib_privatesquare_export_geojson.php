@@ -33,6 +33,7 @@
 			$nelon = (isset($nelon)) ? max($nelon, $lon) : $lon;
 
 			$features[] = array(
+				'type' => 'Feature',
 				'id' => $row['id'],
 				'properties' => $row,
 				'geometry' => array(
