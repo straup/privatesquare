@@ -1,6 +1,12 @@
 {capture assign="page_title"}{$owner.username} | places | {$locality.name}{/capture}
 {include file="inc_head.txt"}
 
+<div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+{foreach from=$venues item="row"}
+	<div class="marker marker-header" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text"></span></div>
+{/foreach}
+</div>
+
 <h3 class="header-right">{$locality.name|escape}</h3>
 
 {foreach from=$venues item="row"}

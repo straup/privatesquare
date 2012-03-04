@@ -1,8 +1,22 @@
 <?php
 
+	loadlib("geo_utils");
+
  	#################################################################
 
 	function privatesquare_checkins_utils_geo_stats($checkins){
+
+		if (count($checkins) == 1){
+			$lat = $checkins[0]['latitude'];
+			$lon = $checkins[0]['longitude'];
+
+			$bbox = geo_utils_bbox_from_point($lat, $lon, 1);
+
+			return array(
+				'centroid' => array($lat, $lon),
+				'bounding_box' => $bbox,
+			);
+		}
 
 		$swlat = null;
 		$swlon = null;

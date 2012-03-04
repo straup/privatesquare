@@ -3,6 +3,7 @@
 	include("include/init.php");
 
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_checkins_utils");
 	loadlib("foursquare_users");
 
 	$fsq_id = get_int32("foursquare_id");
@@ -37,6 +38,9 @@
 
 	$rsp = privatesquare_checkins_localities_for_user($owner, $more);
 	$GLOBALS['smarty']->assign_by_ref("places", $rsp['rows']);
+
+	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 

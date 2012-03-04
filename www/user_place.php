@@ -3,6 +3,7 @@
 	include("include/init.php");
 
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_checkins_utils");
 	loadlib("privatesquare_export");
 	loadlib("foursquare_users");
 
@@ -46,6 +47,9 @@
 
 	$rsp = privatesquare_checkins_venues_for_user($owner, $more);
 	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
+
+	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 	$locality = reverse_geoplanet_get_by_woeid($woeid, 'locality');
 	$GLOBALS['smarty']->assign_by_ref("locality", $locality);
