@@ -15,8 +15,8 @@ for (var i = 0; i < links.length; i++) {
         return false;
     }
 }
+{/literal}
 </script>
 
-{/literal}
 </body>
 </html>
