@@ -51,8 +51,6 @@ RewriteRule	^apple-touch-icon.png		images/apple-touch-icon.png	[L]
 
 # Login stuff
 
-# RewriteRule  ^signup/?$			signup.php		[L]
-# RewriteRule  ^signin/?$			signin.php		[L]
 RewriteRule    ^signout/?$		signout.php		[L]
 RewriteRule    ^checkcookie/?$		checkcookie.php	[L]
 
