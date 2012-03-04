@@ -76,6 +76,10 @@
 			$email = "{$foursquare_id}@donotsend-foursquare.com";
 		}
 
+		if (isset($rsp['rsp']['user']['lastName'])){
+			$username .= " {$rsp['rsp']['user']['lastName']}";
+		}
+
 		$password = random_string(32);
 
 		$user = users_create_user(array(
