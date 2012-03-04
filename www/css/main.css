@@ -339,3 +339,14 @@ button {
     font-size:small;
     margin-top:10px;
 }
+
+.permalink {
+    font-size: small;
+    text-align:right;
+    color:#ccc;
+}
+
+.permalink a {
+    color:#ccc;
+    text-decoration:none;
+}

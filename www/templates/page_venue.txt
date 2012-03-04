@@ -64,14 +64,14 @@
 {foreach from=$venue.checkins item="row" name="checkins"}
 {assign var="status_id" value=$row.status_id}
 <li>
-	<a href="{$row|@urls_checkin}" class="sq">◻</a>&#160;
 {if $success and $smarty.foreach.checkins.first}
 	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}" title="&lt;keanu&gt;Whoa...&lt/keanu&gt;">You <em>are</em> here...</a>
 {else}
 	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
 {/if}
- <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape}</span>
-{if $row.weather} {include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
+ <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape} </span>
+{if $row.weather}{include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
+<span class="permalink">&#160;&#160;<a href="{$row|@urls_checkin}">◻</a></span>
 </li>
 {/foreach}
 </ul>
