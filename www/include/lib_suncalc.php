@@ -14,15 +14,7 @@
 		array(6, 'goldenHourEnd', 'goldenHour')
 	);
 
-
-	/* 
-	var m   = Math,
-	    rad = m.PI / 180,
-	    sin = m.sin,
-	    cos = m.cos;
-	*/
-
-	// constants for sun calculations
+	# constants for sun calculations
 
 	define(SUNCALC_RAD, M_PI / 180);
 
@@ -42,41 +34,71 @@
 	define(SUNCALC_th0, SUNCALC_RAD * 280.1600);
 	define(SUNCALC_th1, SUNCALC_RAD * 360.9856235);
 
-	// date conversions
+	# date conversions
 
-	function suncalc_dateToJulianDate(date){
+	function suncalc_dateToJulianDate($date){
 		# FIX ME
 		return date.valueOf() / SUNCALC_DAYSMS - 0.5 + SUNCALC_J1970;
 	}
 
-	function suncalc_julianDateToDate(j){
+	function suncalc_julianDateToDate($j){
 		# FIX ME
 		return new Date((j + 0.5 - SUNCALC_J1970) * SUNCALC_DAYSMS);
 	}
 
-	// general sun calculations
+	# general sun calculations
 
-	function getJulianCycle(J, lw) { return m.round(J - J2000 - J0 - lw / (2 * m.PI)); }
-	function getSolarMeanAnomaly(Js) { return M0 + M1 * (Js - J2000); }
-	function getEquationOfCenter(M) { return C1 * sin(M) + C2 * sin(2 * M) + C3 * sin(3 * M); }
-	function getEclipticLongitude(M, C) { return M + P + C + m.PI; }
-	function getSunDeclination(Ls) { return m.asin(sin(Ls) * sin(e)); }
+	function suncalc_get_julian_cycle($J, $lw){
+		return round($J - SUNCALC_J2000 - SUNCALC_J0 - $lw / (2 * M_PI));
+	}
 
+	function suncalc_get_solar_mean_anomaly($Js){
+		return SUNCALC_M0 + SUNCALC_M1 * ($Js - SUNCALC_J2000);
+	}
 
-	// calculations for sun times
+	function suncalc_get_equation_of_center($M){
+		return SUNCALC_C1 * sin($M) + SUNCALC_C2 * sin(2 * $M) + SUNCALC_C3 * sin(3 * $M);
+	}
 
-	function getApproxTransit(Ht, lw, n) { return J2000 + J0 + (Ht + lw) / (2 * m.PI) + n; }
-	function getSolarTransit(Js, M, Ls) { return Js + (J1 * sin(M)) + (J2 * sin(2 * Ls)); }
-	function getHourAngle(h, phi, d) { return m.acos((sin(h) - sin(phi) * sin(d)) / (cos(phi) * cos(d))); }
+	function suncalc_get_ecliptic_longitude($M, $C){
+		return $M + SUNCALC_P + $C + M_PI;
+	}
 
+	function suncalc_get_sun_declination($Ls){
+		return asin(sin($Ls) * sin(SUNCALC_E));
+	}
 
-	// calculations for sun position
+	# calculations for sun times
 
-	function getRightAscension(Ls) { return m.atan2(sin(Ls) * cos(e), cos(Ls)); }
-	function getSiderealTime(J, lw) { return th0 + th1 * (J - J2000) - lw; }
-	function getAzimuth(H, phi, d) { return m.atan2(sin(H), cos(H) * sin(phi) - m.tan(d) * cos(phi)); }
-	function getAltitude(H, phi, d) { return m.asin(sin(phi) * sin(d) + cos(phi) * cos(d) * cos(H)); }
+	function suncalc_get_approx_transit($Ht, $lw, $n){
+		return SUNCALC_J2000 + SUNCALC_J0 + ($Ht + $lw) / (2 * M_PI) + $n;
+	}
 
+	function suncalc_get_solar_transit($Js, $M, $Ls){
+		return $Js + (SUNCALC_J1 * sin($M)) + (SUNCALC_J2 * sin(2 * $Ls));
+	}
+
+	function suncalc_get_hour_angle($h, $phi, $d){
+		return acos((sin($h) - sin($phi) * sin($d)) / (cos($phi) * cos($d)));
+	}
+
+	# calculations for sun position
+
+	function suncalc_get_right_ascension($Ls){
+		return atan2(sin($Ls) * cos(SUNCALC_e), cos($Ls));
+	}
+
+	function suncalc_get_sidereal_time($J, $lw){
+		return SUNCALC_th0 + SUNCALC_th1 * ($J - SUNCALC_J2000) - $lw;
+	}
+
+	function suncalc_get_azimuth($H, $phi, $d) {
+		return atan2(sin($H), cos($H) * sin($phi) - tan($d) * cos($phi));
+	}
+
+	function suncalc_get_altitude($H, $phi, $d){
+		return asin(sin($phi) * sin($d) + cos($phi) * cos($d) * cos($H));
+	}
 
 	function suncalc_add_time($angle, $rise_name, $set_name){
 		$GLOBALS['suncalc_times'][] = array($angle, $rise_name, $set_name);
@@ -86,39 +108,44 @@
 
 	function suncalc_get_times($date, $lat, $lon){
 
-		var lw    = SUNCALC_RAD * -lng,
-		    phi   = SUNCALC_RAD * lat,
-		    J     = dateToJulianDate(date),
-		    n     = getJulianCycle(J, lw),
-		    Js    = getApproxTransit(0, lw, n),
-		    M     = getSolarMeanAnomaly(Js),
-		    C     = getEquationOfCenter(M),
-		    Ls    = getEclipticLongitude(M, C),
-		    d     = getSunDeclination(Ls),
-		    Jnoon = getSolarTransit(Js, M, Ls);
+		$lw = SUNCALC_RAD * -lng;
+		$phi = SUNCALC_RAD * lat;
 
-		function getSetJ(h) {
-			var w = getHourAngle(h, phi, d),
-			    a = getApproxTransit(w, lw, n);
+		$J = suncalc_date_to_julian_date($date);
+		$n = suncalc_get_julian_cycle($J, $lw);
 
-			return getSolarTransit(a, M, Ls);
-		}
+		$Js = suncalc_get_approx_transit(0, $lw, $n);
+		$M = suncalc_get_solar_mean_anomaly($Js);
+		$C = suncalc_get_equation_of_center($M);
 
-		var result = {solarNoon: julianDateToDate(Jnoon)};
+		$Ls = suncalc_get_ecliptic_longitude($M, $C);
+		$d = suncalc_get_sun_declination($Ls);
 
-		var i, len, time, angle, morningName, eveningName, Jset, Jrise;
-		for (i = 0, len = times.length; i < len; i += 1) {
-			time = times[i];
+		$Jnoon = suncalc_get_solar_transit($Js, $M, $Ls);
 
-			angle       = time[0];
-			morningName = time[1];
-			eveningName = time[2];
+		$result = array(
+			'solarNoon' => suncalc_julian_date_to_date($Jnoon)
+		);
 
-			Jset  = getSetJ(angle * SUNCALC_RAD);
-			Jrise = Jnoon - (Jset - Jnoon);
+		# var i, len, time, angle, morningName, eveningName, Jset, Jrise;
 
-			result[morningName] = julianDateToDate(Jrise);
-			result[eveningName] = julianDateToDate(Jset);
+		foreach ($GLOBALS['suncalc_times'] as $time){
+
+			# $Jset  = getSetJ(angle * SUNCALC_RAD);
+
+			$angle       = $time[0];
+			$morningName = $time[1];
+			$eveningName = $time[2];
+
+			$_h = $angle * SUNCALC_RAD;
+			$_w = suncalc_get_hour_angle($_h, $phi, $d);
+			$_a = suncalc_get_approx_transit($_w, $lw, $n);
+
+			$JSet = suncalc_get_solar_transit($_a, $M, $ls);
+			$Jrise = $Jnoon - ($Jset - $Jnoon);
+
+			$result[$morningName] = suncalc_julian_date_to_date($Jrise);
+			$result[$eveningName] = suncalc_julian_date_to_date($Jset);
 		}
 
 		return result;
