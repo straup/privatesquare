@@ -74,7 +74,7 @@
 
 	$GLOBALS['cfg']['enable_feature_suncalc'] = 0;
 	$GLOBALS['cfg']['enable_feature_suncalc_api'] = 0;
-	$GLOBALS['cfg']['suncalc_api_endpoint'] = '';
+	$GLOBALS['cfg']['suncalc_api_endpoint'] = 'http://suncalc-api.herokuapp.com/'';
 
 	# Internals. Go ahead and tweak these if you want (and understand
 	# how Flamework projects are set up) but you don't need to.
