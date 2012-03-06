@@ -72,7 +72,16 @@
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;
 	$GLOBALS['cfg']['weather_tracking_measure'] = 'Metric';		# change to 'US' for degrees Farenheit
 
+	# Record the position of the sun and time of day for each checkin
+	# This does the calculations locally using lib_suncalc and does
+	# not work yet (20120306/straup)
+
 	$GLOBALS['cfg']['enable_feature_suncalc'] = 0;
+
+	# Or you can use a remote httpony to do the same, because...uh
+	# well... because. (20120306/straup)
+	# See also: https://github.com/RandomEtc/suncalc-api
+
 	$GLOBALS['cfg']['enable_feature_suncalc_api'] = 0;
 	$GLOBALS['cfg']['suncalc_api_endpoint'] = 'http://suncalc-api.herokuapp.com/'';
 

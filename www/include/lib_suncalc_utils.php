@@ -16,11 +16,11 @@
 
  	#################################################################
 
-	function suncalc_utils_get_timeofday($ts, $times){
+	function suncalc_utils_get_timeofday($ts, $ts_times){
 
 		$timeofday = null;
 
-		foreach ($times as $label => $when){
+		foreach ($ts_times as $label => $when){
 
 			$timeofday = $label;
 
