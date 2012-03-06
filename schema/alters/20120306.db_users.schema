@@ -1,0 +1,2 @@
+ALTER TABLE `PrivatesquareCheckins` ADD `timeofday` VARCHAR(24);
+ALTER TABLE `PrivatesquareCheckins` ADD `sun_inthe_sky` TEXT;
