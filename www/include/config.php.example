@@ -72,6 +72,10 @@
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;
 	$GLOBALS['cfg']['weather_tracking_measure'] = 'Metric';		# change to 'US' for degrees Farenheit
 
+	$GLOBALS['cfg']['enable_feature_suncalc'] = 0;
+	$GLOBALS['cfg']['enable_feature_suncalc_api'] = 0;
+	$GLOBALS['cfg']['suncalc_api_endpoint'] = '';
+
 	# Internals. Go ahead and tweak these if you want (and understand
 	# how Flamework projects are set up) but you don't need to.
 
