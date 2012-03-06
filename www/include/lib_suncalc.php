@@ -24,21 +24,23 @@
 
 	// constants for sun calculations
 
+	define(SUNCALC_RAD, M_PI / 180);
+
 	define(SUNCALC_DAYSMS, (1000 * 60 * 60 * 24));
 	define(SUNCALC_J1970, 2440588);
 	define(SUNCALC_J2000, 2451545);
-	define(SUNCALC_M0, rad * 357.5291);	# PHP: rad?
-	define(SUNCALC_M1, rad * 0.98560028);	# ibid
+	define(SUNCALC_M0, SUNCALC_RAD * 357.5291);
+	define(SUNCALC_M1, SUNCALC_RAD * 0.98560028);
 	define(SUNCALC_J0, 0.0009);
 	define(SUNCALC_J1, 0.0053);
 	define(SUNCALC_J2, -0.0069);
-	define(SUNCALC_C1, rad * 1.9148);
-	define(SUNCALC_C2, rad * 0.0200);
-	define(SUNCALC_C3, rad * 0.0003);
-	define(SUNCALC_P, rad * 102.9372);
-	define(SUNCALC_e, rad * 23.45);
-	define(SUNCALC_th0, rad * 280.1600);
-	define(SUNCALC_th1, rad * 360.9856235);
+	define(SUNCALC_C1, SUNCALC_RAD * 1.9148);
+	define(SUNCALC_C2, SUNCALC_RAD * 0.0200);
+	define(SUNCALC_C3, SUNCALC_RAD * 0.0003);
+	define(SUNCALC_P, SUNCALC_RAD * 102.9372);
+	define(SUNCALC_e, SUNCALC_RAD * 23.45);
+	define(SUNCALC_th0, SUNCALC_RAD * 280.1600);
+	define(SUNCALC_th1, SUNCALC_RAD * 360.9856235);
 
 	// date conversions
 
@@ -84,8 +86,8 @@
 
 	function suncalc_get_times($date, $lat, $lon){
 
-		var lw    = rad * -lng,
-		    phi   = rad * lat,
+		var lw    = SUNCALC_RAD * -lng,
+		    phi   = SUNCALC_RAD * lat,
 		    J     = dateToJulianDate(date),
 		    n     = getJulianCycle(J, lw),
 		    Js    = getApproxTransit(0, lw, n),
@@ -112,7 +114,7 @@
 			morningName = time[1];
 			eveningName = time[2];
 
-			Jset  = getSetJ(angle * rad);
+			Jset  = getSetJ(angle * SUNCALC_RAD);
 			Jrise = Jnoon - (Jset - Jnoon);
 
 			result[morningName] = julianDateToDate(Jrise);
@@ -127,8 +129,8 @@
 
 	function suncalc_get_position($date, $lat, $lon){
 
-		$lw  = rad * -$lon;
-		$phi = rad * $lat;
+		$lw  = SUNCALC_RAD * -$lon;
+		$phi = SUNCALC_RAD * $lat;
 
 		$J = suncalc_date_to_julian_date($date);
 		$M = suncalc_get_solar_mean_anomaly($J);
