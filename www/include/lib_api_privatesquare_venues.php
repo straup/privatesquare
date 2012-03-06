@@ -34,6 +34,7 @@
 		$venue = foursquare_venues_get_by_venue_id($venue_id);
 
 		if (! $venue){
+
 			$rsp = foursquare_venues_archive_venue($venue_id);
 
 			if ($rsp['ok']){
@@ -72,6 +73,8 @@
 			# on error, then what?
 		}
 
+		# do I care about the weather? (make me an OLT?)
+
 		if ($GLOBALS['cfg']['enable_feature_weather_tracking']){
 
 			loadlib("weather_google");
@@ -84,6 +87,24 @@
 				$checkin['weather'] = json_encode($conditions);
 			}
 		}
+
+		# do I care about the sun? (make me an OLT?)
+
+		# do not bother if againmumblemumble ?
+
+		if ($GLOBALS['cfg']['enable_feature_suncalc']){
+
+			loadlib("suncalc_simple");
+
+			$rsp = suncalc_simple(time(), $checkin['latitude'], $checkin['longitude']);
+
+			if ($rsp['ok']){
+				$checkin['timeofday'] = strtolower($rsp['timeofday']);
+				$checkin['sun_inthe_sky'] = json_encode($rsp['position']);
+			}
+		}
+
+		# Okay, update the local database!
 
 		$rsp = privatesquare_checkins_create($checkin);
 
