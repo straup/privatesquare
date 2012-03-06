@@ -14,16 +14,84 @@
 
 	function suncalc_api_call($method, $args=array()){
 
+		$req = array(array(
+			$method,
+			$args,
+		));
+
+		$rsp = suncalc_api_call_multi($req);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		return $rsp['rows'][0];
+	}
+
+ 	#################################################################
+
+	function suncalc_api_call_multi($reqs){
+
 		if (! $GLOBALS['cfg']['suncalc_api_endpoint']){
 			return not_okay("suncalc api endpoint not defined");
 		}
 
+		$http_reqs = array();
+
+		foreach ($reqs as $r){
+
+			$method = $r[0];
+			$args = $r[1];
+
+			$url = _suncalc_request_url($method, $args);
+
+			$http_reqs[] = array(
+				'method' => 'GET',
+				'url' => $url,
+			);
+		}
+
+		$rsp_raw = http_multi($http_reqs);
+		$rsp_parsed = array();
+
+		$count_requests = count($rsp_raw);
+		$count_errors = 0;
+
+		for ($i=0; $i < $count_requests; $i++){
+
+			$method = $reqs[$i][0];
+			$raw = $rsp_raw[$i];
+
+			$rsp = _suncalc_api_parse_response($raw, $method);
+			$rsp['method'] = $method;
+
+			$rsp_parsed[] = $rsp;
+
+			if (! $rsp['ok']){
+				$count_errors++;
+			}
+		}
+
+		return okay(array(
+			'count_requests' => $count_requests,
+			'count_errors' => $count_errors,
+			'rows' => $rsp_parsed
+		));
+	}
+
+ 	#################################################################
+
+	function _suncalc_request_url($method, $args){
+
 		$query = http_build_query($args);
-
 		$url = $GLOBALS['cfg']['suncalc_api_endpoint'] . $method . "?" . $query;
-		$rsp = http_get($url);
 
-		# return _suncalc_api_parse_response($rsp);
+		return $url;
+	}
+
+ 	#################################################################
+
+	function _suncalc_api_parse_response($rsp, $key='rsp'){
 
 		if (! $rsp['ok']){
 			return $rsp;
@@ -36,20 +104,8 @@
 		}
 
 		return okay(array(
-			$method => $data
+			$key => $data
 		));
-	}
-
- 	#################################################################
-
-	function suncalc_api_call_multi($reqs){
-		# write me...
-	}
-
- 	#################################################################
-
-	function _suncalc_api_parse_response($rsp){
-		# write me...
 	}
 
  	#################################################################
