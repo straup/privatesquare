@@ -11,6 +11,8 @@ CREATE TABLE `PrivatesquareCheckins` (
   `locality` INT(11) UNSIGNED NOT NULL,
   `checkin_id` VARCHAR(64),
   `weather` TEXT,
+  `timeofday` VARCHAR(24),
+  `sun_inthe_sky` TEXT,
   PRIMARY KEY (`id`),
   KEY `by_status` (`user_id`, `status_id`),
   KEY `by_date` (`user_id`, `created`),
