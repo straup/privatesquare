@@ -1,5 +1,8 @@
 <?php
 
+	# See also:
+	# https://gist.github.com/1984749
+
 	# /times?lat=51.5&lon=-0.1
 	# /position?lat=51.5&lon=-0.1
 	# /position?date=2012-03-06T06:35:20.784Z&lat=51.5&lon=-0.1
