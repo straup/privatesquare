@@ -16,7 +16,9 @@
 
  	#################################################################
 
-	function suncalc_utils_get_timeofday($ts, $ts_times){
+	function suncalc_utils_get_timeofday($ts, $times){
+
+		$ts_times = suncalc_utils_timestampify($times);
 
 		$timeofday = null;
 
