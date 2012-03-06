@@ -4,7 +4,13 @@
 
  	#################################################################
 
-	function privatesquare_checkins_utils_geo_stats($checkins){
+	function privatesquare_checkins_utils_geo_stats($checkins, $more=array()){
+
+		$defaults = array(
+			'enbiggen_bbox' => 1,
+		);
+
+		$more = array_merge($defaults, $more);
 
 		if (count($checkins) == 1){
 			$lat = $checkins[0]['latitude'];
@@ -31,6 +37,20 @@
 			$swlon = (isset($swlon)) ? min($swlon, $lon) : $lon;
 			$nelat = (isset($nelat)) ? max($nelat, $lat) : $lat;
 			$nelon = (isset($nelon)) ? max($nelon, $lon) : $lon;
+		}
+
+		# typically so that when creating a map by extent we don't
+		# crop items (dots) that hug the edge of the map/bbox
+
+		if (isset($more['enbiggen_bbox'])){
+
+			$sw_bbox = geo_utils_bbox_from_point($swlat, $swlon, .5);
+			$ne_bbox = geo_utils_bbox_from_point($nelat, $nelon, .5);
+
+			$swlat = $sw_bbox[0];
+			$swlon = $sw_bbox[1];
+			$nelat = $ne_bbox[2];
+			$nelon = $ne_bbox[3];
 		}
 
 		$ctr_lat = $swlat + (($nelat - $swlat) / 2);
