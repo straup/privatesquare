@@ -24,6 +24,8 @@
 		$url = $GLOBALS['cfg']['suncalc_api_endpoint'] . $method . "?" . $query;
 		$rsp = http_get($url);
 
+		# return _suncalc_api_parse_response($rsp);
+
 		if (! $rsp['ok']){
 			return $rsp;
 		}
@@ -35,8 +37,21 @@
 		}
 
 		return okay(array(
-			'data' => $data
+			$method => $data
 		));
 	}
 
  	#################################################################
+
+	function suncalc_api_call_multi($reqs){
+		# write me...
+	}
+
+ 	#################################################################
+
+	function _suncalc_api_parse_response($rsp){
+		# write me...
+	}
+
+ 	#################################################################
+?>
