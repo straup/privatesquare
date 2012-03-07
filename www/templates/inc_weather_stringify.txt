@@ -9,9 +9,29 @@
 <span class="weather_temp">{$weather.temp_c|escape}° C</span><span class="weather_condition"> {$weather.condition|strtolower|escape}</span>
 {/if}
 
-{if $timeofday}
-/ {$timeofday|escape}
-{/if}
+{if $timeofday=='solarnoon'}
+/ noon
+{elseif $timeofday=='sunrise'}
+/ sunrise
+{elseif $timeofday=='sunset'}
+/ sunset
+{elseif $timeofday=='sunriseend'}
+/ crouching sun
+{elseif $timeofday=='sunsetstart'}
+/ setting sun
+{elseif $timeofday=='dawn' or $timeofday=='nauticaldawn'}
+/ dawn
+{elseif $timeofday=='dusk' or $timeofday=='nauticaldusk'}
+/ dusk
+{elseif $timeofday=='nightend'}
+/ night's end
+{elseif $timeofday=='night'}
+/ nighttime
+{elseif $timeofday=='goldenhour'}
+/ the golden hour
+{elseif $timeofday=='goldenhourend'}
+/ the darkening hour 
+{else}{/if}
 
 {/if}
 
@@ -48,8 +68,7 @@
  / during the golden hour
 {elseif $timeofday=='goldenhourend'}
  / as the golden hour faded
-{else}
-{/if}
+{else}{/if}
 
 {/if}
 
