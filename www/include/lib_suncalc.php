@@ -41,6 +41,80 @@
 
  	#################################################################
 
+	# calculates sun times for a given date and latitude/longitude
+
+ 	#################################################################
+
+	function suncalc_get_times($date, $lat, $lon){
+
+		$lw = SUNCALC_RAD * -$lon;
+		$phi = SUNCALC_RAD * $lat;
+
+		$J = suncalc_date_to_julian_date($date);
+
+		$n = suncalc_get_julian_cycle($J, $lw);
+
+		$Js = suncalc_get_approx_transit(0, $lw, $n);
+		$M = suncalc_get_solar_mean_anomaly($Js);
+		$C = suncalc_get_equation_of_center($M);
+
+		$Ls = suncalc_get_ecliptic_longitude($M, $C);
+		$d = suncalc_get_sun_declination($Ls);
+
+		$Jnoon = suncalc_get_solar_transit($Js, $M, $Ls);
+
+		$result = array(
+			'solarNoon' => suncalc_julian_date_to_date($Jnoon)
+		);
+
+		foreach ($GLOBALS['suncalc_times'] as $time){
+
+			$angle = $time[0];
+			$morningName = $time[1];
+			$eveningName = $time[2];
+
+			$_h = $angle * SUNCALC_RAD;
+			$_w = suncalc_get_hour_angle($_h, $phi, $d);
+			$_a = suncalc_get_approx_transit($_w, $lw, $n);
+
+			$Jset = suncalc_get_solar_transit($_a, $M, $ls);
+			$Jrise = $Jnoon - ($Jset - $Jnoon);
+
+			$result[$morningName] = suncalc_julian_date_to_date($Jrise);
+			$result[$eveningName] = suncalc_julian_date_to_date($Jset);
+		}
+
+		return $result;
+	}
+
+ 	#################################################################
+
+	# calculates sun azimuth and altitude for a given date and latitude/longitude
+
+	function suncalc_get_position($date, $lat, $lon){
+
+		$lw  = SUNCALC_RAD * -$lon;
+		$phi = SUNCALC_RAD * $lat;
+
+		$J = suncalc_date_to_julian_date($date);
+		$M = suncalc_get_solar_mean_anomaly($J);
+		$C = suncalc_get_equation_of_center($M);
+		$Ls = suncalc_get_ecliptic_longitude($M, $C);
+
+		$d  = suncalc_get_sun_declination($Ls);
+
+		$a = suncalc_get_right_ascension($Ls);
+		$th = suncalc_get_sidereal_time($J, $lw);
+		$H = $th - $a;
+
+		return array(
+			'azimuth' =>  suncalc_get_azimuth(H, phi, d),
+			'altitude' => suncalc_get_altitude(H, phi, d)
+		);
+	}
+
+ 	#################################################################
+
 	# date conversions
 
  	#################################################################
@@ -61,10 +135,8 @@
 		$ms = ($jd + 0.5 - SUNCALC_J1970) * SUNCALC_DAYSMS;
 		$ts = $ms / 1000;
 
-		return date('c', $ts);
-
-		# $fmt = "Y-m-d\TG:i:s\Z";
-		# return gmdate($fmt, $ts);
+		$fmt = "Y-m-d\TG:i:s\Z";
+		return gmdate($fmt, $ts);
 	}
 
  	#################################################################
@@ -159,81 +231,4 @@
 
  	#################################################################
 
-	# calculates sun times for a given date and latitude/longitude
-
- 	#################################################################
-
-	function suncalc_get_times($date, $lat, $lon){
-
-		$lw = SUNCALC_RAD * -$lon;
-		$phi = SUNCALC_RAD * $lat;
-
-		$J = suncalc_date_to_julian_date($date);
-
-		$n = suncalc_get_julian_cycle($J, $lw);
-
-		$Js = suncalc_get_approx_transit(0, $lw, $n);
-		$M = suncalc_get_solar_mean_anomaly($Js);
-		$C = suncalc_get_equation_of_center($M);
-
-		$Ls = suncalc_get_ecliptic_longitude($M, $C);
-		$d = suncalc_get_sun_declination($Ls);
-
-		$Jnoon = suncalc_get_solar_transit($Js, $M, $Ls);
-
-		$result = array(
-			'solarNoon' => suncalc_julian_date_to_date($Jnoon)
-		);
-
-		# var i, len, time, angle, morningName, eveningName, Jset, Jrise;
-
-		foreach ($GLOBALS['suncalc_times'] as $time){
-
-			# $Jset  = getSetJ(angle * SUNCALC_RAD);
-
-			$angle = $time[0];
-			$morningName = $time[1];
-			$eveningName = $time[2];
-
-			$_h = $angle * SUNCALC_RAD;
-			$_w = suncalc_get_hour_angle($_h, $phi, $d);
-			$_a = suncalc_get_approx_transit($_w, $lw, $n);
-
-			$Jset = suncalc_get_solar_transit($_a, $M, $ls);
-			$Jrise = $Jnoon - ($Jset - $Jnoon);
-
-			$result[$morningName] = suncalc_julian_date_to_date($Jrise);
-			$result[$eveningName] = suncalc_julian_date_to_date($Jset);
-		}
-
-		return $result;
-	}
-
- 	#################################################################
-
-	# calculates sun azimuth and altitude for a given date and latitude/longitude
-
-	function suncalc_get_position($date, $lat, $lon){
-
-		$lw  = SUNCALC_RAD * -$lon;
-		$phi = SUNCALC_RAD * $lat;
-
-		$J = suncalc_date_to_julian_date($date);
-		$M = suncalc_get_solar_mean_anomaly($J);
-		$C = suncalc_get_equation_of_center($M);
-		$Ls = suncalc_get_ecliptic_longitude($M, $C);
-
-		$d  = suncalc_get_sun_declination($Ls);
-
-		$a = suncalc_get_right_ascension($Ls);
-		$th = suncalc_get_sidereal_time($J, $lw);
-		$H = $th - $a;
-
-		return array(
-			'azimuth' =>  suncalc_get_azimuth(H, phi, d),
-			'altitude' => suncalc_get_altitude(H, phi, d)
-		);
-	}
-
- 	#################################################################
 ?>
