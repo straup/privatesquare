@@ -108,8 +108,8 @@
 		$H = $th - $a;
 
 		return array(
-			'azimuth' =>  suncalc_get_azimuth(H, phi, d),
-			'altitude' => suncalc_get_altitude(H, phi, d)
+			'azimuth' =>  suncalc_get_azimuth($H, $phi, $d),
+			'altitude' => suncalc_get_altitude($H, $phi, $d),
 		);
 	}
 
