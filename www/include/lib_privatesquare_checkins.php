@@ -219,6 +219,13 @@
 			$sql .= " AND locality='{$enc_loc}'";
 		}
 
+		# TO DO indexes
+
+		if ($more['timeofday']){
+			$enc_tod = AddSlashes($more['timeofday']);
+			$sql .= " AND timeofday='{$enc_tod}'";
+		}
+
 		$sql .= " GROUP BY venue_id";
 
 		$rsp = db_fetch_users($cluster_id, $sql);
@@ -284,6 +291,41 @@
 		return okay(array(
 			'rows' => $rows,
 			'pagination' => $pagination
+		));
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_timesofday_for_locality(&$user, &$locality){
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_locality = AddSlashes($locality['locality']);
+
+		$cluster_id = $user['cluster_id'];
+
+		# TO DO: indexes
+
+		$sql = "SELECT timeofday, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+		$sql .= " AND locality='{$enc_locality}' AND timeofday IS NOT NULL";
+
+		$sql .= " GROUP BY timeofday";
+
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$times = array();
+
+		foreach ($rsp['rows'] as $row){
+			$times[$row['timeofday']] = $row['count'];
+		}
+
+		krsort($times);
+
+		return okay(array(
+			'times' => $times
 		));
 	}
 

@@ -1,4 +1,5 @@
-{capture assign="page_title"}{$owner.username} | places | {$locality.name}{/capture}
+{capture assign="timeofday"}{if $smarty.get.timeofday}{include file="inc_timeofday_stringify.txt" timeofday=$smarty.get.timeofday}{/if}{/capture}
+{capture assign="page_title"}{$owner.username} | places | {$locality.name}{if $timeofday} | {$timeofday|replace:" / ":""}{/if}{/capture}
 {include file="inc_head.txt"}
 
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
@@ -7,7 +8,13 @@
 {/foreach}
 </div>
 
-<h3 class="header-right">{$locality.name|escape}</h3>
+<h3 class="header-right">{$locality.name|escape} {$timeofday}</h3>
+
+{if 0}
+{foreach from=$timesofday item="count" key="timeofday"}
+{if $smarty.get.timeofday==$timeofday}{$timeofday|escape}{else}<a href="">{$timeofday|escape}</a>{/if}
+{/foreach}
+{/if}
 
 {foreach from=$venues item="row"}
 

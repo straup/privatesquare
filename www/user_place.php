@@ -41,6 +41,10 @@
 		'locality' => $woeid,
 	);
 
+	if ($tod = get_str("timeofday")){
+		$more['timeofday'] = $tod;
+	}
+
 	if ($page = get_int32("page")){
 		$more['page'] = $page;
 	}
@@ -53,6 +57,11 @@
 
 	$locality = reverse_geoplanet_get_by_woeid($woeid, 'locality');
 	$GLOBALS['smarty']->assign_by_ref("locality", $locality);
+
+	# TO DO: check the suncalc config flag?
+
+	$rsp = privatesquare_checkins_timesofday_for_locality($owner, $locality);
+	$GLOBALS['smarty']->assign_by_ref("timesofday", $rsp['times']);
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 
