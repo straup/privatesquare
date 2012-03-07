@@ -5,6 +5,8 @@
 	# and sunlight phases. See also:
 	# https://github.com/mourner/suncalc
 
+ 	#################################################################
+
 	$GLOBALS['suncalc_times'] = array(
 		array(-0.83, 'sunrise', 'sunset'),
 		array(-0.3, 'sunriseEnd', 'sunsetStart'),
@@ -14,7 +16,11 @@
 		array(6, 'goldenHourEnd', 'goldenHour')
 	);
 
+ 	#################################################################
+
 	# constants for sun calculations
+
+ 	#################################################################
 
 	define('SUNCALC_RAD', M_PI / 180);
 	define('SUNCALC_DAYSMS', (1000 * 60 * 60 * 24));
@@ -33,22 +39,35 @@
 	define('SUNCALC_th0', SUNCALC_RAD * 280.1600);
 	define('SUNCALC_th1', SUNCALC_RAD * 360.9856235);
 
+ 	#################################################################
+
 	# date conversions
 
  	#################################################################
 
 	function suncalc_date_to_julian_date($date){
 		$ms = strtotime($date) * 1000;
-		return $ms / SUNCALC_DAYSMS - 0.5 + SUNCALC_J1970;
+		$jd = $ms / SUNCALC_DAYSMS - 0.5 + SUNCALC_J1970;
+
+		# dumper("$date -> $jd -> " . suncalc_julian_date_to_date($jd));
+
+		return $jd;
 	}
 
  	#################################################################
 
-	function suncalc_julian_date_to_date($j){
-		$ms = ($j + 0.5 - SUNCALC_J1970) * SUNCALC_DAYSMS;
+	function suncalc_julian_date_to_date($jd){
+
+		$ms = ($jd + 0.5 - SUNCALC_J1970) * SUNCALC_DAYSMS;
 		$ts = $ms / 1000;
-		return gmdate('c', $ts);
+
+		return date('c', $ts);
+
+		# $fmt = "Y-m-d\TG:i:s\Z";
+		# return gmdate($fmt, $ts);
 	}
+
+ 	#################################################################
 
 	# general sun calculations
 
@@ -150,6 +169,7 @@
 		$phi = SUNCALC_RAD * $lat;
 
 		$J = suncalc_date_to_julian_date($date);
+
 		$n = suncalc_get_julian_cycle($J, $lw);
 
 		$Js = suncalc_get_approx_transit(0, $lw, $n);
@@ -171,7 +191,7 @@
 
 			# $Jset  = getSetJ(angle * SUNCALC_RAD);
 
-			$angle       = $time[0];
+			$angle = $time[0];
 			$morningName = $time[1];
 			$eveningName = $time[2];
 
@@ -179,7 +199,7 @@
 			$_w = suncalc_get_hour_angle($_h, $phi, $d);
 			$_a = suncalc_get_approx_transit($_w, $lw, $n);
 
-			$JSet = suncalc_get_solar_transit($_a, $M, $ls);
+			$Jset = suncalc_get_solar_transit($_a, $M, $ls);
 			$Jrise = $Jnoon - ($Jset - $Jnoon);
 
 			$result[$morningName] = suncalc_julian_date_to_date($Jrise);
