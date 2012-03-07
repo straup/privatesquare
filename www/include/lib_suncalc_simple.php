@@ -1,5 +1,6 @@
 <?php
 
+	loadlib("suncalc");
 	loadlib("suncalc_api");
 	loadlib("suncalc_utils");
 
@@ -7,29 +8,40 @@
 
 	function suncalc_simple($ts, $lat, $lon){
 
-		# TO DO: finish php libs; check API stuff here...
-
 		$date = date('c', $ts);
 
-		$args = array(
-			'date' => $date,
-			'lat' => 37.756532,
-			'lon' => -122.422149
-		);
+		if ($GLOBALS['cfg']['enable_feature_suncalc_api']){
 
-		$reqs = array(
-			array('times', $args),
-			array('position', $args)
-		);
+			$args = array(
+				'date' => $date,
+				'lat' => 37.756532,
+				'lon' => -122.422149
+			);
 
-		$rsp = suncalc_api_call_multi($reqs);
+			$reqs = array(
+				array('times', $args),
+				array('position', $args)
+			);
 
-		if (! $rsp['ok']){
-			return $rsp;
+			$rsp = suncalc_api_call_multi($reqs);
+
+			if (! $rsp['ok']){
+				return $rsp;
+			}
+
+			$times = $rsp['rows'][0]['times'];
+			$pos = $rsp['rows'][1]['position'];
 		}
 
-		$times = $rsp['rows'][0]['times'];
-		$pos = $rsp['rows'][1]['position'];
+		else {
+			# these are totally unreliable right now
+			# (20120306/straup)
+
+			return not_okay("why are you not using the api?");
+
+			$times = suncalc_get_times($date, $lat, $lon);
+			$pos = suncalc_get_position($date, $lat, $lon);
+		}
 
 		$tod = suncalc_utils_get_timeofday($ts, $times);
 
