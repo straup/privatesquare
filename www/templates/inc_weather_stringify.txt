@@ -9,8 +9,13 @@
 <span class="weather_temp">{$weather.temp_c|escape}° C</span><span class="weather_condition"> {$weather.condition|strtolower|escape}</span>
 {/if}
 
+{if $timeofday}
+/ {$timeofday|escape}
 {/if}
 
+{/if}
+
+{* long form *}
 {else}
 
 {if $weather.source=='google'}
@@ -19,6 +24,10 @@
 <span class="weather_temp">It was {$weather.temp_f|escape}° F</span><span class="weather_condition"> and {$weather.condition|strtolower|escape}</span>
 {else}
 <span class="weather_temp">It was {$weather.temp_c|escape}° C</span><span class="weather_condition"> and {$weather.condition|strtolower|escape}</span>
+{/if}
+
+{if $timeofday}
+ / during the {$timeofday|escape}
 {/if}
 
 {/if}

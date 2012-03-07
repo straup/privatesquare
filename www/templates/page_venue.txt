@@ -70,7 +70,7 @@
 	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
 {/if}
  <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape} </span>
-{if $row.weather}{include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
+{if $row.weather}{include file="inc_weather_stringify.txt" weather=$row.weather short_form=1 timeofday=$row.timeofday}{/if}
 <span class="permalink">&#160;&#160;<a href="{$row|@urls_checkin}">◻</a></span>
 </li>
 {/foreach}
