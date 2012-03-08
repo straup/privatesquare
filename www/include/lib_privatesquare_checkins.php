@@ -55,6 +55,25 @@
 
  	#################################################################
 
+	function privatesquare_checkins_update($checkin, $update){
+
+		$user = users_get_by_id($checkin['user_id']);
+		$cluster_id = $user['cluster_id'];
+
+		$enc_id = AddSlashes($checkin['id']);
+		$where = "id='{$enc_id}'";
+
+		$hash = array();
+
+		foreach ($update as $k => $v){
+			$hash[$k] = AddSlashes($v);
+		}
+
+		return db_update_users($cluster_id, 'PrivatesquareCheckins', $update, $where);
+	}
+
+ 	#################################################################
+
 	function privatesquare_checkins_for_user(&$user, $more=array()){
 
 		$cluster_id = $user['cluster_id'];

@@ -1,3 +1,5 @@
+<span style="color:#ccc;">
+
 {if $short_form}
 {if $timeofday=='solarnoon'}
 / noon
@@ -26,7 +28,7 @@
 {else}
 
 {if $timeofday=='solarnoon'}
- / at noon
+ / during <q>solar</q> noon
 {elseif $timeofday=='sunrise'}
  / at sunrise
 {elseif $timeofday=='sunset'}
@@ -42,11 +44,13 @@
 {elseif $timeofday=='nightend'}
  / at night's end
 {elseif $timeofday=='night'}
- / during the night
+ / at night
 {elseif $timeofday=='goldenhour'}
  / during the golden hour
 {elseif $timeofday=='goldenhourend'}
  / as the golden hour faded
-{else}{/if}
+{else}{$timeofday|escape}{/if}
 
 {/if}
+
+</span>

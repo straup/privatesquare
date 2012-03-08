@@ -9,8 +9,6 @@
 <span class="weather_temp">{$weather.temp_c|escape}° C</span><span class="weather_condition"> {$weather.condition|strtolower|escape}</span>
 {/if}
 
-{include file="inc_timeofday_stringify.txt"}
-
 {/if}
 
 {* long form *}
@@ -23,8 +21,6 @@
 {else}
 <span class="weather_temp">It was {$weather.temp_c|escape}° C</span><span class="weather_condition"> and {$weather.condition|strtolower|escape}</span>
 {/if}
-
-{include file="inc_timeofday_stringify.txt"}
 
 {/if}
 
