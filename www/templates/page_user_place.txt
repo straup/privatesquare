@@ -8,13 +8,17 @@
 {/foreach}
 </div>
 
-<h3 class="header-right">{$locality.name|escape} {$timeofday}</h3>
+<h3 class="header-right">{$locality.name|escape} {$timeofday}
 
-{if 0}
-{foreach from=$timesofday item="count" key="timeofday"}
-{if $smarty.get.timeofday==$timeofday}{$timeofday|escape}{else}<a href="">{$timeofday|escape}</a>{/if}
+<div id="timesofday">
+{foreach from=$timesofday item="count" key="timeofday" name="tod"}
+{if 0}{capture assign="_timeofday"}{include file="inc_timeofday_stringify.txt" timeofday=$timeofday no_markup=1}{/capture}{/if}
+{if $smarty.get.timeofday==$timeofday}<strong>{$timeofday|escape}</strong>{else}<a href="{$owner|@urls_places_for_user}{$locality.locality|escape}/{$timeofday|escape}/">{$timeofday|escape}</a>{/if}
+{if $smarty.foreach.tod.last}{else} | {/if}
 {/foreach}
-{/if}
+</div>
+
+</h3>
 
 {foreach from=$venues item="row"}
 

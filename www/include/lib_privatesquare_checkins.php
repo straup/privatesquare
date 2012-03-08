@@ -325,7 +325,7 @@
 		# TO DO: indexes
 
 		$sql = "SELECT timeofday, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
-		$sql .= " AND locality='{$enc_locality}' AND timeofday IS NOT NULL";
+		$sql .= " AND locality='{$enc_locality}' AND timeofday IS NOT NULL AND timeofday != ''";
 
 		$sql .= " GROUP BY timeofday";
 

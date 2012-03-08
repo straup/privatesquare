@@ -369,3 +369,9 @@ button {
     color:#ccc;
     text-decoration:none;
 }
+
+#timesofday {
+    font-size:small;
+    margin-top: 5px;
+    font-weight: 100;
+}

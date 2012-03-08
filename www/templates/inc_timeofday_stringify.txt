@@ -2,7 +2,7 @@
 
 {if $short_form}
 {if $timeofday=='solarnoon'}
-/ noon
+/ solar noon
 {elseif $timeofday=='sunrise'}
 / sunrise
 {elseif $timeofday=='sunset'}
@@ -28,7 +28,7 @@
 {else}
 
 {if $timeofday=='solarnoon'}
- / during <q>solar</q> noon
+ / during solar noon
 {elseif $timeofday=='sunrise'}
  / at sunrise
 {elseif $timeofday=='sunset'}
