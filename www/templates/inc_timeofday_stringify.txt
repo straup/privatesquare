@@ -1,54 +1,60 @@
 {if $no_markup}{else}<span class="timeofday">{/if}
+{if $no_delimeter}{else} / {/if}
 
 {if $short_form}
-{if $timeofday=='solarnoon'}
-/ solar noon
+{if $timeofday=='solarnoon' or $timeofday=='midmorning'}
+{if 0}solar noon{/if}
+late-morning
 {elseif $timeofday=='sunrise'}
-/ sunrise
+sunrise
 {elseif $timeofday=='sunset'}
-/ sunset
+sunset
 {elseif $timeofday=='sunriseend'}
-/ crouching sun
+crouching sun
 {elseif $timeofday=='sunsetstart'}
-/ setting sun
+setting sun
 {elseif $timeofday=='dawn' or $timeofday=='nauticaldawn'}
-/ dawn
-{elseif $timeofday=='dusk' or $timeofday=='nauticaldusk'}
-/ dusk
-{elseif $timeofday=='nightend'}
-/ night's end
+dawn
+{elseif $timeofday=='nauticaldusk' or $timeofday=='twilight'}
+twilight
+{elseif $timeofday=='dusk'}
+dusk
+{elseif $timeofday=='nightend' or $timeofday=='morning'}
+morning
 {elseif $timeofday=='night'}
-/ nighttime
+nighttime
 {elseif $timeofday=='goldenhour'}
-/ the golden hour
+the golden hour
 {elseif $timeofday=='goldenhourend'}
-/ the darkening hour 
+the darkening hour 
 {else}{/if}
 
 {else}
 
-{if $timeofday=='solarnoon'}
- / during solar noon
+{if $timeofday=='solarnoon' or $timeofday=='latemorning'}
+mid to late-morning
 {elseif $timeofday=='sunrise'}
- / at sunrise
+at sunrise
 {elseif $timeofday=='sunset'}
- / at sunset
+at sunset
 {elseif $timeofday=='sunriseend'}
- / as the sun appeared
+as the sun appeared
 {elseif $timeofday=='sunsetstart'}
- / as the sun started setting
+as the sun started setting
 {elseif $timeofday=='dawn' or $timeofday=='nauticaldawn'}
- / at dawn
-{elseif $timeofday=='dusk' or $timeofday=='nauticaldusk'}
- / at dusk
-{elseif $timeofday=='nightend'}
- / at night's end
+at dawn
+{elseif $timeofday=='dusk'}
+at dusk
+{elseif $timeofday=='nauticaldusk' or $timeofday=='twilight'}
+at twilight
+{elseif $timeofday=='nightend' or $timeofday=='morning'}
+in the morning
 {elseif $timeofday=='night'}
- / at night
+at night
 {elseif $timeofday=='goldenhour'}
- / during the golden hour
+during the golden hour
 {elseif $timeofday=='goldenhourend'}
- / as the golden hour faded
+as the golden hour faded
 {else}{$timeofday|escape}{/if}
 
 {/if}

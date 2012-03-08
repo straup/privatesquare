@@ -373,5 +373,6 @@ button {
 #timesofday {
     font-size:small;
     margin-top: 5px;
+    margin-bottom: 25px;
     font-weight: 100;
 }

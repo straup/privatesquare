@@ -341,10 +341,116 @@
 			$times[$row['timeofday']] = $row['count'];
 		}
 
-		krsort($times);
+		arsort($times);
 
 		return okay(array(
 			'times' => $times
+		));
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_timesofday_for_user(&$user, &$locality){
+
+		$enc_user = AddSlashes($user['id']);
+		$cluster_id = $user['cluster_id'];
+
+		# TO DO: indexes
+
+		$sql = "SELECT timeofday, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+		$sql .= " AND timeofday IS NOT NULL AND timeofday != ''";
+
+		$sql .= " GROUP BY timeofday";
+
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$times = array();
+
+		foreach ($rsp['rows'] as $row){
+			$times[$row['timeofday']] = $row['count'];
+		}
+
+		arsort($times);
+
+		return okay(array(
+			'times' => $times
+		));
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_localities_for_timeofday($user, $timeofday){
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_tod = AddSlashes($timeofday);
+
+		$cluster_id = $user['cluster_id'];
+
+		# TO DO: indexes
+
+		$sql = "SELECT locality, COUNT(id) AS count FROM PrivatesquareCheckins";
+		$sql .= " WHERE user_id='{$enc_user}' AND timeofday='{$enc_tod}'";
+		$sql .= " GROUP BY locality";
+
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$localities = array();
+
+		foreach ($rsp['rows'] as $row){
+
+			if (! $row['locality']){
+				continue;
+			}
+
+			$localities[$row['locality']] = $row['count'];
+		}
+
+		arsort($localities);
+
+		return okay(array(
+			'localities' => $localities
+		));
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_venues_for_timeofday($user, $timeofday){
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_tod = AddSlashes($timeofday);
+
+		$cluster_id = $user['cluster_id'];
+
+		# TO DO: indexes
+
+		$sql = "SELECT venue_id, COUNT(id) AS count FROM PrivatesquareCheckins";
+		$sql .= " WHERE user_id='{$enc_user}' AND timeofday='{$enc_tod}'";
+		$sql .= " GROUP BY venue_id";
+
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$venues = array();
+
+		foreach ($rsp['rows'] as $row){
+			$venues[$row['venue_id']] = $row['count'];
+		}
+
+		arsort($venues);
+
+		return okay(array(
+			'venues' => $venues
 		));
 	}
 

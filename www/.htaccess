@@ -85,6 +85,8 @@ RewriteRule ^venue/([a-f0-9]+)/?$			venue.php?venue_id=$1&%{QUERY_STRING}	[L]
 
 RewriteRule ^user/([0-9]+)/checkin(/([0-9a-f]+))/?$	user_checkin.php?foursquare_id=$1&checkin_id=$3&%{QUERY_STRING}	[L]
 
+RewriteRule ^user/([0-9]+)/timepies/?$			user_timepies.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+
 RewriteRule ^user/([0-9]+)/places(/page([0-9]+))?/?$		user_places.php?foursquare_id=$1&page=$3&%{QUERY_STRING}	[L]
 
 RewriteRule ^user/([0-9]+)/places/([0-9]+)/([a-z]+)(/page([0-9]+))?/?$	user_place.php?foursquare_id=$1&woeid=$2&timeofday=$3&page=$5&%{QUERY_STRING}	[L]

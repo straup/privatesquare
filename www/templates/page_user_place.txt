@@ -1,5 +1,5 @@
-{capture assign="timeofday"}{if $smarty.get.timeofday}{include file="inc_timeofday_stringify.txt" timeofday=$smarty.get.timeofday no_markup=1}{/if}{/capture}
-{capture assign="page_title"}{$owner.username} | places | {$locality.name}{if $timeofday} | {$timeofday|replace:" / ":""}{/if}{/capture}
+{capture assign="timeofday"}{if $smarty.get.timeofday}{include file="inc_timeofday_stringify.txt" timeofday=$smarty.get.timeofday no_markup=1 no_delimeter=1}{/if}{/capture}
+{capture assign="page_title"}{$owner.username} | places | {$locality.name}{if $timeofday} | {$timeofday}{/if}{/capture}
 {include file="inc_head.txt"}
 
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
@@ -8,12 +8,12 @@
 {/foreach}
 </div>
 
-<h3 class="header-right">{$locality.name|escape} {$timeofday}
+<h3 class="header-right">{$locality.name|escape} / {$timeofday}
 
 <div id="timesofday">
-{foreach from=$timesofday item="count" key="timeofday" name="tod"}
-{if 0}{capture assign="_timeofday"}{include file="inc_timeofday_stringify.txt" timeofday=$timeofday no_markup=1}{/capture}{/if}
-{if $smarty.get.timeofday==$timeofday}<strong>{$timeofday|escape}</strong>{else}<a href="{$owner|@urls_places_for_user}{$locality.locality|escape}/{$timeofday|escape}/">{$timeofday|escape}</a>{/if}
+{foreach from=$timesofday item="count" key="suncalc_label" name="tod"}
+{capture assign="timeofday"}{include file="inc_timeofday_stringify.txt" timeofday=$suncalc_label no_markup=1 no_delimeter=1}{/capture}
+{if $smarty.get.timeofday==$suncalc_label}<strong>{$timeofday|escape}</strong>{else}<a href="{$owner|@urls_places_for_user}{$locality.locality|escape}/{$suncalc_label|escape}/">{$timeofday|escape}</a>{/if}
 {if $smarty.foreach.tod.last}{else} | {/if}
 {/foreach}
 </div>
