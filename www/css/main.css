@@ -343,8 +343,8 @@ button {
     padding:10px;
 }
 
-.weather {
-    color:#ccc;
+.weather, .timeofday {
+    color: #ccc;
     margin-top:5px;
     margin-left:5px;
 }

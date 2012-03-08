@@ -1,4 +1,4 @@
-<span style="color:#ccc;">
+{if $no_markup}{else}<span class="timeofday">{/if}
 
 {if $short_form}
 {if $timeofday=='solarnoon'}
@@ -53,4 +53,4 @@
 
 {/if}
 
-</span>
+{if $no_markup}{else}</span>{/if}

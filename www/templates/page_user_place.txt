@@ -1,4 +1,4 @@
-{capture assign="timeofday"}{if $smarty.get.timeofday}{include file="inc_timeofday_stringify.txt" timeofday=$smarty.get.timeofday}{/if}{/capture}
+{capture assign="timeofday"}{if $smarty.get.timeofday}{include file="inc_timeofday_stringify.txt" timeofday=$smarty.get.timeofday no_markup=1}{/if}{/capture}
 {capture assign="page_title"}{$owner.username} | places | {$locality.name}{if $timeofday} | {$timeofday|replace:" / ":""}{/if}{/capture}
 {include file="inc_head.txt"}
 
