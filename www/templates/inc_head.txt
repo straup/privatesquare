@@ -27,6 +27,12 @@
 {else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js?version={$version}"></script>
 {/if}
+
+{if $cfg.enable_feature_deferred_checkins}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.js?version={$version}"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.js?version={$version}"></script>
+{/if}
+
 {/if}
 
 	<script type="text/javascript">
