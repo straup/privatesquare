@@ -131,6 +131,12 @@ q {
 
 /* HTMAPL stuff */
 
+.map-error {
+    padding:10px;
+    font-family:monospace;
+    color:#999;
+}
+
 #map-wrapper {
 	height: 300px;
 	width: 100%;

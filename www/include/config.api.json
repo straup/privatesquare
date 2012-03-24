@@ -34,6 +34,15 @@
 			"requires_crumb": 1,
 			"crumb_ttl": 1200,
 			"library": "api_privatesquare_venues"
+		},
+
+		"ohyeah.that": {
+			"documented": 0,
+			"enabled": 1,
+			"requires_auth": 1,
+			"requires_crumb": 1,
+			"crumb_ttl": 1200,
+			"library": "api_ohyeah"
 		}
 
 	}
