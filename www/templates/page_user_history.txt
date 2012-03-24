@@ -53,7 +53,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}
-	$(".map").htmapl();
+	privatesquare_htmapl();
 {literal}}{/literal});
 </script>
 

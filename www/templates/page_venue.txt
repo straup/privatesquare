@@ -100,7 +100,8 @@ $(document).ready(function(){
 	  differences ... so, something (20120220/straup)
 	*/
 
-	$(".map").htmapl();
+	var map = $(".map");
+	privatesquare_htmapl(map);
 
 	var show_checkin_form = function(){
 		privatesquare_unset_status();
