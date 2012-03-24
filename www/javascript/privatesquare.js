@@ -305,7 +305,15 @@ function _privatesquare_show_map(lat, lon){
 	wrapper.html(map)
 
 	wrapper.show();
-	map.htmapl();
+
+	try {
+		map.htmapl();
+	}
+
+	catch (e){
+		map.html('<div class="map-error">hrmph...failed to load map: ' + e + '</div>');
+		console.log(e);
+	}
 }
 
 function _privatesquare_hide_map(){
