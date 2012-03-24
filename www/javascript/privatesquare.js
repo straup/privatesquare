@@ -306,13 +306,21 @@ function _privatesquare_show_map(lat, lon){
 
 	wrapper.show();
 
+	privatesquare_htmapl(map);
+}
+
+function privatesquare_htmapl(map){
+
+	if (! map){
+		map = $(".map");
+	}
+
 	try {
 		map.htmapl();
 	}
 
 	catch (e){
 		map.html('<div class="map-error">hrmph...failed to load map: ' + e + '</div>');
-		console.log(e);
 	}
 }
 
