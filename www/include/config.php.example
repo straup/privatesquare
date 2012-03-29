@@ -67,6 +67,8 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
+
 	$GLOBALS['cfg']['enable_feature_export'] = 1;
 
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;

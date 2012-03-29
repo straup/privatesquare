@@ -95,13 +95,21 @@
 
 		if ((isset($row['weather'])) && (isset($more['inflate_weather']))){
 
-			if ($data = json_decode($row['weather'], 'as hash')){
+			if (is_array($row['weather'])){
+				$data = $row['weather'];
+			}
+
+			else {
+				$data = json_decode($row['weather'], 'as hash');
+			}
+
+			if (is_array($data)){
 
 				foreach ($data as $k => $v){
 					$row[ "weather_{$k}" ] = $v;
 				}
 			}
-
+		
 			unset($row['weather']);			
 		}
 
