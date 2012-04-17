@@ -40,7 +40,7 @@
 		'name' => 'privatesquare',
 		'user' => 'privatesquare',
 		'pass' => '',
-		'auto_connect' => 1,
+		'auto_connect' => 0,
 	);
 
 	# You will need to set up secrets for the various parts of the site
