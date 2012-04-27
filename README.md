@@ -162,7 +162,7 @@ If you really want to hack and play around with privatesquare, it's best to do t
 
 This rest of this section will assume the following:
 
-* That you're running MAMP on a Mac. MAMP is a nice convenient way to run MySQL, Apache and PHP on a Mac. There's also a Windows version called WAMP. Or most Linux distros come with all of this installed. YMMV so you may need to change some paths and file names.
+* That you're running [MAMP](http://mamp.info/en/index.html) on a Mac. MAMP is a nice convenient way to run MySQL, Apache and PHP on a Mac. There's also a Windows version called [WAMP](http://www.wampserver.com/en/). Or most Linux distros come with all of this installed. YMMV so you may need to change some paths and file names.
 * That you'll set up a local host name called `privatesquare`
 * That your MAMP installation is running Apache on port 8888 and MySQL on port 8889.
 
@@ -174,7 +174,7 @@ On some operating systems, this file is re-read each time your browser is re-sta
 
 	$ sudo /usr/bin/dscacheutil -flushcache
 
-Now create a new virtual host on your machine. Edit /Applications/MAMP/conf/apache/httpd-vhosts.conf and append the magic incantation ...
+Now create a new virtual host on your machine. Edit `/Applications/MAMP/conf/apache/httpd-vhosts.conf` and append the magic incantation ...
 
 	<VirtualHost *:8888>
 		ServerName localps:8888
@@ -211,11 +211,11 @@ Copy `/Applications/MAMP/htdocs/privatesquare/bin/spoof-login-cookie.php` to `/A
 
 Edit `/Applications/MAMP/htdocs/ps.vicchi.org/bin/spoof-login-cookie.php`. *Yes*, this is fugly and hacky. *Yes*, I know it is. Change the `$username` variable to contain your Foursquare username (take a look in the `users` table in your cloned database to see what yours is). Save your changes.
 
-Browse to http://privatesquare:8888/spoof-login-cookie.php
+Browse to `http://privatesquare:8888/spoof-login-cookie.php`
 
 You should now see a message saying *"All done; now click here"*. Click *there*.
 
-You should be signed in and good to go.
+You should be signed in and good to go. You'll probably want to remove the copy of `spoof-login-cookie.php` if you have OCD, but it's a local machine and if someone can access this on a browser running on your machine then this is the least of your problems.
 
 If you want to run `<root>/bin/sync-foursquare.php` you'll need to make your your shell environment is set up to find the correct binaries and libraries. For MAMP this means putting the following into your `.bash_profile`.
 	
