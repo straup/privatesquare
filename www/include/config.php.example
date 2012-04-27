@@ -7,6 +7,7 @@
 
 	$GLOBALS['cfg']['site_name'] = 'privatesquare';
 	$GLOBALS['cfg']['environment'] = 'prod';
+	#$GLOBALS['cfg']['localhost'] = 1;
 
 	$GLOBALS['cfg']['site_disabled'] = 0;
 	$GLOBALS['cfg']['site_disabled_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
