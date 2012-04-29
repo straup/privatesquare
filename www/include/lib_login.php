@@ -130,7 +130,7 @@
 	#################################################################
 
 	function login_set_cookie($name, $value, $expire=0, $path='/'){
-		$domain = ($GLOBALS['cfg']['localhost']) ? $GLOBALS['cfg']['auth_cookie_domain'] : false;
+		$domain = ($GLOBALS['cfg']['environment'] == 'localhost') ? $GLOBALS['cfg']['auth_cookie_domain'] : false;
 		$res = setcookie($name, $value, $expire, $path, $domain);
 	}
 

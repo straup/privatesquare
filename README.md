@@ -201,9 +201,9 @@ Edit your local copy of privatesquare's configuration file at `/Applications/MAM
 		'auto_connect' => 0,
 		);
 
-Still in the local privatesquare configuration file, uncomment the line that read like ...
+Still in the local privatesquare configuration file, set the `environment` config value to be `localhost`:
 
-	#$GLOBALS['cfg']['localhost'] = 1;
+	$GLOBALS['cfg']['environment'] = 'localhost';
 
 Now browse back to `http://privatesquare:8888`. You should be asked to *sign in w/ 4sq*. Don't. You'll be redirected to the Foursquare site to authenticate and this will fail as your local install isn't publicly accessible.
 

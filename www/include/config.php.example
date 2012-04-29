@@ -5,12 +5,21 @@
 
 	$GLOBALS['cfg'] = array();
 
+	# Things you may want to change in a hurry
+
 	$GLOBALS['cfg']['site_name'] = 'privatesquare';
-	$GLOBALS['cfg']['environment'] = 'prod';
-	#$GLOBALS['cfg']['localhost'] = 1;
 
 	$GLOBALS['cfg']['site_disabled'] = 0;
 	$GLOBALS['cfg']['site_disabled_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
+
+	# Known special values for 'environment':
+	#
+	# 'prod': This will cause privatesquare to use minimized JS libraries, where possible
+	# 'localhost' : This will make the rest of the code assume that you're running privatesquare
+	#               on a machine not otherwise connected to the (public) Internets. See the section
+	#               on a 'here-be-dragons' locally hosted version in README.md
+
+	$GLOBALS['cfg']['environment'] = 'prod';
 
 	# You will need valid foursquare OAuth credentials
 	# See also: https://foursquare.com/oauth/register
