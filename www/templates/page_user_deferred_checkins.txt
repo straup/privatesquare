@@ -1,4 +1,12 @@
 {capture assign="page_title"}{$owner.username} | deferred checkins{/capture}
+{capture assign="extra_head"}
+{if $cfg.environment=='prod'}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.min.js"></script>
+{else}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.js"></script>
+{/if}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
+{/capture}
 {include file="inc_head.txt"}
 
 <div id="status"></div>
@@ -6,23 +14,13 @@
 <div id="map-wrapper"></div>
 
 <form method="POST" id="deferred">
-	<select id="checkin" />
+	<select id="checkins" />
 	<input type="SUBMIT" value="THIS" />
 </form>
 
 <script type="text/javascript">
 {literal}
-$(document).ready(function(){
-
-	var pending = privatesquare_deferred_list();
-
-	if (pending.length == 0){
-		privatesquare_set_status("There are no pending checkins to administriviate.");
-		return;
-	}
-
-	privatesquare_set_status("Do something");
-});
+$(document).ready(privatesquare_pending_init);
 {/literal}
 </script>
 
