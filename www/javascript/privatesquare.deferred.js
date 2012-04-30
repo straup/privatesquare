@@ -19,6 +19,7 @@ function privatesquare_deferred_checkin(lat, lon, reason){
 	_privatesquare_show_map(lat, lon);
 
 	var w = $("#deferred_where");
+	w.val("");
 
 	w.attr("data-latitude", lat);
 	w.attr("data-longitude", lon);
@@ -33,9 +34,13 @@ function privatesquare_deferred_checkin_submit(){
 	var ts = parseInt(dt.getTime() / 1000);
 
 	var w = $("#deferred_where");
+	var venue = w.val();
+
+	var id = venue + "#" + ts;
 
 	var checkin = {
-		'venue': w.val(),
+		'id': id,
+		'venue': venue,
 		'latitude': w.attr('data-latitude'),
 		'longitude': w.attr('data-longitude'),
 		'created': ts
@@ -47,7 +52,9 @@ function privatesquare_deferred_checkin_submit(){
 
 function privatesquare_deferred_checkin_stored(checkin){
 
-	var msg = "Okay! Your checkin at " + htmlspecialchars(checkin['venue']) + " has been recorded.";
+	console.log(checkin);
+
+	var msg = "Okay! Your checkin at '" + checkin['venue'] + "' has been recorded.";
 	privatesquare_set_status(msg);
 
 	_privatesquare_hide_map();
@@ -59,7 +66,7 @@ function privatesquare_deferred_indicator(){
 	var store = new Store("privatesquare");
 	var deferred = store.get("deferred");
 
-	var count = (deferred) ? deferred.length : 0;
+	var count = (deferred) ? Object.keys(deferred).length : 0;
 
 	var wrapper = $("#pending");
 	var indicator = $("#pending_count");
@@ -75,19 +82,76 @@ function privatesquare_deferred_indicator(){
 	}
 }
 
+function privatesquare_deferred_list(sort_order){
+
+	sort_order = (sort_order) ? sort_order.toLowerCase() : 'asc';
+
+	var store = new Store("privatesquare");
+	var deferred = store.get("deferred");
+
+	var list = new Array();
+
+	if (! deferred){
+		return list;
+	}
+
+	for (var k in deferred){
+		list.push(deferred[k]);
+	}
+
+	list.sort(function(a, b){
+
+		if (a['created'] < b['created']){
+			return (sort_order=='desc') ? 1 : -1;
+		}
+
+		if (a['created'] > b['created']){
+			return (sort_order=='desc') ? -1 : 1;
+		}
+
+		return 0;
+	});
+
+	return list;
+}
+
 function privatesquare_deferred_store(checkin, callback){
 
 	var store = new Store("privatesquare");
 	var deferred = store.get("deferred");
 
 	if (! deferred){
-		deferred = new Array();
+		deferred = {};
 	}
-		
-	deferred.push(checkin);
+
+	var key = checkin['id'];
+	deferred[key] = checkin;
+
 	store.set("deferred", deferred);
 
-	_privatesquare_deferred_onupdate();
+	var _callback = null;
+
+	if (callback){
+
+		_callback = function(){
+			callback(checkin);
+		};
+	}
+
+	_privatesquare_deferred_onupdate(_callback);
+}
+
+function privatesquare_deferred_remove(checkin_id, callback){
+
+	var store = new Store("privatesquare");
+	var deferred = store.get("deferred");
+
+	if (deferred){
+		delete deferred[checkin_id];
+		store.set("deferred", deferred);
+	}
+
+	_privatesquare_deferred_onupdate(callback);
 }
 
 function privatesquare_deferred_purge(callback){
@@ -98,7 +162,7 @@ function privatesquare_deferred_purge(callback){
 		store.remove("deferred");
 	}
 
-	_privatesquare_deferred_onupdate();
+	_privatesquare_deferred_onupdate(callback);
 }
 
 function _privatesquare_deferred_onupdate(callback){
@@ -106,6 +170,6 @@ function _privatesquare_deferred_onupdate(callback){
 	privatesquare_deferred_indicator();
 
 	if (callback){
-		callback(checkin);
+		callback();
 	}
 }
