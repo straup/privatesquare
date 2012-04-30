@@ -42,9 +42,11 @@
 
 	<script type="text/javascript">
 var _cfg={literal}{{/literal}
-	'abs_root_url':'{$cfg.abs_root_url}'
+	'abs_root_url':'{$cfg.abs_root_url}',
+	'deferred_checkins': {if $cfg.enable_feature_deferred_checkins}1{else}0{/if}
 	{literal}}{/literal};
 	</script>
+
 	{$extra_head}
 </head>
 <body>
