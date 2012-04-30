@@ -44,6 +44,7 @@ function privatesquare_pending_init(){
 	checkins.html(html);
 
 	var deferred = $("#deferred");
+	deferred.attr('data-count-pending', pending.length);
 	deferred.submit(privatesquare_pending_onselect);
 
 	deferred.show();
@@ -51,18 +52,22 @@ function privatesquare_pending_init(){
 
 function privatesquare_pending_onselect(){
 
+	var deferred = $("#deferred");
 	var checkins = $("#checkins");
+
 	var where = checkins.val();
 
 	if (where == '__purge__'){
 
-		/* to do : count checkins */
 		var q = 'Are you sure you want to delete all those pending checkins?';
 
-		if (confirm(q)){
+		var count_pending = deferred.attr('data-count-pending');
 
-			var deferred = $("#deferred");
-			var checkins = $("#checkins");
+		if (count_pending == 1){
+			q = 'Are you sure you want to delete this checkin?';
+		}
+
+		if (confirm(q)){
 
 			checkins.html("");
 			deferred.hide();
