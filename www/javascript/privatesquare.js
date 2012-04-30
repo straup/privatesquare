@@ -90,7 +90,7 @@ function _privatesquare_geolocation_onsuccess(rsp){
 	var lat = rsp['coords']['latitude'];
 	var lon = rsp['coords']['longitude'];
 
-	if ((window.navigator.onLine) && (_cfg['deferred_checkins'])){
+	if ((! window.navigator.onLine) && (_cfg['deferred_checkins'])){
 		privatesquare_deferred_checkin(lat, lon, 'offline');
 		return;
 	}

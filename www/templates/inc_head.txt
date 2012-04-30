@@ -29,8 +29,14 @@
 {/if}
 
 {if $cfg.enable_feature_deferred_checkins}
+{if $cfg.environment=='prod'}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.min.js?version={$version}"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.min.js?version={$version}"></script>
+{else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.js?version={$version}"></script>
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.js?version={$version}"></script>
+
+{/if}
 	<script type="text/javascript">
 {literal}
 	$(document).ready(privatesquare_deferred_indicator);
