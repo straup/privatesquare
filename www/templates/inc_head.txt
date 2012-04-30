@@ -31,6 +31,11 @@
 {if $cfg.enable_feature_deferred_checkins}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.js?version={$version}"></script>
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.js?version={$version}"></script>
+	<script type="text/javascript">
+{literal}
+	$(document).ready(privatesquare_deferred_indicator);
+{/literal}
+	</script>
 {/if}
 
 {/if}
@@ -71,6 +76,12 @@ var _cfg={literal}{{/literal}
 		<a href="{$cfg.user|@urls_history_for_user}export/">export</a>
 		|
 		</span>
+{if $cfg.enable_feature_deferred_checkins}
+		<span id="deferred">
+		<span id="deferred_count"></span>
+		|
+		</span>
+{/if}
 			<a href="{$cfg.abs_root_url}signout/">logout</a>
 {else}
 	{if $cfg.enable_feature_signin}

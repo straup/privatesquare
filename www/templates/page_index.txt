@@ -6,7 +6,10 @@
 <div id="status"></div>
 
 <div id="map-wrapper"></div>
-{if 0}<div id="map" class="map" data-hash="false" data-touch="true" data-mousewheel="true" data-provider="toner"></div>{/if}
+
+{if $cfg.enable_feature_deferred_checkins}
+{include file="inc_deferred_checkin.txt"}
+{/if}
 
 <div id="venues" style="display:none;">
 

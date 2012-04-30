@@ -14,6 +14,10 @@ body {
 	padding: 0;
 }
 
+#deferred {
+    display:none;
+}
+
 #message {
 	border-bottom: solid thin;
 	margin-bottom: 10px;
@@ -116,6 +120,14 @@ p.message {
 select {
     font-size:1.3em;
     margin-bottom:20px;
+}
+
+input[type=text] {
+    font-size:1.5em;
+    margin-bottom:20px;
+    border:solid thin;
+    width:99%;
+    padding:5px;
 }
 
 input[type=submit] {

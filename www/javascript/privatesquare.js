@@ -86,9 +86,16 @@ function privatesquare_checkin(args, onsuccess){
 }
 
 function _privatesquare_geolocation_onsuccess(rsp){
+
 	var lat = rsp['coords']['latitude'];
 	var lon = rsp['coords']['longitude'];
-	privatesquare_fetch_venues(lat, lon);
+
+	if (window.navigator.onLine){
+		privatesquare_fetch_venues(lat, lon);
+		return;
+	}
+
+	privatesquare_deferred_checkin(lat, lon, 'offline');
 }
 
 function privatesquare_search(){
@@ -156,7 +163,24 @@ function _foursquare_venues_onsuccess(rsp){
 	$("#status").html("");
 
 	if (rsp['stat'] != 'ok'){
-		_privatesquare_api_error(rsp);
+
+		/*
+		I am unsure how I feel about this; the maybe better alternative
+		is to wrap the lat/lon used to call the API in all the various
+		callbacks... (20120429/straup)
+		*/
+
+		var _okay = function(rsp){
+			var lat = rsp['coords']['latitude'];
+			var lon = rsp['coords']['longitude'];
+			privatesquare_deferred_checkin(lat, lon, 'api error');
+		};
+
+		var _not_okay = function(){
+			privatesquare_api_error(rsp);
+		}
+
+		navigator.geolocation.getCurrentPosition(_okay, _not_okay);
 		return;
 	}
 
