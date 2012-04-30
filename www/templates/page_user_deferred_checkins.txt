@@ -1,5 +1,29 @@
+{capture assign="page_title"}{$owner.username} | deferred checkins{/capture}
 {include file="inc_head.txt"}
 
-STUFF
+<div id="status"></div>
+
+<div id="map-wrapper"></div>
+
+<form method="POST" id="deferred">
+	<select id="checkin" />
+	<input type="SUBMIT" value="THIS" />
+</form>
+
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+
+	var pending = privatesquare_deferred_list();
+
+	if (pending.length == 0){
+		privatesquare_set_status("There are no pending checkins to administriviate.");
+		return;
+	}
+
+	privatesquare_set_status("Do something");
+});
+{/literal}
+</script>
 
 {include file="inc_foot.txt"}
