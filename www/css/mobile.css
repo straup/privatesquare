@@ -1,3 +1,7 @@
+#message {
+    font-size: small !important;
+}
+
 #map-wrapper {
 	height: 100px !important;
 	margin-bottom: 10px;
