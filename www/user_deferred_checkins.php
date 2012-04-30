@@ -34,6 +34,9 @@
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("is_own", $is_own);
 
+	$search_crumb = crumb_generate("api", "privatesquare.venues.search");
+	$GLOBALS['smarty']->assign("search_crumb", $search_crumb);
+
 	$GLOBALS['smarty']->display("page_user_deferred_checkins.txt");
 	exit();
 ?>

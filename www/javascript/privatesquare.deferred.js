@@ -141,6 +141,18 @@ function privatesquare_deferred_store(checkin, callback){
 	_privatesquare_deferred_onupdate(_callback);
 }
 
+function privatesquare_deferred_get_by_id(checkin_id){
+
+	var store = new Store("privatesquare");
+	var deferred = store.get("deferred");
+
+	if (deferred){
+		return deferred[checkin_id];
+	}
+
+	return null;
+}
+
 function privatesquare_deferred_remove(checkin_id, callback){
 
 	var store = new Store("privatesquare");

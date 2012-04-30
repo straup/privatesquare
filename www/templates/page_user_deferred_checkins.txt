@@ -14,7 +14,7 @@
 <div id="map-wrapper"></div>
 
 <form method="POST" id="deferred">
-	<select id="checkins" />
+	<select id="checkins" data-crumb="{$search_crumb|escape}" />
 	<input type="SUBMIT" value="THIS" />
 </form>
 

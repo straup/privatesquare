@@ -41,7 +41,6 @@ function privatesquare_pending_init(){
 	html += '</optgroup>';
 
 	var checkins = $("#checkins");
-	checkins.attr("data-crumb", "fixme");
 	checkins.html(html);
 
 	var deferred = $("#deferred");
@@ -76,6 +75,10 @@ function privatesquare_pending_onselect(){
 	else {
 
 		console.log(where);
+		var checkin = privatesquare_deferred_get_by_id(where);
+		console.log(checkin);
+
+		privatesquare_fetch_venues(checkin['latitude'], checkin['longitude'], checkin['venue']);
 	}
 
 	return false;
