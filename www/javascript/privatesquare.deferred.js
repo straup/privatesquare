@@ -87,14 +87,25 @@ function privatesquare_deferred_store(checkin, callback){
 	deferred.push(checkin);
 	store.set("deferred", deferred);
 
+	_privatesquare_deferred_onupdate();
+}
+
+function privatesquare_deferred_purge(callback){
+	var store = new Store("privatesquare");
+	var deferred = store.get("deferred");
+
+	if (deferred){
+		store.remove("deferred");
+	}
+
+	_privatesquare_deferred_onupdate();
+}
+
+function _privatesquare_deferred_onupdate(callback){
+
 	privatesquare_deferred_indicator();
 
 	if (callback){
 		callback(checkin);
 	}
-}
-
-function privatesquare_deferred_purge(){
-	var store = new Store("privatesquare");
-	store.remove("deferred");
 }
