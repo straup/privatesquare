@@ -77,8 +77,8 @@ var _cfg={literal}{{/literal}
 		|
 		</span>
 {if $cfg.enable_feature_deferred_checkins}
-		<span id="deferred">
-		<span id="deferred_count"></span>
+		<span id="pending">
+		<span id="pending_count"></span>
 		|
 		</span>
 {/if}

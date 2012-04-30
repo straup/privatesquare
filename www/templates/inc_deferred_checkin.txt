@@ -1,6 +1,6 @@
-<div id="deferred">
+<div id="deferred" style="display:none;">
 
-<form method="POST" id="deferred_checkin" style="display:none;">
+<form method="POST" id="deferred_checkin">
 	<input type="text" id="deferred_where" placeholder="Where are you?" />
 	<input type="submit" value="THIS WILL HAPPEN" />
 </form>
