@@ -72,7 +72,7 @@ function privatesquare_deferred_indicator(){
 	var indicator = $("#pending_count");
 
 	if (count){
-		indicator.html(count + " pending");
+		indicator.html('<a href="' + _cfg.abs_root_url + 'me/pending/">pending</a>');
 		wrapper.show();
 	}
 

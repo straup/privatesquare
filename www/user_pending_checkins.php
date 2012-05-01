@@ -37,6 +37,6 @@
 	$search_crumb = crumb_generate("api", "privatesquare.venues.search");
 	$GLOBALS['smarty']->assign("search_crumb", $search_crumb);
 
-	$GLOBALS['smarty']->display("page_user_deferred_checkins.txt");
+	$GLOBALS['smarty']->display("page_user_pending_checkins.txt");
 	exit();
 ?>

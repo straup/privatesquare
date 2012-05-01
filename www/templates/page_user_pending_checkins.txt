@@ -1,4 +1,4 @@
-{capture assign="page_title"}{$owner.username} | deferred checkins{/capture}
+{capture assign="page_title"}{$owner.username} | pending checkins{/capture}
 {capture assign="extra_head"}
 {if $cfg.environment=='prod'}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.min.js"></script>
@@ -17,6 +17,8 @@
 	<select id="checkins" data-crumb="{$search_crumb|escape}" />
 	<input type="SUBMIT" value="THIS" />
 </form>
+
+{include file="inc_checkin_venues.txt"}
 
 <script type="text/javascript">
 {literal}

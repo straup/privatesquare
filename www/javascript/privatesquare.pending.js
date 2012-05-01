@@ -79,11 +79,17 @@ function privatesquare_pending_onselect(){
 
 	else {
 
-		console.log(where);
 		var checkin = privatesquare_deferred_get_by_id(where);
-		console.log(checkin);
-
 		privatesquare_fetch_venues(checkin['latitude'], checkin['longitude'], checkin['venue']);
+
+		deferred.hide();
+
+		/*
+		 to do: enforce 'I was here' (don't tell foursquare?)
+		 to do: assign create data...
+		 to do: hide 'to it again'
+		 to do: do not let user create deferred checkin if api call fails
+		*/
 	}
 
 	return false;

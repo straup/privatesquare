@@ -11,30 +11,7 @@
 {include file="inc_deferred_checkin.txt"}
 {/if}
 
-<div id="venues" style="display:none;">
-
-<form method="POST" id="checkin">
-
-	<select id="where"></select>
-
-	<select id="what">
-{foreach from=$status_map item="label" key="id"}
-		<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-	</select>
-
-	<select id="broadcast">
-{foreach from=$broadcast_map item="label" key="id"}
-		<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-	</select>
-
-	<input type="submit" value="THIS HAPPENED" />
-</form>
-
-<div id="again">do it again!</div>
-
-</div>
+{include file="inc_checkin_venues.txt"}
 
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}
