@@ -63,7 +63,6 @@ function privatesquare_gather_args(){
 	broadcast = (status_id==2) ? "" : broadcast;
 
 	var crumb = $("#where").attr("data-crumb");
-	var created = $("#where").attr("data-created");
 
 	var args = {
 		'crumb': crumb,
@@ -71,10 +70,6 @@ function privatesquare_gather_args(){
 		'status_id': status_id,
 		'broadcast': broadcast
 	};
-
-	if (created){
-		args['created'] = created;
-	}
 
 	return args;
 }
@@ -144,7 +139,7 @@ function privatesquare_search(){
 	return false;
 }
 
-function privatesquare_fetch_venues(lat, lon, query, created){
+function privatesquare_fetch_venues(lat, lon, query){
 
 	var args = {
 		'method': 'foursquare.venues.search',
@@ -159,21 +154,17 @@ function privatesquare_fetch_venues(lat, lon, query, created){
 	$.ajax({
 		'url': _cfg.abs_root_url + 'api/',
 		'data': args,
-		'success': function(rsp){
-			_foursquare_venues_onsuccess(rsp, created);
-		}
+		'success': _foursquare_venues_onsuccess
 	});
  
 	privatesquare_set_status("Fetching nearby places...");
 }
 
-/* 'created' as in a deferred checkin that is being processed */
-
-function _foursquare_venues_onsuccess(rsp, created){
+function _foursquare_venues_onsuccess(rsp){
 
 	$("#status").html("");
 
-	if ((rsp['stat'] != 'ok') && (! created)){
+	if (rsp['stat'] != 'ok'){
 
 		/*
 		I am unsure how I feel about this; the maybe better alternative
@@ -222,11 +213,6 @@ function _foursquare_venues_onsuccess(rsp, created){
 
 	var where = $("#where");
 	where.attr("data-crumb", rsp['crumb']);
-
-	if (created){
-		where.attr("data-created", created);
-	}
-
 	where.html(html);
 	where.change(_privatesquare_where_onchange);
 

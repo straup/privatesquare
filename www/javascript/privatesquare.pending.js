@@ -80,7 +80,7 @@ function privatesquare_pending_onselect(){
 	else {
 
 		var checkin = privatesquare_deferred_get_by_id(where);
-		privatesquare_fetch_venues(checkin['latitude'], checkin['longitude'], checkin['venue'], checkin['created']);
+		privatesquare_pending_fetch_venues(checkin);
 
 		deferred.hide();
 
@@ -93,4 +93,95 @@ function privatesquare_pending_onselect(){
 	}
 
 	return false;
+}
+
+function privatesquare_pending_fetch_venues(checkin){
+
+	var args = {
+		'method': 'foursquare.venues.search',
+		'latitude': checkin['lat'],
+		'longitude': checkin['lon'],
+		'query': checkin['venue']
+	};
+
+	$.ajax({
+		'url': _cfg.abs_root_url + 'api/',
+		'data': args,
+		'success': function(rsp){
+			rsp['checkin'] = checkin;
+			_foo(rsp);
+		}
+	});
+ 
+	privatesquare_set_status("Fetching nearby places...");
+}
+
+function _foo(rsp){
+
+	privatesquare_unset_status();
+
+	if (rsp['stat'] != 'ok'){
+		privatesquare_set_status("FAIL:api");
+		return;
+	}
+
+	var count = rsp['venues'].length;
+
+	if (! count){
+		privatesquare_set_status("FAIL: no venues");
+		return;
+	}
+
+	var html = '';
+
+	for (var i=0; i < count; i++){
+		var v = rsp['venues'][i];
+		html += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
+	}
+
+	html += '<option value="-1">–– none of the above / search ––</option>';
+
+	var where = $("#where");
+	where.attr("data-crumb", rsp['crumb']);
+
+	where.attr("data-created", rsp['checkin']['created']);
+
+	where.html(html);
+	where.change(_privatesquare_where_onchange);
+
+	$("#what").change(_privatesquare_what_onchange);
+
+	// draw the map...
+
+	_privatesquare_show_map(rsp['latitude'], rsp['longitude']);
+
+	privatesquare_unset_status();
+	$("#venues").show();
+
+	$("#checkin").submit(privatesquare_pending_onsubmit);
+}
+
+/* need to figure out how to pass checking (id) around... */
+
+function privatesquare_pending_onsubmit(){
+
+	var args = privatesquare_gather_args();
+
+	if (args['venue_id'] == -1){
+		privatesquare_search();
+		return false;
+	}
+
+	privatesquare_checkin(args, privatesquare_pending_checkin_onsuccess);
+
+	$("#venues").hide();
+
+	_privatesquare_hide_map()
+
+	privatesquare_set_status("Checking in...");
+	return false;
+}
+
+function privatesquare_pending_checkin_onsuccess(rsp){
+
 }
