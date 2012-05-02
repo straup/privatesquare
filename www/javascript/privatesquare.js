@@ -9,6 +9,23 @@ function privatesquare_init(){
 	privatesquare_set_status("Asking the sky where you are...");
 }
 
+function _privatesquare_geolocation_onsuccess(rsp){
+
+	var lat = rsp['coords']['latitude'];
+	var lon = rsp['coords']['longitude'];
+
+	if ((! window.navigator.onLine) && (_cfg['deferred_checkins'])){
+		privatesquare_deferred_checkin(lat, lon, 'offline');
+		return;
+	}
+
+	privatesquare_fetch_venues(lat, lon);
+}
+
+function _privatesquare_geolocation_onerror(rsp){
+	privatesquare_set_status("Huh. I have no idea where you are...");
+}
+
 function privatesquare_reset(){
 	$("#venues").hide();
 
@@ -46,13 +63,20 @@ function privatesquare_gather_args(){
 	broadcast = (status_id==2) ? "" : broadcast;
 
 	var crumb = $("#where").attr("data-crumb");
+	var created = $("#where").attr("data-created");
 
-	return {
+	var args = {
 		'crumb': crumb,
 		'venue_id': venue_id,
 		'status_id': status_id,
 		'broadcast': broadcast
 	};
+
+	if (created){
+		args['created'] = created;
+	}
+
+	return args;
 }
 
 function privatesquare_checkin(args, onsuccess){
@@ -83,19 +107,6 @@ function privatesquare_checkin(args, onsuccess){
 		}
 	});
 
-}
-
-function _privatesquare_geolocation_onsuccess(rsp){
-
-	var lat = rsp['coords']['latitude'];
-	var lon = rsp['coords']['longitude'];
-
-	if ((! window.navigator.onLine) && (_cfg['deferred_checkins'])){
-		privatesquare_deferred_checkin(lat, lon, 'offline');
-		return;
-	}
-
-	privatesquare_fetch_venues(lat, lon);
 }
 
 function privatesquare_search(){
@@ -133,7 +144,7 @@ function privatesquare_search(){
 	return false;
 }
 
-function privatesquare_fetch_venues(lat, lon, query){
+function privatesquare_fetch_venues(lat, lon, query, created){
 
 	var args = {
 		'method': 'foursquare.venues.search',
@@ -148,31 +159,26 @@ function privatesquare_fetch_venues(lat, lon, query){
 	$.ajax({
 		'url': _cfg.abs_root_url + 'api/',
 		'data': args,
-		'success': _foursquare_venues_onsuccess
+		'success': function(rsp){
+			_foursquare_venues_onsuccess(rsp, created);
+		}
 	});
  
 	privatesquare_set_status("Fetching nearby places...");
 }
 
-function _privatesquare_geolocation_onerror(rsp){
-	privatesquare_set_status("Huh. I have no idea where you are...");
-}
+/* 'created' as in a deferred checkin that is being processed */
 
-function _foursquare_venues_onsuccess(rsp){
+function _foursquare_venues_onsuccess(rsp, created){
 
 	$("#status").html("");
 
-	if (rsp['stat'] != 'ok'){
+	if ((rsp['stat'] != 'ok') && (! created)){
 
 		/*
 		I am unsure how I feel about this; the maybe better alternative
 		is to wrap the lat/lon used to call the API in all the various
 		callbacks... (20120429/straup)
-		*/
-
-		/*
-		to do: some check to not do this if the user is trying to finish
-		a deferred checkin...
 		*/
 
 		var _okay = function(rsp){
@@ -216,6 +222,11 @@ function _foursquare_venues_onsuccess(rsp){
 
 	var where = $("#where");
 	where.attr("data-crumb", rsp['crumb']);
+
+	if (created){
+		where.attr("data-created", created);
+	}
+
 	where.html(html);
 	where.change(_privatesquare_where_onchange);
 
@@ -227,6 +238,15 @@ function _foursquare_venues_onsuccess(rsp){
 
 	privatesquare_unset_status();
 	$("#venues").show();
+
+	/*
+	this is necessary for the pending checking stuff
+	... and shouldn't be a problem ... except for the
+	part where it needs a custom callback... hmmmm...
+	(20120501/straup)
+	*/
+
+	$("#checkin").submit(privatesquare_submit);
 }
 
 function _privatesquare_where_onchange(){

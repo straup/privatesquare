@@ -18,7 +18,7 @@
 	<input type="SUBMIT" value="THIS" />
 </form>
 
-{include file="inc_checkin_venues.txt"}
+{include file="inc_checkin_venues.txt" donot_doitagain=1}
 
 <script type="text/javascript">
 {literal}

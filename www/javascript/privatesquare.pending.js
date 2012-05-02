@@ -80,7 +80,7 @@ function privatesquare_pending_onselect(){
 	else {
 
 		var checkin = privatesquare_deferred_get_by_id(where);
-		privatesquare_fetch_venues(checkin['latitude'], checkin['longitude'], checkin['venue']);
+		privatesquare_fetch_venues(checkin['latitude'], checkin['longitude'], checkin['venue'], checkin['created']);
 
 		deferred.hide();
 
