@@ -3,6 +3,8 @@
 	include("include/init.php");
 
 	loadlib("foursquare_users");
+	loadlib("foursquare_checkins");
+	loadlib("privatesquare_checkins");
 
 	if (! $GLOBALS['cfg']['enable_feature_deferred_checkins']){
 		error_disabled();
@@ -30,6 +32,26 @@
 	if (! $is_own){
 		error_403();
 	}
+
+	$status_map = privatesquare_checkins_status_map('string keys');
+	$broadcast_map = foursquare_checkins_broadcast_map('string keys');
+
+	# Hey look! A little bit of hand-waving to prune the list of
+	# possible broadcast/status flags
+
+	$broadcast = "don't tell foursquare";
+	$status = "i am here";
+
+	$broadcast_map = array(
+		$broadcast_map[$broadcast] => $broadcast,
+	);
+
+	$status_map = array(
+		$status_map[$status] => $status,
+	);
+
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+	$GLOBALS['smarty']->assign_by_ref("broadcast_map", $broadcast_map);
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("is_own", $is_own);

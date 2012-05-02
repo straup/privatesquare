@@ -170,6 +170,11 @@ function _foursquare_venues_onsuccess(rsp){
 		callbacks... (20120429/straup)
 		*/
 
+		/*
+		to do: some check to not do this if the user is trying to finish
+		a deferred checkin...
+		*/
+
 		var _okay = function(rsp){
 			var lat = rsp['coords']['latitude'];
 			var lon = rsp['coords']['longitude'];
