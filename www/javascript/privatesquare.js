@@ -162,7 +162,7 @@ function privatesquare_fetch_venues(lat, lon, query){
 
 function _foursquare_venues_onsuccess(rsp){
 
-	$("#status").html("");
+	privatesquare_unset_status();
 
 	if (rsp['stat'] != 'ok'){
 
@@ -224,13 +224,6 @@ function _foursquare_venues_onsuccess(rsp){
 
 	privatesquare_unset_status();
 	$("#venues").show();
-
-	/*
-	this is necessary for the pending checking stuff
-	... and shouldn't be a problem ... except for the
-	part where it needs a custom callback... hmmmm...
-	(20120501/straup)
-	*/
 
 	$("#checkin").submit(privatesquare_submit);
 }

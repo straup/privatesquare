@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
 {if $cfg.user}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.min.js"></script>
 {if $cfg.environment=='prod'}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js?version={$version}"></script>
 {else}
@@ -30,11 +31,8 @@
 {if $cfg.enable_feature_deferred_checkins}
 {if $cfg.environment=='prod'}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.min.js?version={$version}"></script>
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.min.js?version={$version}"></script>
 {else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.js?version={$version}"></script>
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.js?version={$version}"></script>
-
 {/if}
 	<script type="text/javascript">
 {literal}

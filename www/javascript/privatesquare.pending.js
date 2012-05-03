@@ -99,8 +99,8 @@ function privatesquare_pending_fetch_venues(checkin){
 
 	var args = {
 		'method': 'foursquare.venues.search',
-		'latitude': checkin['lat'],
-		'longitude': checkin['lon'],
+		'latitude': checkin['latitude'],
+		'longitude': checkin['longitude'],
 		'query': checkin['venue']
 	};
 
@@ -143,8 +143,7 @@ function _foo(rsp){
 
 	var where = $("#where");
 	where.attr("data-crumb", rsp['crumb']);
-
-	where.attr("data-created", rsp['checkin']['created']);
+	where.attr("data-checkin-id", rsp['checkin']['id']);
 
 	where.html(html);
 	where.change(_privatesquare_where_onchange);
@@ -158,12 +157,20 @@ function _foo(rsp){
 	privatesquare_unset_status();
 	$("#venues").show();
 
-	$("#checkin").submit(privatesquare_pending_onsubmit);
+	$("#checkin").submit(function(){
+try{
+_privatesquare_pending_onsubmit();
+} catch (e){
+console.log(e);
+}
+
+return false;
+});
 }
 
 /* need to figure out how to pass checking (id) around... */
 
-function privatesquare_pending_onsubmit(){
+function _privatesquare_pending_onsubmit(){
 
 	var args = privatesquare_gather_args();
 
@@ -172,7 +179,16 @@ function privatesquare_pending_onsubmit(){
 		return false;
 	}
 
-	privatesquare_checkin(args, privatesquare_pending_checkin_onsuccess);
+	var where = $("#where");
+	var id = where.attr("data-checkin-id");
+	var checkin = privatesquare_deferred_get_by_id(id);
+
+	args['created'] = checkin['created'];
+
+	privatesquare_checkin(args, function(rsp){
+		rsp['checkin'] = checkin;
+		_privatesquare_pending_checkin_onsuccess(rsp);
+	});
 
 	$("#venues").hide();
 
@@ -182,6 +198,7 @@ function privatesquare_pending_onsubmit(){
 	return false;
 }
 
-function privatesquare_pending_checkin_onsuccess(rsp){
-
+function _privatesquare_pending_checkin_onsuccess(rsp){
+	console.log(rsp);
+	privatesquare_deferred_remove(rsp['checkin']['id']);
 }
