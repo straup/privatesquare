@@ -22,3 +22,12 @@ CREATE TABLE `PrivatesquareCheckins` (
   KEY `by_foursquare_id` (`user_id`, `checkin_id`),
   UNIQUE KEY `by_checkin` (`created`, `venue_id`, `user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `UserPreferences`;
+
+CREATE TABLES `UsersPreferences` (
+  `user_id` INT(11) UNSIGNED NOT NULL,
+  `preference` VARCHAR(255),
+  `value` VARCHAR(255),
+  UNIQUE KEY `by_pref` (`user_id`, `preference`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
