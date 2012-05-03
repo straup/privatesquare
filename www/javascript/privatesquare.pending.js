@@ -7,17 +7,19 @@ function privatesquare_pending_init(){
 		return;
 	}
 
-	var html = '<optgroup>';
-
 	var prettydate = function(dt){
+
 		var mmToMonth = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 
 		var yyyy = dt.getFullYear();
 		var dd = dt.getDate();
 		var mm = mmToMonth[dt.getMonth()];
 
+		/* include time? */
 		return mm + " " + dd;
 	}
+
+	var html = '<optgroup>';
 
 	for (var i in pending){
 
@@ -48,6 +50,14 @@ function privatesquare_pending_init(){
 	deferred.submit(privatesquare_pending_onselect);
 
 	deferred.show();
+
+	var msg = "There are " + pending.length + " pending checkins."
+
+	if (pending.length == 1){
+		msg = "You have one pending checkin.";
+	}
+
+	privatesquare_set_status(msg);
 }
 
 function privatesquare_pending_onselect(){
@@ -83,13 +93,6 @@ function privatesquare_pending_onselect(){
 		privatesquare_pending_fetch_venues(checkin);
 
 		deferred.hide();
-
-		/*
-		 to do: enforce 'I was here' (don't tell foursquare?)
-		 to do: assign create data...
-		 to do: hide 'to it again'
-		 to do: do not let user create deferred checkin if api call fails
-		*/
 	}
 
 	return false;
@@ -109,75 +112,67 @@ function privatesquare_pending_fetch_venues(checkin){
 		'data': args,
 		'success': function(rsp){
 			rsp['checkin'] = checkin;
-			_foo(rsp);
+			_privatesquare_pending_fetch_venues_onload(rsp);
 		}
 	});
  
-	privatesquare_set_status("Fetching nearby places...");
+	privatesquare_set_status("Looking for '" + htmlspecialchars(checkin['venue']) + "'");
 }
 
-function _foo(rsp){
+function _privatesquare_pending_fetch_venues_onload(rsp){
 
 	privatesquare_unset_status();
 
 	if (rsp['stat'] != 'ok'){
-		privatesquare_set_status("FAIL:api");
+		privatesquare_api_error(rsp);
 		return;
 	}
 
 	var count = rsp['venues'].length;
 
 	if (! count){
-		privatesquare_set_status("FAIL: no venues");
+		privatesquare_set_status("Ack! foursquare can't find like '" + htmlspecialchars(checkin['venue']) + "' around there...");
 		return;
 	}
 
 	var html = '';
+	html += '<optgroup>';
 
 	for (var i=0; i < count; i++){
 		var v = rsp['venues'][i];
 		html += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
 	}
 
-	html += '<option value="-1">–– none of the above / search ––</option>';
+	html += '</optgroup>';
+
+	html += '<optgroup class="admin">';
+	html += '<option value="-1">Meh, just delete this...</option>';
+	html += '</optgroup>';
 
 	var where = $("#where");
 	where.attr("data-crumb", rsp['crumb']);
 	where.attr("data-checkin-id", rsp['checkin']['id']);
 
 	where.html(html);
-	where.change(_privatesquare_where_onchange);
 
-	$("#what").change(_privatesquare_what_onchange);
+	$("#what").attr("disabled", "disabled");
+	$("#broadcast").attr("disabled", "disabled");
 
-	// draw the map...
+	_privatesquare_show_map(rsp['latitude'], rsp['longitude'], '"' + rsp['checkin']['venue'] + '"');
 
-	_privatesquare_show_map(rsp['latitude'], rsp['longitude']);
-
-	privatesquare_unset_status();
 	$("#venues").show();
 
-	$("#checkin").submit(function(){
-try{
-_privatesquare_pending_onsubmit();
-} catch (e){
-console.log(e);
-}
+	$("#checkin").submit(_privatesquare_pending_onsubmit);
 
-return false;
-});
 }
-
-/* need to figure out how to pass checking (id) around... */
 
 function _privatesquare_pending_onsubmit(){
 
-	var args = privatesquare_gather_args();
+	$("#venues").hide();
 
-	if (args['venue_id'] == -1){
-		privatesquare_search();
-		return false;
-	}
+	_privatesquare_hide_map()
+
+	var args = privatesquare_gather_args();
 
 	var where = $("#where");
 	var id = where.attr("data-checkin-id");
@@ -185,20 +180,54 @@ function _privatesquare_pending_onsubmit(){
 
 	args['created'] = checkin['created'];
 
+	if (args['venue_id'] == -1){
+
+		var q = "Are you sure you want to delete this pending checkin?";
+
+		if (confirm(q)){
+
+			privatesquare_deferred_remove(checkin['id']);
+
+			var pending = privatesquare_deferred_list();
+
+			if (pending.length == 0){
+				privatesquare_set_status("All your pending checkins have been encheckin-ified (or deleted).");
+			}
+
+			else {
+				privatesquare_set_status("Your checkin at '" + htmlspecialchars(checkin['venue']) + "' has deleted.");
+				privatesquare_pending_init();
+			}
+		}
+
+		return false;
+	}
+
 	privatesquare_checkin(args, function(rsp){
 		rsp['checkin'] = checkin;
-		_privatesquare_pending_checkin_onsuccess(rsp);
+		_privatesquare_pending_checkin_onload(rsp);
 	});
-
-	$("#venues").hide();
-
-	_privatesquare_hide_map()
 
 	privatesquare_set_status("Checking in...");
 	return false;
 }
 
-function _privatesquare_pending_checkin_onsuccess(rsp){
-	console.log(rsp);
+function _privatesquare_pending_checkin_onload(rsp){
+
+	if (rsp['stat'] != 'ok'){
+		privatesquare_api_error(rsp);
+		return;
+	}
+
 	privatesquare_deferred_remove(rsp['checkin']['id']);
+
+	var pending = privatesquare_deferred_list();
+
+	if (pending.length == 0){
+		privatesquare_set_status("All your pending checkins have been encheckin-ified!");
+		return;
+	}
+
+	privatesquare_set_status("Your checkin at '" + htmlspecialchars(rsp['checkin']['venue']) + "' has been encheckin-ified!");
+	privatesquare_pending_init();
 }

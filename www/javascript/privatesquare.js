@@ -304,7 +304,11 @@ function privatesquare_api_error(rsp, tryagain_func){
 
 }
 
-function _privatesquare_show_map(lat, lon){
+function _privatesquare_show_map(lat, lon, label){
+
+	if (! label){
+		label = "you are here-ish";
+	}
 
 	var latlon = lat + ',' + lon;
 
@@ -327,7 +331,7 @@ function _privatesquare_show_map(lat, lon){
 
 	mrk.attr("class", "marker")
 	mrk.attr("data-location", latlon)
-	mrk.html("you are here-ish");
+	mrk.html(htmlspecialchars(label));
 
 	map.html(mrk);
 	wrapper.html(map)
