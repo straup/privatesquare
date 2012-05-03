@@ -3,18 +3,16 @@ function privatesquare_deferred_checkin(lat, lon, reason){
 	 privatesquare_unset_status();
 
 	if (reason=='offline'){
-		privatesquare_set_status("I've lost the network.");
+		reason = "I've lost the network";
 	}
 
 	else if (reason=='api error'){
-		privatesquare_set_status("foursquare is sad.");
+		reason = "foursquare is sad";
 	}
 
-	else if (reason){
-		privatesquare_set_status(reason);
+	if (reason){
+		privatesquare_set_status(htmlspecialchars(reason) + ' / write a postcard to the future?');
 	}
-
-	else {}
 
 	_privatesquare_show_map(lat, lon);
 

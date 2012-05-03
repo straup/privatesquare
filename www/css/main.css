@@ -149,6 +149,7 @@ input[type=submit] {
 #status {
     font-size:1.6em;
     font-family:serif;
+    margin-bottom:5px;
 }
 
 #again {

@@ -16,7 +16,7 @@
 <form method="POST" id="deferred">
 	<select id="checkins" data-crumb="{$search_crumb|escape}" />
 	<br />
-	<input type="SUBMIT" value="ENCHECKIN-IFY THIS" />
+	<input type="SUBMIT" value="MAKE IT SO" />
 </form>
 
 {include file="inc_checkin_venues.txt" donot_doitagain=1}
