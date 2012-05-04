@@ -21,6 +21,11 @@
 
 	$GLOBALS['cfg']['environment'] = 'prod';
 
+	# Display a message in the page header (for all pages)
+
+	$GLOBALS['cfg']['display_message'] = 0;
+	$GLOBALS['cfg']['display_message_text'] = 'This is the text that will appear in the message header.';
+
 	# You will need valid foursquare OAuth credentials
 	# See also: https://foursquare.com/oauth/register
 
@@ -76,6 +81,8 @@
 	# See also: https://github.com/straup/privatesquare/blob/master/bin/compile-templates.php
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
+
+	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 
 	$GLOBALS['cfg']['enable_feature_export'] = 1;
 

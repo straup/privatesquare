@@ -1,3 +1,21 @@
+#login {
+    font-size:8pt;
+    padding-top:5px;
+}
+
+#nav {
+}
+
+#status {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+#message {
+    font-size: small !important;
+}
+
 #map-wrapper {
 	height: 100px !important;
 	margin-bottom: 10px;
@@ -94,4 +112,8 @@ input[type=submit] {
 
 #displaymap {
     height: 100px;
+}
+
+#deferred {
+    padding-top: 10px;
 }
