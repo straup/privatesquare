@@ -13,11 +13,27 @@
 
 <div id="map-wrapper"></div>
 
-<form method="POST" id="deferred">
-	<select id="checkins" data-crumb="{$search_crumb|escape}" />
-	<br />
-	<input type="SUBMIT" value="MAKE IT SO" />
-</form>
+<div>
+
+	<form id="deferred">
+	<select id="checkins" data-crumb="{$search_crumb|escape}">
+	</select>
+
+	<select id="whatnow">
+		<option value="checkin">This happened</option>
+		<option value="delete">Er... yeah, whatever</option>
+	</select>
+
+	<input type="submit" value="MAKE IT SO" />
+
+	<div id="meh-all" style="margin-top:60px;text-align:right;">
+	<button style="background-color:#ccc;padding:10px;">meh... just delete it all</button>
+	</div>
+
+	</form>
+
+
+</div>
 
 {include file="inc_checkin_venues.txt" donot_doitagain=1}
 

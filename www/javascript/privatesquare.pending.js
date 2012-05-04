@@ -34,22 +34,18 @@ function privatesquare_pending_init(){
 	}
 
 	html += '</optgroup>';
-	html += '<optgroup class="admin">';
-
-	html += '<option value="__purge__">';
-	html += (pending.length > 1) ? 'Delete all pending checkins' : 'Just forget this checkin';
-	html += '</option>';
-
-	html += '</optgroup>';
 
 	var checkins = $("#checkins");
 	checkins.html(html);
 
+	var meh = $("#meh-all");
+	meh.click(privatesquare_pending_purge_checkins);
+
 	var deferred = $("#deferred");
 	deferred.attr('data-count-pending', pending.length);
-	deferred.submit(privatesquare_pending_onselect);
 
 	deferred.show();
+	deferred.submit(privatesquare_pending_onselect);
 
 	privatesquare_pending_show_map(pending);
 }
@@ -59,36 +55,22 @@ function privatesquare_pending_onselect(){
 	_privatesquare_hide_map();
 
 	var deferred = $("#deferred");
-	var checkins = $("#checkins");
+	deferred.hide();
 
+	var checkins = $("#checkins");
 	var where = checkins.val();
 
-	if (where == '__purge__'){
+	var checkin = privatesquare_deferred_get_by_id(where);
 
-		var q = 'Are you sure you want to delete all those pending checkins?';
+	var whatnow = $("#whatnow");
+	var what = whatnow.val();
 
-		var count_pending = deferred.attr('data-count-pending');
-
-		if (count_pending == 1){
-			q = 'Are you sure you want to delete this checkin?';
-		}
-
-		if (confirm(q)){
-
-			checkins.html("");
-			deferred.hide();
-
-			privatesquare_deferred_purge();
-			privatesquare_set_status("Okay all your pending checkins have been deleted.");
-		}
+	if (what == 'delete'){
+		privatesquare_pending_delete_checkin(checkin);
 	}
 
 	else {
-
-		var checkin = privatesquare_deferred_get_by_id(where);
 		privatesquare_pending_fetch_venues(checkin);
-
-		deferred.hide();
 	}
 
 	return false;
@@ -127,7 +109,11 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 	var count = rsp['venues'].length;
 
 	if (! count){
-		privatesquare_set_status("Ack! foursquare can't find like '" + htmlspecialchars(checkin['venue']) + "' around there...");
+
+		var msg = "Ack! foursquare can't find anything like '" + htmlspecialchars(rsp['checkin']['venue']) + "' around those parts.";
+		msg += " Also, privatesquare isn't smart enough to deal with this situation yet...";
+
+		privatesquare_set_status(msg);
 		return;
 	}
 
@@ -155,7 +141,10 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 	$("#venues").show();
 
 	var meh = $("#meh");
-	meh.click(privatesquare_pending_delete_checkin);
+	meh.click(function(){
+		privatesquare_pending_delete_checkin(rsp['checkin']);
+	});
+
 	meh.show();
 
 	$("#checkin").submit(_privatesquare_pending_onsubmit);
@@ -165,6 +154,7 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 function _privatesquare_pending_onsubmit(){
 
 	$("#venues").hide();
+	$("#meh").hide();
 
 	_privatesquare_hide_map();
 
@@ -185,11 +175,28 @@ function _privatesquare_pending_onsubmit(){
 	return false;
 }
 
-function privatesquare_pending_delete_checkin(){
+function privatesquare_pending_purge_checkins(){
 
-	var where = $("#where");
-	var id = where.attr("data-checkin-id");
-	var checkin = privatesquare_deferred_get_by_id(id);
+	var q = 'Are you sure you want to delete all those pending checkins?';
+
+	var deferred = $("#deferred");
+	var count_pending = deferred.attr('data-count-pending');
+
+	if (count_pending == 1){
+		q = 'Are you sure you want to delete this checkin?';
+	}
+
+	if (! confirm(q)){
+		return;
+	}
+
+	deferred.hide();
+
+	privatesquare_deferred_purge();
+	privatesquare_set_status("Okay all your pending checkins have been deleted.");
+}
+
+function privatesquare_pending_delete_checkin(checkin){
 
 	var q = "Are you sure you want to delete this pending checkin?";
 
