@@ -1,6 +1,18 @@
+function privatesquare_deferred_has_local_storage(){
+
+	try {
+		var store = new Store("privatesquare");
+		return 1;
+	}
+
+	catch(e){
+		return 0;
+	}
+}
+
 function privatesquare_deferred_checkin(lat, lon, reason){
 
-	 privatesquare_unset_status();
+	privatesquare_unset_status();
 
 	if (reason=='offline'){
 		reason = "I've lost the network";
@@ -10,11 +22,14 @@ function privatesquare_deferred_checkin(lat, lon, reason){
 		reason = "foursquare is sad";
 	}
 
-	if (reason){
-		privatesquare_set_status(htmlspecialchars(reason) + ' / write a postcard to the future?');
+	_privatesquare_show_map(lat, lon);
+
+	if (! privatesquare_deferred_has_local_storage()){
+		privatesquare_set_status(htmlspecialchars(reason) + " / your browser can't store deferred checkins / sad browser is sad");
+		return;
 	}
 
-	_privatesquare_show_map(lat, lon);
+	privatesquare_set_status(htmlspecialchars(reason) + ' / write a postcard to the future?');
 
 	var w = $("#deferred_where");
 	w.val("");

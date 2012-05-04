@@ -43,7 +43,17 @@
 
 <script type="text/javascript">
 {literal}
-$(document).ready(privatesquare_pending_init);
+
+$(document).ready(function(){
+
+	if (! privatesquare_deferred_has_local_storage()){
+		privatesquare_set_status("your browser does not support deferred checkins / sad nokia phone sound");
+		return;
+	}
+
+	privatesquare_pending_init();
+});
+
 {/literal}
 </script>
 
