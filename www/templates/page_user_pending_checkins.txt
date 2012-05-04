@@ -21,6 +21,10 @@
 
 {include file="inc_checkin_venues.txt" donot_doitagain=1}
 
+<div id="meh" style="display:none;margin-top:40px;text-align:right;">
+<button style="background-color:#ccc;padding:10px;">meh... just delete this</button>
+</div>
+
 <script type="text/javascript">
 {literal}
 $(document).ready(privatesquare_pending_init);

@@ -51,16 +51,12 @@ function privatesquare_pending_init(){
 
 	deferred.show();
 
-	var msg = "There are " + pending.length + " pending checkins."
-
-	if (pending.length == 1){
-		msg = "You have one pending checkin.";
-	}
-
-	privatesquare_set_status(msg);
+	privatesquare_pending_show_map(pending);
 }
 
 function privatesquare_pending_onselect(){
+
+	_privatesquare_hide_map();
 
 	var deferred = $("#deferred");
 	var checkins = $("#checkins");
@@ -145,10 +141,6 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 
 	html += '</optgroup>';
 
-	html += '<optgroup class="admin">';
-	html += '<option value="-1">Meh, just delete this...</option>';
-	html += '</optgroup>';
-
 	var where = $("#where");
 	where.attr("data-crumb", rsp['crumb']);
 	where.attr("data-checkin-id", rsp['checkin']['id']);
@@ -162,6 +154,10 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 
 	$("#venues").show();
 
+	var meh = $("#meh");
+	meh.click(privatesquare_pending_delete_checkin);
+	meh.show();
+
 	$("#checkin").submit(_privatesquare_pending_onsubmit);
 
 }
@@ -170,7 +166,7 @@ function _privatesquare_pending_onsubmit(){
 
 	$("#venues").hide();
 
-	_privatesquare_hide_map()
+	_privatesquare_hide_map();
 
 	var args = privatesquare_gather_args();
 
@@ -180,29 +176,6 @@ function _privatesquare_pending_onsubmit(){
 
 	args['created'] = checkin['created'];
 
-	if (args['venue_id'] == -1){
-
-		var q = "Are you sure you want to delete this pending checkin?";
-
-		if (confirm(q)){
-
-			privatesquare_deferred_remove(checkin['id']);
-
-			var pending = privatesquare_deferred_list();
-
-			if (pending.length == 0){
-				privatesquare_set_status("All your pending checkins have been encheckin-ified (or deleted).");
-			}
-
-			else {
-				privatesquare_set_status("Your checkin at '" + htmlspecialchars(checkin['venue']) + "' has deleted.");
-				privatesquare_pending_init();
-			}
-		}
-
-		return false;
-	}
-
 	privatesquare_checkin(args, function(rsp){
 		rsp['checkin'] = checkin;
 		_privatesquare_pending_checkin_onload(rsp);
@@ -210,6 +183,36 @@ function _privatesquare_pending_onsubmit(){
 
 	privatesquare_set_status("Checking in...");
 	return false;
+}
+
+function privatesquare_pending_delete_checkin(){
+
+	var where = $("#where");
+	var id = where.attr("data-checkin-id");
+	var checkin = privatesquare_deferred_get_by_id(id);
+
+	var q = "Are you sure you want to delete this pending checkin?";
+
+	if (! confirm(q)){
+		return;
+	}
+
+	$("#venues").hide();
+	$("#meh").hide();
+
+	_privatesquare_hide_map()
+
+	privatesquare_deferred_remove(checkin['id']);
+
+	var pending = privatesquare_deferred_list();
+
+	if (pending.length == 0){
+		privatesquare_set_status("All your pending checkins have been encheckin-ified (or deleted).");
+		return;
+	}
+
+	privatesquare_set_status("Your checkin at '" + htmlspecialchars(checkin['venue']) + "' has deleted.");
+	privatesquare_pending_init();
 }
 
 function _privatesquare_pending_checkin_onload(rsp){
@@ -230,4 +233,64 @@ function _privatesquare_pending_checkin_onload(rsp){
 
 	privatesquare_set_status("Your checkin at '" + htmlspecialchars(rsp['checkin']['venue']) + "' has been encheckin-ified!");
 	privatesquare_pending_init();
+}
+
+function privatesquare_pending_show_map(checkins){
+
+	var markers = new Array();
+
+	var swlat = null;
+	var swlon = null;
+	var nelat = null;
+	var nelon = null;
+
+	for (var i in checkins){
+		var chk = checkins[i];
+
+		var lat = parseFloat(chk['latitude']);
+		var lon = parseFloat(chk['longitude']);
+		var latlon = lat + ',' + lon;
+
+		swlat = (swlat == undefined) ? lat : Math.min(swlat, lat);
+		swlon = (swlon == undefined) ? lon : Math.min(swlon, lon);
+		nelat = (nelat == undefined) ? lat : Math.max(nelat, lat);
+		nelon = (nelon == undefined) ? lon : Math.max(nelon, lon);
+
+		var mrk = '<div';
+		mrk += ' class="marker marker-header"';
+		mrk += ' data-location="' + latlon + '">';
+		mrk += '<span class="marker-history-text"></span>';
+		mrk += '</div>';
+
+		markers.push(mrk);
+	}
+
+	var wrapper = $("#map-wrapper");
+
+	var map = document.createElement("div");
+	map = $(map);
+
+	map.attr("class", "map");
+
+	if (checkins.length == 1){
+		var latlon = swlat + ',' + swlon;
+		map.attr("data-location", latlon);
+		map.attr("data-zoom", 14);
+	}
+
+	else {
+		var extent = [swlat,swlon,nelat,nelon].join(",");
+		map.attr("data-extent", extent);
+	}
+
+	map.attr("data-hash", false);
+	map.attr("data-touch", true);
+	map.attr("data-provider", "toner");
+
+	map.html(markers.join(""));
+	wrapper.html(map)
+
+	wrapper.show();
+
+	privatesquare_htmapl(map);	
 }

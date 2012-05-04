@@ -8,6 +8,8 @@
 
 	function api_foursquare_venues_search(){
 
+		# api_output_error(999, 'Debugging');
+
 		$lat = request_float('latitude');
 		$lon = request_float('longitude');
 		$alt = request_float('altitude');

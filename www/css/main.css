@@ -148,8 +148,7 @@ input[type=submit] {
 
 #status {
     font-size:1.6em;
-    font-family:serif;
-    margin-bottom:5px;
+    margin-bottom:15px;
 }
 
 #again {
@@ -195,12 +194,6 @@ q {
     font-size:11px;
     font-weight:700;
     color:#fff;
-    /*
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -khtml-border-radius: 20px;
-    border-radius: 20px;
-    */
 }
 
 .marker-header {
