@@ -463,9 +463,10 @@
 		$user = users_get_by_id($checkin['user_id']);
 		$cluster_id = $user['cluster_id'];
 
-		$enc_id = AddSlashes($checkin['checkin_id']);
+		$enc_id = AddSlashes($checkin['id']);
 
-		$sql = "DELETE FROM PrivatesquareCheckins WHERE checkin_id='{$checkin_id}'";
+		$sql = "DELETE FROM PrivatesquareCheckins WHERE id='{$enc_id}'";
+
 		return db_write_users($cluster_id, $sql);
 
 		# But wait, you say. How does one delete the checkin from

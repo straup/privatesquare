@@ -282,6 +282,11 @@ li{
     margin-bottom:25px;
 }
 
+#deleteme {
+    display:none;
+    border:solid thin;
+}
+
 .geo {
     line-height: 1.25em;
 }

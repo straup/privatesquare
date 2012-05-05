@@ -26,7 +26,13 @@
 			api_output_error(999, $rsp['error']);
 		}
 
-		api_output_ok();
+		$has_foursquare_checkin = ($checkin['checkin_id']) ? 1 : 0;
+
+		$out = array(
+			'has_foursquare_checkin' => $has_foursquare_checkin,
+		);
+
+		api_output_ok($out);
 	}
 
  	#################################################################

@@ -7,13 +7,13 @@
 
 {assign var="status_id" value=$checkin.status_id}
 
-<div class="checkin">
+<div class="checkin" id="map">
 	<div class="map" data-zoom="14" data-center="{$checkin.venue.latitude|escape},{$checkin.venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$checkin.venue.latitude|escape},{$checkin.venue.longitude|escape}"><span class="marker-history-text">{$checkin.venue.name|escape}</span></div>
 	</div>
 </div>
 
-<p style="font-size:small;">
+<p style="font-size:small;" id="user_checkin_context">
 {if $is_own}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
@@ -59,6 +59,8 @@ $(document).ready(function(){
 
 	privatesquare_htmapl();
 
+	/* oh please god... put me in plain vanilla procedural functions */
+
 	var deleteme_flow = function(){
 
 		$('#iamhere').attr('disabled', 'disabled');
@@ -86,9 +88,29 @@ $(document).ready(function(){
 			'type': 'POST',
 			'data': args,
 			'success': function(rsp){
-console.log(rsp);
+
+				if (rsp['stat'] == 'ok'){
+
+					var msg = "Okee dokee, your checkin has been deleted."
+
+					if (rsp['has_foursquare_checkin']){
+						msg += " Keep in mind that because there is no way to delete stuff from foursquare using their API that checkin is still sitting on their servers. Awesome, yeah?";
+					}
+
+					privatesquare_set_status(msg);
+					return;
+				}
+
+				privatesquare_api_error(rsp);
+
+				$("#user_checkin_context").show();
 			}
 		});
+
+		$("#user_checkin_details").hide();
+		$("#user_checkin_context").hide();
+		$("#iamhere").hide();
+		$("#deleteme").hide();
 
 		privatesquare_set_status("deleting your checkin / tasteful muzak plays");
 		return;
@@ -125,7 +147,8 @@ console.log(rsp);
 	$('#iamhere').removeAttr('disabled');
 	$('#iamhere').show();
 
-	/* $('#deleteme').removeAttr('disabled'); */
+	$('#deleteme').removeAttr('disabled');
+	$('#deleteme').show();
 
 });
 
