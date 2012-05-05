@@ -50,7 +50,7 @@
 
 	#################################################################
 
-	function users_preferences_reset_for_user($user){
+	function users_preferences_reset(&$user){
 
 		$cluster_id = $user['cluster_id'];
 
@@ -61,4 +61,54 @@
 	}
 
 	#################################################################
+
+	function users_preferences_update(&$user, $prefs){
+
+		$defaults = users_preferences_defaults();
+		$new = array();
+
+		foreach ($defaults as $k => $v){
+
+			if (! isset($prefs[$k])){
+				continue;
+			}
+
+			if ($v == $prefs[$k]){
+				continue;
+			}
+
+			$new[$k] = $v;
+		}
+
+		if (! count($new)){
+
+			return okay(array(
+				'preferences' => $prefs,
+			));
+		}
+
+		$rsp = users_preferences_reset($user);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$cluster_id = $user['cluster_id'];
+
+		foreach ($new as $k => $v){
+
+			$insert = array(
+				'user_id' => AddSlashes($user['id']),
+				'preference' => AddSlashes($k),
+				'value' => AddSlashes($v),
+			);
+
+			db_insert_users('UsersPreferences', $insert, $cluster_id);
+		}
+
+		return users_preferences_for_user($user);
+	}
+
+	#################################################################
+
 ?>
