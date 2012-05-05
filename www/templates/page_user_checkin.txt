@@ -22,9 +22,11 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
 </p>
 
+{if $is_own}
 <button id="iamhere">I am here again</button>
 
 <button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled">Delete this checkin</button>
+{/if}
 
 {* TO DO: next/previous *}
 
