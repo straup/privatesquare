@@ -33,10 +33,10 @@
 
 		foreach ($rsp['rows'] as $row){
 	
-			$pref = $row['pref'];
+			$pref = $row['preference'];
 			$value = $row['value'];
 
-			if (! isset($defaults[$key])){
+			if (! isset($defaults[$pref])){
 				continue;
 			}
 
@@ -57,7 +57,7 @@
 		$enc_id = AddSlashes($user['id']);
 		$sql = "DELETE FROM UsersPreferences WHERE user_id='{$enc_id}'";
 
-		db_write_users($cluster_id, $sql);
+		return db_write_users($cluster_id, $sql);
 	}
 
 	#################################################################
@@ -77,33 +77,29 @@
 				continue;
 			}
 
-			$new[$k] = $v;
+			$new[$k] = $prefs[$k];
 		}
 
-		if (! count($new)){
+		if (count($new)){
 
-			return okay(array(
-				'preferences' => $prefs,
-			));
-		}
+			$rsp = users_preferences_reset($user);
 
-		$rsp = users_preferences_reset($user);
+			if (! $rsp['ok']){
+				return $rsp;
+			}
 
-		if (! $rsp['ok']){
-			return $rsp;
-		}
+			$cluster_id = $user['cluster_id'];
 
-		$cluster_id = $user['cluster_id'];
+			foreach ($new as $k => $v){
 
-		foreach ($new as $k => $v){
+				$insert = array(
+					'user_id' => AddSlashes($user['id']),
+					'preference' => AddSlashes($k),
+					'value' => AddSlashes($v),
+				);
 
-			$insert = array(
-				'user_id' => AddSlashes($user['id']),
-				'preference' => AddSlashes($k),
-				'value' => AddSlashes($v),
-			);
-
-			db_insert_users('UsersPreferences', $insert, $cluster_id);
+				db_insert_users($cluster_id, 'UsersPreferences', $insert);
+			}
 		}
 
 		return users_preferences_for_user($user);
