@@ -44,18 +44,7 @@
 
 	#################################################################
 
-	function users_preferences_reset(&$user){
-
-		$update = array(
-			'preferences' => '',
-		);
-
-		return users_extras_update($user, $update);
-	}
-
-	#################################################################
-
-	function users_preferences_update(&$user, $prefs){
+	function users_preferences_assign(&$user, $prefs){
 
 		$defaults = users_preferences_defaults();
 		$new = array();
@@ -79,9 +68,24 @@
 			'preferences' => $new,
 		);
 
-		users_extras_update($user, $update);
+		$rsp = users_extras_update($user, $update);
 
-		return users_preferences_for_user($user);
+		if ($rsp['ok']){
+			$rsp['preferences'] = users_preferences_for_user($user);
+		}
+
+		return $rsp;
+	}
+
+	#################################################################
+
+	function users_preferences_reset(&$user){
+
+		$update = array(
+			'preferences' => '',
+		);
+
+		return users_extras_update($user, $update);
 	}
 
 	#################################################################
