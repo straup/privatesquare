@@ -1,0 +1,26 @@
+<div id="venues" style="display:none;">
+
+<form method="POST" id="checkin">
+
+	<select id="where"></select>
+
+	<select id="what">
+{foreach from=$status_map item="label" key="id"}
+		<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+	</select>
+
+	<select id="broadcast">
+{foreach from=$broadcast_map item="label" key="id"}
+		<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+	</select>
+
+	<input type="submit" value="THIS HAPPENED" />
+</form>
+
+{if !$donot_doitagain}
+<div id="again">do it again!</div>
+{/if}
+
+</div>
