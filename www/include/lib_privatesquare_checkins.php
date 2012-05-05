@@ -468,7 +468,14 @@
 		$sql = "DELETE FROM PrivatesquareCheckins WHERE checkin_id='{$checkin_id}'";
 		return db_write_users($cluster_id, $sql);
 
-		# delete from 4sq? what if we don't have a 'write' token?
+		# But wait, you say. How does one delete the checkin from
+		# foursquare itself. You can't delete checkins via the API
+		# because... uh... because, god hates you I guess. So dumb.
+		# (20120505/straup)
+
+		# See also:
+		# https://groups.google.com/group/foursquare-api/browse_thread/thread/0400eedc66058702
+
 	}
 
  	#################################################################
