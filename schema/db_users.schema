@@ -25,9 +25,9 @@ CREATE TABLE `PrivatesquareCheckins` (
 
 DROP TABLE IF EXISTS `UserPreferences`;
 
-CREATE TABLES `UsersPreferences` (
+CREATE TABLE `UsersPreferences` (
   `user_id` INT(11) UNSIGNED NOT NULL,
-  `preference` VARCHAR(255),
-  `value` VARCHAR(255),
+  `preference` VARCHAR(255) NOT NULL,
+  `value` VARCHAR(255) NOT NULL,
   UNIQUE KEY `by_pref` (`user_id`, `preference`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
