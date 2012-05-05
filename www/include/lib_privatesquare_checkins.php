@@ -457,4 +457,15 @@
 	}
 
  	#################################################################
+
+	function privatesquare_checkins_delete(&$checkin){
+
+		return not_okay("TBD");
+
+		# delete from the local db
+
+		# delete from 4sq? what if we don't have a 'write' token?
+	}
+
+ 	#################################################################
 ?>
