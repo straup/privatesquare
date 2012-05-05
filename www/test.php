@@ -2,6 +2,9 @@
 
 	include("include/init.php");
 
-	dumper(crumb_generate("api", "test.echo"));
+	loadlib("users_preferences");
+
+	$prefs = users_preferences_for_user($GLOBALS['cfg']['user']);
+	dumper($prefs);
 	exit();
 ?>

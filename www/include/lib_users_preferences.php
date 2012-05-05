@@ -10,7 +10,7 @@
 			return array();
 		}
 
-		$GLOBALS['cfg']['users_preferences_defaults'];
+		return $GLOBALS['cfg']['users_preferences_defaults'];
 	}
 
 	#################################################################
@@ -18,7 +18,7 @@
 	function users_preferences_for_user(&$user){
 
 		$defaults = users_preferences_defaults();
-		$prefs = array();
+		$prefs = $defaults;
 
 		$cluster_id = $user['cluster_id'];
 
