@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS `UsersPreferences`;
+
+CREATE TABLE `users_extras` (
+  `user_id` INT(11) UNSIGNED NOT NULL,
+  `preferences` TEXT,
+  PRIMARY KEY (`user_id`)
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

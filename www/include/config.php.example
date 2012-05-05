@@ -84,6 +84,13 @@
 
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 
+	$GLOBALS['cfg']['enable_feature_users_preferences'] = 1;
+
+	$GLOBALS['cfg']['users_preferences_defaults'] = array(
+		'foursquare_broadcast' => '',	# see also: foursquare_checkins_broadcast_map()
+		'privatesquare_status' => 0,	# see also: privatesquare_checkins_status_map()
+	);
+
 	$GLOBALS['cfg']['enable_feature_export'] = 1;
 
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;

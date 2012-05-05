@@ -23,11 +23,10 @@ CREATE TABLE `PrivatesquareCheckins` (
   UNIQUE KEY `by_checkin` (`created`, `venue_id`, `user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `UserPreferences`;
+DROP TABLE IF EXISTS `users_extras`;
 
-CREATE TABLE `UsersPreferences` (
+CREATE TABLE `users_extras` (
   `user_id` INT(11) UNSIGNED NOT NULL,
-  `preference` VARCHAR(255) NOT NULL,
-  `value` VARCHAR(255) NOT NULL,
-  UNIQUE KEY `by_pref` (`user_id`, `preference`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  `preferences` TEXT,
+  PRIMARY KEY (`user_id`)
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

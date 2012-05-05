@@ -1,6 +1,8 @@
 <?php
 
-	# THIS HAS NOT BEEN TESTED
+	#################################################################
+
+	loadlib("users_extras");
 
 	#################################################################
 
@@ -20,44 +22,35 @@
 		$defaults = users_preferences_defaults();
 		$prefs = $defaults;
 
-		$cluster_id = $user['cluster_id'];
+		# TO DO: error checking/handling on $rsp here...
 
-		$enc_id = AddSlashes($user['id']);
-		$sql = "SELECT * FROM UsersPreferences WHERE user_id='{$enc_id}'";
+		$rsp = users_extras_for_user($user);
+		$extras = $rsp['extras'];
 
-		$rsp = db_fetch_users($cluster_id, $sql);
-
-		if (! $rsp['ok']){
-			return $rsp;
+		if (! $extras['preferences']){
+			return $prefs;
 		}
 
-		foreach ($rsp['rows'] as $row){
-	
-			$pref = $row['preference'];
-			$value = $row['value'];
+		$user_prefs = json_decode($extras['preferences'], 'as hash');
 
-			if (! isset($defaults[$pref])){
-				continue;
-			}
-
-			$prefs[$pref] = $value;
+		if (! $user_prefs){
+			return $prefs;
 		}
 
-		return okay(array(
-			'preferences' => $prefs
-		));
+		$prefs = array_merge($defaults, $user_prefs);
+
+		return $prefs;
 	}
 
 	#################################################################
 
 	function users_preferences_reset(&$user){
 
-		$cluster_id = $user['cluster_id'];
+		$update = array(
+			'preferences' => '',
+		);
 
-		$enc_id = AddSlashes($user['id']);
-		$sql = "DELETE FROM UsersPreferences WHERE user_id='{$enc_id}'";
-
-		return db_write_users($cluster_id, $sql);
+		return users_extras_update($user, $update);
 	}
 
 	#################################################################
@@ -80,27 +73,13 @@
 			$new[$k] = $prefs[$k];
 		}
 
-		if (count($new)){
+		$new = (count($new)) ? json_encode($new) : '';
 
-			$rsp = users_preferences_reset($user);
+		$update = array(
+			'preferences' => $new,
+		);
 
-			if (! $rsp['ok']){
-				return $rsp;
-			}
-
-			$cluster_id = $user['cluster_id'];
-
-			foreach ($new as $k => $v){
-
-				$insert = array(
-					'user_id' => AddSlashes($user['id']),
-					'preference' => AddSlashes($k),
-					'value' => AddSlashes($v),
-				);
-
-				db_insert_users($cluster_id, 'UsersPreferences', $insert);
-			}
-		}
+		users_extras_update($user, $update);
 
 		return users_preferences_for_user($user);
 	}
