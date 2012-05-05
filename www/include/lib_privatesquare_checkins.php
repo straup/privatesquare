@@ -460,9 +460,13 @@
 
 	function privatesquare_checkins_delete(&$checkin){
 
-		return not_okay("TBD");
+		$user = users_get_by_id($checkin['user_id']);
+		$cluster_id = $user['cluster_id'];
 
-		# delete from the local db
+		$enc_id = AddSlashes($checkin['checkin_id']);
+
+		$sql = "DELETE FROM PrivatesquareCheckins WHERE checkin_id='{$checkin_id}'";
+		return db_write_users($cluster_id, $sql);
 
 		# delete from 4sq? what if we don't have a 'write' token?
 	}

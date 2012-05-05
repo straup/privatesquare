@@ -24,6 +24,8 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 
 <button id="iamhere">I am here again</button>
 
+<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled">Delete this checkin</button>
+
 {* TO DO: next/previous *}
 
 {* TO DO: links *}
@@ -57,20 +59,58 @@ $(document).ready(function(){
 
 	privatesquare_htmapl();
 
+	var deleteme_flow = function(){
+
+		$('#iamhere').attr('disabled', 'disabled');
+		$('#deleteme').attr('disabled', 'disabled');
+
+		var q = "Are you sure you want to delete this checkin? There is no UNDO.";
+
+		if (! confirm(q)){
+			$('#iamhere').removeAttr('disabled');
+			$('#deleteme').removeAttr('disabled');
+			return;
+		}
+
+		var checkin_id = $("#deleteme").attr("data-checkin-id");
+		var crumb = $("#deleteme").attr("data-crumb");
+
+		var args = {
+			'checkin_id' : checkin_id,
+			'crumb': crumb,
+			'method': 'privatesquare.checkins.delete',
+		};
+
+		$.ajax({
+			'url': _cfg.abs_root_url + 'api/',
+			'type': 'POST',
+			'data': args,
+			'success': function(rsp){
+console.log(rsp);
+			}
+		});
+
+		privatesquare_set_status("deleting your checkin / tasteful muzak plays");
+		return;
+	};
+
 	var show_checkin_form = function(){
 		privatesquare_unset_status();
 
 		$('#iamhere').attr('disabled', 'disabled');
+		$('#deleteme').attr('disabled', 'disabled');
 		$('#checkin_venue').show();
 	};
 
 	$('#iamhere').click(show_checkin_form);
+	$('#deleteme').click(deleteme_flow);
 
 	$('#checkin_form').submit(function(){
 
 		var _onsuccess = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
 			$('#iamhere').removeAttr('disabled');
+			$('#deleteme').removeAttr('disabled');
 		}
 
 		var args = privatesquare_gather_args();
@@ -84,6 +124,8 @@ $(document).ready(function(){
 
 	$('#iamhere').removeAttr('disabled');
 	$('#iamhere').show();
+
+	/* $('#deleteme').removeAttr('disabled'); */
 
 });
 
