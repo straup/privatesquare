@@ -93,13 +93,17 @@ $(document).ready(function(){
 
 				if (rsp['stat'] == 'ok'){
 
-					var msg = "Okee dokee, your checkin has been deleted."
+					var redir = _cfg['abs_root_url'] + "me/history?deleted=1";
 
-					if (rsp['has_foursquare_checkin']){
-						msg += " Keep in mind that because there is no way to delete stuff from foursquare using their API that checkin is still sitting on their servers. Awesome, yeah?";
+					if (rsp['venue_id']){
+						redir += "&venue_id=" + rsp['venue_id'];
 					}
 
-					privatesquare_set_status(msg);
+					if (rsp['foursquare_checkin']){
+						redir += "&foursquare_checkin=" + rsp['foursquare_checkin'];
+					}
+
+					location.href = redir;
 					return;
 				}
 

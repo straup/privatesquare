@@ -29,7 +29,8 @@
 		$has_foursquare_checkin = ($checkin['checkin_id']) ? 1 : 0;
 
 		$out = array(
-			'has_foursquare_checkin' => $has_foursquare_checkin,
+			'venue_id' => $checkin['venue_id'],
+			'foursquare_checkin' => $checkin['checkin_id'],
 		);
 
 		api_output_ok($out);
