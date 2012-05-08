@@ -13,7 +13,7 @@ Okee dookee, your checkin has been deleted.
 {/if}
 
 {if $mock_checkin and $mock_checkin.checkin_id}
-<div style="font-size:11px;margin-top:10px;">Keep in mind that this checkin <em>it is still sitting somewhere on their servers</em>. That's because there is no way to delete checkins using the foursquare API. You will need to <a href="{$mock_checkin|@foursquare_urls_checkin}" target="_foursquare">log in to the foursquare website</a> and delete the checkin by hand. Awesome, yeah?</div>
+<div style="font-size:11px;margin-top:10px;">Keep in mind that this checkin <em>it is still sitting somewhere on the foursquare servers</em>. That's because there is no way to delete checkins using the foursquare API. You will need to <a href="{$mock_checkin|@foursquare_urls_checkin}" target="_foursquare">log in to the foursquare website</a> and delete the checkin by hand. Awesome, yeah?</div>
 {/if}
 
 </div>
