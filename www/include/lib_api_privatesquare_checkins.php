@@ -26,8 +26,6 @@
 			api_output_error(999, $rsp['error']);
 		}
 
-		$has_foursquare_checkin = ($checkin['checkin_id']) ? 1 : 0;
-
 		$out = array(
 			'venue_id' => $checkin['venue_id'],
 			'foursquare_checkin' => $checkin['checkin_id'],

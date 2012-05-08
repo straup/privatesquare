@@ -93,7 +93,10 @@ $(document).ready(function(){
 
 				if (rsp['stat'] == 'ok'){
 
-					var redir = _cfg['abs_root_url'] + "me/history?deleted=1";
+					var dt = new Date();
+					var ts = dt.getTime() / 1000;
+
+					var redir = _cfg['abs_root_url'] + "me/history?deleted=" + ts;
 
 					if (rsp['venue_id']){
 						redir += "&venue_id=" + rsp['venue_id'];
