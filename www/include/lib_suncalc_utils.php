@@ -6,11 +6,15 @@
 
 		$ts_times = array();
 
-		foreach ($times as $label => $date){
-			$ts_times[$label] = strtotime($date);
+		if (is_array($times)){
+
+			foreach ($times as $label => $date){
+				$ts_times[$label] = strtotime($date);
+			}
+
+			asort($ts_times);
 		}
 
-		asort($ts_times);
 		return $ts_times;
 	}
 
