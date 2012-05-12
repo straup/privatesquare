@@ -5,11 +5,26 @@
 
 	$GLOBALS['cfg'] = array();
 
+	# Things you may want to change in a hurry
+
 	$GLOBALS['cfg']['site_name'] = 'privatesquare';
-	$GLOBALS['cfg']['environment'] = 'prod';
 
 	$GLOBALS['cfg']['site_disabled'] = 0;
 	$GLOBALS['cfg']['site_disabled_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
+
+	# Known special values for 'environment':
+	#
+	# 'prod': This will cause privatesquare to use minimized JS libraries, where possible
+	# 'localhost' : This will make the rest of the code assume that you're running privatesquare
+	#               on a machine not otherwise connected to the (public) Internets. See the section
+	#               on a 'here-be-dragons' locally hosted version in README.md
+
+	$GLOBALS['cfg']['environment'] = 'prod';
+
+	# Display a message in the page header (for all pages)
+
+	$GLOBALS['cfg']['display_message'] = 0;
+	$GLOBALS['cfg']['display_message_text'] = 'This is the text that will appear in the message header.';
 
 	# You will need valid foursquare OAuth credentials
 	# See also: https://foursquare.com/oauth/register
@@ -40,7 +55,7 @@
 		'name' => 'privatesquare',
 		'user' => 'privatesquare',
 		'pass' => '',
-		'auto_connect' => 1,
+		'auto_connect' => 0,
 	);
 
 	# You will need to set up secrets for the various parts of the site
@@ -66,6 +81,9 @@
 	# See also: https://github.com/straup/privatesquare/blob/master/bin/compile-templates.php
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
+
+	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
+	$GLOBALS['cfg']['enable_feature_delete_checkins'] = 1;
 
 	$GLOBALS['cfg']['enable_feature_export'] = 1;
 

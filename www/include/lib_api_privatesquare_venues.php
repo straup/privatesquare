@@ -29,6 +29,10 @@
 			'status_id' => $status_id,
 		);
 
+		if ($created = post_int32("created")){
+			$checkin['created'] = $created;
+		}
+
 		# where am I?
 
 		$venue = foursquare_venues_get_by_venue_id($venue_id);
@@ -48,9 +52,16 @@
 			$checkin['longitude'] = $venue['longitude'];
 		}
 
-		# check to see if we're checking in to 4sq too
+		# Check to see if we're checking in to 4sq too
 
-		if ($broadcast = post_str("broadcast")){
+		# If this is a deferred checkin then we're just going to
+		# ignore foursquare (for the time being) since there's no
+		# way to back date checkins. One possibility is to make a
+		# note of the backdating in the shout-out but in the interest
+		# of keeping things simple to start, we're not going to.
+		# (20120501/straup)
+
+		if (($broadcast = post_str("broadcast")) && (! isset($checkin['created']))){
 
 			$method = 'checkins/add';
 
@@ -75,7 +86,11 @@
 
 		# do I care about the weather? (make me an OLT?)
 
-		if ($GLOBALS['cfg']['enable_feature_weather_tracking']){
+		# If we already have a 'created' data that means this is a deferred
+		# checkin being processed which means it's in the past which makes
+		# it hard to ask for the weather. (20120501/straup)
+
+		if (($GLOBALS['cfg']['enable_feature_weather_tracking']) && (! isset($checkin['created']))){
 
 			loadlib("weather_google");
 

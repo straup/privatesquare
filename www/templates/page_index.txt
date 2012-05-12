@@ -6,32 +6,12 @@
 <div id="status"></div>
 
 <div id="map-wrapper"></div>
-{if 0}<div id="map" class="map" data-hash="false" data-touch="true" data-mousewheel="true" data-provider="toner"></div>{/if}
 
-<div id="venues" style="display:none;">
+{if $cfg.enable_feature_deferred_checkins}
+{include file="inc_deferred_checkin.txt"}
+{/if}
 
-<form method="POST" id="checkin">
-
-	<select id="where"></select>
-
-	<select id="what">
-{foreach from=$status_map item="label" key="id"}
-		<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-	</select>
-
-	<select id="broadcast">
-{foreach from=$broadcast_map item="label" key="id"}
-		<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-	</select>
-
-	<input type="submit" value="THIS HAPPENED" />
-</form>
-
-<div id="again">do it again!</div>
-
-</div>
+{include file="inc_checkin_venues.txt"}
 
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}

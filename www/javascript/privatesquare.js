@@ -9,6 +9,24 @@ function privatesquare_init(){
 	privatesquare_set_status("Asking the sky where you are...");
 }
 
+function _privatesquare_geolocation_onsuccess(rsp){
+
+	var lat = rsp['coords']['latitude'];
+	var lon = rsp['coords']['longitude'];
+
+	if ((! window.navigator.onLine) && (_cfg['deferred_checkins'])){
+
+		privatesquare_deferred_checkin(lat, lon, 'offline');
+		return;
+	}
+
+	privatesquare_fetch_venues(lat, lon);
+}
+
+function _privatesquare_geolocation_onerror(rsp){
+	privatesquare_set_status("Huh. I have no idea where you are...");
+}
+
 function privatesquare_reset(){
 	$("#venues").hide();
 
@@ -47,12 +65,14 @@ function privatesquare_gather_args(){
 
 	var crumb = $("#where").attr("data-crumb");
 
-	return {
+	var args = {
 		'crumb': crumb,
 		'venue_id': venue_id,
 		'status_id': status_id,
 		'broadcast': broadcast
 	};
+
+	return args;
 }
 
 function privatesquare_checkin(args, onsuccess){
@@ -83,12 +103,6 @@ function privatesquare_checkin(args, onsuccess){
 		}
 	});
 
-}
-
-function _privatesquare_geolocation_onsuccess(rsp){
-	var lat = rsp['coords']['latitude'];
-	var lon = rsp['coords']['longitude'];
-	privatesquare_fetch_venues(lat, lon);
 }
 
 function privatesquare_search(){
@@ -147,16 +161,29 @@ function privatesquare_fetch_venues(lat, lon, query){
 	privatesquare_set_status("Fetching nearby places...");
 }
 
-function _privatesquare_geolocation_onerror(rsp){
-	privatesquare_set_status("Huh. I have no idea where you are...");
-}
-
 function _foursquare_venues_onsuccess(rsp){
 
-	$("#status").html("");
+	privatesquare_unset_status();
 
 	if (rsp['stat'] != 'ok'){
-		_privatesquare_api_error(rsp);
+
+		/*
+		I am unsure how I feel about this; the maybe better alternative
+		is to wrap the lat/lon used to call the API in all the various
+		callbacks... (20120429/straup)
+		*/
+
+		var _okay = function(rsp){
+			var lat = rsp['coords']['latitude'];
+			var lon = rsp['coords']['longitude'];
+			privatesquare_deferred_checkin(lat, lon, 'api error');
+		};
+
+		var _not_okay = function(){
+			privatesquare_api_error(rsp);
+		}
+
+		navigator.geolocation.getCurrentPosition(_okay, _not_okay);
 		return;
 	}
 
@@ -198,6 +225,8 @@ function _foursquare_venues_onsuccess(rsp){
 
 	privatesquare_unset_status();
 	$("#venues").show();
+
+	$("#checkin").submit(privatesquare_submit);
 }
 
 function _privatesquare_where_onchange(){
@@ -276,7 +305,11 @@ function privatesquare_api_error(rsp, tryagain_func){
 
 }
 
-function _privatesquare_show_map(lat, lon){
+function _privatesquare_show_map(lat, lon, label){
+
+	if (! label){
+		label = "you are here-ish";
+	}
 
 	var latlon = lat + ',' + lon;
 
@@ -299,7 +332,7 @@ function _privatesquare_show_map(lat, lon){
 
 	mrk.attr("class", "marker")
 	mrk.attr("data-location", latlon)
-	mrk.html("you are here-ish");
+	mrk.html(htmlspecialchars(label));
 
 	map.html(mrk);
 	wrapper.html(map)

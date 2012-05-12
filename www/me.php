@@ -16,6 +16,12 @@
 
 	$url = "{$GLOBALS['cfg']['abs_root_url']}user/{$fsq_user['foursquare_id']}/{$path}";
 
+	unset($_GET['path']);
+
+	if (count($_GET)){
+		$url .= "?" . http_build_query($_GET);
+	}
+
 	header("location: {$url}");
 	exit();
 ?>

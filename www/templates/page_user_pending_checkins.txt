@@ -1,0 +1,60 @@
+{capture assign="page_title"}{$owner.username} | pending checkins{/capture}
+{capture assign="extra_head"}
+{if $cfg.environment=='prod'}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.min.js"></script>
+{else}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.js"></script>
+{/if}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
+{/capture}
+{include file="inc_head.txt"}
+
+<div id="status"></div>
+
+<div id="map-wrapper"></div>
+
+<div>
+
+	<form id="deferred">
+	<select id="checkins" data-crumb="{$search_crumb|escape}">
+	</select>
+
+	<select id="whatnow">
+		<option value="checkin">This happened</option>
+		<option value="delete">Er... yeah, whatever</option>
+	</select>
+
+	<input type="submit" value="MAKE IT SO" />
+
+	<div id="meh-all" style="margin-top:60px;text-align:right;">
+	<button style="background-color:#ccc;padding:10px;">meh... just delete it all</button>
+	</div>
+
+	</form>
+
+
+</div>
+
+{include file="inc_checkin_venues.txt" donot_doitagain=1}
+
+<div id="meh" style="display:none;margin-top:40px;text-align:right;">
+<button style="background-color:#ccc;padding:10px;">meh... just delete this</button>
+</div>
+
+<script type="text/javascript">
+{literal}
+
+$(document).ready(function(){
+
+	if (! privatesquare_deferred_has_local_storage()){
+		privatesquare_set_status("your browser does not support deferred checkins / sad nokia phone sound");
+		return;
+	}
+
+	privatesquare_pending_init();
+});
+
+{/literal}
+</script>
+
+{include file="inc_foot.txt"}

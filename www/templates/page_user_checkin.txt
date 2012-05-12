@@ -7,13 +7,13 @@
 
 {assign var="status_id" value=$checkin.status_id}
 
-<div class="checkin">
+<div class="checkin" id="map">
 	<div class="map" data-zoom="14" data-center="{$checkin.venue.latitude|escape},{$checkin.venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$checkin.venue.latitude|escape},{$checkin.venue.longitude|escape}"><span class="marker-history-text">{$checkin.venue.name|escape}</span></div>
 	</div>
 </div>
 
-<p style="font-size:small;">
+<p style="font-size:small;" id="user_checkin_context">
 {if $is_own}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
@@ -23,7 +23,14 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {if $checkin.timeofday}{include file="inc_timeofday_stringify.txt" timeofday=$checkin.timeofday}{/if}
 </p>
 
+{if $is_own}
 <button id="iamhere">I am here again</button>
+
+{if $cfg.enable_feature_delete_checkins}
+<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled">Delete this checkin</button>
+{/if}
+
+{/if}
 
 {* TO DO: next/previous *}
 
@@ -58,20 +65,87 @@ $(document).ready(function(){
 
 	privatesquare_htmapl();
 
+	/* oh please god... put me in plain vanilla procedural functions */
+
+	var deleteme_flow = function(){
+
+		$('#iamhere').attr('disabled', 'disabled');
+		$('#deleteme').attr('disabled', 'disabled');
+
+		var q = "Are you sure you want to delete this checkin? There is no UNDO.";
+
+		if (! confirm(q)){
+			$('#iamhere').removeAttr('disabled');
+			$('#deleteme').removeAttr('disabled');
+			return;
+		}
+
+		var checkin_id = $("#deleteme").attr("data-checkin-id");
+		var crumb = $("#deleteme").attr("data-crumb");
+
+		var args = {
+			'checkin_id' : checkin_id,
+			'crumb': crumb,
+			'method': 'privatesquare.checkins.delete',
+		};
+
+		$.ajax({
+			'url': _cfg.abs_root_url + 'api/',
+			'type': 'POST',
+			'data': args,
+			'success': function(rsp){
+
+				if (rsp['stat'] == 'ok'){
+
+					var dt = new Date();
+					var ts = dt.getTime() / 1000;
+
+					var redir = _cfg['abs_root_url'] + "me/history?deleted=" + ts;
+
+					if (rsp['venue_id']){
+						redir += "&venue_id=" + rsp['venue_id'];
+					}
+
+					if (rsp['foursquare_checkin']){
+						redir += "&foursquare_checkin=" + rsp['foursquare_checkin'];
+					}
+
+					location.href = redir;
+					return;
+				}
+
+				privatesquare_api_error(rsp);
+
+				$("#user_checkin_context").show();
+			}
+		});
+
+		$("#user_checkin_details").hide();
+		$("#user_checkin_context").hide();
+		$("#iamhere").hide();
+		$("#deleteme").hide();
+
+		privatesquare_set_status("deleting your checkin / tasteful muzak plays");
+		return;
+	};
+
 	var show_checkin_form = function(){
 		privatesquare_unset_status();
 
 		$('#iamhere').attr('disabled', 'disabled');
+		$('#deleteme').attr('disabled', 'disabled');
 		$('#checkin_venue').show();
 	};
 
 	$('#iamhere').click(show_checkin_form);
+	$('#deleteme').click(deleteme_flow);
 
 	$('#checkin_form').submit(function(){
 
 		var _onsuccess = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
 			$('#iamhere').removeAttr('disabled');
+			$('#deleteme').removeAttr('disabled');
 		}
 
 		var args = privatesquare_gather_args();
@@ -85,6 +159,9 @@ $(document).ready(function(){
 
 	$('#iamhere').removeAttr('disabled');
 	$('#iamhere').show();
+
+	$('#deleteme').removeAttr('disabled');
+	$('#deleteme').show();
 
 });
 

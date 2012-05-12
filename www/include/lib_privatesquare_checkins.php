@@ -624,4 +624,27 @@
 	}
 
  	#################################################################
+
+	function privatesquare_checkins_delete(&$checkin){
+
+		$user = users_get_by_id($checkin['user_id']);
+		$cluster_id = $user['cluster_id'];
+
+		$enc_id = AddSlashes($checkin['id']);
+
+		$sql = "DELETE FROM PrivatesquareCheckins WHERE id='{$enc_id}'";
+
+		return db_write_users($cluster_id, $sql);
+
+		# But wait, you say. How does one delete the checkin from
+		# foursquare itself. You can't delete checkins via the API
+		# because... uh... because, god hates you I guess. So dumb.
+		# (20120505/straup)
+
+		# See also:
+		# https://groups.google.com/group/foursquare-api/browse_thread/thread/0400eedc66058702
+
+	}
+
+ 	#################################################################
 ?>
