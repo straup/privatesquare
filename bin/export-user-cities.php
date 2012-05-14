@@ -22,13 +22,11 @@
 		$sql = "SELECT locality, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND locality != 0 GROUP BY locality";
 		$rsp = db_fetch_users($cluster_id, $sql);
 
-		# $rsp = privatesquare_checkins_localities_for_user($user);
-
-		$localities = array();
-
 		foreach ($rsp['rows'] as $row){
 
 			$locality = $row['locality'];
+
+			echo "[{$user['id']}] fetch checkins for {$locality}\n";
 
 			$page_count = 0;
 
@@ -43,7 +41,11 @@
 			while ((! $page_count) || ($page_count > $more['page'])){
 
 				$more['page'] += 1;
-				# echo "[{$locality}] {$more['page']} / {$page_count}\n";
+
+				# This is not awesome for people with a gazillion checkins
+				# in a single city. Work should be done to work out some
+				# sort of streaming hoo-hah to compensate for that...
+				# (20120514/straup)
 
 				$rsp_ch = privatesquare_checkins_for_user($user, $more);
 				$checkins = array_merge($checkins, $rsp_ch['rows']);
@@ -94,6 +96,12 @@
 
 	if ($opts['u']){
 		$user = users_get_by_id($opts['u']);
+
+		if (! $user){
+			echo "Invalid user ID\n";
+			exit();
+		}
+
 		export_user_cities($user);
 	}
 
