@@ -86,6 +86,8 @@
 	$GLOBALS['cfg']['enable_feature_delete_checkins'] = 1;
 
 	$GLOBALS['cfg']['enable_feature_export'] = 1;
+	$GLOBALS['cfg']['enable_feature_export_static'] = 1;
+	$GLOBALS['cfg']['export_static_path'] = '';
 
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;
 	$GLOBALS['cfg']['weather_tracking_measure'] = 'Metric';		# change to 'US' for degrees Farenheit

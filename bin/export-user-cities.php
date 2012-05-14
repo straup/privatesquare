@@ -8,6 +8,8 @@
 	include("include/init.php");
 
 	loadlib("backfill");
+	loadlib("cli");
+
 	loadlib("privatesquare_checkins");
 	loadlib("privatesquare_export_geojson");
 	loadlib("privatesquare_export_csv");
@@ -82,8 +84,23 @@
 		}
 	}
 
-	$sql = "SELECT * FROM users";
-	backfill_db_users($sql, "export_user_cities");
+	# main()
+
+	$spec = array(
+		'u' => array('name' => 'user', 'required' => 0, 'help' => 'Export cities for a specific user (ID)'),
+	);
+
+	$opts = cli_getopts($spec);
+
+	if ($opts['u']){
+		$user = users_get_by_id($opts['u']);
+		export_user_cities($user);
+	}
+
+	else {
+		$sql = "SELECT * FROM users";
+		backfill_db_users($sql, "export_user_cities");
+	}
 
 	exit();
 
