@@ -5,6 +5,7 @@
 {include file="inc_head.txt"}
 
 {if $latitude and $longitude}
+{if $venues|@count}
 
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 {foreach from=$venues item="row"}
@@ -35,6 +36,9 @@ $(document).ready(function(){literal}{{/literal}
 </script>
 
 {else}
+	<p>You do not appear to have been here before... that or the computers are having a <q>computer moment</q> (where <em>here</em> means: {$latitude|escape}, {$longitude|escape})</p> 
+{/if}
+{else}
 
 <div id="status"></div>
 
@@ -60,7 +64,7 @@ $(document).ready(function(){
 		privatesquare_set_status("I have no idea where you are.");
 	};
 
-	navigator.geolocation.getCurrentPosition(_onsuccess, _onfail);
+	privatesquare_whereami(_onsuccess, _onfail);
 	privatesquare_set_status("Asking the sky where you are...");
 });
 {/literal}

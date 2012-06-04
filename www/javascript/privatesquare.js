@@ -375,6 +375,18 @@ function privatesquare_unset_status(){
 }
 
 function privatesquare_whereami(onsuccess, onerror){
-	var args = { enableHighAccuracy:true, maximumAge: 1000 };
-	navigator.geolocation.getCurrentPosition(onsuccess, onerror, args);
+
+	/* this shouldn't be necessary but it also seems to be
+	   where the weirdness with /nearby is happening...
+	   (20120604/straup) */
+
+	try {
+		var args = { enableHighAccuracy:true, maximumAge: 1000 };
+		navigator.geolocation.getCurrentPosition(onsuccess, onerror, args);
+	}
+
+	catch (e) {
+	      alert("The sky is angry offering only this, today: " + e);
+	}
+
 }
