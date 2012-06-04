@@ -2,7 +2,7 @@ var checking_in=false;
 var searching=false;
 
 function privatesquare_init(){
-	navigator.geolocation.getCurrentPosition(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
+	privatesquare_whereami(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
 	$("#checkin").submit(privatesquare_submit);
 	$("#again").click(privatesquare_reset);
 
@@ -134,7 +134,7 @@ function privatesquare_search(){
 
 	var _onerror = function(rsp){};
 
-	navigator.geolocation.getCurrentPosition(_onsuccess, _onerror);
+	privatesquare_whereami(_onsuccess, _onerror, args);
 
 	privatesquare_set_status("Re-checking your location first...");
 	return false;
@@ -183,7 +183,7 @@ function _foursquare_venues_onsuccess(rsp){
 			privatesquare_api_error(rsp);
 		}
 
-		navigator.geolocation.getCurrentPosition(_okay, _not_okay);
+		privatesquare_whereami(_okay, _not_okay);
 		return;
 	}
 
@@ -372,4 +372,9 @@ function privatesquare_set_status(msg){
 function privatesquare_unset_status(){
 	$("#status").html("");
 	$("#status").hide();
+}
+
+function privatesquare_whereami(onsuccess, onerror){
+	var args = { enableHighAccuracy:true, maximumAge: 1000 };
+	navigator.geolocation.getCurrentPosition(onsuccess, onerror, args);
 }
