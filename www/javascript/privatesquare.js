@@ -134,7 +134,7 @@ function privatesquare_search(){
 
 	var _onerror = function(rsp){};
 
-	privatesquare_whereami(_onsuccess, _onerror, args);
+	privatesquare_whereami(_onsuccess, _onerror);
 
 	privatesquare_set_status("Re-checking your location first...");
 	return false;
