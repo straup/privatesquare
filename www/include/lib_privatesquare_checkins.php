@@ -480,4 +480,39 @@
 	}
 
  	#################################################################
+
+	function privatesquare_checkins_bookends_for_date(&$user, $ymd){
+
+		$bookends = array(
+			'before' => null,
+			'after' => null,
+		);
+
+		$fmt = "Y-m-d";
+
+		$cluster_id = $user['cluster_id'];
+
+		$start = strtotime("{$ymd} 00:00:00");
+		$stop = strtotime("{$ymd} 23:59:59");
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_start = AddSlashes($start);
+		$enc_stop = AddSlashes($stop);
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND created < {$enc_start} ORDER BY created DESC LIMIT 1";
+
+		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
+			$bookends['before'] = date($fmt, $row['created']);
+		}
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND created > {$enc_stop}";
+
+		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
+			$bookends['after'] = date($fmt, $row['created']);
+		}
+
+		return $bookends;
+	}
+
+ 	#################################################################
 ?>

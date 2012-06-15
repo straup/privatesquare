@@ -82,6 +82,9 @@
 		$GLOBALS['smarty']->assign("when", $when);
 		$GLOBALS['smarty']->assign("start", $start);
 		$GLOBALS['smarty']->assign("stop", $stop);
+
+		$bookends = privatesquare_checkins_bookends_for_date($owner, $when);
+		$GLOBALS['smarty']->assign("bookends", $bookends);
 	}
 
 	$status_map = privatesquare_checkins_status_map();
