@@ -81,6 +81,11 @@ p.message {
 	background-color: #9f9;
 }
 
+#pag_bookends {
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
 
 /*pagination*/
 #pagination{
