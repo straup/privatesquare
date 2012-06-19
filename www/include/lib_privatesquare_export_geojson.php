@@ -18,11 +18,11 @@
 			# See notes in privatesquare_export_csv for why we're
 			# doing this explicitly (20120227/straup)
 
-			$more = array(
+			$_more = array(
 				'inflate_weather' => 1,
 			);
 
-			privatesquare_export_massage_checkin($row, $more);
+			privatesquare_export_massage_checkin($row, $_more);
 
 			$lat = floatval($row['latitude']);
 			$lon = floatval($row['longitude']);

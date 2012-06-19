@@ -14,6 +14,20 @@ body {
 	padding: 0;
 }
 
+#deferred {
+    display:none;
+    margin-top:10px;
+}
+
+#message {
+	border-bottom: solid thin;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 100%;
+	background-color:#eee;
+	text-align:center;
+}
+
 #nav {
 	background-color: #fff;
 	padding: 0.5em 1em;
@@ -67,6 +81,11 @@ p.message {
 	background-color: #9f9;
 }
 
+#pag_bookends {
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
 
 /*pagination*/
 #pagination{
@@ -109,15 +128,32 @@ select {
     margin-bottom:20px;
 }
 
+input[type=text] {
+    font-size:1.5em;
+    margin-bottom:20px;
+    border:solid thin;
+    width:99%;
+    padding:5px;
+}
+
 input[type=submit] {
     font-size:1.5em;
     margin-bottom:20px;
     border:solid thin;
 }
 
+.admin {
+    border-top:solid thin;
+    margin-top:5px;
+    padding-top:5px;
+    padding-bottom:10px;
+    background-color:#ededed;
+    font-weight:100;
+}
+
 #status {
     font-size:1.6em;
-    font-family:serif;
+    margin-bottom:15px;
 }
 
 #again {
@@ -163,12 +199,6 @@ q {
     font-size:11px;
     font-weight:700;
     color:#fff;
-    /*
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -khtml-border-radius: 20px;
-    border-radius: 20px;
-    */
 }
 
 .marker-header {
@@ -255,6 +285,11 @@ li{
     border:solid thin;
     margin-top:15px;
     margin-bottom:25px;
+}
+
+#deleteme {
+    display:none;
+    border:solid thin;
 }
 
 .geo {
@@ -375,3 +410,4 @@ button {
     color:#ccc;
     text-decoration:none;
 }
+

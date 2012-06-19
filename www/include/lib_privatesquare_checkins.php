@@ -457,4 +457,62 @@
 	}
 
  	#################################################################
+
+	function privatesquare_checkins_delete(&$checkin){
+
+		$user = users_get_by_id($checkin['user_id']);
+		$cluster_id = $user['cluster_id'];
+
+		$enc_id = AddSlashes($checkin['id']);
+
+		$sql = "DELETE FROM PrivatesquareCheckins WHERE id='{$enc_id}'";
+
+		return db_write_users($cluster_id, $sql);
+
+		# But wait, you say. How does one delete the checkin from
+		# foursquare itself. You can't delete checkins via the API
+		# because... uh... because, god hates you I guess. So dumb.
+		# (20120505/straup)
+
+		# See also:
+		# https://groups.google.com/group/foursquare-api/browse_thread/thread/0400eedc66058702
+
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_bookends_for_date(&$user, $ymd){
+
+		$bookends = array(
+			'before' => null,
+			'after' => null,
+		);
+
+		$fmt = "Y-m-d";
+
+		$cluster_id = $user['cluster_id'];
+
+		$start = strtotime("{$ymd} 00:00:00");
+		$stop = strtotime("{$ymd} 23:59:59");
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_start = AddSlashes($start);
+		$enc_stop = AddSlashes($stop);
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND created < {$enc_start} ORDER BY created DESC LIMIT 1";
+
+		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
+			$bookends['before'] = date($fmt, $row['created']);
+		}
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND created > {$enc_stop}";
+
+		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
+			$bookends['after'] = date($fmt, $row['created']);
+		}
+
+		return $bookends;
+	}
+
+ 	#################################################################
 ?>

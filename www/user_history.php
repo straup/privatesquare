@@ -31,6 +31,30 @@
 		error_403();
 	}
 
+	#
+
+	if ($deleted = get_str("deleted")){
+
+		$GLOBALS['smarty']->assign("deleted_checkin", 1);
+
+		if ($venue_id = get_str("venue_id")){
+			if ($venue = foursquare_venues_get_by_venue_id($venue_id)){
+				$GLOBALS['smarty']->assign_by_ref("deleted_checkin_venue", $venue);
+			}
+		}
+
+		if ($foursquare_checkin = get_str("foursquare_checkin")){
+			$mock_checkin = array(
+				"checkin_id" => $foursquare_checkin,
+				"user_id" => $owner['id'],
+			);
+
+			$GLOBALS['smarty']->assign_by_ref("mock_checkin", $mock_checkin);
+		}
+	}
+
+	#
+
 	$more = array();
 
 	if ($page = get_int32("page")){
@@ -58,6 +82,9 @@
 		$GLOBALS['smarty']->assign("when", $when);
 		$GLOBALS['smarty']->assign("start", $start);
 		$GLOBALS['smarty']->assign("stop", $stop);
+
+		$bookends = privatesquare_checkins_bookends_for_date($owner, $when);
+		$GLOBALS['smarty']->assign("bookends", $bookends);
 	}
 
 	$status_map = privatesquare_checkins_status_map();
