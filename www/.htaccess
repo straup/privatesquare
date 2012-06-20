@@ -1,3 +1,26 @@
+# The base set of sensible PHP options. You could put these in your
+# php.ini file too, but having them in your Apache config puts
+# everything in one place. Magic quotes off because they are stupid.
+# Register globals off for the same reason. Track errors is so that
+# we can at least get at the error messages we hide using @func().
+# last_modified is a bad idea if we have any dynamic content. Short
+# tags make for a few saved bytes of cruft and are fine unless you're
+# running another XML preprocessor over your code (wtf?).
+
+php_value magic_quotes_gpc 0
+php_value register_globals 0
+php_value magic_quotes_runtime 0
+php_value track_errors 1
+php_value last_modified off
+php_value short_open_tag on
+
+php_flag display_errors on
+
+# this sets all current and future error flags on, except for E_NOTICE
+# which can go fuck itself. we have some separate code for checking the
+# one notice we do care about.
+php_value error_reporting 2147483639
+
 #
 # Hey! Everything in here is better suited to httpd.conf, since
 # we get a performance boost if we can turn off AllowOverride and
@@ -23,6 +46,9 @@ ErrorDocument 403 /403.php
 
 # Get mod_rewrite fired up
 RewriteEngine on
+
+# See also: the 'php-ini' command in the root Makefile
+RewriteRule   ^php.ini		- [R=404,L]
 
 # Images
 
