@@ -92,6 +92,9 @@
 	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;
 	$GLOBALS['cfg']['weather_tracking_measure'] = 'Metric';		# change to 'US' for degrees Farenheit
 
+	# See also: http://prag.ma/code/sparky/
+	$GLOBALS['cfg']['enable_feature_sparklines'] = 0;
+
 	# Internals. Go ahead and tweak these if you want (and understand
 	# how Flamework projects are set up) but you don't need to.
 

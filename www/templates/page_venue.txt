@@ -1,6 +1,10 @@
 {capture assign="page_title"}venues | {$venue.name}{/capture}
 {capture assign="extra_head"}
 <meta http-equiv="refresh" content="1190">
+{if "sparklines"|@features_is_enabled}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/raphael-min.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/sparky.js"></script>
+{/if}
 {/capture}
 {include file="inc_head.txt"}
 
@@ -59,6 +63,30 @@
 </div>
 
 <h4 id="youwerehere">You were here</h4>
+
+{if "sparklines"|@features_is_enabled}
+<p><span class="sparkline" data-points="{$buckets.weather|@join:","|escape}" data-preset="gray-area"></span>
+</p>
+
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var sparks = document.querySelectorAll(".sparkline");
+        var len = sparks.length;
+
+	for (var i = 0; i < len; i++) {
+                var el = sparks[i];
+                var data = sparky.parse.numbers(el.getAttribute("data-points"));
+                var preset = sparky.presets.get(el.getAttribute("data-preset"));
+                var options = sparky.util.getElementOptions(el, preset);
+                sparky.sparkline(el, data, options);
+       }
+});
+
+</script>
+{/literal}
+{/if}
 
 <ul class="checkins">
 {foreach from=$venue.checkins item="row" name="checkins"}

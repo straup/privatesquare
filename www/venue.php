@@ -28,10 +28,30 @@
 
 	$more = array(
 		'venue_id' => $venue_id,
+		'per_page' => 100,
 	);
 
 	$checkins = privatesquare_checkins_for_user($owner, $more);
 	$venue['checkins'] = $checkins['rows'];
+
+	if (features_is_enabled("sparklines")){
+
+		$buckets = array(
+			'created' => array(),
+			'weather' => array(),
+		);
+
+		foreach ($venue['checkins'] as $c){
+
+			array_unshift($buckets['created'], $c['created']);
+
+			if (isset($c['weather'])){
+				$buckets['weather'][] = $c['weather']['temp_c'];
+			}
+		}
+
+		$GLOBALS['smarty']->assign_by_ref("buckets", $buckets);
+	}
 
 	$status_map = privatesquare_checkins_status_map();
 	$broadcast_map = foursquare_checkins_broadcast_map();
