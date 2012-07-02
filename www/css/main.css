@@ -212,6 +212,12 @@ q {
     -webkit-border-radius: 10px !important;
     -khtml-border-radius: 10px !important;
     border-radius: 10px !important;
+    z-index:100;    
+}
+
+.marker-header-todo {
+    background-color:#adadad;
+    z-index:50;
 }
 
 .map-tile {
