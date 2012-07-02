@@ -197,6 +197,13 @@
 
  	#################################################################
 
+	# TO DO: venues for status (notes)
+	# this should probably be it's own function because while it
+	# maybe should group on venue_id the requirements for how things
+	# are sorted are different and it's quickly turning in to a mess
+	# of if/else statements. See also, comments below about filesorts
+	# (20120701/straup)
+
 	function privatesquare_checkins_venues_for_user(&$user, $more=array()){
 
 		$defaults = array(
@@ -214,12 +221,29 @@
 
 		$sql = "SELECT venue_id, COUNT(id) AS count FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 
+		# TO DO: indexes so we can do status for user and city...
+
 		if (isset($more['locality'])){
 			$enc_loc = AddSlashes($more['locality']);
 			$sql .= " AND locality='{$enc_loc}'";
 		}
 
+		else if (isset($more['status_id'])){
+			$enc_status = AddSlashes($more['status_id']);
+			$sql .= " AND status_id='{$enc_status}'";
+		}
+
 		$sql .= " GROUP BY venue_id";
+
+		# SEE THIS? HEY YOU!!! THIS IS IMPORTANT.
+		# This will always cause MySQL to do a filesort.
+		# That is not a feature but for development and
+		# testing purposes we will live with it. For now.
+		# (20120701/straup)
+
+		if (isset($more['status_id'])){
+			$sql .= " ORDER BY created DESC";
+		}
 
 		$rsp = db_fetch_users($cluster_id, $sql);
 
