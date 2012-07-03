@@ -54,6 +54,9 @@
 	$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
 	$GLOBALS['smarty']->assign("checkin_crumb", $checkin_crumb);
 
+	$status_crumb = crumb_generate("api", "privatesquare.checkins.updateStatus");
+	$GLOBALS['smarty']->assign("status_crumb", $status_crumb);
+
 	$delete_crumb = crumb_generate("api", "privatesquare.checkins.delete");
 	$GLOBALS['smarty']->assign("delete_crumb", $delete_crumb);
 

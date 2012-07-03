@@ -27,6 +27,13 @@
 
  	#################################################################
 
+	function privatesquare_checkins_is_valid_status($status_id){
+		$map = privatesquare_checkins_status_map();
+		return (isset($map[$status_id])) ? 1 : 0;
+	}
+
+ 	#################################################################
+
 	function privatesquare_checkins_create($checkin){
 
 		$user = users_get_by_id($checkin['user_id']);
@@ -50,6 +57,29 @@
 			$rsp['checkin'] = $checkin;
 		}
 
+		return $rsp;
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_update(&$checkin, $update){
+
+		$user = users_get_by_id($checkin['user_id']);
+		$cluster_id = $user['cluster_id'];
+
+		# requires a schema change (20120703/straup)
+		# $update['last_modified'] = time();
+
+		$insert = array();
+
+		foreach ($update as $k => $v){
+			$insert[$k] = AddSlashes($v);
+		}
+
+		$enc_id = AddSlashes($checkin['id']);
+		$where = "id='{$enc_id}'";
+
+		$rsp = db_update_users($cluster_id, 'PrivatesquareCheckins', $insert, $where);
 		return $rsp;
 	}
 

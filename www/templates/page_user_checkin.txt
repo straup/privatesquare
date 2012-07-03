@@ -23,6 +23,25 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 </p>
 
 {if $is_own}
+
+{if 0}
+{if $checkin.status_id != 2}
+
+<select id="foo" data-status-crumb="{$status_crumb|escape}">
+{foreach from=$status_map item="label" key="id"}
+	{if $id==2}
+	<option value="{$id|escape}" disabled="disabled">{$label|escape}</option>
+	{elseif $id==$checkin.status_id}
+	<option value="{$id|escape}" selected="true">{$label|escape}</option>
+	{else}
+	<option value="{$id|escape}">{$label|escape}</option>
+	{/if}
+{/foreach}
+</select>
+
+{/if}
+{/if}
+
 <button id="iamhere">I am here again</button>
 
 {if $cfg.enable_feature_delete_checkins}
