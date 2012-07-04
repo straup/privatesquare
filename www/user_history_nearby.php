@@ -33,6 +33,8 @@
 	$lat = get_float('latitude');
 	$lon = get_float('longitude');
 
+	# TO DO: check whether any of these are 'iwanttogothere' ... 
+
 	if (($lat) && ($lon)){
 
 		$more = array();
