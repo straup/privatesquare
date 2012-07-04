@@ -264,7 +264,11 @@
 
 		foreach ($rsp['rows'] as $row){
 
-			$row['venue'] = foursquare_venues_get_by_venue_id($row['venue_id']);
+			$_more = array(
+				'inflate_locality' => 1,
+			);
+
+			privatesquare_checkins_inflate_extras($row, $_more);
 			$rows[] = $row;
 		}
 

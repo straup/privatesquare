@@ -41,8 +41,10 @@ Okee dookee, your checkin has been deleted.
 
 	<div class="date" data-created="{$row.created|escape}">
 
-		{if $status_id}
+		{if $status_id and $status_id <= 1}
 		you said <q>{$status_map.$status_id|escape}</q>
+		{elseif $status_id}
+		you said <q><a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a></q>
 		{else}
 		<a href="{$owner|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}" style="text-decoration:none;color:#000;">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> at {$row.created|date_format:"%k:%M"|escape}
 		{/if}

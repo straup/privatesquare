@@ -42,6 +42,15 @@
     display:none;
 }
 
+.marker-header-todo {
+    background-color:#adadad;
+    z-index:50;
+}
+
+.marker-history-todo {
+    background-color:#adadad !important;
+}
+
 select {
 	width:100% !important;
 	display:block !important;

@@ -71,7 +71,7 @@
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 	$GLOBALS['smarty']->assign("str_status", $str_status);
 
-	$pagination_url = urls_places_for_user($owner) . "status/{$status_id}/";
+	$pagination_url = urls_foo_for_user($owner) . "{$status_id}/";
 	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$export_formats = privatesquare_export_valid_formats();
