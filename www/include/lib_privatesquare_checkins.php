@@ -233,6 +233,7 @@
 			'stats_mode' => 0,
 			'per_page' => 10,
 			'page' => 1,
+			'dist' => .5
 		);
 
 		$more = array_merge($defaults, $more);
@@ -250,6 +251,19 @@
 		if (isset($more['locality'])){
 			$enc_loc = AddSlashes($more['locality']);
 			$sql .= " AND locality='{$enc_loc}'";
+		}
+
+		else if ((isset($more['latitude'])) && (isset($more['longitude']))){
+
+			loadlib("geo_utils");
+		
+			$dist = $more['dist'];
+			$unit = 'm';
+
+			# TO DO: sanity check to ensure max $dist
+
+			$bbox = geo_utils_bbox_from_point($more['latitude'], $more['longitude'], $dist, $unit);
+			$sql .= " AND latitude BETWEEN {$bbox[0]} AND {$bbox[2]} AND longitude BETWEEN {$bbox[1]} AND {$bbox[3]}";
 		}
 
 		$sql .= " ORDER BY created DESC";
