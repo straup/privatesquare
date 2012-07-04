@@ -42,7 +42,11 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {/if}
 {/if}
 
+{if $checkin.status_id==2}
+<button id="iamhere">I am here now</button>
+{else}
 <button id="iamhere">I am here again</button>
+{/if}
 
 {if $cfg.enable_feature_delete_checkins}
 <button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled">Delete this checkin</button>
