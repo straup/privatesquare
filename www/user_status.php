@@ -32,9 +32,16 @@
 		error_404();
 	}
 
+	$woeid = get_int32("woeid");
+
 	$str_status = $status_map[$status_id];
 
 	$whereami = "user/{$fsq_id}/status/{$status_id}/";
+
+	if ($woeid){
+		$whereami .= "{$woeid}/";
+	}
+
 	login_ensure_loggedin($whereami);
 
 	$fsq_user = foursquare_users_get_by_foursquare_id($fsq_id);
@@ -52,11 +59,13 @@
 		error_403();
 	}
 
-	$more = array(
-		'status_id' => $status_id,
-	);
+	$more = array();
 
-	# TO DO: hooks for nearby or a WOE ID or nearby
+	if ($woeid){
+		$more['locality'] = $woeid;
+	}
+
+	# TO DO: hooks for nearby
 
 	if ($page = get_int32("page")){
 		$more['page'] = $page;
@@ -69,6 +78,8 @@
 	
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
+	$GLOBALS['smarty']->assign("status_id", $status_id);
 	$GLOBALS['smarty']->assign("str_status", $str_status);
 
 	$pagination_url = urls_foo_for_user($owner) . "{$status_id}/";

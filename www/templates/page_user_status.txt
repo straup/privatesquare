@@ -13,7 +13,7 @@
 
 	<h3 class="header-left">
 		<a href="{$row|@urls_venue}">{$row.venue.name|escape}</a>
-		<span class="header-loc">{$row.created|date_format|escape}{if $row.locality}, in {$row.locality.name|escape}{/if}</span>
+		<span class="header-loc">{$row.created|date_format|escape}{if $row.locality}, in <a href="{$owner|@urls_foo_for_user}{$status_id|escape}/{$row.venue.locality|escape}/">{$row.locality.name|escape}</a>{/if}</span>
 	</h3>
 
 	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
