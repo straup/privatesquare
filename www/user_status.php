@@ -64,7 +64,7 @@
 
 	# see notes in lib_privatesquare_checkins
 
-	$rsp = privatesquare_checkins_venues_for_user($owner, $more);
+	$rsp = privatesquare_checkins_venues_for_user_and_status($owner, $status_id, $more);
 	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 	
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);

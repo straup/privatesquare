@@ -227,6 +227,53 @@
 
  	#################################################################
 
+	function privatesquare_checkins_venues_for_user_and_status(&$user, $status_id, $more=array()){
+
+		$defaults = array(
+			'stats_mode' => 0,
+			'per_page' => 10,
+			'page' => 1,
+		);
+
+		$more = array_merge($defaults, $more);
+
+		$cluster_id = $user['cluster_id'];
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_status = AddSlashes($status_id);
+
+		# TO DO: indexes
+		# TO DO: check for nearby/geo
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND status_id='{$enc_status}'";
+
+		if (isset($more['locality'])){
+			$enc_loc = AddSlashes($more['locality']);
+			$sql .= " AND locality='{$enc_loc}'";
+		}
+
+		$sql .= " ORDER BY created DESC";
+
+		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$rows = array();
+
+		foreach ($rsp['rows'] as $row){
+
+			$row['venue'] = foursquare_venues_get_by_venue_id($row['venue_id']);
+			$rows[] = $row;
+		}
+
+		$rsp['rows'] = $rows;
+		return $rsp;
+	}
+
+ 	#################################################################
+
 	# TO DO: venues for status (notes)
 	# this should probably be it's own function because while it
 	# maybe should group on venue_id the requirements for how things
@@ -258,22 +305,7 @@
 			$sql .= " AND locality='{$enc_loc}'";
 		}
 
-		else if (isset($more['status_id'])){
-			$enc_status = AddSlashes($more['status_id']);
-			$sql .= " AND status_id='{$enc_status}'";
-		}
-
 		$sql .= " GROUP BY venue_id";
-
-		# SEE THIS? HEY YOU!!! THIS IS IMPORTANT.
-		# This will always cause MySQL to do a filesort.
-		# That is not a feature but for development and
-		# testing purposes we will live with it. For now.
-		# (20120701/straup)
-
-		if (isset($more['status_id'])){
-			$sql .= " ORDER BY created DESC";
-		}
 
 		$rsp = db_fetch_users($cluster_id, $sql);
 
