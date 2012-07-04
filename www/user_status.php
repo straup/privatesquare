@@ -76,6 +76,9 @@
 	$rsp = privatesquare_checkins_venues_for_user_and_status($owner, $status_id, $more);
 	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 	
+	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
+
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 

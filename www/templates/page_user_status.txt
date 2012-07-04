@@ -1,11 +1,11 @@
-{capture assign="page_title"}{$owner.username} | status | {$str_status}{/capture}
+{capture assign="page_title"}{$owner.username} | status | {$str_status}{if $venues.0.locality} | {$venues.0.locality.name|escape}{/if}{/capture}
 {include file="inc_head.txt"}
 
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 {include file="inc_map_header_markers.txt markers=$venues}
 </div>
 
-<h3 class="header-right">{$str_status|escape}</h3>
+<h3 class="header-right">{$str_status|escape}{if $venues.0.locality}, in {$venues.0.locality.name|escape}{/if}</h3>
 
 {foreach from=$venues item="row"}
 
