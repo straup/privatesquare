@@ -15,7 +15,7 @@
 
 <p style="font-size:small;" id="user_checkin_context">
 {if $is_own}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q>{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q id="yousaid">{$status_map.$status_id|escape}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
 {/if}
@@ -24,12 +24,11 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 
 {if $is_own}
 
-{if 0}
 {if $checkin.status_id != 2}
 
-<select id="foo" data-status-crumb="{$status_crumb|escape}">
+<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}">
 {foreach from=$status_map item="label" key="id"}
-	{if $id==2}
+	{if $id==0 or $id==2}
 	<option value="{$id|escape}" disabled="disabled">{$label|escape}</option>
 	{elseif $id==$checkin.status_id}
 	<option value="{$id|escape}" selected="true">{$label|escape}</option>
@@ -39,7 +38,6 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {/foreach}
 </select>
 
-{/if}
 {/if}
 
 {if $checkin.status_id==2}
@@ -88,6 +86,57 @@ $(document).ready(function(){
 	privatesquare_htmapl();
 
 	/* oh please god... put me in plain vanilla procedural functions */
+
+	var toggle_controls = function(enabled){
+
+		if (enabled){
+			$('#iamhere').removeAttr('disabled');
+			$('#deleteme').removeAttr('disabled');
+			$('#status_update').removeAttr('disabled');
+		}
+
+		else {
+			$('#iamhere').attr('disabled', 'disabled');
+			$('#deleteme').attr('disabled', 'disabled');
+			$('#status_update').attr('disabled', 'disabled');
+		}
+	}
+
+	var status_flow = function(){
+
+		toggle_controls(0);
+
+		var checkin_id = $("#status_update").attr("data-checkin-id");
+		var status_id = $("#status_update").val();
+		var crumb = $("#status_update").attr("data-status-crumb");
+
+		var args = {
+			'checkin_id' : checkin_id,
+			'status_id' : status_id,
+			'crumb': crumb,
+			'method': 'privatesquare.checkins.updateStatus',
+		};
+
+		$.ajax({
+			'url': _cfg.abs_root_url + 'api/',
+			'type': 'POST',
+			'data': args,
+			'success': function(rsp){
+
+				if (rsp['stat'] != 'ok'){
+					privatesquare_api_error(rsp);	
+				}
+
+				else {
+					$("#yousaid").html(rsp['label']);
+				}
+
+				toggle_controls(1);
+			}
+		});
+
+		return false;
+	};
 
 	var deleteme_flow = function(){
 
@@ -162,12 +211,16 @@ $(document).ready(function(){
 	$('#iamhere').click(show_checkin_form);
 	$('#deleteme').click(deleteme_flow);
 
+	/* this needs to be more nuanced */
+	$('#status_update').change(status_flow);
+
 	$('#checkin_form').submit(function(){
 
 		var _onsuccess = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
 			$('#iamhere').removeAttr('disabled');
 			$('#deleteme').removeAttr('disabled');
+			$('#status_update').removeAttr('disabled');
 		}
 
 		var args = privatesquare_gather_args();
@@ -184,7 +237,6 @@ $(document).ready(function(){
 
 	$('#deleteme').removeAttr('disabled');
 	$('#deleteme').show();
-
 });
 
 {/literal}

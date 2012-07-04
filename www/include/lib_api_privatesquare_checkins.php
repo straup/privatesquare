@@ -22,10 +22,6 @@
 			'status_id' => $status_id,
 		);
 
-		# debugging...
-
-		api_output_ok($update);
-		exit();
 
 		$rsp = privatesquare_checkins_update($checkin, $update);
 
@@ -33,7 +29,14 @@
 			api_output_error(999, $rsp['error']);
 		}
 
-		api_output_ok();
+		$status_map = privatesquare_checkins_status_map();
+
+		$out = array(
+			'status_id' => $status_id,
+			'label' => $status_map[$status_id],
+		);
+
+		api_output_ok($out);
 	}
 
  	#################################################################
