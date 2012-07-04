@@ -220,6 +220,10 @@ q {
     z-index:50;
 }
 
+.marker-history-todo {
+    background-color:#adadad;
+}
+
 .map-tile {
     opacity: 0;
 }

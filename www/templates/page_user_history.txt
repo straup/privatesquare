@@ -50,7 +50,7 @@ Okee dookee, your checkin has been deleted.
 	</div>
 
 	<div class="map" data-zoom="14" data-center="{$row.venue.latitude|escape},{$row.venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history" data-location="{$row.venue.latitude|escape},{$row.venue.longitude|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
+		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$row.venue.latitude|escape},{$row.venue.longitude|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
 	</div>
 
 	<div class="permalink">
