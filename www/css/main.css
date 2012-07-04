@@ -417,3 +417,18 @@ button {
     text-decoration:none;
 }
 
+#youmeanttosay {
+    text-decoration:underline;
+    font-size:small;
+    margin-bottom:15px;
+}
+
+#status_update_ornot {
+    text-decoration:underline;
+}
+
+#status_update_wrapper {
+    display:none;
+    margin-bottom:15px;
+    font-size: small;
+}

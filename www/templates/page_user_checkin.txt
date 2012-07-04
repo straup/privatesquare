@@ -26,17 +26,29 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 
 {if $checkin.status_id != 2}
 
+<div id="youmeanttosay">Did you mean to say something else?</div>
+
+<div id="status_update_wrapper">
+
+Maybe something like 
+
 <select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}">
+	<optgroup>
 {foreach from=$status_map item="label" key="id"}
 	{if $id==0 or $id==2}
-	<option value="{$id|escape}" disabled="disabled">{$label|escape}</option>
+	{* the problem is that mobile safari doesn't seem to honour the disabled flag *}
+	{* <option value="{$id|escape}" disabled="disabled">{$label|escape}</option> *}
 	{elseif $id==$checkin.status_id}
 	<option value="{$id|escape}" selected="true">{$label|escape}</option>
 	{else}
 	<option value="{$id|escape}">{$label|escape}</option>
 	{/if}
 {/foreach}
+	</optgroup>
 </select>
+
+	... <span id="status_update_ornot">or not</span>
+</div>
 
 {/if}
 
@@ -131,6 +143,11 @@ $(document).ready(function(){
 					$("#yousaid").html(rsp['label']);
 				}
 
+				$("#status_update_wrapper").hide();
+
+				$("#youmeanttosay").show();
+				$('#iamhere').show();
+				$('#deleteme').show();
 				toggle_controls(1);
 			}
 		});
@@ -140,14 +157,12 @@ $(document).ready(function(){
 
 	var deleteme_flow = function(){
 
-		$('#iamhere').attr('disabled', 'disabled');
-		$('#deleteme').attr('disabled', 'disabled');
+		toggle_controls(0);
 
 		var q = "Are you sure you want to delete this checkin? There is no UNDO.";
 
 		if (! confirm(q)){
-			$('#iamhere').removeAttr('disabled');
-			$('#deleteme').removeAttr('disabled');
+			toggle_controls(1);
 			return;
 		}
 
@@ -203,11 +218,27 @@ $(document).ready(function(){
 	var show_checkin_form = function(){
 		privatesquare_unset_status();
 
-		$('#iamhere').attr('disabled', 'disabled');
-		$('#deleteme').attr('disabled', 'disabled');
+		toggle_controls(0);
+
 		$('#checkin_venue').show();
 	};
 
+	var show_status_update = function(){
+		$("#youmeanttosay").hide();
+		$('#iamhere').hide();
+		$('#deleteme').hide();
+		$("#status_update_wrapper").show();
+		return false;
+	};
+
+	$("#status_update_ornot").click(function(){
+		$("#status_update_wrapper").hide();
+		$("#youmeanttosay").show();
+		$('#iamhere').show();
+		$('#deleteme').show();
+	});
+
+	$('#youmeanttosay').click(show_status_update);
 	$('#iamhere').click(show_checkin_form);
 	$('#deleteme').click(deleteme_flow);
 
@@ -218,9 +249,7 @@ $(document).ready(function(){
 
 		var _onsuccess = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
-			$('#iamhere').removeAttr('disabled');
-			$('#deleteme').removeAttr('disabled');
-			$('#status_update').removeAttr('disabled');
+			toggle_controls(1);
 		}
 
 		var args = privatesquare_gather_args();
@@ -232,10 +261,9 @@ $(document).ready(function(){
 		return false;	
 	});
 
-	$('#iamhere').removeAttr('disabled');
-	$('#iamhere').show();
+	toggle_controls(1);
 
-	$('#deleteme').removeAttr('disabled');
+	$('#iamhere').show();
 	$('#deleteme').show();
 });
 

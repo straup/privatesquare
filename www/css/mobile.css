@@ -117,3 +117,13 @@ input[type=submit] {
 #deferred {
     padding-top: 10px;
 }
+
+#status_update {
+    display:block;
+    margin-top:15px;
+}
+
+#status_update_ornot {
+    text-decoration:underline;
+    text-align:right;
+}
