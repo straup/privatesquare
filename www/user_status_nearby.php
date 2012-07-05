@@ -57,6 +57,8 @@
 	$lon = get_float('longitude');
 	$dist = .5;	# in miles
 
+	# TO DO: validate lat/lon
+
 	if (($lat) && ($lon)){
 
 		$more = array(
@@ -75,7 +77,8 @@
 		$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
 		$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
-		# FIX ME: add lat and lon...
+		$GLOBALS['smarty']->assign('latitude', $lat);
+		$GLOBALS['smarty']->assign('longitude', $lon);
 
 		$pagination_url = urls_foo_for_user($owner) . "{$status_id}/nearby/";
 		$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
