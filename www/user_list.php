@@ -45,13 +45,12 @@
 		error_404();
 	}
 
-	#
+	$str_status = $status_map[$status_id];
+	$status_url = str_replace(" ", "", $str_status);
+
+	$whereami = "user/{$fsq_id}/list/{$status_url}/";
 
 	$woeid = get_int32("woeid");
-
-	$str_status = $status_map[$status_id];
-
-	$whereami = "user/{$fsq_id}/status/{$status_id}/";
 
 	if ($woeid){
 		$whereami .= "{$woeid}/";
@@ -84,8 +83,6 @@
 		$more['page'] = $page;
 	}
 
-	# see notes in lib_privatesquare_checkins
-
 	$rsp = privatesquare_checkins_venues_for_user_and_status($owner, $status_id, $more);
 	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 	
@@ -98,14 +95,12 @@
 	$GLOBALS['smarty']->assign("status_id", $status_id);
 	$GLOBALS['smarty']->assign("str_status", $str_status);
 
-	$status_url = str_replace(" ", "", $str_status);
 	$pagination_url = urls_lists_for_user($owner) . "{$status_url}/";
-
 	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$export_formats = privatesquare_export_valid_formats();
 	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
 
-	$GLOBALS['smarty']->display("page_user_status.txt");
+	$GLOBALS['smarty']->display("page_user_list.txt");
 	exit();
 ?>

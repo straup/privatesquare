@@ -105,6 +105,13 @@ RewriteRule ^user/([0-9]+)/status/([0-9]+)/nearby(/page([0-9]+))?/?$	user_status
 RewriteRule ^user/([0-9]+)/status/([0-9]+)/([0-9]+)(/page([0-9]+))?/?$	user_status.php?foursquare_id=$1&status_id=$2&woeid=$3&page=$5&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/status/([0-9]+)(/page([0-9]+))?/?$	user_status.php?foursquare_id=$1&status_id=$2&page=$4&%{QUERY_STRING}	[L]
 
+RewriteRule ^user/([0-9]+)/lists/?$	user_lists.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+
+RewriteRule ^user/([0-9]+)/lists?/(([0-9]+)|([a-z]+))/nearby(/page([0-9]+))?/?$	user_list_nearby.php?foursquare_id=$1&status_id=$3&status_label=$4&page=$6&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/lists?/(([0-9]+)|([a-z]+))/([0-9]+)(/page([0-9]+))?/?$	user_list.php?foursquare_id=$1&status_id=$3&status_label=$4&woeid=$5&page=$7&%{QUERY_STRING}	[L]
+
+RewriteRule ^user/([0-9]+)/lists?/(([0-9]+)|([a-z]+))(/page([0-9]+))?/?$	user_list.php?foursquare_id=$1&status_id=$3&status_label=$4&page=$6&%{QUERY_STRING}	[L]
+
 RewriteRule ^user/([0-9]+)/history/nearby/?$		user_history_nearby.php?foursquare_id=$1&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/history/export(\.([a-z]+))?/?$	user_history_export.php?foursquare_id=$1&format=$3&%{QUERY_STRING}	[L]
 

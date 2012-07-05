@@ -1,0 +1,11 @@
+{include file="inc_head.txt"}
+
+<ul>
+{foreach from=$list_map item="clean" key="id"}
+{assign var="label" value=$status_map.$id}
+
+<li><a href="{$owner|@urls_lists_for_user}{$clean|escape}/">{$label|escape}</a> (<a href="{$owner|@urls_lists_for_user}{$clean|escape}/nearby/">nearby</a>)</li>
+{/foreach}
+</ul>
+
+{include file="inc_foot.txt"}

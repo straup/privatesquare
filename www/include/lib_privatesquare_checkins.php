@@ -27,6 +27,32 @@
 
  	#################################################################
 
+	# Dunno... might move in to a separate library (20120705/straup)
+
+	function privatesquare_checkins_list_map($string_keys=0){
+
+		$status_map = privatesquare_checkins_status_map();
+		$list_map = array();
+
+		foreach ($status_map as $id => $label){
+
+			if (in_array($id, array(0, 1))){
+				continue;
+			}
+
+			$clean = str_replace(" ", "", $label);
+			$list_map[$id] = $clean;
+		}
+
+		if ($string_keys){
+			$list_map = array_flip($list_map);
+		}
+
+		return $list_map;
+	}
+
+ 	#################################################################
+
 	function privatesquare_checkins_is_valid_status($status_id){
 		$map = privatesquare_checkins_status_map();
 		return (isset($map[$status_id])) ? 1 : 0;

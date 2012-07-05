@@ -45,17 +45,10 @@
 		error_404();
 	}
 
-	#
-
-	$woeid = get_int32("woeid");
-
 	$str_status = $status_map[$status_id];
+	$status_url = str_replace(" ", "", $str_status);
 
-	$whereami = "user/{$fsq_id}/status/{$status_id}/";
-
-	if ($woeid){
-		$whereami .= "{$woeid}/";
-	}
+	$whereami = "user/{$fsq_id}/list/{$status_url}/nearby/";
 
 	login_ensure_loggedin($whereami);
 
@@ -74,23 +67,39 @@
 		error_403();
 	}
 
-	$more = array();
+	$lat = get_float('latitude');
+	$lon = get_float('longitude');
+	$dist = .5;	# in miles
 
-	if ($woeid){
-		$more['locality'] = $woeid;
-	}
+	# TO DO: validate lat/lon
 
-	if ($page = get_int32("page")){
-		$more['page'] = $page;
-	}
+	if (($lat) && ($lon)){
 
-	# see notes in lib_privatesquare_checkins
+		$more = array(
+			'latitude' => $lat,
+			'longitude' => $lon,
+			'dist' => $dist
+		);
 
-	$rsp = privatesquare_checkins_venues_for_user_and_status($owner, $status_id, $more);
-	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
+		if ($page = get_int32("page")){
+			$more['page'] = $page;
+		}
+
+		$rsp = privatesquare_checkins_venues_for_user_and_status($owner, $status_id, $more);
+		$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 	
-	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
-	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
+		$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+		$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
+
+		$GLOBALS['smarty']->assign('latitude', $lat);
+		$GLOBALS['smarty']->assign('longitude', $lon);
+
+		$pagination_url = urls_foo_for_user($owner) . "{$status_id}/nearby/";
+		$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
+
+		$export_formats = privatesquare_export_valid_formats();
+		$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
+	}
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
@@ -98,14 +107,6 @@
 	$GLOBALS['smarty']->assign("status_id", $status_id);
 	$GLOBALS['smarty']->assign("str_status", $str_status);
 
-	$status_url = str_replace(" ", "", $str_status);
-	$pagination_url = urls_lists_for_user($owner) . "{$status_url}/";
-
-	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
-
-	$export_formats = privatesquare_export_valid_formats();
-	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));
-
-	$GLOBALS['smarty']->display("page_user_status.txt");
+	$GLOBALS['smarty']->display("page_user_list_nearby.txt");
 	exit();
 ?>
