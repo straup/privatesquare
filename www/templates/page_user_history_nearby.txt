@@ -8,20 +8,20 @@
 {if $venues|@count}
 
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-{include file="inc_map_header_markers.txt markers=$venues}
+{include file="inc_map_header_markers.txt markers=$venues use_test='has_visited'}
 </div>
 
 {foreach from=$venues item="row"}
 
 	<h3 class="header-left">
 	<a href="{$row|@urls_venue}">{$row.name|escape}</a>
-	<span class="header-loc">{if $row.count_checkins==1}you've been here once{else}you've been here {$row.count_checkins|escape} times{/if}</span>
+	<span class="header-loc">{if !$row.has_visited}you are wanting to go here{elseif $row.count_checkins==1}you've been here once{else}you've been here {$row.count_checkins|escape} times{/if}</span>
 	</h3>
 
 <div class="checkin" data-venue="{$row.venue_id|escape}">
 
 	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
+		<div class="marker marker-history{if !$row.has_visited} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
 	</div>
 </div>
 

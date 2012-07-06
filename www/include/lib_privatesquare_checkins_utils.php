@@ -63,4 +63,29 @@
 	}
 
  	#################################################################
+
+	function privatesquare_checkins_utils_has_visited_venue(&$user, $venue_id){
+
+		$more = array(
+			'venue_id' => $venue_id
+		);
+
+		$statuses = privatesquare_checkins_statuses_for_user($user, $more);
+
+		if (count(array_keys($statuses)) > 1){
+			$has_visited = 1;
+		}
+
+		else if (isset($statuses['2'])){
+			$has_visited = 0;
+		}
+
+		else if (count(array_keys($statuses))){
+			$has_visited = 1;
+		}
+
+		return $has_visited;
+	}
+
+ 	#################################################################
 ?>

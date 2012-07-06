@@ -577,6 +577,11 @@
 		foreach ($tmp as $venue_id => $count){
 			$venue = foursquare_venues_get_by_venue_id($venue_id); 
 			$venue['count_checkins'] = $count;
+
+			$has_visited = privatesquare_checkins_utils_has_visited_venue($user, $venue_id);
+			$venue['has_visited'] = $has_visited;
+
+
 			$venues[] = $venue;
 		}
 
