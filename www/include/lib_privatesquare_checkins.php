@@ -309,6 +309,24 @@
 			);
 
 			privatesquare_checkins_inflate_extras($row, $_more);
+
+			# TO DO: OMG... INDEXES
+
+			$enc_venue = AddSlashes($row['venue_id']);
+			$enc_created = AddSlashes($row['created']);
+
+			$_sql = "SELECT COUNT(id) AS cnt FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+
+			if ($status_id == 2){
+				$_sql .= " AND status_id != '{$enc_status}'";
+			}
+
+			$_sql .= " AND venue_id='{$enc_venue}'";
+			$_sql .= " AND created > '{$enc_created}'";
+
+			$_rsp = db_single(db_fetch_users($cluster_id, $_sql));
+
+			$row['count_checkins'] = $_rsp['cnt'];
 			$rows[] = $row;
 		}
 
