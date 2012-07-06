@@ -447,3 +447,10 @@ button {
     margin-bottom:15px;
     font-size: small;
 }
+
+.nearby_all {
+    font-size:11px;
+    display:block;
+    font-weight:100;
+    margin-top:5px;
+}

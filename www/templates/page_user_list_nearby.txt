@@ -8,7 +8,7 @@
 <div class="marker marker-header marker-youarehere" data-location="{$latitude|escape},{$longitude|escape}"><span class="marker-history-text"></span></div>
 </div>
 
-<h3 class="header-right">{$str_status|escape}, nearby here</h3>
+<h3 class="header-right">{$str_status|escape}, nearby here <span class="nearby_all"><a href="{$owner|@urls_lists_for_user}{$status_id|escape}/{$venues.0.venue.locality|escape}/">{$str_status|escape} for {$venues.0.locality.name|escape}</a></span></h3>
 
 {foreach from=$venues item="row"}
 
@@ -16,7 +16,7 @@
 
 	<h3 class="header-left">
 		<a href="{$row|@urls_venue}">{$row.venue.name|escape}</a>
-		<span class="header-loc">{$row.created|date_format|escape}{if $row.locality}, in <a href="{$owner|@urls_foo_for_user}{$status_id|escape}/{$row.venue.locality|escape}/">{$row.locality.name|escape}</a>{/if}</span>
+		<span class="header-loc">{if $row.locality} in <a href="{$owner|@urls_lists_for_user}{$status_id|escape}/{$row.venue.locality|escape}/">{$row.locality.name|escape}</a>{/if}, {$row.created|date_format|escape}{if $row.count_checkins} &#8212; {if $row.count_checkins == 1}you've been here once since then{else}you've been here {$row.count_checkins|escape} times since{/if}{/if}</span>
 	</h3>
 
 	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
