@@ -49,6 +49,10 @@
 		$has_visited = 0;
 	}
 
+	else if (count(array_keys($statuses))){
+		$has_visited = 1;
+	}
+
 	$GLOBALS['smarty']->assign_by_ref("statuses", $statuses);
 	$GLOBALS['smarty']->assign_by_ref("has_visited", $has_visited);
 
