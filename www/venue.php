@@ -39,6 +39,19 @@
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 	$GLOBALS['smarty']->assign_by_ref("broadcast_map", $broadcast_map);
 
+	$statuses = privatesquare_checkins_statuses_for_user($owner, $more);
+
+	if (count(array_keys($statuses)) > 1){
+		$has_visited = 1;
+	}
+
+	else if (isset($statuses['2'])){
+		$has_visited = 0;
+	}
+
+	$GLOBALS['smarty']->assign_by_ref("statuses", $statuses);
+	$GLOBALS['smarty']->assign_by_ref("has_visited", $has_visited);
+
 	$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 
 	$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");

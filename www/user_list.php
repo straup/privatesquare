@@ -96,6 +96,13 @@
 	$GLOBALS['smarty']->assign("str_status", $str_status);
 
 	$pagination_url = urls_lists_for_user($owner) . "{$status_url}/";
+
+	if ($woeid){
+
+		$pagination_url .= "{$woeid}/";
+		$GLOBALS['smarty']->assign("woeid", $woeid);
+	}
+
 	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$export_formats = privatesquare_export_valid_formats();

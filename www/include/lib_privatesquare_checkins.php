@@ -155,6 +155,33 @@
 
  	#################################################################
 
+	function privatesquare_checkins_statuses_for_user(&$user, $more=array()){
+
+		$cluster_id = $user['cluster_id'];
+		$enc_user = AddSlashes($user['id']);
+
+		$sql = "SELECT status_id, COUNT(id) AS cnt FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
+
+		if (isset($more['venue_id'])){
+			$enc_venue = AddSlashes($more['venue_id']);
+			$sql .= " AND venue_id='{$enc_venue}'";
+		}
+
+		$sql .= " GROUP BY status_id";
+
+		$rsp = db_fetch_users($cluster_id, $sql);
+
+		$stats = array();
+
+		foreach ($rsp['rows'] as $row){
+			$stats[$row['status_id']] = $row['cnt'];
+		}
+
+		return $stats;
+	}
+
+ 	#################################################################
+
 	function privatesquare_checkins_localities_for_user(&$user, $more=array()){
 
 		$defaults = array(

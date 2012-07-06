@@ -21,10 +21,14 @@
 	{include file="inc_checkin_venue.txt"}
 
 	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
+		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
 
+	{if $has_visited}
 	<button id="iamhere">I am here again</button>
+	{else}
+	<button id="iamhere">I am here now</button>
+	{/if}
 
 {if $venue.latitude and $venue.longitude}
 <div class="geo">
@@ -76,6 +80,33 @@
 {/foreach}
 </ul>
 
+<div id="venue_stats">
+<h4>You said</h4>
+
+<ul>
+{foreach from=$statuses item="count" key="status_id"}
+{if $status_id >= 2}
+
+{if $count==1}
+<li><q><a href="{$owner|@urls_lists_for_user}{$status_id|escape}/nearby?latitude={$venue.latitude|escape}&longitude={$venue.longitude|escape}">{$status_map.$status_id|escape}</a></q> &#8212; once</li>
+{else}
+<li><q><a href="{$owner|@urls_lists_for_user}{$status_id|escape}/nearby?latitude={$venue.latitude|escape}&longitude={$venue.longitude|escape}">{$status_map.$status_id|escape}</a></q> &#8212; {$count|escape} times</li>
+{/if}
+
+{else}
+
+{if $count==1}
+<li><q>{$status_map.$status_id|escape}</q> &#8212; once</li>
+{else}
+<li><q>{$status_map.$status_id|escape}</q> &#8212; {$count|escape} times</li>
+{/if}
+
+{/if}
+{/foreach}
+</ul>
+
+</div>
+
 <div id="venue_details">
 <h4>Details</h4>
 
@@ -83,6 +114,7 @@
 <li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
 <li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
 </ul>
+
 </div>
 
 {include file="inc_export_links.txt"}

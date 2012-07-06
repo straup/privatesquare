@@ -220,6 +220,11 @@ q {
     z-index:50;
 }
 
+.marker-youarehere {
+    z-index: 100;
+    opacity:1;
+}
+
 .marker-history-todo {
     background-color:#adadad;
 }
@@ -358,6 +363,12 @@ button {
 }
 
 #user_checkin_details ul {
+    font-size: small;
+    padding: 0px;
+    margin: 0px;
+}
+
+#venue_stats ul {
     font-size: small;
     padding: 0px;
     margin: 0px;
