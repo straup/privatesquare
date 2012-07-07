@@ -43,12 +43,12 @@
 }
 
 .marker-header-todo {
-    background-color:#adadad;
+    background-color:#008abe;
     z-index:50;
 }
 
 .marker-history-todo {
-    background-color:#adadad !important;
+    background-color:#008abe !important;
 }
 
 select {

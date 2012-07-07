@@ -216,17 +216,19 @@ q {
 }
 
 .marker-header-todo {
-    background-color:#adadad;
+    background-color:#008abe;
     z-index:50;
 }
 
 .marker-youarehere {
     z-index: 100;
     opacity:1;
+    background-color:#adadad;
+    /* background-color: #ffe48b; */
 }
 
 .marker-history-todo {
-    background-color:#adadad;
+    background-color:#008abe;
 }
 
 .map-tile {
