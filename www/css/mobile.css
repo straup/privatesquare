@@ -136,3 +136,13 @@ input[type=submit] {
     text-decoration:underline;
     text-align:right;
 }
+
+#lists {
+    margin: 0px;
+    padding: 0px;
+    margin-left:20px;
+}
+
+#lists li {
+    font-size:1.25em !important;
+}

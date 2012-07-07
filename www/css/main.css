@@ -456,16 +456,18 @@ button {
 }
 
 #lists li {
-    font-size:1.5em !important;
+    font-size:1.75em !important;
     color: #adadad;
-    margin-bottom:20px;
+    font-weight:700;
 }
 
 #lists li a {
     text-decoration:none;
+    margin-bottom:10px;
 }
 
-#lists li a .nearby {
-    font-size:small;
-
+#lists .nearbyhere {
+    font-size:small !important;
+    margin-bottom:20px;
+    font-weight:100;
 }
