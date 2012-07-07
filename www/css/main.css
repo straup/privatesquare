@@ -454,3 +454,18 @@ button {
     font-weight:100;
     margin-top:5px;
 }
+
+#lists li {
+    font-size:1.5em !important;
+    color: #adadad;
+    margin-bottom:20px;
+}
+
+#lists li a {
+    text-decoration:none;
+}
+
+#lists li a .nearby {
+    font-size:small;
+
+}
