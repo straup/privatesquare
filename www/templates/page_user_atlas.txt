@@ -1,0 +1,47 @@
+{capture assign="page_title"}{$owner.username} | atlas of desire | {$str_status}{if $woeid} | {$venues.0.locality.name|escape}{/if}{/capture}
+{include file="inc_head.txt"}
+
+{if $venues|@count}
+
+<div id="displaymap" class="map map-list"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+{include file="inc_map_header_markers.txt markers=$venues}
+</div>
+
+<h3 class="header-right header-right-list">{$str_status|escape}{if $woeid}, in {$venues.0.locality.name|escape}{/if} <span class="nearby_all"><a href="{$owner|@urls_atlas_of_desire_for_user}{$status_id|escape}/nearby/">{$str_status|escape} nearby</a></span></h3>
+
+{foreach from=$venues item="row"}
+
+<div class="checkin" data-venue="{$row.venue_id|escape}">
+
+	<h3 class="header-left">
+		<a href="{$row|@urls_venue}">{$row.venue.name|escape}</a>
+		<span class="header-loc">{if $row.locality} in <a href="{$owner|@urls_atlas_of_desire_for_user}{$status_id|escape}/{$row.venue.locality|escape}/">{$row.locality.name|escape}</a>{/if}, {$row.created|date_format|escape}{if $row.count_checkins} &#8212; {if $row.count_checkins == 1}you've been here once since then{else}you've been here {$row.count_checkins|escape} times since{/if}{/if}</span>
+	</h3>
+
+	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
+	</div>
+</div>
+
+{/foreach}
+
+{include file="inc_pagination.txt"}
+{include file="inc_export_links.txt"}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	privatesquare_htmapl();
+{literal}}{/literal});
+</script>
+
+{else}
+
+<h3 class="header-right">{$str_status|escape}</h3>
+
+<p>You haven't said <q>{$str_status|escape}</q> about any places.</p>
+
+<p>Would you to <a href="{$owner|@urls_atlas_of_desire_for_user}">return</a> to your atlas of desire?</p>
+
+{/if}
+
+{include file="inc_foot.txt"}

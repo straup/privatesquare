@@ -1,0 +1,15 @@
+{capture assign="page_title"}{$owner.username} | atlas of desire{/capture}
+{include file="inc_head.txt"}
+
+<h3 class="header-right">A private atlas of desire</h3>
+
+<ul id="lists">
+{foreach from=$list_map item="clean" key="id"}
+{assign var="label" value=$status_map.$id}
+
+<li><a href="{$owner|@urls_atlas_of_desire_for_user}{$clean|escape}/">{$label|escape}</a></li>
+<li class="nearbyhere"><a href="{$owner|@urls_atlas_of_desire_for_user}{$clean|escape}/nearby/">{$label|escape} nearby here</a></li>
+{/foreach}
+</ul>
+
+{include file="inc_foot.txt"}

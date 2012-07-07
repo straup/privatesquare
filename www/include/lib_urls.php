@@ -29,23 +29,17 @@
 
  	#################################################################
 
-	# IT'S CALLED 'foo' BECAUSE IT NEEDS A PROPER NAME
-	# (20120704/straup)
-
-	function urls_foo_for_user(&$user){
-
-		$fsq_user = foursquare_users_get_by_user_id($user['id']);
-
-		return $GLOBALS['cfg']['abs_root_url'] . "user/{$fsq_user['foursquare_id']}/status/";
-	}
-
- 	#################################################################
+	# deprecated
 
 	function urls_lists_for_user(&$user){
+		return urls_atlas_of_desire_for_user($user);
+	}
+
+	function urls_atlas_of_desire_for_user($user){
 
 		$fsq_user = foursquare_users_get_by_user_id($user['id']);
 
-		return $GLOBALS['cfg']['abs_root_url'] . "user/{$fsq_user['foursquare_id']}/lists/";
+		return $GLOBALS['cfg']['abs_root_url'] . "user/{$fsq_user['foursquare_id']}/atlas/";
 	}
 
  	#################################################################
