@@ -1,7 +1,7 @@
 {capture assign="page_title"}{$owner.username} | lists{/capture}
 {include file="inc_head.txt"}
 
-<h3 class="header-right">lists</h3>
+<h3 class="header-right">A private atlas of desire</h3>
 
 <ul id="lists">
 {foreach from=$list_map item="clean" key="id"}

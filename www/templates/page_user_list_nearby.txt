@@ -41,7 +41,9 @@ $(document).ready(function(){literal}{{/literal}
 
 <h3 class="header-right">{$str_status|escape}, nearby here</h3>
 
-<p>I got nothing.</p>
+<p>You haven't said <q>{$str_status|escape}</q> about any places, near here.</p>
+
+<p>Would you like to see <a href="{$owner|@urls_lists_for_user}{$status_id}/">the entire list</a> of things marked <q>{$str_status}</q> or just <a href="{$owner|@urls_lists_for_user}">go back</a> to your atlas of desire?</p>
 
 {/if}
 {else}

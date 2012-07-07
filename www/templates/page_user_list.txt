@@ -38,7 +38,9 @@ $(document).ready(function(){literal}{{/literal}
 
 <h3 class="header-right">{$str_status|escape}</h3>
 
-<p>I got nothing.</p>
+<p>You haven't said <q>{$str_status|escape}</q> about any places.</p>
+
+<p>Would you to <a href="{$owner|@urls_lists_for_user}">return</a> to your atlas of desire?</p>
 
 {/if}
 
