@@ -101,12 +101,6 @@ RewriteRule ^user/([0-9]+)/checkin(/([0-9a-f]+))/?$	user_checkin.php?foursquare_
 RewriteRule ^user/([0-9]+)/places(/page([0-9]+))?/?$		user_places.php?foursquare_id=$1&page=$3&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/places/([0-9]+)(/page([0-9]+))?/?$	user_place.php?foursquare_id=$1&woeid=$2&page=$4&%{QUERY_STRING}	[L]
 
-# deprecated
-RewriteRule ^user/([0-9]+)/lists/?$	user_lists.php?foursquare_id=$1&%{QUERY_STRING}	[L]
-RewriteRule ^user/([0-9]+)/lists?/(([0-9]+)|([a-z]+))/nearby(/page([0-9]+))?/?$	user_list_nearby.php?foursquare_id=$1&status_id=$3&status_label=$4&page=$6&%{QUERY_STRING}	[L]
-RewriteRule ^user/([0-9]+)/lists?/(([0-9]+)|([a-z]+))/([0-9]+)(/page([0-9]+))?/?$	user_list.php?foursquare_id=$1&status_id=$3&status_label=$4&woeid=$5&page=$7&%{QUERY_STRING}	[L]
-RewriteRule ^user/([0-9]+)/lists?/(([0-9]+)|([a-z]+))(/page([0-9]+))?/?$	user_list.php?foursquare_id=$1&status_id=$3&status_label=$4&page=$6&%{QUERY_STRING}	[L]
-
 RewriteRule ^user/([0-9]+)/atlas/?$							user_atlas_of_desire.php?foursquare_id=$1&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/atlas/(([0-9]+)|([a-z]+))/nearby(/page([0-9]+))?/?$		user_atlas_nearby.php?foursquare_id=$1&status_id=$3&status_label=$4&page=$6&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/atlas/(([0-9]+)|([a-z]+))/([0-9]+)(/page([0-9]+))?/?$	user_atlas.php?foursquare_id=$1&status_id=$3&status_label=$4&woeid=$5&page=$7&%{QUERY_STRING}	[L]
