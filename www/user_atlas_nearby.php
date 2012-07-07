@@ -86,7 +86,23 @@
 		}
 
 		$rsp = privatesquare_checkins_venues_for_user_and_status($owner, $status_id, $more);
-		$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
+		$venues = $rsp['rows'];
+
+		$count = count($venues);
+	
+		for ($i = 0; $i < $count; $i++){
+			$swlat = min($lat, $venues[$i]['latitude']);
+			$swlon = min($lon, $venues[$i]['longitude']);
+			$nelat = max($lat, $venues[$i]['latitude']);
+			$nelon = max($lon, $venues[$i]['longitude']);
+
+			# list($ne_lat, $ne_lon) = geo_utils_move_point($ne_lat, $ne_lon, 45, 10);
+			# list($sw_lat, $ne_lon) = geo_utils_move_point($sw_lat, $sw_lon, 225, 10);
+
+			$venues[$i]['nearby_bbox'] = array($swlat, $swlon, $nelat, $nelon);
+		}
+
+		$GLOBALS['smarty']->assign_by_ref("venues", $venues);
 	
 		$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
 		$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);

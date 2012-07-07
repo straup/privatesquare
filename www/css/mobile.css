@@ -38,6 +38,13 @@
     border-radius: 20px !important;
 }
 
+.marker-youarehere {
+    z-index: 100;
+    opacity:1;
+    background-color:#adadad !important;
+    /* background-color: #ffe48b; */
+}
+
 .marker-history-text {
     display:none;
 }

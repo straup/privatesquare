@@ -107,7 +107,7 @@
 	# http://www.richardpeacock.com/sites/default/files/getDueCoords.php__0.txt
 
 	function geo_utils_move_point($lat, $lon, $bearing, $dist, $unit='m'){
-		
+
 		$radius = GEO_UTILS_R_M;
 
 		if ($unit == 'km'){
