@@ -37,11 +37,14 @@
 
 	if (($lat) && ($lon)){
 
-		$more = array();
+		$more = array(
+			'dist' => 0.5,
+		);
 
-		if (get_float('dist')) {
-			$more['dist'] = get_float('dist');
+		if ($d = get_float('dist')) {
+			$more['dist'] = $d;
 		}
+
 		if ( get_str('unit')) {
 			$more['unit'] = get_str('unit');
 		}
@@ -58,6 +61,9 @@
 
 		$GLOBALS['smarty']->assign("latitude", $lat);
 		$GLOBALS['smarty']->assign("longitude", $lon);
+
+		$nearby_bbox = geo_utils_bbox_from_point($lat, $lon, ($more['dist'] * 1.25), 'm');
+		$GLOBALS['smarty']->assign("nearby_bbox", $nearby_bbox);
 	}
 
 	$GLOBALS['smarty']->display("page_user_history_nearby.txt");

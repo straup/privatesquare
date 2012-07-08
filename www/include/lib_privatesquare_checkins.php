@@ -544,7 +544,7 @@
 
 		loadlib("geo_utils");
 		
-		$dist = (isset($more['dist'])) ? floatval($more['dist']) : 0.2;
+		$dist = (isset($more['dist'])) ? floatval($more['dist']) : 0.5;
 		$unit = (geo_utils_is_valid_unit($more['unit'])) ? $more['unit'] : 'm';
 
 		# TO DO: sanity check to ensure max $dist

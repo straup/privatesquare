@@ -20,8 +20,8 @@
 		<span class="header-loc">{if $row.locality} in <a href="{$owner|@urls_atlas_of_desire_for_user}{$status_id|escape}/{$row.venue.locality|escape}/">{$row.locality.name|escape}</a>{/if}, {$row.created|date_format|escape}{if $row.count_checkins} &#8212; {if $row.count_checkins == 1}you've been here once since then{else}you've been here {$row.count_checkins|escape} times since{/if}{/if}</span>
 	</h3>
 
-	<div class="map" data-extent="{$row.nearby_bbox|@join:","|escape}" x-data-zoom="14" x-data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history marker-youarehere marker-history-nearby" data-location="{$latitude|escape},{$longitude|escape}"><span class="marker-history-text marker-history-text-nearby">you<span class="are-hereish"> are here-ish</span></span></div>
+	<div class="map" data-extent="{$nearby_bbox|@join:","|escape}" x-data-zoom="14" x-data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history marker-youarehere" data-location="{$latitude|escape},{$longitude|escape}"><span class="marker-history-text">you are here-ish</span></div>
 		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
 	</div>
 </div>

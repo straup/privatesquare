@@ -221,10 +221,8 @@ q {
 }
 
 .marker-youarehere {
-    z-index: 100;
     opacity:1;
     background-color:#adadad;
-    /* background-color: #ffe48b; */
 }
 
 .marker-history-todo {

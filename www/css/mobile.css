@@ -49,17 +49,6 @@
     display:none;
 }
 
-.marker-history-text-nearby {
-    display:inline !important;
-}
-
-.marker-history-nearby {
-    -moz-border-radius: 0px !important;
-    -webkit-border-radius: 0px !important;
-    -khtml-border-radius: 0px !important;
-    border-radius: 0px !important;
-}
-
 .are-hereish {
     display: none;
 }
