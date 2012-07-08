@@ -221,8 +221,15 @@ q {
 }
 
 .marker-youarehere {
+    z-index: 500 auto;
     opacity:1;
     background-color:#adadad;
+}
+
+.marker-youarehere:hover {
+    z-index: 500 !important;
+    background-color:#fff;
+    color:#000;
 }
 
 .marker-history-todo {
