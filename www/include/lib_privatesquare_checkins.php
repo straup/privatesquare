@@ -16,6 +16,7 @@
 			'4' => 'again again',
 			'5' => 'again maybe',
 			'6' => 'again never',
+			'7' => 'meh',
 		);
 
 		if ($string_keys){
