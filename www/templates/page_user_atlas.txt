@@ -1,4 +1,4 @@
-{capture assign="page_title"}{$owner.username} | atlas of desire | {$str_status}{if $woeid} | {$venues.0.locality.name|escape}{/if}{/capture}
+{capture assign="page_title"}{if $str_status=='meh'}{$owner.username} | atlas of meh{if $woeid} | {$venues.0.locality.name|escape}{/if}{else}{$owner.username} | atlas of desire | {$str_status}{if $woeid} | {$venues.0.locality.name|escape}{/if}{/if}{/capture}
 {include file="inc_head.txt"}
 
 {if $venues|@count}

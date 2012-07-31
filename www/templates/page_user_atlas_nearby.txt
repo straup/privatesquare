@@ -1,4 +1,4 @@
-{capture assign="page_title"}{$owner.username} | atlas of desire | {$str_status} | nearby here{if $latitude and $longitude} | {$latitude|escape}, {$longitude|escape}{/if}{/capture}
+{capture assign="page_title"}{if $str_status=='meh'}{$owner.username} | atlas of meh | nearby here{if $latitude and $longitude} | {$latitude|escape}, {$longitude|escape}{/if}{else}{$owner.username} | atlas of desire | {$str_status} | nearby here{if $latitude and $longitude} | {$latitude|escape}, {$longitude|escape}{/if}{/if}{/capture}
 {include file="inc_head.txt"}
 
 {if $latitude and $longitude}
