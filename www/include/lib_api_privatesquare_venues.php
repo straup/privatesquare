@@ -89,9 +89,9 @@
 
 		if (($GLOBALS['cfg']['enable_feature_weather_tracking']) && (! isset($checkin['created']))){
 
-			loadlib("weather_google");
+			loadlib("weather_yahoo");
 
-			$rsp = weather_google_conditions($checkin['latitude'], $checkin['longitude']);
+			$rsp = weather_yahoo_conditions($checkin['latitude'], $checkin['longitude'], $checkin['locality']);
 
 			if ($rsp['ok']){
 				$conditions = $rsp['conditions'];
