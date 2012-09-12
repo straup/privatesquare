@@ -30,15 +30,17 @@
 
 		$condition_attrs = $conditions[0]->attributes();
 
-		$current = (string)$condition_attrs['temp'] . "&deg; ";
-		$current .= (string)$condition_attrs['text'];
+		$normalized_conds = array();
+		$normalized_conds['condition'] = (string)$condition_attrs['text'];
+		$normalized_conds['temp_f'] = (string)$condition_attrs['temp'];
+		$normalized_conds['temp_c'] = round(($normalized_conds['temp_f'] - 32) * (5/9));
 
 		$rsp = array(
 			'latitude' => $lat,
 			'longitude' => $lon,
 			'timestamp' => time(),
 			'source' => 'yahoo',
-			'conditions' => $current,
+			'conditions' => $normalized_conds,
 		);
 
 		return okay($rsp);
