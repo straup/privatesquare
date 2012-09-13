@@ -1,7 +1,7 @@
 <span class="weather">
 {if $short_form}
 
-{if $weather.source=='google'}
+{if $weather.source=='google' || $weather.source=='yahoo'}
 
 {if $cfg.weather_tracking_measure=='US'}
 <span class="weather_temp">{$weather.temp_f|escape}° F</span><span class="weather_condition"> {$weather.condition|strtolower|escape}</span>
@@ -13,7 +13,7 @@
 
 {else}
 
-{if $weather.source=='google'}
+{if $weather.source=='google' || $weather.source=='yahoo'}
 
 {if $cfg.weather_tracking_measure=='US'}
 <span class="weather_temp">It was {$weather.temp_f|escape}° F</span><span class="weather_condition"> and {$weather.condition|strtolower|escape}</span>
