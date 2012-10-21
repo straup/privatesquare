@@ -3,6 +3,7 @@
 	loadlib("foursquare_venues");
 	loadlib("datetime_when");
 	loadlib("reverse_geoplanet");
+	loadlib("privatesquare_utils");
 
  	#################################################################
 
@@ -66,7 +67,7 @@
 		$user = users_get_by_id($checkin['user_id']);
 		$cluster_id = $user['cluster_id'];
 
-		$checkin['id'] = dbtickets_create(64);
+		$checkin['id'] = privatesquare_utils_generate_id(64);
 
 		if (! isset($checkin['created'])){
 			$checkin['created'] = time();

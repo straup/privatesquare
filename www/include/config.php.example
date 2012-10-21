@@ -82,6 +82,9 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	$GLOBALS['cfg']['enable_feature_artisanal_integers'] = 0;
+	$GLOBALS['cfg']['artisanal_integers_provider'] = 'brooklyn';
+	
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 	$GLOBALS['cfg']['enable_feature_delete_checkins'] = 1;
 
