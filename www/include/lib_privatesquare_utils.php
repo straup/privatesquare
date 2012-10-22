@@ -14,6 +14,10 @@
 			return dbtickets_create($len);
 		}
 
+		# TO DO: error checking / handling - as in: what
+		# should actually happen if an API fails?
+		# (20121022/straup)
+		
 		loadlib("artisanal_integers");
 		return artisanal_integers_create();
 	}
