@@ -13,7 +13,7 @@
 	function artisanal_integers_create($provider=null){
 
 		if (! features_is_enabled("artisanal_integers")){
-			return 0;
+			return failure("artisanal integers are currently disabled", -1);
 		}
 
 		if ($provider){

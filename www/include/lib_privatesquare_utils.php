@@ -19,7 +19,13 @@
 		# (20121022/straup)
 		
 		loadlib("artisanal_integers");
-		return artisanal_integers_create();
+		$rsp = artisanal_integers_create();
+
+		if (! $rsp['ok']){
+			return 0;
+		}
+
+		return $rsp['integer'];
 	}
 
 	#################################################################
