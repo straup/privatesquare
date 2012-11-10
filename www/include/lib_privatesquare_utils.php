@@ -14,18 +14,43 @@
 			return dbtickets_create($len);
 		}
 
-		# TO DO: error checking / handling - as in: what
-		# should actually happen if an API fails?
-		# (20121022/straup)
-		
-		loadlib("artisanal_integers");
-		$rsp = artisanal_integers_create();
+		return privatesquare_utils_generate_artisanal_id();
+	}
 
-		if (! $rsp['ok']){
-			return 0;
+	#################################################################
+
+	function privatesquare_utils_generate_artisanal_id($max_attempts=3){
+
+		loadlib("artisanal_integers");		
+
+		$attempts = 0;
+		$id = 0;
+
+		while (! $id){
+
+			$attempts += 1;
+
+			$rsp = artisanal_integers_create();
+
+			if ($rsp['ok']){
+				$id = $rsp['integer'];
+				break;
+			}
+
+			log_notice("failed to return integer: {$rsp['error']}");
+
+			if ($rsp['error_code'] == -1){
+				log_notice($rsp['error']);
+				break;
+			}
+
+			if ($attempts == $max_attempts){
+				log_notice("exceeded max attempts to collect an artisanal integer");
+				break;
+			}
 		}
 
-		return $rsp['integer'];
+		return $id;
 	}
 
 	#################################################################
