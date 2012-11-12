@@ -30,22 +30,22 @@
 
 			$attempts += 1;
 
-			$rsp = artisanal_integers_create();
+			$rsp = artisanal_integers_create('brooklyn');
 
 			if ($rsp['ok']){
 				$id = $rsp['integer'];
 				break;
 			}
 
-			log_notice("failed to return integer: {$rsp['error']}");
+			# log_notice("failed to return integer: {$rsp['error']}");
 
 			if ($rsp['error_code'] == -1){
-				log_notice($rsp['error']);
+				# log_notice($rsp['error']);
 				break;
 			}
 
 			if ($attempts == $max_attempts){
-				log_notice("exceeded max attempts to collect an artisanal integer");
+				# log_notice("exceeded max attempts to collect an artisanal integer");
 				break;
 			}
 		}
