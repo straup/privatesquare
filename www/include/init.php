@@ -270,7 +270,10 @@
 	# 'ok' and 'not_ok' conflict with testmore (20111219/straup)
 
 	function okay($more=null){
+		return success($more);
+	}
 
+	function success($more=null){
 		$out = array('ok' => 1);
 
 		if (is_array($more)){
@@ -281,7 +284,10 @@
 	}
 
 	function not_okay($msg='Your call could not be completed as dialed', $code=null){
+		return failure($msg, $code);
+	}
 
+	function failure($msg='Your call could not be completed as dialed', $code=null){
 		$out = array('ok' => 0,	'error' => $msg);
 
 		if ($code){
