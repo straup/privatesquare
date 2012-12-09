@@ -2,7 +2,7 @@
 
 	#################################################################
 
-	$GLOBALS['cfg']['artisanal_integers_providers'] = array(
+	$GLOBALS['artisanal_integers_providers'] = array(
 		'brooklyn',
 		'london',
 		'mission',
@@ -10,41 +10,52 @@
 
 	#################################################################
 
+	function artisanal_integers_is_valid_provider($provider){
+
+		if (! in_array($provider, $GLOBALS['artisanal_integers_providers'])){
+			return 0;
+		}
+
+		return 1;
+	}
+
+	#################################################################
+
 	function artisanal_integers_create($provider=null){
 
 		if (! features_is_enabled("artisanal_integers")){
-			return failure("artisanal integers are currently disabled", -1);
+			return array("ok" => 0, "error" => "artisanal integers are currently disabled", "error_code" => -1);
 		}
 
 		if ($provider){
 
-			if (! in_array($provider, $GLOBALS['cfg']['artisanal_integers_providers'])){
-				return failure("invalid provider");
+			if (! artisanal_integers_is_valid_provider($provider)){
+				return array("ok" => 0, "error" => "invalid provider");
 			}
 		}
 
 		else {
 
-			$count = count($GLOBALS['cfg']['artisanal_integers_providers']);
+			$count = count($GLOBALS['artisanal_integers_providers']);
 
 			if (! $count){
-				return failure("no providers defined");
+				return array("ok" => 0, "error" => "no providers defined");
 			}
 
 			$idx = rand(1, $count) - 1;
-			$provider = $GLOBALS['cfg']['artisanal_integers_providers'][$idx];
+			$provider = $GLOBALS['artisanal_integers_providers'][$idx];
 		}
 
 		$func_name = "artisanal_integers_create_{$provider}_integer";
 
 		if (! function_exists($func_name)){
-			return failure("no handler defined for {$provider}");
+			return array("ok" => 0, "error" => "no handler defined for {$provider}");
 		}
 
 		$rsp = call_user_func($func_name);
 
 		if (! $rsp['ok']){
-			return 0;
+			return $rsp;
 		}
 
 		$rsp['provider'] = $provider;
@@ -64,9 +75,7 @@
 			return rsp;
 		}
 
-		return success(array(
-			'integer' => $rsp['response']['integer']
-		));
+		return array('ok' => 1, 'integer' => $rsp['response']['integer']);
 	}
 
 	#################################################################
@@ -82,9 +91,7 @@
 			return $rsp;
 		}
 
-		return success(array(
-			'integer' => $rsp['response'][0]
-		));
+		return array('ok' => 1, 'integer' => $rsp['response']['integer']);
 	}
 
 	#################################################################
@@ -100,9 +107,7 @@
 			return $rsp;
 		}
 
-		return success(array(
-			'integer' => $rsp['response']['integer']
-		));
+		return array('ok' => 1, 'integer' => $rsp['response']['integer']);
 	}
 
 	#################################################################

@@ -82,8 +82,12 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	# Use an artisanal integer provider to generate local privatesquare database IDs
+	# The seriously long version is here: http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels
+
 	$GLOBALS['cfg']['enable_feature_artisanal_integers'] = 0;
-	$GLOBALS['cfg']['artisanal_integers_provider'] = 'brooklyn';
+	$GLOBALS['cfg']['artisanal_integers_provider'] = '';	# defaults to a random provider
+								# possible values are: mission, brooklyn, london
 	
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 	$GLOBALS['cfg']['enable_feature_delete_checkins'] = 1;
