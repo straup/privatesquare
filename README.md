@@ -248,3 +248,5 @@ For a very very (very) long and thorough discussion of artisanal integers [you s
 * [flamework](https://github.com/exflickr/flamework)
 
 * [flamework-foursquareapp](https://github.com/straup/flamework-foursquareapp)
+
+* [flamework-artisanal-integers](https://github.com/straup/flamework-artisanal-integers)
