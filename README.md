@@ -234,10 +234,12 @@ To enable the use of artisanal integers please ensure that the following variabl
 
 	$GLOBALS['cfg']['enable_feature_artisanal_integers'] = 1;
 
-	# Possible values are: [mission](http://www.missionintegers.com/), [brooklyn](http://www.brooklynintegers.com/), [london](http://www.londonintegers.com/)
+	# Possible values are: mission; brooklyn; london
 	# If empty the code will default to a random provider
 
 	$GLOBALS['cfg']['artisanal_integers_provider'] = '';
+
+The currently supported artisanal integer providers are: [Mission Integers](http://www.missionintegers.com/), [Brooklyn Integers](http://www.brooklynintegers.com/) and [London Integers](http://www.londonintegers.com/)
 
 For a very very (very) long and thorough discussion of artisanal integers [you should read this blog post](http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels).
 
