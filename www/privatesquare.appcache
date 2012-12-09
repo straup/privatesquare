@@ -1,0 +1,10 @@
+CACHE MANIFEST
+/
+css/main.css
+css/mobile.css
+javascript/jquery.touchwipe.min.js
+javascript/store.min.js
+javascript/privatesquare.js
+javascript/privatesquare.min.js
+javascript/privatesquare.deferred.js
+javascript/privatesquare.deferred.min.js

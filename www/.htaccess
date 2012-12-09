@@ -51,6 +51,9 @@ DirectoryIndex index.php
 ErrorDocument 404 /404.php
 ErrorDocument 403 /403.php
 
+# For offline/appcache support
+AddType text/cache-manifest .appcache
+
 # Get mod_rewrite fired up
 RewriteEngine on
 
