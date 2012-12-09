@@ -1,5 +1,5 @@
 {utf8_headers}<!DOCTYPE html> 
-<html{if 0} manifest="{$cfg.abs_root_url}privatesquare.appcache"{/if}>
+<html{if 1} manifest="{$cfg.abs_root_url}privatesquare.appcache"{/if}>
 <head>
 	<title>{$cfg.site_name|escape}{if $page_title} | {$page_title|escape}{/if}</title>
 
@@ -72,6 +72,7 @@ var _cfg={literal}{{/literal}
 			<strong>{$cfg.user.username|escape}</strong>
 		|
 		<a href="{$cfg.abs_root_url}">checkin</a>
+		<span id="navi-online">
 		|
 		<a href="{$cfg.user|@urls_nearby_for_user}">nearby</a>
 		|
@@ -92,6 +93,8 @@ var _cfg={literal}{{/literal}
 		</span>
 {/if}
 			<a href="{$cfg.abs_root_url}signout/">logout</a>
+		</span>
+		{if 0}<span id="navi-offline">offline mode</div>{/if}
 {else}
 	{if $cfg.enable_feature_signin}
 			<a href="{$cfg.abs_root_url}signin/">sign in w/ 4sq</a>

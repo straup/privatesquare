@@ -2,6 +2,12 @@ var checking_in=false;
 var searching=false;
 
 function privatesquare_init(){
+
+	if (window.navigator.online){
+		$("#navi-online").hide();
+		$("#navi-offline").show();
+	}
+
 	privatesquare_whereami(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
 	$("#checkin").submit(privatesquare_submit);
 	$("#again").click(privatesquare_reset);

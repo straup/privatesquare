@@ -1,14 +1,14 @@
 CACHE MANIFEST
-# version wtf-0001
+# version wtf-0005
 
 CACHE:
-# /css/main.css
-# /css/mobile.css
-# /javascript/jquery-1.7.1.min.js
-# /javascript/jquery.touchwipe.min.js
-# /javascript/store.min.js
-# /javascript/privatesquare.deferred.js
-# /javascript/privatesquare.js
+/css/main.css
+/css/mobile.css
+/javascript/jquery-1.7.1.min.js
+/javascript/jquery.touchwipe.min.js
+/javascript/store.min.js
+/javascript/privatesquare.deferred.js
+/javascript/privatesquare.js
 
 NETWORK:
 

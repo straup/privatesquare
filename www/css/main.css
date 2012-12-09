@@ -478,3 +478,7 @@ button {
     margin-bottom:20px;
     font-weight:100;
 }
+
+#navi-offline {
+    display:none !important;
+}
