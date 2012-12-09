@@ -239,9 +239,7 @@ To enable the use of artisanal integers please ensure that the following variabl
 
 	$GLOBALS['cfg']['artisanal_integers_provider'] = '';
 
-The currently supported artisanal integer providers are: [Mission Integers](http://www.missionintegers.com/), [Brooklyn Integers](http://www.brooklynintegers.com/) and [London Integers](http://www.londonintegers.com/)
-
-For a very very (very) long and thorough discussion of artisanal integers [you should read this blog post](http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels).
+The currently supported artisanal integer providers are: [Mission Integers](http://www.missionintegers.com/), [Brooklyn Integers](http://www.brooklynintegers.com/) and [London Integers](http://www.londonintegers.com/). For a very very (very) long and thorough discussion of artisanal integers [you should read this blog post](http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels).
 
 ## See also
 
