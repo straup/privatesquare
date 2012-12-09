@@ -1,5 +1,5 @@
 {utf8_headers}<!DOCTYPE html> 
-<html manifest="privatesquare.appcache">
+<html{if 0} manifest="{$cfg.abs_root_url}privatesquare.appcache"{/if}>
 <head>
 	<title>{$cfg.site_name|escape}{if $page_title} | {$page_title|escape}{/if}</title>
 
