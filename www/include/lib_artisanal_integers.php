@@ -27,8 +27,11 @@
 			return array("ok" => 0, "error" => "artisanal integers are currently disabled", "error_code" => -1);
 		}
 
-		if (($provider) && (! artisanal_integers_is_valid_provider($provider))){
-			return array("ok" => 0, "error" => "invalid provider");
+		if ($provider){
+
+			if (! artisanal_integers_is_valid_provider($provider)){
+				return array("ok" => 0, "error" => "invalid provider");
+			}
 		}
 
 		else {
