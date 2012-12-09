@@ -221,7 +221,26 @@ If you want to run `<root>/bin/sync-foursquare.php` you'll need to make your you
 	
 	PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php/php5.3.6/bin:$PATH
 	export $PATH
+
+## Configuring fancy stuff – Artisanal Integers
+
+By default privatesquare generates its own internal check in IDs using a local ticket server. One side effect of this approach is that it makes it difficult to reliably merge two (or more) separate instances of privatesquare because its likely that each instance will have issued the same ID for different check ins.
+
+It is possible to configure privatesquare to use an artisanal integer provider to ensure that all your check ins are assigned globally unique IDs. Please note that creating these IDs involves calling these services when you check in and this will add a little extra time and overhead to every check in. 
 	
+To enable the use of artisanal integers please ensure that the following variables are set (and enabled) in your `config.php` file:
+
+	# Use an artisanal integer provider to generate local privatesquare database IDs
+
+	$GLOBALS['cfg']['enable_feature_artisanal_integers'] = 1;
+
+	# Possible values are: [mission](http://www.missionintegers.com/), [brooklyn](http://www.brooklynintegers.com/), [london](http://www.londonintegers.com/)
+	# If empty the code will default to a random provider
+
+	$GLOBALS['cfg']['artisanal_integers_provider'] = '';
+
+For a very very (very) long and thorough discussion of artisanal integers [you should read this blog post](http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels).
+
 ## See also
 
 * [flamework](https://github.com/exflickr/flamework)
