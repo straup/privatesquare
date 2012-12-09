@@ -23,6 +23,7 @@
 
 		loadlib("artisanal_integers");		
 
+		$provider = null;	# random
 		$attempts = 0;
 		$id = 0;
 
@@ -30,7 +31,7 @@
 
 			$attempts += 1;
 
-			$rsp = artisanal_integers_create('brooklyn');
+			$rsp = artisanal_integers_create($provider);
 
 			if ($rsp['ok']){
 				$id = $rsp['integer'];
