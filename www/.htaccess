@@ -53,6 +53,7 @@ ErrorDocument 403 /403.php
 
 # For offline/appcache support
 AddType text/cache-manifest .appcache
+ExpiresByType text/cache-manifest "access plus 0 seconds"
 
 # Get mod_rewrite fired up
 RewriteEngine on
