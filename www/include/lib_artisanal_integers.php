@@ -10,9 +10,17 @@
 
 	#################################################################
 
+	function artisanal_integers_available_providers(){
+		return $GLOBALS['artisanal_integers_providers'];
+	}
+
+	#################################################################
+
 	function artisanal_integers_is_valid_provider($provider){
 
-		if (! in_array($provider, $GLOBALS['artisanal_integers_providers'])){
+		$available = artisanal_integers_available_providers();
+
+		if (! in_array($provider, $available)){
 			return 0;
 		}
 
