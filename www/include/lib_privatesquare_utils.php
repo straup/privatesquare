@@ -11,10 +11,18 @@
 		}
 
 		if (! $use_artisanal){
-			return dbtickets_create($len);
+			$id = dbtickets_create($len);
 		}
 
-		return privatesquare_utils_generate_artisanal_id();
+		else {
+			$id = privatesquare_utils_generate_artisanal_id();
+		}
+
+		if (! $id){
+			return array('ok' => 0, 'error' => "failed to generate id (artisanal: {$use_artisanal})");
+		}
+
+		return array('ok' => 1, 'id' => $id, 'is_artisanal' => $use_artisanal);
 	}
 
 	#################################################################
@@ -24,6 +32,14 @@
 		loadlib("artisanal_integers");		
 
 		$provider = null;	# random
+
+		if (isset($GLOBALS['cfg']['artisanal_integers_provider'])){
+
+			if (artisanal_integers_is_valid_provider($GLOBALS['cfg']['artisanal_integers_provider'])){
+				$provider = $GLOBALS['cfg']['artisanal_integers_provider'];
+			}
+		}
+
 		$attempts = 0;
 		$id = 0;
 

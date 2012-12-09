@@ -64,10 +64,18 @@
 
 	function privatesquare_checkins_create($checkin){
 
+		$rsp = privatesquare_utils_generate_id(64);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$id = $rsp['id'];
+
 		$user = users_get_by_id($checkin['user_id']);
 		$cluster_id = $user['cluster_id'];
 
-		$checkin['id'] = privatesquare_utils_generate_id(64);
+		$checkin['id'] = $id;
 
 		if (! isset($checkin['created'])){
 			$checkin['created'] = time();
