@@ -47,11 +47,7 @@
 
 			$attempts += 1;
 
-<<<<<<< HEAD:www/include/lib_privatesquare_utils.php
-			$rsp = artisanal_integers_create('brooklyn');
-=======
 			$rsp = artisanal_integers_create($provider);
->>>>>>> artisanal:www/include/lib_privatesquare_utils.php
 
 			if ($rsp['ok']){
 				$id = $rsp['integer'];
