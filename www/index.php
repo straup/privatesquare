@@ -17,6 +17,8 @@
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 	$GLOBALS['smarty']->assign_by_ref("broadcast_map", $broadcast_map);
 
+	$GLOBALS['smarty']->assign("appcache", "checkin");
+
 	$GLOBALS['smarty']->display("page_index.txt");
 	exit();
 

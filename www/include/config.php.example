@@ -89,6 +89,8 @@
 	$GLOBALS['cfg']['artisanal_integers_provider'] = '';	# defaults to a random provider
 								# possible values are: mission, brooklyn, london
 	
+	$GLOBALS['cfg']['enable_feature_offline_appcache'] = 0;
+
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 	$GLOBALS['cfg']['enable_feature_delete_checkins'] = 1;
 
