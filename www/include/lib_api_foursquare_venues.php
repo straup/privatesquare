@@ -12,7 +12,7 @@
 
 		$lat = request_float('latitude');
 		$lon = request_float('longitude');
-		$alt = request_float('altitude');
+		$near = request_str('near');
 
 		$query = request_str('query');
 
@@ -28,11 +28,11 @@
 			$sort_func = "_api_foursquare_venues_sort_by_distance";
 		}
 
-		if ((! $lat) || (! geo_utils_is_valid_latitude($lat))){
+		if (($lat) && (! geo_utils_is_valid_latitude($lat))){
 			api_output_error(999, "Missing or invalid latitude");
 		}
 
-		if ((! $lat) || (! geo_utils_is_valid_longitude($lon))){
+		if (($lon) && (! geo_utils_is_valid_longitude($lon))){
 			api_output_error(999, "Missing or invalid longitude");
 		}
 
@@ -51,6 +51,16 @@
 				'intent' => 'match',
 				'query' => $query
 			);
+			
+			if (($lat) && ($lon)){
+				$args['ll'] = "{$lat},{$lon}";
+			}
+
+			else if ($near){
+				$args['near'] = $near;
+			}
+
+			else {}
 
 			$rsp = foursquare_api_call($method, $args);
 
