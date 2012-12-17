@@ -19,6 +19,10 @@ body {
     margin-top:10px;
 }
 
+#deferred_city {
+    display:none;
+}
+
 #message {
 	border-bottom: solid thin;
 	margin-bottom: 10px;

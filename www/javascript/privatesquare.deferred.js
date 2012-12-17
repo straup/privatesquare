@@ -12,6 +12,10 @@ function privatesquare_deferred_has_local_storage(){
 
 function privatesquare_deferred_checkin(lat, lon, reason){
 
+	if (lat && lon){
+		_privatesquare_show_map(lat, lon);
+	}
+
 	privatesquare_unset_status();
 
 	if (reason=='offline'){
@@ -21,8 +25,6 @@ function privatesquare_deferred_checkin(lat, lon, reason){
 	else if (reason=='api error'){
 		reason = "foursquare is sad";
 	}
-
-	_privatesquare_show_map(lat, lon);
 
 	if (! privatesquare_deferred_has_local_storage()){
 		privatesquare_set_status(htmlspecialchars(reason) + " / your browser can't store deferred checkins / sad browser is sad");
@@ -34,8 +36,16 @@ function privatesquare_deferred_checkin(lat, lon, reason){
 	var w = $("#deferred_where");
 	w.val("");
 
-	w.attr("data-latitude", lat);
-	w.attr("data-longitude", lon);
+	if (lat && lon){
+		w.attr("data-latitude", lat);
+		w.attr("data-longitude", lon);
+	}
+
+	else {
+		var c = $("#deferred_city");
+		c.val("");
+		c.show();
+	}
 
 	$("#deferred_checkin").submit(privatesquare_deferred_checkin_submit);
 	$("#deferred").show();
@@ -49,6 +59,9 @@ function privatesquare_deferred_checkin_submit(){
 	var w = $("#deferred_where");
 	var venue = w.val();
 
+	var c = $("#deferred_city");
+	var city = c.val();
+
 	var id = venue + "#" + ts;
 
 	var checkin = {
@@ -56,6 +69,7 @@ function privatesquare_deferred_checkin_submit(){
 		'venue': venue,
 		'latitude': w.attr('data-latitude'),
 		'longitude': w.attr('data-longitude'),
+		'near': city,
 		'created': ts
 	};
 

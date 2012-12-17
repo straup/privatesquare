@@ -2,6 +2,7 @@
 
 <form method="POST" id="deferred_checkin">
 	<input type="text" id="deferred_where" placeholder="Where are you?" />
+	<input type="text" id="deferred_city" placeholder="What city are you in?" />
 	<input type="submit" value="THIS WILL HAPPEN" />
 </form>
 

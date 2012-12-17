@@ -3,9 +3,9 @@ var searching=false;
 
 function privatesquare_init(){
 
-	if (window.navigator.online){
-		$("#navi-online").hide();
-		$("#navi-offline").show();
+	if (! window.navigator.online){
+		privatesquare_deferred_checkin(null, null, 'offline');
+		return;
 	}
 
 	privatesquare_whereami(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
