@@ -26,7 +26,6 @@ function privatesquare_pending_init(){
 		var checkin = pending[i];
 		var dt = new Date(checkin['created'] * 1000);
 
-
 		html += '<option value="' + htmlspecialchars(checkin['id']) + '">';
 		html += prettydate(dt) + ' at "';
 		html += htmlspecialchars(checkin['venue']);
@@ -80,10 +79,17 @@ function privatesquare_pending_fetch_venues(checkin){
 
 	var args = {
 		'method': 'foursquare.venues.search',
-		'latitude': checkin['latitude'],
-		'longitude': checkin['longitude'],
 		'query': checkin['venue']
 	};
+
+	if ((checkin['latitude']) && (checkin['longitude'])){
+		args['latitude'] = checkin['latitude'];
+		args['longitude'] = checkin['longitude'];
+	}
+
+	else {
+		args['near'] =  checkin['near'];
+	}
 
 	$.ajax({
 		'url': _cfg.abs_root_url + 'api/',
@@ -256,6 +262,11 @@ function privatesquare_pending_show_map(checkins){
 
 		var lat = parseFloat(chk['latitude']);
 		var lon = parseFloat(chk['longitude']);
+
+		if ((! lat) || (! lon)){
+			continue;
+		}
+
 		var latlon = lat + ',' + lon;
 
 		swlat = (swlat == undefined) ? lat : Math.min(swlat, lat);
@@ -270,6 +281,10 @@ function privatesquare_pending_show_map(checkins){
 		mrk += '</div>';
 
 		markers.push(mrk);
+	}
+
+	if (markers.length == 0){
+		return;
 	}
 
 	var wrapper = $("#map-wrapper");

@@ -45,15 +45,14 @@
 
 			$args = array(
 				'oauth_token' => $fsq_user['oauth_token'],
-				'll' => "{$lat},{$lon}",
-				'radius' => 1200,
 				'limit' => 30,
-				'intent' => 'match',
 				'query' => $query
 			);
 			
 			if (($lat) && ($lon)){
 				$args['ll'] = "{$lat},{$lon}";
+				$args['radius'] = 1500;
+				$args['intent'] = 'match';
 			}
 
 			else if ($near){
