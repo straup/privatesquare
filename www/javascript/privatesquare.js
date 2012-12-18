@@ -3,7 +3,7 @@ var searching=false;
 
 function privatesquare_init(){
 
-	if (! window.navigator.online){
+	if (! window.navigator.onLine){
 		privatesquare_deferred_checkin(null, null, 'offline');
 		return;
 	}
