@@ -4,9 +4,16 @@ var searching=false;
 function privatesquare_init(){
 
 	if (! window.navigator.onLine){
+
+		$("#navi-online").hide();
+		$("#navi-offline").show();
+
 		privatesquare_deferred_checkin(null, null, 'offline');
 		return;
 	}
+
+	$("#navi-online").show();
+	$("#navi-offline").hide();
 
 	privatesquare_whereami(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
 	$("#checkin").submit(privatesquare_submit);

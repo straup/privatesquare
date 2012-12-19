@@ -138,15 +138,32 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 	where.attr("data-checkin-id", rsp['checkin']['id']);
 
 	where.html(html);
-
+	
 	$("#what").attr("disabled", "disabled");
 	$("#broadcast").attr("disabled", "disabled");
 
-	_privatesquare_show_map(rsp['latitude'], rsp['longitude'], '"' + rsp['checkin']['venue'] + '"');
+	/*
+
+	If we don't have a lat,lon that probably suggests that
+	we checked in in offline-mode. Probably better to show
+	a bbox (history) style map with little round markers 
+	for any possible check-in locations. (20121219/straup)
+	*/
+
+	if (rsp['latitude'] && rsp['longitude']){
+		_privatesquare_show_map(rsp['latitude'], rsp['longitude'], '"' + rsp['checkin']['venue'] + '"');
+	}
+
+	else {
+		// This will require some CSS wrangling (20121219/straup)
+		// $('#map-wrapper').html('');
+		// $('#map-wrapper').show();
+	}
 
 	$("#venues").show();
 
 	var meh = $("#meh");
+
 	meh.click(function(){
 		privatesquare_pending_delete_checkin(rsp['checkin']);
 	});

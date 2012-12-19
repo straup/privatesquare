@@ -59,8 +59,8 @@ function privatesquare_deferred_checkin_submit(){
 	var w = $("#deferred_where");
 	var venue = w.val();
 
-	var c = $("#deferred_city");
-	var city = c.val();
+	var n = $("#deferred_city");
+	var near = n.val();
 
 	var id = venue + "#" + ts;
 
@@ -69,7 +69,7 @@ function privatesquare_deferred_checkin_submit(){
 		'venue': venue,
 		'latitude': w.attr('data-latitude'),
 		'longitude': w.attr('data-longitude'),
-		'near': city,
+		'near': near,
 		'created': ts
 	};
 
@@ -79,7 +79,7 @@ function privatesquare_deferred_checkin_submit(){
 
 function privatesquare_deferred_checkin_stored(checkin){
 
-	console.log(checkin);
+	// console.log(checkin);
 
 	var msg = "Okay! Your checkin at '" + checkin['venue'] + "' has been recorded.";
 	privatesquare_set_status(msg);
