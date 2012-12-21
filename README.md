@@ -256,16 +256,16 @@ be stored as a "pending" check-in in your browser's local storage database
 allowing you to complete the check-in when the foursquare servers are happy
 again.
 
-If you're offline though your browser won't even know where you are. So instead
+If you're offline, though, your browser won't even know where you are. So instead
 of just prompting you for the name of the venue you're at privatesquare asks you
 for both the name of the venue _and_ the city you're in. It will look something
 [like this](http://www.flickr.com/photos/straup/8292903436/).
 
-Once you're back online you're check-in will be waiting for you in the same
+Once you're back online your check-in will be waiting for you in the same
 "pending" bin as deferred check-ins (specifically the "pending" link in nav
 menu). Instead of asking foursquare for a venue named (x) near a given latitude and
 longitude privatesquare will ask for venues named (x) in the city you told it
-about. This means that you will, potentially, be presented with _a lot_ more
+about. This means that you will probably be presented with _a lot_ more
 venues to choose from but if the alternative is not being able to check-in at
 all it seems like a reasonable compromise.
 
