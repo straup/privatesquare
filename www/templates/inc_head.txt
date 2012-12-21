@@ -47,7 +47,8 @@
 	<script type="text/javascript">
 var _cfg={literal}{{/literal}
 	'abs_root_url':'{$cfg.abs_root_url}',
-	'deferred_checkins': {if $cfg.enable_feature_deferred_checkins}1{else}0{/if}
+	'deferred_checkins': {if "deferred_checkins"|@features_is_enabled}1{else}0{/if},
+	'offline_appcache': {if "offline_appcache"|@features_is_enabled}1{else}0{/if}
 	{literal}}{/literal};
 	</script>
 

@@ -82,6 +82,9 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	# See also: 'Configuring fancy stuff – Artisanal Integers'
+	# in the README.md file for details
+
 	# Use an artisanal integer provider to generate local privatesquare database IDs
 	# The seriously long version is here: http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels
 
@@ -89,6 +92,9 @@
 	$GLOBALS['cfg']['artisanal_integers_provider'] = '';	# defaults to a random provider
 								# possible values are: mission, brooklyn, london
 	
+	# See also: 'Configuring fancy stuff – Checking in offline'
+	# in the README.md file for details
+
 	$GLOBALS['cfg']['enable_feature_offline_appcache'] = 0;
 
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;

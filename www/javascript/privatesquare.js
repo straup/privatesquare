@@ -3,12 +3,13 @@ var searching=false;
 
 function privatesquare_init(){
 
-	if (! window.navigator.onLine){
+	// it's possible the second test is pointless
+	// (20121220/straup)
 
+	if ((! window.navigator.onLine) && (_cfg['offline_appcache'])){
+		privatesquare_deferred_checkin(null, null, 'offline');
 		$("#navi-online").hide();
 		$("#navi-offline").show();
-
-		privatesquare_deferred_checkin(null, null, 'offline');
 		return;
 	}
 
