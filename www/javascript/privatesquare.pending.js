@@ -79,7 +79,7 @@ function privatesquare_pending_fetch_venues(checkin){
 
 	var args = {
 		'method': 'foursquare.venues.search',
-		'query': checkin['venue']
+		'query': '"' + checkin['venue'] + '"'
 	};
 
 	if ((checkin['latitude']) && (checkin['longitude'])){
@@ -142,22 +142,37 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 	$("#what").attr("disabled", "disabled");
 	$("#broadcast").attr("disabled", "disabled");
 
-	/*
-
-	If we don't have a lat,lon that probably suggests that
-	we checked in in offline-mode. Probably better to show
-	a bbox (history) style map with little round markers 
-	for any possible check-in locations. (20121219/straup)
-	*/
-
 	if (rsp['latitude'] && rsp['longitude']){
 		_privatesquare_show_map(rsp['latitude'], rsp['longitude'], '"' + rsp['checkin']['venue'] + '"');
 	}
 
 	else {
-		// This will require some CSS wrangling (20121219/straup)
-		// $('#map-wrapper').html('');
-		// $('#map-wrapper').show();
+
+		var count_venues = rsp['venues'].length;
+		var venues = new Array();
+
+		var swlat = null;
+		var swlon = null;
+		var nelat = null;
+		var nelon = null;
+
+		for (var i=0; i < count_venues; i++){
+			var venue = rsp['venues'][i];
+			var name = venue['name'];
+			var lat = venue['location']['lat'];
+			var lon = venue['location']['lng'];
+
+			swlat = (swlat==null) ? lat : Math.min(swlat, lat);
+			swlon = (swlon==null) ? lon : Math.min(swlon, lon);
+			nelat = (nelat==null) ? lat : Math.max(nelat, lat);
+			nelon = (nelon==null) ? lon : Math.max(nelon, lon);
+
+			venues.push([lat, lon, name]);
+		}
+
+		var bbox = [swlat, swlon, nelat, nelon];
+
+		_privatesquare_show_map_bbox(bbox, venues);
 	}
 
 	$("#venues").show();

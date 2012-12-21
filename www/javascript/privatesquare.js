@@ -355,6 +355,55 @@ function _privatesquare_show_map(lat, lon, label){
 	privatesquare_htmapl(map);
 }
 
+function _privatesquare_show_map_bbox(bbox,venues){
+
+	var wrapper = $("#map-wrapper");
+
+	var map = document.createElement("div");
+	map = $(map);
+
+	map.attr("class", "map");
+	map.attr("data-extent", bbox.join(','));
+	map.attr("data-hash", false);
+	map.attr("data-touch", true);
+	map.attr("data-provider", "toner");
+
+	var markers = [];
+
+	var count_venues = venues.length;
+
+	for (var i=0; i < count_venues; i++){
+
+		var venue = venues[i];
+		var lat = venue[0];
+		var lon = venue[1];
+		var label = venue[2];
+
+		var latlon = lat + ',' + lon;
+
+		var mrk = document.createElement("div");
+		mrk = $(mrk);
+
+		mrk.attr("class", "marker marker-header")
+		mrk.attr("data-location", latlon);
+		// mrk.html(htmlspecialchars(label));
+
+		// http://stackoverflow.com/questions/2419749/get-selected-elements-outer-html
+		// sigh... (20121220/straup)
+
+		markers.push(mrk.clone().wrap('<div/>').parent().html());
+	}
+
+	if (markers.length){
+		map.html(markers.join(''));
+	}
+
+	wrapper.html(map)
+	wrapper.show();
+
+	privatesquare_htmapl(map);
+}
+
 function privatesquare_htmapl(map){
 
 	if (! map){
