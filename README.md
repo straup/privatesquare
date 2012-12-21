@@ -246,15 +246,14 @@ The currently supported artisanal integer providers are: [Mission Integers](http
 Support for checking in offline is a subset of the `deferred checkins`
 feature.
 
-A deferred checkin might happen when the foursquare servers are busted
-(like when everyone is at SXSW and trying to check in at the same time). If that
+A deferred check-in might happen when the foursquare servers are busted, like when everyone is at SXSW and trying to check-in at the same time. If that
 happens privatesquare will know _where_ you are in geographic space (latitude
 and longitude) and will prompt you to record the name of the venue you're trying
-to check in to.
+to check-in to.
 
 That name of the venue, along with the latitude and longitude and the date, will
-be stored as a "pending" check in in your browser's local storage database
-allowing you to complete the check in when the foursquare servers are happy
+be stored as a "pending" check-in in your browser's local storage database
+allowing you to complete the check-in when the foursquare servers are happy
 again.
 
 If you're offline though your browser won't even know where you are. So instead
@@ -262,24 +261,24 @@ of just prompting you for the name of the venue you're at privatesquare asks you
 for both the name of the venue _and_ the city you're in. It will look something
 [like this](http://www.flickr.com/photos/straup/8292903436/).
 
-Once you're back online you're checkin will be waiting for you in the same
-"pending" bin as deferred checkins (specifically the "pending" link in nav
+Once you're back online you're check-in will be waiting for you in the same
+"pending" bin as deferred check-ins (specifically the "pending" link in nav
 menu). Instead of asking foursquare for a venue named (x) near a given latitude and
 longitude privatesquare will ask for venues named (x) in the city you told it
 about. This means that you will, potentially, be presented with _a lot_ more
-venues to choose from but if the alternative is not being able to check in at
+venues to choose from but if the alternative is not being able to check-in at
 all it seems like a reasonable compromise.
 
 _At some point in the future privatesquare might keep a local cache of all the
 cities you're in and try to be clever about auto-filling that field but for the
 time being you'll need to add that information by hand._
 
-To enable offline checkins make sure the following flags are enabled in your `config.php` file:
+To enable offline check-ins make sure the following flags are enabled in your `config.php` file:
 
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 	$GLOBALS['cfg']['enable_feature_offline_appcache'] = 1;
 
-Offline check ins are built using the [HTML5 Application
+Offline check-ins are built using the [HTML5 Application
 Cache](https://developer.mozilla.org/en-US/docs/HTML/Using_the_application_cache)
 (sometimes just referred to as "appcache") which is a
 temperamental beast, at best. Jake Archibald's article [Application Cache is a
