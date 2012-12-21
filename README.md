@@ -299,7 +299,7 @@ in mind if you do enable it and [let me
 know](https://github.com/straup/privatesquare/issues) if and where it doesn't
 work for you.
 
-As of this writing the only piece of privatesquare that works in offline mode is
+As of this writing the only part of privatesquare that works in offline mode is
 the ability to check-in. History pages, the Atlas of Desire and all the other
 good stuff is absolutely _not_ available for viewing in offline mode since it
 would quickly turn in to a poison soup of caching issues and other gotchas that
