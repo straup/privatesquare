@@ -259,13 +259,16 @@ again.
 
 If you're offline though your browser won't even know where you are. So instead
 of just prompting you for the name of the venue you're at privatesquare asks you
-for both the name of the venue _and_ the city you're in. Once you're back online
-your checkin will be waiting for you in the same "pending" bin as deferred
-checkins (specifically the "pending" link in nav menu).
+for both the name of the venue _and_ the city you're in. It will look something
+[like this](http://www.flickr.com/photos/straup/8292903436/).
 
-Instead of asking foursquare for a venue named (x) near a given latitude and
+Once you're back online you're checkin will be waiting for you in the same
+"pending" bin as deferred checkins (specifically the "pending" link in nav
+menu). Instead of asking foursquare for a venue named (x) near a given latitude and
 longitude privatesquare will ask for venues named (x) in the city you told it
-about. 
+about. This means that you will, potentially, be presented with _a lot_ more
+venues to choose from but if the alternative is not being able to check in at
+all it seems like a reasonable compromise.
 
 _At some point in the future privatesquare might keep a local cache of all the
 cities you're in and try to be clever about auto-filling that field but for the
@@ -276,7 +279,26 @@ To enable offline checkins make sure the following flags are enabled in your `co
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
 	$GLOBALS['cfg']['enable_feature_offline_appcache'] = 1;
 
-Jake Archibald's article [Application Cache is a Douchebag](http://www.alistapart.com/articles/application-cache-is-a-douchebag/) is pretty much much the definitive word on the subject.
+Offline check ins are built using the [HTML5 Application
+Cache](https://developer.mozilla.org/en-US/docs/HTML/Using_the_application_cache)
+(sometimes just referred to as "appcache") which is a
+temperamental beast, at best. Jake Archibald's article [Application Cache is a
+Douchebag](http://www.alistapart.com/articles/application-cache-is-a-douchebag/)
+is pretty much much the definitive word on the subject.
+
+In addition to the vagueries of appcache itself there are also individual
+browser caches and sometimes even network proxy caches thrown in to the
+mix. Rarely do they place nicely with one another. By the time this
+functionality will have been checked in to the `master` branch (and you are
+reading this) it is all code that I will have been using on a regular basis in
+the network-challenged subways of New York City for several weeks. So it
+_should_ work.
+
+Barring any really stupid bugs, though, there are still plenty of reasons why it
+might not work which is why the feature is disabled by default. Please keep that
+in mind if you do enable it and [let me
+know](https://github.com/straup/privatesquare/issues) if and where it doesn't
+work for you.
 
 ## See also
 
