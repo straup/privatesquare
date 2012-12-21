@@ -267,7 +267,7 @@ menu). Instead of asking foursquare for a venue named (x) near a given latitude 
 longitude privatesquare will ask for venues named (x) in the city you told it
 about. This means that you will probably be presented with _a lot_ more
 venues to choose from but if the alternative is not being able to check-in at
-all that seems like a reasonable compromise.
+all that seems like a reasonable compromise. [Like this](https://www.flickr.com/photos/straup/8292070035/).
 
 _At some point in the future privatesquare might keep a local cache of all the
 cities you're checked in from and try to be clever about auto-filling that field but for the
