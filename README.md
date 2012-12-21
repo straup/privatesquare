@@ -272,6 +272,13 @@ _At some point in the future privatesquare might keep a local cache of all the
 cities you're checked in from and try to be clever about auto-filling that field but for the
 time being you'll need to add that information by hand._
 
+As with deferred checkins you can only indicate that "you are here". Check-ins
+are _not_ passed along to foursquare since there's no way to check-in to the
+past with foursquare. That's a perfectly legitimate choice for them to
+make. I've been tossing around the possibility of working around that
+constraint by adding a mention about the past-iness of a deferred or offline
+check-in in the notes field, but it's not something I've done yet.
+
 To enable offline check-ins make sure the following flags are enabled in your `config.php` file:
 
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
