@@ -267,10 +267,10 @@ menu). Instead of asking foursquare for a venue named (x) near a given latitude 
 longitude privatesquare will ask for venues named (x) in the city you told it
 about. This means that you will probably be presented with _a lot_ more
 venues to choose from but if the alternative is not being able to check-in at
-all it seems like a reasonable compromise.
+all that seems like a reasonable compromise.
 
 _At some point in the future privatesquare might keep a local cache of all the
-cities you're in and try to be clever about auto-filling that field but for the
+cities you're checked in from and try to be clever about auto-filling that field but for the
 time being you'll need to add that information by hand._
 
 To enable offline check-ins make sure the following flags are enabled in your `config.php` file:
@@ -298,6 +298,12 @@ might not work which is why the feature is disabled by default. Please keep that
 in mind if you do enable it and [let me
 know](https://github.com/straup/privatesquare/issues) if and where it doesn't
 work for you.
+
+As of this writing the only piece of privatesquare that works in offline mode is
+the ability to check-in. History pages, the Atlas of Desire and all the other
+good stuff is absolutely _not_ available for viewing in offline mode since it
+would quickly turn in to a poison soup of caching issues and other gotchas that
+life is too short to bother dealing with.
 
 ## See also
 
