@@ -12,11 +12,10 @@
 
 	#################################################################
 
-	function foursquare_venues_archive_venue($venue_id){
+	function foursquare_venues_fetch_venue($venue_id){
 
 		loadlib("foursquare_users");
 		loadlib("foursquare_api");
-		loadlib("reverse_geoplanet");
 
 		$fsq_user = foursquare_users_random_user();
 
@@ -27,6 +26,16 @@
 		);
 
 		$rsp = foursquare_api_call($method, $args);
+		return $rsp;
+	}
+
+	#################################################################
+
+	function foursquare_venues_archive_venue($venue_id){
+
+		loadlib("reverse_geoplanet");
+
+		$rsp = foursquare_venues_fetch_venue($venue_id);
 
 		if (! $rsp['ok']){
 			return $rsp;

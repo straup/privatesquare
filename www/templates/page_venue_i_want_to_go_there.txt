@@ -1,0 +1,13 @@
+{include file="inc_head.txt"}
+
+{if $step=="choose"}
+	{include file="inc_venue_i_want_to_go_there_choose.txt"}
+{elseif $step=="confirm"}
+	{include file="inc_venue_i_want_to_go_there_confirm.txt"}
+{elseif $step=="update"}
+	{include file="inc_venue_i_want_to_go_there_update.txt"}
+{else}
+
+{/if}
+
+{include file="inc_foot.txt"}
