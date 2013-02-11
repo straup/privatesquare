@@ -1,1 +1,8 @@
-CHOOSE
+<form method="POST" action="{$cfg.abs_root_url}iwanttogothere/">
+	<input type="text" name="venue_id" placeholder="Enter a 4sq venue ID" />
+	<br />
+	<input type="submit" value="I WANT TO GO THERE" />
+
+	<br />
+	<p style="font-size:small;">No, you can't search for venues yet.</p>
+</form>
