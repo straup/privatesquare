@@ -1,42 +1,34 @@
-<div class="checkin" data-venue="{$venue.venue_id|escape}">
+{include file="inc_venue.txt"}
 
-	<div class="map" data-zoom="{if $data_zoom}{$data_zoom|escape}{else}14{/if}" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
-	</div>
-
-	{if $venue.latitude and $venue.longitude}
-	<div class="geo">
-		<span property="geo:name">
-
-		<span class="vcard adr">
-		<span class="abook address street-address">{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}</span>
-		</span>
-
-	<br />
-
-	{if $venue.data.location.city}<span class="locality">{$venue.data.location.city}</span>,{/if}   
-	{if $venue.data.location.state}<span="region">{$venue.data.location.state},</span>{/if}
-	{if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
-
-	<span class="coordinates" style="display:none;"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</span>
-
-	</div>	
-	{/if}
-
-	{if $venue.data.contact.formattedPhone|escape}
-	<div class="abook phone tel">
-		<a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
-	</div>
-	{/if}
-
+<div id="iwanttogothere" style="text-align:center;">
+	<form id="checkin_form">
+	<input type="submit" value="I WANT TO GO HERE" /> &#160; <a href="{$cfg.abs_root_url}">or not</a>
+	</form>
 </div>
 
 <script type="text/javascript">
 {literal}
 
 $(document).ready(function(){
-	var map = $(".map");
-	privatesquare_htmapl(map);
+
+	// this isn't working yet (20130211/straup)
+
+	$('#checkin_form').submit(function(){
+
+	alert("HI");
+
+		var _onsuccess = function(rsp){
+			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
+		}
+
+		// FIX ME
+		//var args = {};
+		//privatesquare_checkin(args, _onsuccess);
+
+		privatesquare_set_status("Talking to the sky...");
+		return false;	
+	});
+
 });
 
 {/literal}
