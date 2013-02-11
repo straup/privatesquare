@@ -21,6 +21,7 @@
 
 		# check if not $venue
 
+		$venue['data'] = json_decode($venue['data'], 'as hash');
 		$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 
 		$update = post_isset("update");

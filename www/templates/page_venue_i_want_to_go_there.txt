@@ -3,7 +3,7 @@
 {if $step=="choose"}
 	{include file="inc_venue_i_want_to_go_there_choose.txt"}
 {elseif $step=="confirm"}
-	{include file="inc_venue_i_want_to_go_there_confirm.txt"}
+	{include file="inc_venue_i_want_to_go_there_confirm.txt" data_zoom=15}
 {elseif $step=="update"}
 	{include file="inc_venue_i_want_to_go_there_update.txt"}
 {else}
