@@ -1,3 +1,4 @@
+{capture assign="page_title"}i want to go there{/capture}
 {include file="inc_head.txt"}
 
 {if $step=="choose"}
