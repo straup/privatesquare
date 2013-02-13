@@ -5,6 +5,7 @@
 	login_ensure_loggedin();
 
 	loadlib("foursquare_venues");
+	loadlib("privatesquare_checkins");
 
 	if ($venue_id = request_str("venue_id")){
 
@@ -21,11 +22,9 @@
 			}
 
 			if (! $venue_id){
-
+				# TO DO: error handling...
 			}
 		}
-
-		# check if venue_id is a URL and strip
 
 		$venue = foursquare_venues_get_by_venue_id($venue_id);
 
@@ -39,11 +38,13 @@
 		$venue['data'] = json_decode($venue['data'], 'as hash');
 		$GLOBALS['smarty']->assign_by_ref("venue", $venue);
 
-		$update = post_isset("update");
+		$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
+		$GLOBALS['smarty']->assign_by_ref("checkin_crumb", $checkin_crumb);
 
-		if ((0) && ($update)){
+		$status_map = privatesquare_checkins_status_map("string keys");
+		$GLOBALS['smarty']->assign("status_id", $status_map['i want to go there']);
 
-		}
+		# TO DO: update if POST args (in a world... without javascript)
 	}
 
 	else {

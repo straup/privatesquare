@@ -1,7 +1,7 @@
 {include file="inc_venue.txt"}
 
 <div id="iwanttogothere" style="text-align:center;">
-	<form id="checkin_form">
+	<form id="iwanttogothere_form" method="POST">
 	<input type="submit" value="I WANT TO GO HERE" /> &#160; <a href="{$cfg.abs_root_url}">or not</a>
 	</form>
 </div>
@@ -11,18 +11,22 @@
 
 $(document).ready(function(){
 
-	// this isn't working yet (20130211/straup)
-
-	$('#checkin_form').submit(function(){
-
-	alert("HI");
+	$('#iwanttogothere_form').submit(function(){
 
 		var _onsuccess = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
 		}
 
-		// FIX ME
-		//var args = {};
+		var args = {
+			'crumb': '{/literal}{$checkin_crumb|escape}{literal}',
+			'venue_id': '{/literal}{$venue.venue_id|escape}{literal}',
+			'status_id': {/literal}{$status_id|escape}{literal},
+			'broadcast': ''
+		};
+
+		console.log(args);
+		return false;
+
 		//privatesquare_checkin(args, _onsuccess);
 
 		privatesquare_set_status("Talking to the sky...");
