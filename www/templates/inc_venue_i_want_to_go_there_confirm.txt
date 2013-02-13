@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$('#iwanttogothere_form').submit(function(){
 
 		var _onsuccess = function(rsp){
-			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
+			privatesquare_checkin_onsuccess(rsp);
 		}
 
 		var args = {
@@ -24,10 +24,7 @@ $(document).ready(function(){
 			'broadcast': ''
 		};
 
-		console.log(args);
-		return false;
-
-		//privatesquare_checkin(args, _onsuccess);
+		privatesquare_checkin(args, _onsuccess);
 
 		privatesquare_set_status("Talking to the sky...");
 		return false;	

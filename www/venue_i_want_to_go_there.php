@@ -33,7 +33,9 @@
 			$venue = $rsp['venue'];
 		}
 
-		# check if not $venue
+		# TO DO: check if not $venue
+
+		# TO DO: check to see if already been here...
 
 		$venue['data'] = json_decode($venue['data'], 'as hash');
 		$GLOBALS['smarty']->assign_by_ref("venue", $venue);
