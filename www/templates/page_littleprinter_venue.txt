@@ -1,0 +1,34 @@
+<h1>{$venue.name|escape}</h1>
+
+<div class="checkin" data-venue="{$venue.venue_id|escape}">
+
+	<div class="map" data-zoom="{if $data_zoom}{$data_zoom|escape}{else}14{/if}" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
+	</div>
+
+	{if $venue.latitude and $venue.longitude}
+	<div class="geo">
+		<span property="geo:name">
+
+		<span class="vcard adr">
+		<span class="abook address street-address">{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}</span>
+		</span>
+
+		<br />
+
+		{if $venue.data.location.city}<span class="locality">{$venue.data.location.city}</span>,{/if}   
+		{if $venue.data.location.state}<span="region">{$venue.data.location.state},</span>{/if}
+		{if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
+
+		<span class="coordinates" style="display:none;"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</span>
+
+	</div>	
+	{/if}
+
+	{if $venue.data.contact.formattedPhone|escape}
+	<div class="abook phone tel">
+		<a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
+	</div>
+	{/if}
+
+</div>
