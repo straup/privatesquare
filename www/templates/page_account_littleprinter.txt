@@ -1,3 +1,10 @@
 {include file="inc_head.txt"}
 
+<form method="POST">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="update" value="1" />
+	<input type="text" name="direct_print_code" value="{if $berg_user}{$berg_user.direct_print_code|escape}{/if}" />
+	<input type="submit" value="UPDATE" />
+</form>
+
 {include file="inc_foot.txt"}
