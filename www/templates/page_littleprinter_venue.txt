@@ -1,10 +1,15 @@
-<h1>{$venue.name|escape}</h1>
+<div style="font-size:14pt;font-family:Arial;">
 
-<div class="checkin" data-venue="{$venue.venue_id|escape}">
+<h1 style="font-family:Octin College">{$venue.name|escape}</h1>
 
-	<div class="map" data-zoom="{if $data_zoom}{$data_zoom|escape}{else}14{/if}" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
-	</div>
+<p>You said that you are wanting to go here.</p>
+
+<div>
+
+	{* this basically works - now make it work for more than one lat,lon... *}
+	<img src="http://b.tile.stamen.com/toner/15/9649/12313.jpg" height="384" width="384" />
+
+	<div style="margin-top:1em;">
 
 	{if $venue.latitude and $venue.longitude}
 	<div class="geo">
@@ -14,21 +19,20 @@
 		<span class="abook address street-address">{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}</span>
 		</span>
 
-		<br />
-
 		{if $venue.data.location.city}<span class="locality">{$venue.data.location.city}</span>,{/if}   
 		{if $venue.data.location.state}<span="region">{$venue.data.location.state},</span>{/if}
 		{if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
-
-		<span class="coordinates" style="display:none;"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</span>
 
 	</div>	
 	{/if}
 
 	{if $venue.data.contact.formattedPhone|escape}
 	<div class="abook phone tel">
-		<a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
+		{$venue.data.contact.formattedPhone|escape}
 	</div>
 	{/if}
+	</div>
+
+</div>
 
 </div>

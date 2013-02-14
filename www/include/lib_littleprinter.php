@@ -7,9 +7,11 @@
 
 	function littleprinter_print_venue(&$venue, &$user){
 
+		# TO DO: error handling...
+
 		$venue['data'] = json_decode($venue['data'], 'as hash');
 
-		# TO DO: error handling...
+		# TO DO: lat,lon (and zoom) to tile
 
 		$berg_user = bergcloud_users_get_by_user_id($user['id']);
 
