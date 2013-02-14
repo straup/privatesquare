@@ -94,3 +94,12 @@ CREATE TABLE `reverse_geoplanet` (
   KEY `by_woeid` (`woeid`),
   KEY `by_locality` (`locality`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `BergcloudUsers`;
+
+CREATE TABLE `BergcloudUsers` (
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `direct_print_code` VARCHAR(24) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `by_code` (`direct_print_code`)
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
