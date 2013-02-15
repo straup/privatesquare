@@ -16,7 +16,7 @@
 
 	########################################################################
 
-	function bergcloud_users_add($user){
+	function bergcloud_users_add_user($user){
 
 		$insert = array();
 
@@ -34,5 +34,26 @@
 	}
 
 	########################################################################
+
+	function bergcloud_users_update_user(&$berg_user, $update){
+
+		$insert = array();
+
+		foreach ($update as $k => $v){
+			$insert[$k] = AddSlashes($v);
+		}
+
+		$enc_id = AddSlashes($berg_user['user_id']);
+		$where = "user_id='{$enc_id}'";
+
+		$rsp = db_update('BergcloudUsers', $insert, $where);
+
+		if ($rsp['ok']){
+			$berg_user = array_merge($berg_user, $update);
+			$rsp['user'] = $berg_user;
+		}
+
+		return $rsp;
+	}
 
 	########################################################################

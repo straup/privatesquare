@@ -9,7 +9,7 @@
 	<input type="text" name="direct_print_code" value="{if $berg_user}{$berg_user.direct_print_code|escape}{/if}" />
 
 	<h3>Send ... to Little Printer</h3>
-	<input type="checkbox" name="print_on_want" />
+	<input type="checkbox" name="littleprinter_updates" {if $berg_user.littleprinter_updates} checked="true"{/if}/><label for="littleprinter_updates"> Yes, please</label>
 
 	<br />
 	<input type="submit" value="UPDATE" />
