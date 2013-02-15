@@ -31,7 +31,7 @@
 		}
 	}
 
-	$GLOBALS['smarty']->display("page_account_littleprinter.txt");
+	$GLOBALS['smarty']->display("page_account_bergcloud.txt");
 	exit();
 
 ?>	

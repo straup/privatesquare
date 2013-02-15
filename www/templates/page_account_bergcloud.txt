@@ -1,9 +1,17 @@
+{capture assign="page_title"}Account | BERG Cloud{/capture}
 {include file="inc_head.txt"}
 
-<form method="POST">
+<form method="POST" action="{$cfg.abs_root_url}account/bergcloud/">
 	{$crumb_key|crumb_input}
 	<input type="hidden" name="update" value="1" />
+
+	<h3>Your Little Printer direct print coe</h3>
 	<input type="text" name="direct_print_code" value="{if $berg_user}{$berg_user.direct_print_code|escape}{/if}" />
+
+	<h3>Send ... to Little Printer</h3>
+	<input type="checkbox" name="print_on_want" />
+
+	<br />
 	<input type="submit" value="UPDATE" />
 </form>
 
