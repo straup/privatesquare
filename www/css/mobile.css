@@ -169,3 +169,7 @@ input[type=submit] {
 .map-list {
     margin-bottom: 0px !important;
 }
+
+#iwanttogothere_form input[type=text] {
+    width: 99%;
+}

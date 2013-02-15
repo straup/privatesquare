@@ -1,8 +1,8 @@
 {include file="inc_venue.txt"}
 
 <div id="iwanttogothere" style="text-align:center;">
-	<form id="iwanttogothere_form" method="POST">
-	<input type="submit" value="I WANT TO GO HERE" /> &#160; <a href="{$cfg.abs_root_url}">or not</a>
+	<form id="iwanttogothere_form" method="POST" action="{$cfg.abs_root_url}want/">
+	<input type="submit" value="YES!" /> &#160; <a href="{$cfg.abs_root_url}">or not</a>
 	</form>
 </div>
 

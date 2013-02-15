@@ -486,3 +486,21 @@ button {
 #navi-offline {
     display:none !important;
 }
+
+#iwanttogothere_choose {
+    margin-top:1em;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+#iwanttogothere_choose h3 {
+    text-align:left;
+}
+
+#iwanttogothere_form input[type=text] {
+    width: 50%;
+}
+
+#iwanttogothere_choose input[type=submit] {
+    padding:4px;
+}

@@ -1,8 +1,13 @@
-<form method="POST" action="{$cfg.abs_root_url}iwanttogothere/">
-	<input type="text" name="venue_id" placeholder="Enter a 4sq venue ID" />
-	<br />
-	<input type="submit" value="I WANT TO GO THERE" />
+<div id="iwanttogothere_choose">
+
+<h3>I want to go to this place</h3>
+
+<form method="POST" action="{$cfg.abs_root_url}want/" id="iwanttogothere_form">
+	<input type="text" name="venue_id" placeholder="Enter a 4sq ID (or URL)" />
+	<input type="submit" value="WANT" />
 
 	<br />
 	<p style="font-size:small;">No, you can't search for venues yet.</p>
 </form>
+
+</div>
