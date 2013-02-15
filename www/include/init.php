@@ -54,18 +54,6 @@
 		include($fq_name);
 	}
 
-	function loadpear($name){
-
-		if ($GLOBALS['loaded_libs']['PEAR:'.$name]){
-			return;
-		}
-
-		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
-
-		$fq_name = _loadlib_enpathify("pear/{$name}.php");
-		include($fq_name);
-	}
-
 	function _loadlib_enpathify($lib){
 
 		# see also: http://www.php.net/manual/en/ini.core.php#ini.include-path

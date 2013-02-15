@@ -7,7 +7,7 @@
 <div>
 
 	{* this basically works - now make it work for more than one lat,lon... *}
-	<img src="http://b.tile.stamen.com/toner/15/9649/12313.jpg" height="384" width="384" />
+	<img src="{$tile_url}" height="384" width="384" />
 
 	<div style="margin-top:1em;">
 
