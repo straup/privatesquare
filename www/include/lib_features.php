@@ -4,7 +4,9 @@
 
 	function features_is_enabled($flag){
 
-		$flag = "enable_feature_{$flag}";
+		if (! preg_match("/^enable_feature_/", $flag)){
+			$flag = "enable_feature_{$flag}";
+		}
 
 		if (! isset($GLOBALS['cfg'][$flag])){
 			return 0;
@@ -14,4 +16,12 @@
 	}
 
 	#################################################################
-?>
+
+	function features_ensure_enabled($flag){
+
+		if (! features_is_enabled($flag)){
+			error_disabled();
+		}
+	}
+
+	#################################################################
