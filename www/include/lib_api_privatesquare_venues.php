@@ -110,9 +110,25 @@
 			'checkin' => $rsp['checkin']
 		);
 
+		#
+
+		$status_map = privatesquare_checkins_status_map('string keys');
+
+		if ((features_is_enabled("littleprinter")) && ($status_id == $status_map['i want to go there'])){
+
+			loadlib("bergcloud_users");
+			loadlib("littleprinter");
+
+			$berg_user = bergcloud_users_get_by_user_id($GLOBALS['cfg']['user']['id']);
+
+			if (($berg_user) && ($berg_user['direct_print_code'])){
+				$rsp = littleprinter_print_venue($venue, $berg_user);
+			}
+		}
+
 		api_output_ok($out);
 	}
 
  	#################################################################
 
-?>
+	# the end

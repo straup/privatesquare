@@ -6,11 +6,7 @@
 
 	########################################################################
 
-	function littleprinter_print_venue(&$venue, &$user){
-
-		$berg_user = bergcloud_users_get_by_user_id($user['id']);
-
-		# TO DO: error handling...
+	function littleprinter_print_venue(&$venue, &$berg_user){
 
 		$venue['data'] = json_decode($venue['data'], 'as hash');
 		$GLOBALS['smarty']->assign_by_ref("venue", $venue);
