@@ -82,6 +82,11 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	# Allow users to send 'iwanttogothere' style checkins to a Little Printer
+
+	$GLOBALS['cfg']['enable_feature_bergcloud_users'] = 0;
+	$GLOBALS['cfg']['enable_feature_bergcloud_littleprinter'] = 0;
+
 	# See also: 'Configuring fancy stuff – Artisanal Integers'
 	# in the README.md file for details
 

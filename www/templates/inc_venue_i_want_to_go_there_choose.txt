@@ -7,7 +7,8 @@
 	<input type="submit" value="WANT" />
 
 	<br />
-	<p style="font-size:small;">No, you can't search for venues yet.</p>
+
+	<p style="margin-right:3em;line-height:1.4em;font-size:small;">This is a little helper page to let you bless a foursquare venue with <q>i want to go there</q> -iness even if you're not physically nearby. At the moment you can not search for venues by name so you'll need to enter the venue ID (or URL).</p>
 </form>
 
 </div>
