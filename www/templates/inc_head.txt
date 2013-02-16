@@ -81,12 +81,10 @@ var _cfg={literal}{{/literal}
 		|
 		<a href="{$cfg.user|@urls_lists_for_user}">atlas</a>
 		|
+		<span class="export">
 		<a href="{$cfg.abs_root_url}want/">want</a>
 		|
-		<span class="export">
 		<a href="{$cfg.user|@urls_places_for_user}">places</a>
-		|
-		<a href="{$cfg.abs_root_url}account/">account</a>
 		|
 		</span>
 {if $cfg.enable_feature_deferred_checkins}
@@ -95,6 +93,8 @@ var _cfg={literal}{{/literal}
 		|
 		</span>
 {/if}
+		<a href="{$cfg.abs_root_url}account/">account</a>
+		|
 			<a href="{$cfg.abs_root_url}signout/">logout</a>
 		</span>
 		{if 0}<span id="navi-offline">offline mode</div>{/if}
