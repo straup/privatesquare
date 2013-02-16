@@ -325,7 +325,7 @@ sure that you run the
 [20130213.db_main.schema](https://github.com/straup/privatesquare/blob/master/schema/alters/20130213.db_main.schema)
 database alter to add the `BergcloudUsers` table to your database.
 
-Once that's done individual users (read: people with Little Printers) can add
+Once that's done individual users can go to `/account/bergcloud/` and add
 their [Direct Print API
 code](http://remote.bergcloud.com/developers/direct_print_codes) and enable
 check-ins to be sent to their printer. The output looks something [like this](http://www.flickr.com/photos/straup/8475131836/).
