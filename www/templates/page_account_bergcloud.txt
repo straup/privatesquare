@@ -1,18 +1,26 @@
-{capture assign="page_title"}Account | BERG Cloud{/capture}
+{capture assign="page_title"}account | berg cloud{/capture}
 {include file="inc_head.txt"}
+
+<h2>Your BERG Cloud settings</h2>
+
+<div style="margin-bottom:2em;line-height:1.5em;">
+     <p>If you have a <a href="http://bergcloud.com/littleprinter/">Little Printer</a> you can configure privatesquare to print out <q>I want to go there</q> check-ins. We use the BERG Cloud <code>Direct Print API</code> to do this, so you'll need to enter that code here. You can find your code at the bottom of the <a href="http://remote.bergcloud.com/developers/direct_print_codes">Direct Print API page</a> on the BERG Cloud developers website.</p>
+</div>
 
 <form method="POST" action="{$cfg.abs_root_url}account/bergcloud/">
 	{$crumb_key|crumb_input}
 	<input type="hidden" name="update" value="1" />
 
-	<h3>Your Little Printer direct print coe</h3>
+	<h3>Your Little Printer Direct Print API code</h3>
+
 	<input type="text" name="direct_print_code" value="{if $berg_user}{$berg_user.direct_print_code|escape}{/if}" />
 
-	<h3>Send ... to Little Printer</h3>
-	<input type="checkbox" name="littleprinter_updates" {if $berg_user.littleprinter_updates} checked="true"{/if}/><label for="littleprinter_updates"> Yes, please</label>
+	<h3>Send <q>I want to go there</q> check-ins to Little Printer</h3>
+	<input type="checkbox" name="littleprinter_updates" {if $berg_user.littleprinter_updates} checked="true"{/if}/><label for="littleprinter_updates"> Yes, please!</label>
 
-	<br />
+	<div style="margin-top:2em;text-align:center;">
 	<input type="submit" value="UPDATE" />
+	</div>
 </form>
 
 {include file="inc_foot.txt"}
