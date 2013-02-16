@@ -311,6 +311,27 @@ good stuff is absolutely _not_ available for viewing in offline mode since it
 would quickly turn in to a poison soup of caching issues and other gotchas that
 life is too short to bother dealing with.
 
+## Configuring fancy stuff - sending check-ins to Little Printer
+
+privatesquare can now be told to send `i want to go there` check-ins to a user's
+[Little Printer](http://bergcloud.com/littleprinter/). To enable the feature
+make sure the following flags are set in your `config.php` file:
+
+	$GLOBALS['cfg']['enable_feature_bergcloud_users'] = 1;
+	$GLOBALS['cfg']['enable_feature_bergcloud_littleprinter'] = 1;
+
+If you already have an instance of privatesquare installed you'll need to make
+sure that you run the
+[20130213.db_main.schema](https://github.com/straup/privatesquare/blob/master/schema/alters/20130213.db_main.schema)
+database alter to add the `BergcloudUsers` table to your database.
+
+Once that's done individual users (read: people with Little Printers) can add
+their [Direct Print API
+code](http://remote.bergcloud.com/developers/direct_print_codes) and enable
+check-ins to be sent to their printer.
+
+The output looks something [like this](http://www.flickr.com/photos/straup/8475131836/).
+
 ## See also
 
 * [flamework](https://github.com/exflickr/flamework)
