@@ -315,7 +315,7 @@ life is too short to bother dealing with.
 
 privatesquare can now be told to send `i want to go there` check-ins to a user's
 [Little Printer](http://bergcloud.com/littleprinter/). To enable the feature
-make sure the following flags are set in your `config.php` file:
+make sure the following flags are set in your `config.php` file.
 
 	$GLOBALS['cfg']['enable_feature_bergcloud_users'] = 1;
 	$GLOBALS['cfg']['enable_feature_bergcloud_littleprinter'] = 1;
@@ -328,9 +328,7 @@ database alter to add the `BergcloudUsers` table to your database.
 Once that's done individual users (read: people with Little Printers) can add
 their [Direct Print API
 code](http://remote.bergcloud.com/developers/direct_print_codes) and enable
-check-ins to be sent to their printer.
-
-The output looks something [like this](http://www.flickr.com/photos/straup/8475131836/).
+check-ins to be sent to their printer. The output looks something [like this](http://www.flickr.com/photos/straup/8475131836/).
 
 ## See also
 
