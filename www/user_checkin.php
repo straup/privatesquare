@@ -38,6 +38,30 @@
 		error_404();
 	}
 
+	# Note sure this should go here but it's a start... (20130407/straup)
+
+	if (features_is_enabled("youarehere")){
+
+		loadlib("youarehere_users");
+		loadlib("youarehere_api");
+
+		if ($yah_user = youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
+
+			$method = 'youarehere.geo.reverseGeocode';
+
+			$args = array(
+				'lat' => $checkin['latitude'],
+				'lon' => $checkin['longitude'],
+				'access_token' => $yah_user['access_token'],
+			);
+
+			# this does not return place names yet because stupid
+			# (20130407/straup)
+
+			# $rsp = youarehere_api_call($method, $args);
+		}
+	}
+
 	$checkin['locality'] = reverse_geoplanet_get_by_woeid($checkin['locality'], 'locality');
 
 	$status_map = privatesquare_checkins_status_map();
