@@ -34,9 +34,16 @@
 		$query = http_build_query($args);
 
 		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_token_endpoint'] . '?'. $query;
-
 		$rsp = http_get($url);
-		dumper($rsp);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$data = json_decode($rsp['body'], 'as hash');
+		$rsp['data'] = $data;
+
+		return $rsp;
 	}
 
 	########################################################################

@@ -8,8 +8,15 @@
 	loadlib("youarehere_users");
 	loadlib("youarehere_api");
 
-	$auth_url = youarehere_api_auth_user_url();
-	$GLOBALS['smarty']->assign("auth_url", $auth_url);
+	if ($youarehere_user = youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
+
+		$GLOBALS['smarty']->assign_by_ref("youarehere_user", $youarehere_user);
+	}
+
+	else {
+		$auth_url = youarehere_api_auth_user_url();
+		$GLOBALS['smarty']->assign("auth_url", $auth_url);
+	}
 
 	$GLOBALS['smarty']->display("page_youarehere.txt");
 	exit();

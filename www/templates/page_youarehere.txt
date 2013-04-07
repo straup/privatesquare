@@ -1,5 +1,10 @@
+{capture assign="page_title"}you are here{/capture}
 {include file="inc_head.txt"}
 
+{if $youarehere_user}
+
+{else}
 <a href="{$auth_url}">Get started</a>
+{/if}
 
 {include file="inc_foot.txt"}
