@@ -2,9 +2,12 @@
 {include file="inc_head.txt"}
 
 {if $youarehere_user}
-
+<p>You've already authenticated <a href="{$cfg.youarehere_host}api/oauth2/tokens/">your <strong>you are here</strong> account</a> to privatesquare.
 {else}
-<a href="{$auth_url}">Get started</a>
+
+<p>WORDS</p>
+
+<p><a href="{$auth_url}">Get started</a></p>
 {/if}
 
 {include file="inc_foot.txt"}

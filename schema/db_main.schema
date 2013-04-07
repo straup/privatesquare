@@ -103,3 +103,13 @@ CREATE TABLE `BergcloudUsers` (
   `littleprinter_updates` TINYINT(3) UNSIGNED NOT NULL,
   PRIMARY KEY (`user_id`)
 )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `YouarehereUsers`;
+
+CREATE TABLE `YouarehereUsers` (
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `access_token` VARCHAR(64) NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`user_id`),
+  INDEX `by_date` (`created`)
+)  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -48,12 +48,13 @@
 
 		else {
 
-			$data = array(
+			$youarehere_user = array(
 				'user_id' => $GLOBALS['cfg']['user']['id'],
 				'access_token' => $rsp['data']['access_token'],
 			);
 
-			# $rsp = youarehere_users_add_user($data);
+			$rsp = youarehere_users_add_user($youarehere_user);
+dumper($rsp);
 		}
 	}
 

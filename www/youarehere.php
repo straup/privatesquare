@@ -9,7 +9,6 @@
 	loadlib("youarehere_api");
 
 	if ($youarehere_user = youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
-
 		$GLOBALS['smarty']->assign_by_ref("youarehere_user", $youarehere_user);
 	}
 

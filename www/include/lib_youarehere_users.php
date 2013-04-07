@@ -2,20 +2,43 @@
 
 	########################################################################
 
-	function youarehere_users_add_user($user){
+	function youarehere_users_add_user($youarehere_user){
 
-		$user['created'] = time();
+		$youarehere_user['created'] = time();
 
 		$insert = array();
 
-		foreach ($user as $k => $v){
+		foreach ($youarehere_user as $k => $v){
 			$insert[$k] = AddSlashes($v);
 		}
 
 		$rsp = db_insert('YouarehereUsers', $insert);
 
 		if ($rsp['ok']){
-			$rsp['user'] = $user;
+			$rsp['youarehere_user'] = $youarehere_user;
+		}
+
+		return $rsp;
+	}
+
+	########################################################################
+
+	function youarehere_users_update_user($youarehere_user, $update){
+
+		$insert = array();
+
+		foreach ($update as $k => $v){
+			$insert[$k] = AddSlashes($v);
+		}
+
+		$enc_id = AddSlashes($youarehere_user['user_id']);
+		$where = "user_id='{$enc_id}'";
+
+		$rsp = db_update('YouarehereUsers', $insert, $where);
+
+		if ($rsp['ok']){
+			$youarehere_user = array_merge($youarehere_user, $update);
+			$rsp['youarehere_user'] = $youarehere_user;
 		}
 
 		return $rsp;
