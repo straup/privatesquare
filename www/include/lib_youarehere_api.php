@@ -21,6 +21,26 @@
 
 	########################################################################
 
+	function youarehere_api_get_access_token($grant_token){
+
+		$args = array(
+			'client_id' => $GLOBALS['cfg']['youarehere_api_key'],
+			'redirect_uri' => $GLOBALS['cfg']['abs_root_url'] . 'youarehere/auth/',
+			'grant_type' => 'authorization_code',
+			'response_type' => 'code',
+			'code' => $grant_token,
+		);
+
+		$query = http_build_query($args);
+
+		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_token_endpoint'] . '?'. $query;
+
+		$rsp = http_get($url);
+		dumper($rsp);
+	}
+
+	########################################################################
+
 	function youarehere_api_call($method, $args=array(), $more=array()){
 
 		$args['method'] = $method;
