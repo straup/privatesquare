@@ -91,11 +91,9 @@
 	# You are here integration
 
 	$GLOBALS['cfg']['enable_feature_youarehere'] = 1;
-
-	$GLOBALS['cfg']['youarehere_host'] = 'https://youarehere.spum.org/';
-	$GLOBALS['cfg']['youarehere_api_endpoint'] = 'api/rest/';
-	$GLOBALS['cfg']['youarehere_grant_endpoint'] = 'api/oauth2/authenticate/';
-	$GLOBALS['cfg']['youarehere_token_endpoint'] = 'api/oauth2/access_token/';
+	$GLOBALS['cfg']['youarehere_api_endpoint'] = 'https://youarehere.spum.org/api/rest/';
+	$GLOBALS['cfg']['youarehere_grant_endpoint'] = 'https://youarehere.spum.org/api/oauth2/authenticate/';
+	$GLOBALS['cfg']['youarehere_token_endpoint'] = 'https://youarehere.spum.org/api/oauth2/access_token/';
 	$GLOBALS['cfg']['youarehere_api_key'] = '';
 
 	# See also: 'Configuring fancy stuff – Artisanal Integers'

@@ -12,10 +12,8 @@
 		$GLOBALS['smarty']->assign_by_ref("youarehere_user", $youarehere_user);
 	}
 
-	else {
-		$auth_url = youarehere_api_authenticate_user_url();
-		$GLOBALS['smarty']->assign("auth_url", $auth_url);
-	}
+	$auth_url = youarehere_api_authenticate_user_url();
+	$GLOBALS['smarty']->assign("auth_url", $auth_url);
 
 	$GLOBALS['smarty']->display("page_youarehere.txt");
 	exit();

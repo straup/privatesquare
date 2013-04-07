@@ -25,6 +25,8 @@
 
 	function youarehere_users_update_user($youarehere_user, $update){
 
+		$update['last_modified'] = time();
+
 		$insert = array();
 
 		foreach ($update as $k => $v){
@@ -41,6 +43,17 @@
 			$rsp['youarehere_user'] = $youarehere_user;
 		}
 
+		return $rsp;
+	}
+
+	########################################################################
+
+	function youarehere_users_delete_user($youarehere_user){
+
+		$enc_id = AddSlashes($youarehere_user['user_id']);
+		$sql = "DELETE FROM YouarehereUsers WHERE user_id='{$enc_id}'";
+
+		$rsp = db_write($sql);
 		return $rsp;
 	}
 

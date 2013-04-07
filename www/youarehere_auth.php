@@ -37,7 +37,7 @@
 
 	else {
 
-		if (youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
+		if ($youarehere_user = youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
 
 			$update = array(
 				'access_token' => $rsp['data']['access_token'],
@@ -54,7 +54,6 @@
 			);
 
 			$rsp = youarehere_users_add_user($youarehere_user);
-dumper($rsp);
 		}
 	}
 

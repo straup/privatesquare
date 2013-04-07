@@ -1,13 +1,16 @@
-{capture assign="page_title"}you are here{/capture}
+{capture assign="page_title"}you are here | authenticate{/capture}
 {include file="inc_head.txt"}
 
 {if $youarehere_user}
-<p>You've already authenticated <a href="{$cfg.youarehere_host}api/oauth2/tokens/">your <strong>you are here</strong> account</a> to privatesquare.
+<p>You've already authenticated your <a href="{$cfg.youarehere_host}api/oauth2/tokens/">you are here</a> account to privatesquare.
+
+<p><a href="{$auth_url}">Do it again</a></p>
+
 {else}
 
 <p>WORDS</p>
 
 <p><a href="{$auth_url}">Get started</a></p>
-{/if}
 
+{/if}
 {include file="inc_foot.txt"}

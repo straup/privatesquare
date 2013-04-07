@@ -15,7 +15,7 @@
 
 		$query = http_build_query($args);
 
-		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_grant_endpoint'] . '?'. $query;
+		$url = $GLOBALS['cfg']['youarehere_grant_endpoint'] . '?'. $query;
 		return $url;
 	}
 
@@ -33,7 +33,7 @@
 
 		$query = http_build_query($args);
 
-		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_token_endpoint'] . '?'. $query;
+		$url = $GLOBALS['cfg']['youarehere_token_endpoint'] . '?'. $query;
 		$rsp = http_get($url);
 
 		if (! $rsp['ok']){
@@ -52,8 +52,7 @@
 
 		$args['method'] = $method;
 
-		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_api_endpoint'];
-
+		$url = $GLOBALS['cfg']['youarehere_api_endpoint'];
 		$rsp = http_post($url, $args);
 
 		if (! $rsp['ok']){
