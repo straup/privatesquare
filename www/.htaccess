@@ -120,3 +120,6 @@ RewriteRule ^user/([0-9]+)/history(/page([0-9]+))?/?$	user_history.php?foursquar
 RewriteRule ^user/([0-9]+)/history/([0-9\-\;\:T]+)(/page([0-9]+))?/?$	user_history.php?foursquare_id=$1&when=$2&page=$4&%{QUERY_STRING}	[L]
 
 RewriteRule ^user/([0-9]+)/pending/?$			user_pending_checkins.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+
+RewriteRule ^youarehere/?$				youarehere.php?%{QUERY_STRING}	[L]
+RewriteRule ^youarehere/auth/?$				youarehere_auth.php?%{QUERY_STRING}	[L]

@@ -2,23 +2,20 @@
 
 	loadlib("http");
 
-	$GLOBALS['youarehere_host'] = '';
-	$GLOBALS['youarehere_api_endpoint'] = 'api/rest/';
-	$GLOBALS['youarehere_auth_endpoint'] = '';
-
 	########################################################################
 
 	function youarehere_api_auth_user_url(){
 
 		$args = array(
-			'scope' => '',
-			'api_key' => '',
+			'client_id' => $GLOBALS['cfg']['youarehere_api_key'],
 			'redirect_uri' => $GLOBALS['cfg']['abs_root_url'] . 'youarehere/auth/',
+			'scope' => 'write',
+			'response_type' => 'code',
 		);
 
 		$query = http_build_query($args);
 
-		$url = $GLOBALS['youarehere_host'] . $GLOBALS['youarehere_auth_endpoint'] . '?'. $query;
+		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_auth_endpoint'] . '?'. $query;
 		return $url;
 	}
 
@@ -28,7 +25,7 @@
 
 		$args['method'] = $method;
 
-		$url = $GLOBALS['youarehere_host'] . $GLOBALS['youarehere_api_endpoint'];
+		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_api_endpoint'];
 
 		$rsp = http_post($url, $args);
 
