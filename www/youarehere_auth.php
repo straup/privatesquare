@@ -9,12 +9,6 @@
 
 	features_ensure_enabled("youarehere");
 
-	if (youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
-		$url = $GLOBALS['cfg']['abs_root_url'] . "youarehere/";
-		header("location: {$url}");
-		exit();
-	}
-
 	$code = get_str("code");
 
 	if (! $code){
@@ -43,12 +37,24 @@
 
 	else {
 
-		$data = array(
-			'user_id' => $GLOBALS['cfg']['user']['id'],
-			'access_token' => $rsp['data']['access_token'],
-		);
+		if (youarehere_users_get_by_user_id($GLOBALS['cfg']['user']['id'])){
 
-		# $rsp = youarehere_users_add_user($data);
+			$update = array(
+				'access_token' => $rsp['data']['access_token'],
+			);
+
+			$rsp = youarehere_users_update_user($youarehere_user, $update);
+		}
+
+		else {
+
+			$data = array(
+				'user_id' => $GLOBALS['cfg']['user']['id'],
+				'access_token' => $rsp['data']['access_token'],
+			);
+
+			# $rsp = youarehere_users_add_user($data);
+		}
 	}
 
 	exit();

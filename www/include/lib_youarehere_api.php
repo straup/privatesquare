@@ -4,7 +4,7 @@
 
 	########################################################################
 
-	function youarehere_api_auth_user_url(){
+	function youarehere_api_authenticate_user_url(){
 
 		$args = array(
 			'client_id' => $GLOBALS['cfg']['youarehere_api_key'],
@@ -15,7 +15,7 @@
 
 		$query = http_build_query($args);
 
-		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_auth_endpoint'] . '?'. $query;
+		$url = $GLOBALS['cfg']['youarehere_host'] . $GLOBALS['cfg']['youarehere_grant_endpoint'] . '?'. $query;
 		return $url;
 	}
 

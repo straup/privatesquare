@@ -14,7 +14,7 @@
 	}
 
 	else {
-		$auth_url = youarehere_api_auth_user_url();
+		$auth_url = youarehere_api_authenticate_user_url();
 		$GLOBALS['smarty']->assign("auth_url", $auth_url);
 	}
 
