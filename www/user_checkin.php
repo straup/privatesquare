@@ -55,9 +55,6 @@
 				'access_token' => $yah_user['access_token'],
 			);
 
-			# this does not return place names yet because stupid
-			# (20130407/straup)
-
 			# $rsp = youarehere_api_call($method, $args);
 		}
 	}
