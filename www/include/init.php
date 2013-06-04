@@ -310,6 +310,23 @@
 		if (! $GLOBALS['cfg']['allow_precache']){
 			error_403();
 		}
+
+	        # API site key/token stuff
+
+		if (features_is_enabled("api")){
+
+                        loadlib("api");
+
+		        if (features_is_enabled(array("api_site_keys", "api_site_tokens"))){
+
+				loadlib("api_keys");
+				loadlib("api_oauth2_access_tokens");
+
+				$token = api_oauth2_access_tokens_fetch_site_token($GLOBALS['cfg']['user']);
+				$GLOBALS['smarty']->assign_by_ref("site_token", $token['access_token']);
+			}
+		}
+
 	}
 
 	#
