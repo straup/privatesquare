@@ -27,6 +27,13 @@
 			"library": "api_foursquare_venues"
 		},
 
+		"nypl.gazetteer.search": {
+			"documented": 0,
+			"enabled": 1,
+			"requires_auth": 1,
+			"library": "api_nypl_gazetteer"
+		},
+
 		"privatesquare.venues.checkin": {
 			"documented": 0,
 			"enabled": 1,

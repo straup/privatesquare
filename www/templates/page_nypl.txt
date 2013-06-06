@@ -1,0 +1,19 @@
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.nypl.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
+{/capture}
+{include file="inc_head.txt"}
+
+<div id="status"></div>
+
+<div id="map-wrapper"></div>
+
+{include file="inc_checkin_venues.txt"}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	privatesquare_nypl_init();
+{literal}}{/literal});
+</script>
+
+{include file="inc_foot.txt"}

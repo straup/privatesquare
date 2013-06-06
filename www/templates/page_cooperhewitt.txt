@@ -1,0 +1,14 @@
+{capture assign="page_title"}cooper hewitt | authenticate{/capture}
+{include file="inc_head.txt"}
+
+{if $cooperhewitt_user}
+<p>You've already authenticated your <a href="{$cfg.cooperhewitt_host}api/oauth2/tokens/">you are here</a> account to privatesquare.
+
+<p><a href="{$auth_url}">Do it again</a></p>
+
+{else}
+
+<p><a href="{$auth_url}">Get started</a></p>
+
+{/if}
+{include file="inc_foot.txt"}
