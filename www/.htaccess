@@ -124,7 +124,4 @@ RewriteRule ^user/([0-9]+)/pending/?$			user_pending_checkins.php?foursquare_id=
 RewriteRule ^youarehere/?$				youarehere.php?%{QUERY_STRING}	[L]
 RewriteRule ^youarehere/auth/?$				youarehere_auth.php?%{QUERY_STRING}	[L]
 
-RewriteRule ^cooperhewitt/?$				cooperhewitt.php?%{QUERY_STRING}	[L]
-RewriteRule ^cooperhewitt/auth/?$			cooperhewitt_auth.php?%{QUERY_STRING}	[L]
-
 RewriteRule ^nypl/?$					nypl.php?%{QUERY_STRING}	[L]
