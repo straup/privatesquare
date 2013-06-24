@@ -80,7 +80,7 @@
 		$rsp = brooklyn_integers_api_post($method);
 
 		if (! $rsp['ok']){
-			return rsp;
+			return $rsp;
 		}
 
 		return array('ok' => 1, 'integer' => $rsp['response']['integer']);
