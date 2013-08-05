@@ -15,6 +15,8 @@
 			'error' => $msg,
 		));
 
+		api_log($out);
+
 		$more['is_error'] = 1;
 
 		api_output_send($out, $more);
@@ -23,6 +25,9 @@
 	#################################################################
 
 	function api_output_send($rsp, $more=array()){
+
+		$ok = ($more['is_error']) ? 0 : 1;
+		api_log(array('ok' => $ok), 'write');
 
 		$rsp['stat'] = (isset($more['is_error'])) ? 'error' : 'ok';
 
@@ -41,7 +46,7 @@
 			header("Access-Control-Allow-Origin: " . htmlspecialchars($more['cors_allow']));
 		}
 
-		if (! isset($more['inline'])){
+		if (! request_isset("inline")){
 			header("Content-Type: text/json");
 		}
 
@@ -53,4 +58,4 @@
 
 	#################################################################
 
-?>
+	# the end

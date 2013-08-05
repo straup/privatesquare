@@ -1,0 +1,40 @@
+DROP TABLE IF EXISTS `AuthTokens`;
+
+ALTER TABLE `ApiKeys` ADD `role_id` TINYINT(3) UNSIGNED NOT NULL;
+ALTER TABLE `ApiKeys` ADD `app_title` VARCHAR(255) NOT NULL;
+ALTER TABLE `ApiKeys` ADD `app_description` VARCHAR(255) NOT NULL;
+ALTER TABLE `ApiKeys` ADD `deleted` INT(11) UNSIGNED NOT NULL;
+ALTER TABLE `ApiKeys` ADD `disabled` INT(11) UNSIGNED NOT NULL;
+ALTER TABLE `ApiKeys` ADD `last_modified` INT(11) UNSIGNED NOT NULL;
+
+CREATE INDEX `by_role` ON `ApiKeys` (`role_id`, `deleted`, `created`);
+CREATE INDEX `by_role_created` ON `ApiKeys` (`role_id`, `created`);
+
+CREATE TABLE `OAuth2AccessTokens` (
+  `id` bigint(20) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `api_key_id` bigint(20) unsigned NOT NULL,
+  `api_key_role_id` tinyint(3) unsigned NOT NULL,
+  `access_token` varchar(64) NOT NULL,
+  `created` int(11) unsigned NOT NULL,
+  `perms` tinyint(3) unsigned NOT NULL,
+  `last_modified` int(11) unsigned NOT NULL,
+  `expires` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `by_api_key` (`api_key_id`,`expires`,`created`),
+  KEY `by_user_key` (`user_id`,`api_key_id`,`expires`, `api_key_role_id`),
+  KEY `by_user` (`user_id`,`expires`, `api_key_role_id`),
+  KEY `by_token` (`access_token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `OAuth2GrantTokens` (
+  `code` varchar(40) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `api_key_id` varchar(40) NOT NULL,
+  `created` int(11) unsigned NOT NULL,
+  `perms` tinyint(3) unsigned NOT NULL,
+  `ttl` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `by_user_key` (`user_id`,`api_key_id`),
+  KEY `by_created` (`created`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
