@@ -12,13 +12,13 @@
 		$map = array(
 			'0' => 'i am here',
 			'1' => 'i was there',
+			'8' => 'i have been there',
 			'2' => 'i want to go there',
 			'3' => 'again',
 			'4' => 'again again',
 			'5' => 'again maybe',
 			'6' => 'again never',
 			'7' => 'meh',
-			'8' => 'i\'ve been there',
 		);
 
 		if ($string_keys){

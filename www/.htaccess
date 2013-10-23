@@ -1,3 +1,5 @@
+Options	-Indexes
+
 # The base set of sensible PHP options. You could put these in your
 # php.ini file too, but having them in your Apache config puts
 # everything in one place. Magic quotes off because they are stupid.
