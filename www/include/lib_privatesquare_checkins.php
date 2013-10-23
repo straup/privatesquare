@@ -18,6 +18,7 @@
 			'5' => 'again maybe',
 			'6' => 'again never',
 			'7' => 'meh',
+			'8' => 'i\'ve been there',
 		);
 
 		if ($string_keys){
