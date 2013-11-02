@@ -1,0 +1,89 @@
+/* HTMAPL stuff */
+
+.map-error {
+    padding:10px;
+    font-family:monospace;
+    color:#999;
+}
+
+#map-wrapper {
+	height: 300px;
+	width: 100%;
+	display:none;
+	border: solid thin;
+	margin-bottom: 20px;
+}
+
+.map {
+    height: 300px;
+    width: 100%;
+}
+
+#displaymap {
+    height: 150px;
+    margin-bottom: 30px;
+    border: 2px solid #000;
+}
+
+.marker {
+    background-color: #0bbdff;
+    border:2px solid #000;
+    padding:5px;
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+}
+
+.marker-header {
+    background-color: #0bbdff;
+    border:2px solid #000;
+    padding:5px;
+    font-size:11px;
+    font-weight:700;
+    color:#fff;
+    -moz-border-radius: 10px !important;
+    -webkit-border-radius: 10px !important;
+    -khtml-border-radius: 10px !important;
+    border-radius: 10px !important;
+    z-index:100;    
+}
+
+.marker-header-todo {
+    background-color:#008abe;
+    z-index:50;
+}
+
+.marker-youarehere {
+    z-index: 500 auto;
+    opacity:1;
+    background-color:#adadad;
+}
+
+.marker-youarehere:hover {
+    z-index: 500 !important;
+    background-color:#fff;
+    color:#000;
+}
+
+.marker-history-todo {
+    background-color:#008abe;
+}
+
+.map-tile {
+    opacity: 0;
+}
+
+.map-tile-loaded {
+    -webkit-animation-name: 'fade-in';
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-duration: 0.2s;
+}
+
+@-webkit-keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

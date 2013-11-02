@@ -28,13 +28,17 @@ function _privatesquare_geolocation_onsuccess(rsp){
 	var lat = rsp['coords']['latitude'];
 	var lon = rsp['coords']['longitude'];
 
+	var v = $("#venues");
+	v.attr("data-geolocation-latitude", lat);
+	v.attr("data-geolocation-longitude", lon);
+
 	if ((! window.navigator.onLine) && (_cfg['deferred_checkins'])){
 
 		privatesquare_deferred_checkin(lat, lon, 'offline');
 		return;
 	}
 
-	privatesquare_fetch_venues(lat, lon);
+	privatesquare_fetch_foursquare_venues(lat, lon);
 }
 
 function _privatesquare_geolocation_onerror(rsp){
@@ -70,6 +74,12 @@ function privatesquare_submit(){
 
 function privatesquare_gather_args(){
 
+	var v = $("#venues");
+
+	var provider = v.attr("data-venues-provider");
+	var lat = v.attr("data-geolocation-latitude");
+	var lon = v.attr("data-geolocation-longitude");
+
 	var venue_id = $("#where").val();
 	var status_id = $("#what").val();
 	var broadcast = $("#broadcast").val();
@@ -82,41 +92,38 @@ function privatesquare_gather_args(){
 	var args = {
 		'crumb': crumb,
 		'venue_id': venue_id,
+	        'provider': provider,
 		'status_id': status_id,
 		'broadcast': broadcast
 	};
 
+	if ((lat) && (lon)){
+	    args['latitude'] = lat;
+	    args['longitude'] = lon;
+	}
+
 	return args;
 }
 
-function privatesquare_checkin(args, onsuccess){
+function privatesquare_checkin(args, on_success){
 
 	if (checking_in){
 		return false;
 	}
 
-	if (! onsuccess){
-		onsuccess = privatesquare_checkin_onsuccess;
+	if (! on_success){
+		on_success = privatesquare_checkin_onsuccess;
 	}
 
+	var on_error = function(rsp){
+		checking_in = false;
+	};
+    
 	checking_in=true;
 
-	args['method'] = 'privatesquare.venues.checkin';
+	var method = 'privatesquare.venues.checkin';
 
-	$.ajax({
-		'url': _cfg.abs_root_url + 'api/',
-		'type': 'POST',
-		'data': args,
-		'error': function(rsp){
-			checking_in=false;
-			/* console.log("ERROR"); */
-		},
-		'success': function(rsp){
-			checking_in=false;
-			onsuccess(rsp);
-		}
-	});
-
+	privatesquare_api_call(method, args, on_success, on_error);
 }
 
 function privatesquare_search(){
@@ -141,7 +148,7 @@ function privatesquare_search(){
 	var _onsuccess = function(rsp){
 		var lat = rsp['coords']['latitude'];
 		var lon = rsp['coords']['longitude'];
-		privatesquare_fetch_venues(lat, lon, query);
+		privatesquare_fetch_foursquare_venues(lat, lon, query);
 		searching = false;
 		return;
 	};
@@ -154,10 +161,11 @@ function privatesquare_search(){
 	return false;
 }
 
-function privatesquare_fetch_venues(lat, lon, query){
+function privatesquare_fetch_foursquare_venues(lat, lon, query){
+
+	var method = 'foursquare.venues.search';
 
 	var args = {
-		'method': 'foursquare.venues.search',
 		'latitude': lat,
 		'longitude': lon
 	};
@@ -166,11 +174,7 @@ function privatesquare_fetch_venues(lat, lon, query){
 		args['query'] = query;
 	}
 
-	$.ajax({
-		'url': _cfg.abs_root_url + 'api/',
-		'data': args,
-		'success': _foursquare_venues_onsuccess
-	});
+	privatesquare_api_call(method, args, _foursquare_venues_onsuccess);
  
 	privatesquare_set_status("Fetching nearby places...");
 }
@@ -216,6 +220,9 @@ function _foursquare_venues_onsuccess(rsp){
 		privatesquare_set_status(msg);
 		return;
 	}
+
+	var venues = $("#venues");
+	venues.attr("data-venues-provider", "foursquare");
 
 	var html = '';
 
@@ -301,12 +308,12 @@ function privatesquare_api_error(rsp, tryagain_func){
 	}
 
 	if (tryagain_func){
-		msg += '<button id="tryagain">Try it again?</button>';
+		msg += '<button id="tryagain" class="btn">Try it again?</button>';
 		msg += '&#160;&#160;';
-		msg += '<button id="donot_tryagain">Forget it</button>';
+		msg += '<button id="donot_tryagain" class="btn">Forget it</button>';
 	}
 
-	privatesquare_set_status(msg);
+	privatesquare_set_status(msg, "warning");
 
 	if (tryagain_func){
 		$("#tryagain").click(tryagain_func);
@@ -416,7 +423,7 @@ function privatesquare_htmapl(map){
 	}
 
 	catch (e){
-		map.html('<div class="map-error">hrmph...failed to load map: ' + e + '</div>');
+		map.html('<div class="map-error alert alert-warning">hrmph...failed to load map: ' + e + '</div>');
 	}
 }
 
@@ -427,7 +434,13 @@ function _privatesquare_hide_map(){
 	map.remove();
 }
 
-function privatesquare_set_status(msg){
+function privatesquare_set_status(msg, alert_type){
+
+	if (! alert_type){
+	    alert_type = "info";
+	}
+
+	$("#status").attr("class", "alert alert-" + alert_type);
 	$("#status").html(msg);
 	$("#status").show();
 }

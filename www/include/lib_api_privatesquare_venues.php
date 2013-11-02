@@ -5,6 +5,8 @@
 	function api_privatesquare_venues_checkin(){
 
 		$provider_id = post_int32("provider_id");
+		$provider = post_int32("provider");
+
 		$venue_id = post_str("venue_id");
 		$status_id = post_int32("status_id");
 
@@ -16,7 +18,11 @@
 			api_output_error(999, "Missing status ID");
 		}
 
-		if (! $provider_id){
+		if ($provider){
+			$provider_id = venues_providers_label_to_id($provider);
+		}
+
+		if (! isset($provider_id)){
 			api_output_error(999, "Missing provider ID");
 		}
 

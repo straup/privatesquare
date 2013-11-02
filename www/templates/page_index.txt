@@ -1,6 +1,3 @@
-{capture assign="extra_head"}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
-{/capture}
 {include file="inc_head.txt"}
 
 <div id="status"></div>

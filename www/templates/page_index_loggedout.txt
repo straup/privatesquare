@@ -1,7 +1,7 @@
 {include file="inc_head.txt"}
 
-<div id="intro">
-<p>◻  this is privatesquare</p>
+<div id="intro" class="lead">
+     <p>privatesquare</p>
 </div>
 
 {include file="inc_foot.txt"}

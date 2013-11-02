@@ -1,0 +1,344 @@
+#deferred {
+    display:none;
+    margin-top:10px;
+}
+
+#deferred_city {
+    display:none;
+}
+
+#message {
+	border-bottom: solid thin;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 100%;
+	background-color:#eee;
+	text-align:center;
+}
+
+#nav {
+	background-color: #fff;
+	padding: 0.5em 1em;
+	border-bottom:solid thin;
+	padding-bottom:20px;
+	font-size:small;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+.admin-section {
+	background-image: url("/images/stripes_bg.gif");
+	border-top: 1px solid #BECCCC;
+	border-bottom: 1px solid #BECCCC;
+	padding: 40px;
+	position: relative;
+	text-align: left;
+}
+
+pre.admin-debug {
+	background: none repeat scroll 0 0 #000000;
+	color: #00FF00;
+	font-size: 14px;
+	margin: 0;
+	padding: 1em;
+}
+
+p.error {
+	background-color: #f99;
+}
+
+p.message {
+	background-color: #9f9;
+}
+
+
+select {
+    font-size:1.3em;
+    margin-bottom:20px;
+}
+
+input[type=text] {
+    font-size:1.5em;
+    margin-bottom:20px;
+    border:solid thin;
+    width:99%;
+    padding:5px;
+}
+
+input[type=submit] {
+    font-size:1.5em;
+    margin-bottom:20px;
+    border:solid thin;
+}
+
+.admin {
+    border-top:solid thin;
+    margin-top:5px;
+    padding-top:5px;
+    padding-bottom:10px;
+    background-color:#ededed;
+    font-weight:100;
+}
+
+#status {
+    font-size:1.6em;
+    margin-bottom:15px;
+}
+
+#again {
+    margin-top:20px;
+    font-style:italic;
+}
+
+q {
+    font-style: italic;
+}
+
+
+.checkin {
+    margin-bottom: 25px;
+}
+
+.checkin .venue{
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.checkin .venue a{
+    color: #000;
+    text-decoration:none;
+}
+
+.checkin .date {
+    font-size: small;
+    margin-bottom:8px;
+}
+
+.checkin .map {
+    border: solid thin;
+    margin-top: 5px;
+}
+
+#pagination {
+    text-align:center;
+}
+
+.abook {
+    margin-bottom: 10px;
+}
+
+.checkins {
+    margin: 0px;
+    padding: 0px;
+}
+
+li{
+    line-height: 1.5em;
+    list-style-type:none;
+    font-size: small;
+}
+
+#youwerehere {
+    margin-bottom:8px;
+}
+
+#iamhere {
+    display:none;
+    border:solid thin;
+    margin-top:15px;
+    margin-bottom:25px;
+}
+
+#deleteme {
+    display:none;
+    border:solid thin;
+}
+
+.geo {
+    line-height: 1.25em;
+}
+
+#nearby {
+    margin-top:20px;
+    font-size:small;
+}
+
+#checkin_venue {
+    margin-top: 20px;
+    display:none;
+}
+
+button {
+    border: solid thin;
+    padding: 5px;
+}
+
+.header-right {
+    text-align:right;
+    margin-top:0px;
+    color:#adadad;
+}
+
+.header-left {
+    text-align:left;
+    margin-top:0px;
+    margin-bottom:10px;
+    color:#333;
+}
+
+.header-left a {
+    text-decoration: none;
+    color:#333;
+}
+
+.header-loc {
+    color:#adadad;
+    font-weight: 100;
+    margin-left:10px;
+}
+
+
+.header-loc a {
+    text-decoration: none;
+    color:#adadad;
+}
+
+.sq {
+    color: #000;
+    text-decoration:none;
+    margin-right: 5px;
+}
+
+#user_checkin_details ul {
+    font-size: small;
+    padding: 0px;
+    margin: 0px;
+}
+
+#venue_stats ul {
+    font-size: small;
+    padding: 0px;
+    margin: 0px;
+}
+
+#venue_details ul {
+    font-size: small;
+    padding: 0px;
+    margin: 0px;
+}
+
+#that {
+    max-width:50%;
+}
+
+#that input {
+    /* why why why, css? */
+    width: 99.5%;
+}
+
+#that textarea {
+    width: 100%;
+    height: 200px;
+}
+
+#that input[type=submit] {
+    width:auto;
+}
+
+#export_links {
+    text-align:right;
+    font-size:small;
+    margin-top:100px;
+    padding:10px;
+}
+
+.weather {
+    color:#ccc;
+    margin-top:5px;
+    margin-left:5px;
+}
+
+.checkins .weather {
+    display: inline !important;
+}
+
+.nearby {
+    display: block;
+    font-size:small;
+    margin-top:10px;
+}
+
+.permalink {
+    font-size: small;
+    text-align:right;
+    color:#ccc;
+}
+
+.permalink a {
+    color:#ccc;
+    text-decoration:none;
+}
+
+#youmeanttosay {
+    text-decoration:underline;
+    font-size:small;
+    margin-bottom:15px;
+}
+
+#status_update_ornot {
+    text-decoration:underline;
+}
+
+#status_update_wrapper {
+    display:none;
+    margin-bottom:15px;
+    font-size: small;
+}
+
+.nearby_all {
+    font-size:11px;
+    display:block;
+    font-weight:100;
+    margin-top:5px;
+}
+
+#lists li {
+    font-size:1.75em !important;
+    color: #adadad;
+    font-weight:700;
+}
+
+#lists li a {
+    text-decoration:none;
+    margin-bottom:10px;
+}
+
+#lists .nearbyhere {
+    font-size:small !important;
+    margin-bottom:20px;
+    font-weight:100;
+}
+
+#navi-offline {
+    display:none !important;
+}
+
+#iwanttogothere_choose {
+    margin-top:1em;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+#iwanttogothere_choose h3 {
+    text-align:left;
+}
+
+#iwanttogothere_form input[type=text] {
+    width: 50%;
+}
+
+#iwanttogothere_choose input[type=submit] {
+    padding:4px;
+}
