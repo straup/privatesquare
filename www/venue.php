@@ -8,12 +8,18 @@
 	loadlib("privatesquare_export");
 	loadlib("reverse_geoplanet");
 
-	login_ensure_loggedin($_SERVER['REQUEST_URI']);
+	login_ensure_loggedin();
 
 	$owner = $GLOBALS['cfg']['user'];
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 
 	$venue_id = get_str("venue_id");
+	$provider = get_str("provider");
+
+	if ($provider){
+
+		$provider_id = venues_providers_label_to_id($provider);
+	}
 
 	$venue = foursquare_venues_get_by_venue_id($venue_id);
 

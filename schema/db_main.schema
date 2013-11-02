@@ -50,6 +50,25 @@ CREATE TABLE `FoursquareVenues` (
   KEY `by_location` (`latitude`, `longitude`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `Venues`;
+
+CREATE TABLE `Venues` (
+  `venue_id` BIGINT(20) UNSIGNED NULL,       
+  `provider_id` VARCHAR(64),
+  `provider_venue_id` VARCHAR(64),
+  `name` VARCHAR(255),
+  `data` TEXT,
+  `neighbourhood` INT(11) UNSIGNED NOT NULL,
+  `locality` INT(11) UNSIGNED NOT NULL,
+  `region` INT(11) UNSIGNED NOT NULL,
+  `country` INT(11) UNSIGNED NOT NULL,
+  `latitude` DECIMAL(9,6) DEFAULT NULL,
+  `longitude` DECIMAL(9,6) DEFAULT NULL,
+  PRIMARY KEY (`venue_id`),
+  UNIQUE KEY `provider_venue` (`provider_id`, `provider_venue_id`),
+  KEY `by_location` (`latitude`, `longitude`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `ApiKeys`;
 
 CREATE TABLE `ApiKeys` (

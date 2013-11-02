@@ -214,7 +214,19 @@
 	#loadlib('versions');
 	loadlib('http');
 	loadlib('urls');
+
 	loadlib('foursquare_urls');
+
+	loadlib("privatesquare_checkins");
+
+	loadlib("foursquare_users");
+	loadlib("foursquare_api");
+
+	loadlib("venues");
+	loadlib("venues_providers");
+	loadlib("venues_geo");
+	loadlib("venues_foursquare");
+	loadlib("venues_stateofmind");
 
 	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 

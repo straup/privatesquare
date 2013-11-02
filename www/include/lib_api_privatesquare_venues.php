@@ -1,15 +1,10 @@
 <?php
 
-	loadlib("privatesquare_checkins");
-
-	loadlib("foursquare_users");
-	loadlib("foursquare_venues");
-	loadlib("foursquare_api");
-
  	#################################################################
 
 	function api_privatesquare_venues_checkin(){
 
+		$provider_id = post_int32("provider_id");
 		$venue_id = post_str("venue_id");
 		$status_id = post_int32("status_id");
 
@@ -21,11 +16,31 @@
 			api_output_error(999, "Missing status ID");
 		}
 
-		$fsq_user = foursquare_users_get_by_user_id($GLOBALS['cfg']['user']['id']);
+		if (! $provider_id){
+			api_output_error(999, "Missing provider ID");
+		}
+
+		if (! venues_provider_is_valid_provider_id($provider_id)){
+			api_output_error(999, "Invalid provider ID");
+		}
+
+		$lat = post_float("latitude");
+		$lon = post_float("longitude");
+
+		if (($lat) && (! geo_utils_is_valid_latitude($lat))){
+			api_output_error(999, "Invalid latitude");
+		}
+
+		if (($lon) && (! geo_utils_is_valid_longitude($lon))){
+			api_output_error(999, "Invalid latitude");
+		}
+
+		$has_geo = (($lat) && ($lon)) ? 1 : 0;
 
 		$checkin = array(
 			'user_id' => $GLOBALS['cfg']['user']['id'],
-			'venue_id' => $venue_id,
+			'provider_id' => $provider_id,
+			'provider_venue_id' => $venue_id,
 			'status_id' => $status_id,
 		);
 
@@ -35,21 +50,30 @@
 
 		# where am I?
 
-		$venue = foursquare_venues_get_by_venue_id($venue_id);
+		$venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id);
 
 		if (! $venue){
-			$rsp = foursquare_venues_archive_venue($venue_id);
+
+			$rsp = venues_archive_venue_for_provider($venue_id, $provider_id);
 
 			if ($rsp['ok']){
 				$venue = $rsp['venue'];
 			}
 		}
 
-		if ($venue){
-			$checkin['locality'] = $venue['locality'];
-			$checkin['latitude'] = $venue['latitude'];
-			$checkin['longitude'] = $venue['longitude'];
+		if ($has_geo){
+
+			$checkin['latitude'] = $lat;
+			$checkin['longitude'] = $lon;
+
+			venues_geo_append_hierarchy($lat, $lon, $checkin);
 		}
+
+		else if ($venue){
+			venues_geo_transfer_hierarchy($venue, $checkin);
+		}
+
+		else {}
 
 		# Check to see if we're checking in to 4sq too
 
@@ -60,27 +84,31 @@
 		# of keeping things simple to start, we're not going to.
 		# (20120501/straup)
 
-		if (($broadcast = post_str("broadcast")) && (! isset($checkin['created']))){
+		if ($provider == 'foursquare'){
 
-			$method = 'checkins/add';
+			if (($broadcast = post_str("broadcast")) && (! isset($checkin['created']))){
 
-			$args = array(
-				'oauth_token' => $fsq_user['oauth_token'],
-				'venueId' => $venue_id,
-				'broadcast' => $broadcast,
-			);
+				$fsq_user = foursquare_users_get_by_user_id($GLOBALS['cfg']['user']['id']);
+				$method = 'checkins/add';
 
-			$more = array(
-				'method' => 'POST',
-			);
+				$args = array(
+					'oauth_token' => $fsq_user['oauth_token'],
+					'venueId' => $venue_id,
+					'broadcast' => $broadcast,
+				);
 
-			$rsp = foursquare_api_call($method, $args, $more);
+				$more = array(
+					'method' => 'POST',
+				);
 
-			if ($rsp['ok']){
-				$checkin['checkin_id'] = $rsp['rsp']['checkin']['id'];
+				$rsp = foursquare_api_call($method, $args, $more);
+
+				if ($rsp['ok']){
+					$checkin['checkin_id'] = $rsp['rsp']['checkin']['id'];
+				}
+
+				# on error, then what?
 			}
-
-			# on error, then what?
 		}
 
 		# If we already have a 'created' data that means this is a deferred
@@ -99,6 +127,8 @@
 				$checkin['weather'] = json_encode($conditions);
 			}
 		}
+
+		# Actually store the checkin
 
 		$rsp = privatesquare_checkins_create($checkin);
 
