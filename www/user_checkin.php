@@ -4,7 +4,6 @@
 
 	loadlib("privatesquare_checkins");
 	loadlib("foursquare_users");
-	loadlib("foursquare_venues");
 	loadlib("foursquare_checkins");
 
 	$fsq_id = get_int32("foursquare_id");

@@ -1,6 +1,5 @@
 <?php
 
-	loadlib("foursquare_venues");
 	loadlib("datetime_when");
 	loadlib("reverse_geoplanet");
 	loadlib("privatesquare_utils");
@@ -458,7 +457,7 @@
 			}
 
 			else {
-				$venue = foursquare_venues_get_by_venue_id($venue_id);
+				$venue = venues_get_by_venue_id($venue_id);
 			}
 
 			$has_visited = privatesquare_checkins_utils_has_visited_venue($user, $venue_id);
@@ -480,7 +479,7 @@
 	function privatesquare_checkins_inflate_extras(&$row, $more=array()){
 
 		$venue_id = $row['venue_id'];
-		$venue = foursquare_venues_get_by_venue_id($venue_id); 
+		$venue = venues_get_by_venue_id($venue_id); 
 		$row['venue'] = $venue;
 
 		if ($row['weather']){
@@ -588,7 +587,7 @@
 		$venues = array();
 
 		foreach ($tmp as $venue_id => $count){
-			$venue = foursquare_venues_get_by_venue_id($venue_id); 
+			$venue = venues_get_by_venue_id($venue_id); 
 			$venue['count_checkins'] = $count;
 
 			$has_visited = privatesquare_checkins_utils_has_visited_venue($user, $venue_id);

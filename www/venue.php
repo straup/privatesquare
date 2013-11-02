@@ -2,7 +2,6 @@
 
 	include("include/init.php");
 
-	loadlib("foursquare_venues");
 	loadlib("foursquare_checkins");
 	loadlib("privatesquare_checkins");
 	loadlib("privatesquare_export");
@@ -19,9 +18,12 @@
 	if ($provider){
 
 		$provider_id = venues_providers_label_to_id($provider);
+		$venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id);
 	}
 
-	$venue = foursquare_venues_get_by_venue_id($venue_id);
+	else {
+		$venue = venues_get_by_venue_id($venue_id);
+	}
 
 	if (! $venue){
 		error_404();
