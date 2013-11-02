@@ -1,0 +1,52 @@
+	<nav class="navbar" role="navigation">
+
+	  <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-head-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+		    <span class="icon-bar"></span>
+      		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+	      </button>
+    	      <a class="navbar-brand" href="{$cfg.abs_root_url}">{$cfg.site_name|escape}</a>
+          </div>
+	
+	<div class="collapse navbar-collapse navbar-head-collapse">
+
+	     {if $cfg.user}
+	     <ul class="nav navbar-nav">
+	     {if $cfg.enable_feature_deferred_checkins}
+		<li id="pending"><span id="pending_count"></span></li>
+	     {/if}
+	     </ul>
+	     {/if}
+
+	     <ul class="nav navbar-nav pull-right">
+
+		{if "signin"|@features_is_enabled}
+		{if $cfg.user}
+		<li class="dropdown">
+		<a href="#" id="navi-account" class="dropdown-toggle navi-label" data-toggle="dropdown" role="button">Hi {$cfg.user.username|escape} <b class="caret caret-ch"></b></a>
+
+		<ul class="dropdown-menu" aria-labelledby="account-navi" role="menu">
+
+		<li><a href="{$cfg.abs_root_url}">checkin</a></li>
+		<li><a href="{$cfg.user|@urls_nearby_for_user}">nearby</a></li>
+		<li><a href="{$cfg.user|@urls_history_for_user}">history</a></li>
+		<li><a href="{$cfg.user|@urls_lists_for_user}">atlas</a></li>
+		<li><a href="{$cfg.abs_root_url}want/">want</a></li>
+		<li><a href="{$cfg.user|@urls_places_for_user}">places</a></li>
+		<li class="divider"></li>
+		<li><a href="{$cfg.abs_root_url}account/">account</a></li>
+		<li><a href="{$cfg.abs_root_url}signout/">logout</a></li>
+		</ul>
+		</li>
+		{else}
+		<li id="signin"><a href="{$cfg.abs_root_url}signin/">sign in w/ 4sq</a></li>
+		{/if}
+		{/if}
+
+	      </ul>
+
+	</div>
+
+	</nav>

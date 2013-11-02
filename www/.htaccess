@@ -76,8 +76,8 @@ RewriteRule  ^signin/?$			signin_foursquare_oauth.php?%{QUERY_STRING}		[L]
 
 # Password retrieval stuff
 
-RewriteRule ^forgot/?$			forgot.php		[L]
-RewriteRule ^reset/([a-zA-Z0-9]+)/?$	reset.php?reset=$1	[L,QSA]
+# RewriteRule ^forgot/?$			forgot.php		[L]
+# RewriteRule ^reset/([a-zA-Z0-9]+)/?$	reset.php?reset=$1	[L,QSA]
 
 # Account stuff
 
@@ -102,6 +102,7 @@ RewriteRule ^me(/(.*))?/?$			me.php?path=$2&%{QUERY_STRING}	[L]
 RewriteRule ^want(/([a-f0-9]+))?/?$		venue_i_want_to_go_there.php?venue_id=$2&%{QUERY_STRING}	[L]
 
 RewriteRule ^venue/([a-f0-9]+)/?$			venue.php?venue_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^venue/([a-z]+)/([a-f0-9]+)/?$		venue.php?provider=$1&venue_id=$2&%{QUERY_STRING}	[L]
 
 RewriteRule ^user/([0-9]+)/checkin(/([0-9a-f]+))/?$	user_checkin.php?foursquare_id=$1&checkin_id=$3&%{QUERY_STRING}	[L]
 
@@ -123,5 +124,3 @@ RewriteRule ^user/([0-9]+)/pending/?$			user_pending_checkins.php?foursquare_id=
 
 RewriteRule ^youarehere/?$				youarehere.php?%{QUERY_STRING}	[L]
 RewriteRule ^youarehere/auth/?$				youarehere_auth.php?%{QUERY_STRING}	[L]
-
-RewriteRule ^nypl/?$					nypl.php?%{QUERY_STRING}	[L]

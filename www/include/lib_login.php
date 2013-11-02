@@ -1,7 +1,4 @@
 <?php
-	#
-	# $Id$
-	#
 
 	#################################################################
 
@@ -14,11 +11,9 @@
 
 		if ($GLOBALS['cfg']['user']['id']) return;
 
-		if ($redir){
-			header("location: {$GLOBALS['cfg']['abs_root_url']}signin/?redir=".urlencode($redir));
-		}else{
-			header("location: {$GLOBALS['cfg']['abs_root_url']}signin/");
-		}
+		if (!$redir) $redir = $_SERVER['REQUEST_URI'];
+
+		header("location: {$GLOBALS['cfg']['abs_root_url']}signin?redir=".urlencode($redir));
 		exit;
 	}
 
@@ -35,7 +30,7 @@
 
 		if ($force_logout) login_do_logout();
 
-		header("location: {$GLOBALS['cfg']['abs_root_url']} . {$redir}");
+		header("location: {$GLOBALS['cfg']['abs_root_url']}{$redir}");
 		exit;
 	}
 
@@ -96,7 +91,7 @@
 		$redir = $redir;
 		$redir = urlencode($redir);
 
-		header("location: {$GLOBALS['cfg']['abs_root_url']}checkcookie/?redir={$redir}");
+		header("location: {$GLOBALS['cfg']['abs_root_url']}checkcookie?redir={$redir}");
 		exit;
 	}
 
@@ -117,12 +112,6 @@
 
 	#################################################################
 
-	function login_encrypt_password($pass){
-		return hash_hmac("sha256", $pass, $GLOBALS['cfg']['crypto_password_secret']);
-	}
-
-	#################################################################
-
 	function login_get_cookie($name){
 		return $_COOKIE[$name];
 	}
@@ -130,8 +119,9 @@
 	#################################################################
 
 	function login_set_cookie($name, $value, $expire=0, $path='/'){
-		$domain = ($GLOBALS['cfg']['environment'] == 'localhost') ? $GLOBALS['cfg']['auth_cookie_domain'] : false;
-		$res = setcookie($name, $value, $expire, $path, $domain);
+		$domain = ($GLOBALS['cfg']['environment'] == 'localhost') ? false : $GLOBALS['cfg']['auth_cookie_domain'];
+		$securify = (($GLOBALS['cfg']['auth_cookie_require_https']) && (isset($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] == 'on')) ? 1 : 0;
+		$res = setcookie($name, $value, $expire, $path, $domain, $securify);
 	}
 
 	#################################################################
@@ -141,4 +131,3 @@
 	}
 
 	#################################################################
-?>

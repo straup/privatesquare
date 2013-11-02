@@ -1,27 +1,10 @@
 <?php
 
-	#
-	# $Id$
- 	#
+	# Note: this is not stock flamework code (20130618/straup)
 
 	########################################################################
 
 	function auth_has_role($role, $who=0){
-
-		# return 1;
-
-		# Currently, this is the only thing that works. It is
-		# disabled by default (20101122/straup)
-
-		# See also: https://github.com/exflickr/GodAuth/
-
-		if (! $GLOBALS['cfg']['auth_enable_poormans_god_auth']){
-			return 0;
-		}
-
-		if (! is_array($GLOBALS['cfg']['auth_poormans_god_auth'])){
-			return 0;
-		}
 
 		$who = ($who) ? $who : $GLOBALS['cfg']['user']['id'];
 
@@ -29,14 +12,16 @@
 			return 0;
 		}
 
-		if (! isset($GLOBALS['cfg']['auth_poormans_god_auth'][$who])){
+		if (! isset($GLOBALS['cfg']['auth_users'][$who])){
 			return 0;
 		}
 
-		$perms = $GLOBALS['cfg']['auth_poormans_god_auth'][$who];
+		$details = $GLOBALS['cfg']['auth_users'][$who];
+		$roles = $details['roles'];
 
-		return (in_array($role, $perms['roles'])) ? 1 : 0;
+		return (in_array($role, $roles)) ? 1 : 0;
 	}
 
 	########################################################################
-?>
+
+	# the end

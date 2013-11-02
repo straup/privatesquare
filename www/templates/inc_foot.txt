@@ -1,9 +1,16 @@
-	</div>
 
-	<div id="footer">
-	</div>
+    </div>
 
-</div>
+    <div class="container">
+
+      <footer class="pull-right">
+      <small>
+        {if 0}<p>&copy; Company {$smarty.now|date_format:"%Y"}</p>{/if}
+	this is a thing by <a href="">aaron straup cope</a> / <a href="{$cfg.abs_root_url}about/">tell me more</a>
+	</small>
+      </footer>
+
+  </body>
 
 <script type="text/javascript">
 /* From http://stackoverflow.com/a/2899099 */
@@ -18,5 +25,4 @@ for (var i = 0; i < links.length; i++) {
 {/literal}
 </script>
 
-</body>
 </html>
