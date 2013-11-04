@@ -12,7 +12,7 @@
 	
 	<div class="collapse navbar-collapse navbar-head-collapse">
 
-	     {if !$cfg.user}
+	     {if $cfg.user}
 	     <ul class="nav navbar-nav">
 		<li class="dropdown">
 		<a id="navi-collection" class="dropdown-toggle navi-label" data-toggle="dropdown" role="button" href="#">Checkin <b class="caret caret-ch"></b></a>
