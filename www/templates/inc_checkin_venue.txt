@@ -1,10 +1,10 @@
 	<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
 
-	<div id="checkin_venue">
+	<div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}>
 
 		<form method="POST" id="checkin_form">
 
-		<input type="hidden" id="where" value="{$venue.venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
+		<input type="hidden" id="where" value="{$venue.provider_venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
 
 		<select id="what">
 {foreach from=$status_map item="label" key="id"}

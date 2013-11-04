@@ -111,7 +111,7 @@
 <h4>Details</h4>
 
 <ul>
-{if $venue.provider_id|@privatesquare_venues_providers_id_to_label == 'foursquare'}
+{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
 <li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
 {/if}
 <li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
@@ -141,7 +141,7 @@ $(document).ready(function(){
 		privatesquare_unset_status();
 
 		$('#iamhere').attr('disabled', 'disabled');
-		$('#checkin_venue').show();
+		$('#venues').show();
 	};
 
 	$('#iamhere').click(show_checkin_form);
