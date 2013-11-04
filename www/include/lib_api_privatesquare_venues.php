@@ -5,7 +5,7 @@
 	function api_privatesquare_venues_checkin(){
 
 		$provider_id = post_int32("provider_id");
-		$provider = post_int32("provider");
+		$provider = post_str("provider");
 
 		$venue_id = post_str("venue_id");
 		$status_id = post_int32("status_id");
@@ -26,7 +26,7 @@
 			api_output_error(999, "Missing provider ID");
 		}
 
-		if (! venues_provider_is_valid_provider_id($provider_id)){
+		if (! venues_providers_is_valid_provider($provider_id)){
 			api_output_error(999, "Invalid provider ID");
 		}
 
@@ -43,17 +43,6 @@
 
 		$has_geo = (($lat) && ($lon)) ? 1 : 0;
 
-		$checkin = array(
-			'user_id' => $GLOBALS['cfg']['user']['id'],
-			'provider_id' => $provider_id,
-			'provider_venue_id' => $venue_id,
-			'status_id' => $status_id,
-		);
-
-		if ($created = post_int32("created")){
-			$checkin['created'] = $created;
-		}
-
 		# where am I?
 
 		$venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id);
@@ -65,6 +54,20 @@
 			if ($rsp['ok']){
 				$venue = $rsp['venue'];
 			}
+		}
+
+		if (! $venue){
+			api_output_error(999, "Failed to archive venue");
+		}
+
+		$checkin = array(
+			'user_id' => $GLOBALS['cfg']['user']['id'],
+			'status_id' => $status_id,
+			'venue_id' => $venue['venue_id']
+		);
+
+		if ($created = post_int32("created")){
+			$checkin['created'] = $created;
 		}
 
 		if ($has_geo){

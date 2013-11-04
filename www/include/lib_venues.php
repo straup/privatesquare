@@ -76,6 +76,9 @@
 			venues_geo_append_hierarchy($venue['latitude'], $venue['longitude'], $venue);
 		}
 
+		$venue['provider_id'] = $provider_id;
+		$venue['provider_venue_id'] = $venue_id;
+
 		return venues_add_venue($venue);
 	}
 
@@ -89,7 +92,7 @@
 			return $rsp;
 		}
 
-		$venue['id'] = $rsp['id'];
+		$venue['venue_id'] = $rsp['id'];
 
 		$insert = array();
 

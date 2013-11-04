@@ -228,6 +228,7 @@
 	loadlib("venues_geo");
 	loadlib("venues_foursquare");
 	loadlib("venues_stateofmind");
+	loadlib("geo_utils");
 
 	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 

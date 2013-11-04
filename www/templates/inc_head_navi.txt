@@ -13,13 +13,12 @@
 	<div class="collapse navbar-collapse navbar-head-collapse">
 
 	     {if $cfg.user}
-	     <ul class="nav navbar-nav">
+	     <ul class="nav navbar-nav pull-right">
 		<li class="dropdown">
 		<a id="navi-collection" class="dropdown-toggle navi-label" data-toggle="dropdown" role="button" href="#">Checkin <b class="caret caret-ch"></b></a>
 		<ul class="dropdown-menu" aria-labelledby="navi-collection" role="menu">
 		<li><a href="{$cfg.abs_root_url}4sq/">foursquare</a></li>
 		<li><a href="{$cfg.abs_root_url}stateofmind/">state of mind</a></li>
-		<li><a href="{$cfg.user|@urls_nearby_for_user}">nearby</a></li>
 		</ul>
 		</li>
 
@@ -39,6 +38,7 @@
 		<ul class="dropdown-menu" aria-labelledby="account-navi" role="menu">
 
 		{if 0}<li><a href="{$cfg.abs_root_url}">checkin</a></li>{/if}
+		<li><a href="{$cfg.user|@urls_nearby_for_user}">nearby</a></li>
 		<li><a href="{$cfg.user|@urls_history_for_user}">history</a></li>
 		<li><a href="{$cfg.user|@urls_lists_for_user}">atlas</a></li>
 		<li><a href="{$cfg.abs_root_url}want/">want</a></li>

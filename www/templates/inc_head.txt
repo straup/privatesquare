@@ -51,7 +51,7 @@
 
   </head>
 
-  <body data-abs-root-url="{$cfg.abs_root_url}" {if "api"|features_is_enabled}data-api-endpoint="{$cfg.api_abs_root_url}{$cfg.api_endpoint}" {if "api_site_tokens|@features_is_enabled"}data-api-site-token="{$site_token|escape}"{/if}{/if} data-deferred-checkins="{if "deferred_checkins"|@features_is_enabled}enabled{else}disabled{/if}">
+  <body data-abs-root-url="{$cfg.abs_root_url}" {if "api"|features_is_enabled}data-api-endpoint="{$cfg.abs_root_url}api/" {if "api_site_tokens|@features_is_enabled"}data-api-site-token="{$site_token|escape}"{/if}{/if} data-deferred-checkins="{if "deferred_checkins"|@features_is_enabled}enabled{else}disabled{/if}">
 
     {if 0}'offline_appcache': {if "offline_appcache"|@features_is_enabled}1{else}0{/if}{/if}
     {include file="inc_head_navi.txt"}

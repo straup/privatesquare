@@ -16,7 +16,7 @@
 {/foreach}
 	</select>
 
-	<input type="submit" value="THIS HAPPENED" />
+	<button class="btn">THIS HAPPENED</button>
 </form>
 
 {if !$donot_doitagain}

@@ -5,11 +5,11 @@
 	function venues_stateofmind_venues(){
 
 		$venues = array(
-			array('venue_id' => '', 'name' => 'in a car'),
-			array('venue_id' => '', 'name' => 'in a cab'),
-			array('venue_id' => '', 'name' => 'on a plane'),
-			array('venue_id' => '', 'name' => 'on a train'),
-			array('venue_id' => '', 'name' => 'on a boat'),
+			array('venue_id' => '51783653', 'name' => 'in a car'),
+			array('venue_id' => '51783655', 'name' => 'in a cab'),
+			array('venue_id' => '51783657', 'name' => 'on a plane'),
+			array('venue_id' => '51783659', 'name' => 'on a train'),
+			array('venue_id' => '51783661', 'name' => 'on a boat'),
 		);
 
 		return $venues;

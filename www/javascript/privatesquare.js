@@ -280,6 +280,8 @@ function _foursquare_venues_onsuccess(rsp){
 
 function privatesquare_fetch_stateofmind_venues(lat, lon){
 
+	$("#broadcast").attr("disabled", "disabled");
+
 	var method = 'stateofmind.venues.search';
 
 	var args = {
