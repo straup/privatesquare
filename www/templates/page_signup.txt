@@ -1,0 +1,39 @@
+{assign var='page_title' value='Sign up for a new account' nav_tab='signup'}
+{include file='inc_head.txt'}
+
+<div class="container">
+	{if $error_missing}		<p class="alert alert-error">Please fill out all the fields</p>{/if}
+	{if $error_email_taken}		<p class="alert alert-error">Email address already registered.</p>{/if}
+	{if $error_username_taken}	<p class="alert alert-error">Username is taken.</p>{/if}
+	{if $error_failed}		<p class="alert alert-error">Failed for an unknown reason :(</p>{/if}
+
+	<form action="/signup/email/" method="post" accept-encoding="UTF-8" class="form" role="form">
+		<input type="hidden" name="signup" value="1" />
+		<input type="hidden" name="redir" value="{$redir|escape}" />
+
+		<fieldset>
+	        <div class="control-group{if $error_missing && !$username} error{/if}">
+			<label class="control-label" for="username">username</label>
+			<input type="text" name="username" size="40" value="{$username|escape}" class="form-control" />
+		</div>
+			
+	        <div class="control-group{if $error_missing && !$email} error{/if}">
+			<label class="control-label" for="email">email address</label>
+			<input type="email" name="email" size="40" value="{$email|escape}" class="form-control" />
+		</div>
+
+	        <div class="control-group{if $error_missing && !$password} error{/if}">
+			<label class="control-label" for="password">password</label>
+			<input type="password" name="password" size="40" value="{$password|escape}" class="form-control" />
+		</div>
+
+	        <div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="CREATE YOUR ACCOUNT"/>
+			<p><small>Already have an account? <a href="{$cfg.abs_root_url}signin/">Sign in here.</a></small></p>
+		</div>
+
+		</fieldset>
+	</form>
+</div>
+
+{include file='inc_foot.txt'}

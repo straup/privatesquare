@@ -62,15 +62,7 @@ Okee dookee, your checkin has been deleted.
 
 {/foreach}
 
-{if $bookends}
-{if $bookends.before}{assign var="paginate_previous" value=$bookends.before}{/if}
-{if $bookends.after}{assign var="paginate_next" value=$bookends.after}{/if}
-
-{include file="inc_pagination_bookends.txt"}
-{include file="inc_pagination_shortcuts.txt"}
-{else}
 {include file="inc_pagination.txt"}
-{/if}
 
 {include file="inc_export_links.txt"}
 

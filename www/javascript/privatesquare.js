@@ -17,7 +17,7 @@ function privatesquare_init(provider){
 		return;
 	}
 
-	var _privatesquare_geolocation_onsuccess(rsp){
+	var _privatesquare_geolocation_onsuccess = function(rsp){
 
 		var lat = rsp['coords']['latitude'];
 		var lon = rsp['coords']['longitude'];

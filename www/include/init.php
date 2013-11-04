@@ -206,6 +206,7 @@
 	loadlib('crypto');
 	loadlib('crumb');
 	loadlib('login');
+	loadlib('passwords');
 	loadlib('email');
 	loadlib('utf8');
 	#loadlib('args');

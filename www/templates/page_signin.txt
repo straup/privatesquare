@@ -1,0 +1,39 @@
+{assign var='page_title' value='Sign in' nav_tab='signin'}
+{include file='inc_head.txt'}
+
+<div class="container">
+	{if $error_missing}	<p class="alert alert-danger">Please enter your email address and password.</p>{/if}
+	{if $error_nouser}	<p class="alert alert-danger">Sorry, we can't find an account with that email address.</p>{/if}
+	{if $error_deleted}	<p class="alert alert-danger">Account has been deleted.</p>{/if}
+	{if $error_password}	<p class="alert alert-danger">Incorrect password.</p>{/if}
+
+	<form action="/signin/email/" method="post" accept-encoding="UTF-8" class="form" role="form">
+		<input type="hidden" name="signin" value="1" />
+		<input type="hidden" name="redir" value="{$redir|escape}" />
+
+		<fieldset>
+	        <div class="control-group{if $error_missing && !$email} error{/if}">
+			<label class="control-label" for="email">email address</label>
+			<input type="email" name="email" size="40" value="{$email|escape}" class="form-control" />
+		</div>
+
+	        <div class="control-group{if $error_missing && !$password} error{/if}">
+			<label class="control-label" for="password">password</label>
+			<input type="password" name="password" size="40" class="form-control"/>
+		</div>
+
+	        <div class="form-actions">
+			<input type="submit" class="btn btn-primary" value="SIGN IN" />
+			<p><small>	     
+			{if $cfg.enable_feature_password_retrieval}
+			<a href="{$cfg.abs_root_url}forgot">Forgotten your password?</a><br />
+			{/if}
+			Don't have an account? <a href="{$cfg.abs_root_url}signup/">Sign up here</a>. 
+			</small></p>
+		</div>
+		</fieldset>
+	</form>
+
+</div>
+
+{include file='inc_foot.txt'}
