@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){literal}{{/literal}
-	privatesquare_init();
+	privatesquare_init('{$provider|escape}');
 {literal}}{/literal});
 </script>
 

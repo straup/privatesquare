@@ -59,6 +59,13 @@
 			"requires_crumb": 1,
 			"crumb_ttl": 600,
 			"library": "api_privatesquare_checkins"
+		},
+
+		"stateofmind.venues.search": {
+			"documented": 0,
+			"enabled": 1,
+			"requires_auth": 1,
+			"library": "api_stateofmind_venues"
 		}
 
 	}

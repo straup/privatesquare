@@ -1,7 +1,11 @@
 var checking_in=false;
 var searching=false;
 
-function privatesquare_init(){
+function privatesquare_init(provider){
+
+	if (! provider){
+	    provider = 'foursquare';
+	}
 
 	// it's possible the second test is pointless
 	// (20121220/straup)
@@ -13,6 +17,24 @@ function privatesquare_init(){
 		return;
 	}
 
+	var _privatesquare_geolocation_onsuccess(rsp){
+
+		var lat = rsp['coords']['latitude'];
+		var lon = rsp['coords']['longitude'];
+
+		var v = $("#venues");
+		v.attr("data-geolocation-latitude", lat);
+		v.attr("data-geolocation-longitude", lon);
+
+		if (provider=='stateofmind'){
+			privatesquare_fetch_stateofmind_venues(lat, lon);
+		}
+
+		else {
+			privatesquare_fetch_foursquare_venues(lat, lon);
+		}
+	};
+
 	$("#navi-online").show();
 	$("#navi-offline").hide();
 
@@ -23,7 +45,7 @@ function privatesquare_init(){
 	privatesquare_set_status("Asking the sky where you are...");
 }
 
-function _privatesquare_geolocation_onsuccess(rsp){
+function _privatesquare_geolocation_onsuccess_old(rsp){
 
 	var lat = rsp['coords']['latitude'];
 	var lon = rsp['coords']['longitude'];
@@ -126,6 +148,9 @@ function privatesquare_checkin(args, on_success){
 	privatesquare_api_call(method, args, on_success, on_error);
 }
 
+// currently assumed to be foursquare since nothing else has search
+// this is reflected in the code below (20131104/straup)
+
 function privatesquare_search(){
 
 	if (searching){
@@ -140,6 +165,10 @@ function privatesquare_search(){
 	var query = prompt("Search for a particular place");
 
 	if (! query){
+
+		var v = $("#venues");
+		var provider = v.attr("data-venues-provider");
+
 		var msg = 'Okay, I\'m giving up. <a href="#" onclick="privatesquare_init();return false;">Start over</a> if you want change your mind.';
 		privatesquare_set_status(msg);
 		return false;
@@ -175,7 +204,6 @@ function privatesquare_fetch_foursquare_venues(lat, lon, query){
 	}
 
 	privatesquare_api_call(method, args, _foursquare_venues_onsuccess);
- 
 	privatesquare_set_status("Fetching nearby places...");
 }
 
@@ -232,6 +260,70 @@ function _foursquare_venues_onsuccess(rsp){
 	}
 
 	html += '<option value="-1">–– none of the above / search ––</option>';
+
+	var where = $("#where");
+	where.attr("data-crumb", rsp['crumb']);
+	where.html(html);
+	where.change(_privatesquare_where_onchange);
+
+	$("#what").change(_privatesquare_what_onchange);
+
+	// draw the map...
+
+	_privatesquare_show_map(rsp['latitude'], rsp['longitude']);
+
+	privatesquare_unset_status();
+	$("#venues").show();
+
+	$("#checkin").submit(privatesquare_submit);
+}
+
+function privatesquare_fetch_stateofmind_venues(lat, lon){
+
+	var method = 'stateofmind.venues.search';
+
+	var args = {
+		'latitude': lat,
+		'longitude': lon
+	};
+
+	privatesquare_api_call(method, args, _stateofmind_venues_onsuccess);
+	privatesquare_set_status("Fetching nearby places...");
+}
+
+function _stateofmind_venues_onsuccess(rsp){
+
+	privatesquare_unset_status();
+
+	if (rsp['stat'] != 'ok'){
+
+		var _okay = function(rsp){
+			var lat = rsp['coords']['latitude'];
+			var lon = rsp['coords']['longitude'];
+			privatesquare_deferred_checkin(lat, lon, 'api error');
+		};
+
+		var _not_okay = function(){
+			privatesquare_api_error(rsp);
+		}
+
+		privatesquare_whereami(_okay, _not_okay);
+		return;
+	}
+
+	var venues = $("#venues");
+	venues.attr("data-venues-provider", "stateofmind");
+
+    	var count = rsp['venues'].length;
+
+	var html = '';
+
+	for (var i=0; i < count; i++){
+		var v = rsp['venues'][i];
+		html += '<option value="' + v['id'] + '">' + v['name'] + '</option>';
+	}
+
+	// html += '<option value="-1">–– none of the above / search ––</option>';
 
 	var where = $("#where");
 	where.attr("data-crumb", rsp['crumb']);

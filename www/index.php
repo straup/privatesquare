@@ -2,14 +2,25 @@
 
 	include("include/init.php");
 
+	loadlib("privatesquare_checkins");
+	loadlib("foursquare_checkins");
+
 	if (! $GLOBALS['cfg']['user']['id']){
 
 		$GLOBALS['smarty']->display("page_index_loggedout.txt");
 		exit();
 	}
 
-	loadlib("privatesquare_checkins");
-	loadlib("foursquare_checkins");
+	if ($provider = get_str("provider")){
+
+		$provider_id = venues_providers_label_to_id($provider);
+
+		if (! venues_providers_is_valid_provider($provider_id)){
+			error_404();
+		}
+
+		$GLOBALS['smarty']->assign("provider", $provider);
+	}
 
 	$status_map = privatesquare_checkins_status_map();
 	$broadcast_map = foursquare_checkins_broadcast_map();

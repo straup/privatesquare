@@ -27,6 +27,14 @@
 
 	#################################################################
 
+	function venues_providers_id_to_label($id){
+
+		$map = venues_providers_map();
+		return (isset($map[$id])) ? $map[$id] : null;
+	}
+
+	#################################################################
+
 	function venues_providers_is_valid_provider_id($id){
 
 		$map = venues_providers_map();
