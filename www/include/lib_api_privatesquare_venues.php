@@ -124,7 +124,7 @@
 		# checkin being processed which means it's in the past which makes
 		# it hard to ask for the weather. (20120501/straup)
 
-		if (($GLOBALS['cfg']['enable_feature_weather_tracking']) && (! isset($checkin['created']))){
+		if ((features_is_enabled("weather_tracking")) && ($has_geo) && (! isset($checkin['created']))){
 
 			loadlib("weather_yahoo");
 

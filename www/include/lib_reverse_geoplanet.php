@@ -64,7 +64,7 @@
 
 		$hierarchy = array();
 
-		foreach (array('locality', 'region', 'country') as $placetype){
+		foreach (array('neighbourhood', 'locality', 'region', 'country') as $placetype){
 			$hierarchy[$placetype] = $loc[$placetype]['woeid'];
 		}
 
@@ -75,6 +75,7 @@
 			'longitude' => $short_lon,
 			'geohash' => $geohash,
 			'woeid' => $loc['woeid'],
+			'neighbourhood' => $hierarchy['neighbourhood'],
 			'locality' => $hierarchy['locality'],
 			'region' => $hierarchy['region'],
 			'country' => $hierarchy['country'],

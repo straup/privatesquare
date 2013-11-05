@@ -382,7 +382,7 @@ function privatesquare_checkin_onsuccess(rsp, tryagain_func){
 		return;
 	}
 
-	var loc = _cfg['abs_root_url' ] + 'venue/' + rsp['checkin']['venue_id'] + '?success=1';
+	var loc = privatesquare_abs_root_url() + 'venue/' + rsp['checkin']['venue_id'] + '?success=1';
 	location.href = loc;
 }
 
@@ -559,4 +559,8 @@ function privatesquare_whereami(onsuccess, onerror){
 	      alert("The sky is angry offering only this, today: " + e);
 	}
 
+}
+
+function privatesquare_abs_root_url(){
+	return document.body.getAttribute("data-abs-root-url");
 }

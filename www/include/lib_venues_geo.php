@@ -19,7 +19,7 @@
 
 	function venues_geo_append_hierarchy($lat, $lon, &$thing){
 
-		$geo_rsp = reverse_geoplanet($lat, $lat, $GLOBALS['cfg']['reverse_geoplanet_remote_endpoint']);
+		$geo_rsp = reverse_geoplanet($lat, $lon, $GLOBALS['cfg']['reverse_geoplanet_remote_endpoint']);
 
 		$places = venues_geo_placetypes();
 		$data = array();

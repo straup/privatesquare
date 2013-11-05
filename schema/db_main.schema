@@ -103,6 +103,7 @@ CREATE TABLE `reverse_geoplanet` (
   `longitude` decimal(6,3) DEFAULT NULL,
   `geohash` char(12) CHARACTER SET latin1 NOT NULL,
   `woeid` int(11) unsigned NOT NULL,
+  `neighbourhood` int(11) unsigned NOT NULL,
   `locality` int(11) unsigned NOT NULL,
   `region` int(11) unsigned NOT NULL,
   `country` int(11) unsigned NOT NULL,

@@ -4,10 +4,10 @@
 
 	function venues_foursquare_fetch_venue($venue_id){
 
-		loadlib("users");
-		loadlib("api");
+		loadlib("foursquare_users");
+		loadlib("foursquare_api");
 
-		$fsq_user = users_random_user();
+		$fsq_user = foursquare_users_random_user();
 
 		$method = "venues/{$venue_id}";
 
@@ -15,7 +15,7 @@
 			'oauth_token' => $fsq_user['oauth_token'],
 		);
 
-		$rsp = api_call($method, $args);
+		$rsp = foursquare_api_call($method, $args);
 		return $rsp;
 	}
 
