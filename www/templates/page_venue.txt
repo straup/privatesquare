@@ -20,9 +20,13 @@
 
 	{include file="inc_checkin_venue.txt"}
 
+	{if $venue.provider_id|@venues_providers_id_to_label == 'stateofmind'}
+	{* uh.... *}
+	{else}
 	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
+	{/if}
 
 	{if $has_visited}
 	<button id="iamhere">I am here again</button>
@@ -131,12 +135,6 @@ var is_checkin={if $success}1{else}0{/if};
 {literal}
 
 $(document).ready(function(){
-
-	/*
-	  TO DO: merge with JS in page_user_checkin.txt ... maybe
-	  it's basically all the same but with tiny subtle
-	  differences ... so, something (20120220/straup)
-	*/
 
 	var map = $(".map");
 	privatesquare_htmapl(map);

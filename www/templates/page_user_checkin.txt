@@ -3,7 +3,7 @@
 
 <h3 class="header-left"><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a> <span class="header-loc"><a href="{$owner|@urls_places_for_user}{$checkin.locality.locality|escape}/">{$checkin.locality.name|escape}</a></span></h3>
 
-{include file="inc_checkin_venue.txt" venue=$checkin.venue}
+{if 0}{include file="inc_checkin_venue.txt" venue=$checkin.venue}{/if}
 
 {assign var="status_id" value=$checkin.status_id}
 
@@ -124,35 +124,33 @@ $(document).ready(function(){
 		var status_id = $("#status_update").val();
 		var crumb = $("#status_update").attr("data-status-crumb");
 
+		var method = 'privatesquare.checkins.updateStatus';
+
 		var args = {
 			'checkin_id' : checkin_id,
 			'status_id' : status_id,
 			'crumb': crumb,
-			'method': 'privatesquare.checkins.updateStatus',
 		};
 
-		$.ajax({
-			'url': _cfg.abs_root_url + 'api/',
-			'type': 'POST',
-			'data': args,
-			'success': function(rsp){
+		var on_success = function(rsp){
 
-				if (rsp['stat'] != 'ok'){
-					privatesquare_api_error(rsp);	
-				}
-
-				else {
-					$("#yousaid").html(rsp['label']);
-				}
-
-				$("#status_update_wrapper").hide();
-
-				$("#youmeanttosay").show();
-				$('#iamhere').show();
-				$('#deleteme').show();
-				toggle_controls(1);
+			if (rsp['stat'] != 'ok'){
+				privatesquare_api_error(rsp);
 			}
-		});
+
+			else {
+				$("#yousaid").html(rsp['label']);
+			}
+
+			$("#status_update_wrapper").hide();
+
+			$("#youmeanttosay").show();
+			$('#iamhere').show();
+			$('#deleteme').show();
+			toggle_controls(1);
+		};
+
+		privatesquare_api_call(method, args, on_success);
 
 		return false;
 	};
@@ -171,42 +169,38 @@ $(document).ready(function(){
 		var checkin_id = $("#deleteme").attr("data-checkin-id");
 		var crumb = $("#deleteme").attr("data-crumb");
 
+		var method = 'privatesquare.checkins.delete';
+
 		var args = {
 			'checkin_id' : checkin_id,
 			'crumb': crumb,
-			'method': 'privatesquare.checkins.delete',
 		};
 
-		$.ajax({
-			'url': _cfg.abs_root_url + 'api/',
-			'type': 'POST',
-			'data': args,
-			'success': function(rsp){
+		var on_success = function(rsp){
 
-				if (rsp['stat'] == 'ok'){
+			if (rsp['stat'] == 'ok'){
 
-					var dt = new Date();
-					var ts = dt.getTime() / 1000;
+				var dt = new Date();
+				var ts = dt.getTime() / 1000;
+				var redir = privatesquare_abs_root_url() + "me/history?deleted=" + ts;
 
-					var redir = _cfg['abs_root_url'] + "me/history?deleted=" + ts;
-
-					if (rsp['venue_id']){
-						redir += "&venue_id=" + rsp['venue_id'];
-					}
-
-					if (rsp['foursquare_checkin']){
-						redir += "&foursquare_checkin=" + rsp['foursquare_checkin'];
-					}
-
-					location.href = redir;
-					return;
+				if (rsp['venue_id']){
+					redir += "&venue_id=" + rsp['venue_id'];
 				}
 
-				privatesquare_api_error(rsp);
+				if (rsp['foursquare_checkin']){
+					redir += "&foursquare_checkin=" + rsp['foursquare_checkin'];
+				}
 
-				$("#user_checkin_context").show();
+				location.href = redir;
+				return;
 			}
-		});
+
+			privatesquare_api_error(rsp);
+			$("#user_checkin_context").show();
+		};
+
+		privatesquare_api_call(method, args, on_success);
 
 		$("#user_checkin_details").hide();
 		$("#user_checkin_context").hide();
