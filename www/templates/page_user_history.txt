@@ -28,7 +28,10 @@ Okee dookee, your checkin has been deleted.
 {/if}
 
 {foreach from=$checkins item="row"}
+
 {assign var="status_id" value=$row.status_id}
+{capture assign="lat"}{if $row.venue.latitude|escape}{$row.venue.latitude}{elseif $row.latitude|escape}{$row.latitude|escape}{else}{/if}{/capture}
+{capture assign="lon"}{if $row.venue.longitude|escape}{$row.venue.longitude}{elseif $row.longitude|escape}{$row.longitude|escape}{else}{/if}{/capture}
 
 <div id="history" class="checkin" data-venue="{$row.venue_id|escape}">
 
@@ -51,8 +54,8 @@ Okee dookee, your checkin has been deleted.
 		{if $row.weather} {include file="inc_weather_stringify.txt" weather=$row.weather}{/if}
 	</div>
 
-	<div class="map" data-zoom="14" data-center="{$row.venue.latitude|escape},{$row.venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$row.venue.latitude|escape},{$row.venue.longitude|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
+	<div class="map" data-zoom="14" data-center="{$lat|escape},{$lon|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$lat|escape},{$lon|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
 	</div>
 
 	<div class="permalink">
