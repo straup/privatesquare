@@ -41,7 +41,6 @@
 		<li><a href="{$cfg.user|@urls_nearby_for_user}">nearby</a></li>
 		<li><a href="{$cfg.user|@urls_history_for_user}">history</a></li>
 		<li><a href="{$cfg.user|@urls_lists_for_user}">atlas</a></li>
-		<li><a href="{$cfg.abs_root_url}want/">want</a></li>
 		<li><a href="{$cfg.user|@urls_places_for_user}">places</a></li>
 		<li class="divider"></li>
 		<li><a href="{$cfg.abs_root_url}account/">account</a></li>
