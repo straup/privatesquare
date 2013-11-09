@@ -1,4 +1,4 @@
-<nav class="navbar navbar navbar-default" role="navigation">
+<nav class="navbar navbar navbar-default navbar-static-top" role="navigation">
 
 	  <div class="navbar-header">
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-head-collapse">
@@ -13,7 +13,7 @@
 	<div class="collapse navbar-collapse navbar-head-collapse">
 
 	     {if $cfg.user}
-	     <ul class="nav navbar-nav pull-right">
+	     <ul class="nav navbar-nav navbar-right">
 		<li class="dropdown">
 		<a id="navi-collection" class="dropdown-toggle navi-label" data-toggle="dropdown" role="button" href="#">Checkin <b class="caret caret-ch"></b></a>
 		<ul class="dropdown-menu" aria-labelledby="navi-collection" role="menu">
@@ -29,7 +29,7 @@
 
 	     {/if}
 
-	     <ul class="nav navbar-nav pull-right">
+	     <ul class="nav navbar-nav navbar-right">
 
 		{if "signin"|@features_is_enabled}
 		{if $cfg.user}
