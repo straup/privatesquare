@@ -1,4 +1,4 @@
-	<nav class="navbar" role="navigation">
+<nav class="navbar navbar navbar-default" role="navigation">
 
 	  <div class="navbar-header">
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-head-collapse">
@@ -57,4 +57,4 @@
 
 	</div>
 
-	</nav>
+</nav>

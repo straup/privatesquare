@@ -3,3 +3,7 @@
     padding-right: 2em; */
     border-bottom: solid thin;
 }
+
+.navbar-default {
+    background-color: #fff;
+}
