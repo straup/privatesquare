@@ -7,6 +7,11 @@
     display:none;
 }
 
+#footer {
+    margin-top:2em;
+    margin-bottom: 1em;
+}
+
 #message {
 	border-bottom: solid thin;
 	margin-bottom: 10px;

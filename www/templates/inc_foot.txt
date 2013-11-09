@@ -1,27 +1,51 @@
 
     </div>
 
-    <div class="container">
+    <div class="container" id="footer">
 
       <footer class="pull-right">
-      <small>
-        {if 0}<p>&copy; Company {$smarty.now|date_format:"%Y"}</p>{/if}
-	this is a thing by <a href="">aaron straup cope</a> / <a href="{$cfg.abs_root_url}about/">tell me more</a>
-	</small>
+      <small id="time"></small>
       </footer>
+    </div>
 
   </body>
 
 <script type="text/javascript">
-/* From http://stackoverflow.com/a/2899099 */
 {literal}
+
+$(document).ready(function(){
+
+	var set_current = function(){
+		var dt = new Date();
+
+		var h = dt.getHours();
+		var m = dt.getMinutes();
+		var s = dt.getSeconds();
+
+		if (h < 10){ h = '0' + h; }
+		if (m < 10){ m = '0' + m; }
+		if (s < 10){ s = '0' + s; }
+
+		var time = h + ':' + m + ':' + s;
+		$("#time").html(time);
+	};
+
+	setInterval(function(){
+		set_current();
+	}, 1000);
+
+});
+
+/* From http://stackoverflow.com/a/2899099 */
 var links = document.getElementsByTagName('a');
-for (var i = 0; i < links.length; i++) {
-    links[i].onclick = function() {
+
+for (var i = 0; i < links.length; i++){
+    links[i].onclick = function(){
         window.location = this.getAttribute('href');
         return false;
     }
 }
+
 {/literal}
 </script>
 

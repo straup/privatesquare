@@ -1,26 +1,36 @@
-<div id="venues" style="display:none;">
+<div id="venues" style="display:none;" class="text-center">
 
-<form method="POST" id="checkin">
+<form method="POST" id="checkin" class="form-inline" role="form">
 
-	<select id="where"></select>
+      <div class="form-group">
+        <label class="sr-only" for="where">Where are you</label>
+	<select id="where" class="form-control"></select>
+	</div>
 
-	<select id="what">
+      <div class="form-group">
+        <label class="sr-only" for="what">What are you doing</label>
+
+	<select id="what" class="form-control">
 {foreach from=$status_map item="label" key="id"}
 		<option value="{$id|escape}">{$label|escape}</option>
 {/foreach}
 	</select>
+	</div>
 
-	<select id="broadcast">
+      <div class="form-group">
+
+        <label class="sr-only" for="broadcast">Who do you want to tell</label>
+	<select id="broadcast" class="form-control">
 {foreach from=$broadcast_map item="label" key="id"}
 		<option value="{$id|escape}">{$label|escape}</option>
 {/foreach}
 	</select>
+	</div>
 
-	<button class="btn">THIS HAPPENED</button>
+      <div class="form-group">
+	<button class="btn btn-primary" style="margin-top:-1.5em;">THIS HAPPENED</button>
+	</div>
+
 </form>
-
-{if !$donot_doitagain}
-<div id="again">do it again!</div>
-{/if}
 
 </div>
