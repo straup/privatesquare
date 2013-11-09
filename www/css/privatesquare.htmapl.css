@@ -7,16 +7,15 @@
 }
 
 #map-wrapper {
-	height: 300px;
 	width: 100%;
 	display:none;
-	border: 10px solid #000;
 	margin-bottom: 20px;
 }
 
 .map {
-    height: 280px;
+    height: 175px;
     width: 100%;
+    border: 5px solid #000;
 }
 
 #displaymap {

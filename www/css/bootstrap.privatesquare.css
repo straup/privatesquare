@@ -9,3 +9,19 @@
 }
 
 /* to do: on hover icon bar stuff... */
+
+.btn-primary {
+    background-color: #000;
+    color: #fff;
+    border: none;
+}
+
+.alert {
+    border-radius: 0;
+}
+
+.alert-info {
+    background-color: #ededed;
+    color: #000;
+    border: none;
+}
