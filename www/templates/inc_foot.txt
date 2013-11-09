@@ -30,9 +30,11 @@ $(document).ready(function(){
 		$("#time").html(time);
 	};
 
+	/*
 	setInterval(function(){
 		set_current();
 	}, 1000);
+	*/
 
 });
 

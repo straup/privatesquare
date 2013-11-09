@@ -9,7 +9,7 @@
 	      </button>
     	      <a class="navbar-brand" href="{$cfg.abs_root_url}">◻  this is privatesquare</a>
           </div>
-	
+
 	<div class="collapse navbar-collapse navbar-head-collapse">
 
 	     {if $cfg.user}
@@ -26,6 +26,7 @@
 		<li id="pending"><span id="pending_count"></span></li>
 	     {/if}
 	     </ul>
+
 	     {/if}
 
 	     <ul class="nav navbar-nav pull-right">
