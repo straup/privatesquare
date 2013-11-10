@@ -1,7 +1,7 @@
 /* HTMAPL stuff */
 
 .map-error {
-    padding:10px;
+    padding:1em;
     font-family:monospace;
     color:#999;
 }
@@ -9,7 +9,7 @@
 #map-wrapper {
 	width: 100%;
 	display:none;
-	margin-bottom: 20px;
+	margin-bottom: 1.5em;
 }
 
 .map {
@@ -19,9 +19,9 @@
 }
 
 #displaymap {
-    height: 150px;
-    margin-bottom: 30px;
-    border: 2px solid #000;
+    height: 175px;
+    margin-bottom: 3em;
+    border: 5px solid #000;
 }
 
 .marker {
@@ -85,4 +85,16 @@
     to {
         opacity: 1;
     }
+}
+
+@media (min-width: 768px){
+
+    #map-wrapper {
+	margin-bottom: 3em;
+    }
+
+    .map {
+	height: 350px;
+    }
+
 }

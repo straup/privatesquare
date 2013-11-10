@@ -1,6 +1,4 @@
 .navbar {
-    /* padding-left: 4em;
-    padding-right: 2em; */
     border-bottom: solid thin;
 }
 
@@ -10,10 +8,20 @@
 
 /* to do: on hover icon bar stuff... */
 
+.navbar-brand {
+    font-weight: 700;
+    color: #000 !important;
+}
+
 .btn-primary {
-    background-color: #000;
+    background-color: #888;
     color: #fff;
-    border: none;
+    border: 1px solid #000;
+}
+
+input {
+    border: 1px solid #000;
+    border-radius: 0 !important;
 }
 
 .alert {
@@ -24,4 +32,14 @@
     background-color: #ededed;
     color: #000;
     border: none;
+}
+
+/* desktop-ish */
+
+@media (min-width: 768px){
+
+    .navbar {
+	padding-left: 2em;
+	padding-right: 2em;
+    }
 }
