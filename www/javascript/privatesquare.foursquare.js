@@ -1,44 +1,8 @@
-/*
-function privatesquare_nypl_search(){
+function privatesquare_foursquare_fetch_venues(lat, lon, query){
 
-	if (searching){
-		return false;
-	}
-
-	searching = true;
-
-	_privatesquare_nypl_hide_map();
-	$("#venues").hide();
-
-	var query = prompt("Search for a particular place");
-
-	if (! query){
-		var msg = 'Okay, I\'m giving up. <a href="#" onclick="privatesquare_nypl_init();return false;">Start over</a> if you want change your mind.';
-		privatesquare_nypl_set_status(msg);
-		return false;
-	}
-
-	var _onsuccess = function(rsp){
-		var lat = rsp['coords']['latitude'];
-		var lon = rsp['coords']['longitude'];
-		privatesquare_nypl_fetch_venues(lat, lon, query);
-		searching = false;
-		return;
-	};
-
-	var _onerror = function(rsp){};
-
-	privatesquare_nypl_whereami(_onsuccess, _onerror);
-
-	privatesquare_nypl_set_status("Re-checking your location first...");
-	return false;
-}
-*/
-
-function privatesquare_nypl_fetch_venues(lat, lon, query){
+	var method = 'foursquare.venues.search';
 
 	var args = {
-		'method': 'nypl.gazetteer.search',
 		'latitude': lat,
 		'longitude': lon
 	};
@@ -47,16 +11,11 @@ function privatesquare_nypl_fetch_venues(lat, lon, query){
 		args['query'] = query;
 	}
 
-	$.ajax({
-		'url': _cfg.abs_root_url + 'api/',
-		'data': args,
-		'success': _privatesquare_nypl_fetch_venues_onsuccess
-	});
- 
+	privatesquare_api_call(method, args, _privatesquare_foursquare_fetch_venues_onsuccess);
 	privatesquare_set_status("Fetching nearby places...");
 }
 
-function _privatesquare_nypl_fetch_venues_onsuccess(rsp){
+function _privatesquare_foursquare_fetch_venues_onsuccess(rsp){
 
 	privatesquare_unset_status();
 
@@ -71,15 +30,14 @@ function _privatesquare_nypl_fetch_venues_onsuccess(rsp){
 		var _okay = function(rsp){
 			var lat = rsp['coords']['latitude'];
 			var lon = rsp['coords']['longitude'];
-			privatesquare_api_error(rsp);
+			privatesquare_deferred_checkin(lat, lon, 'api error');
 		};
 
 		var _not_okay = function(){
 			privatesquare_api_error(rsp);
 		}
 
-		// fix me...
-		// privatesquare_nypl_whereami(_okay, _not_okay);
+		privatesquare_whereami(_okay, _not_okay);
 		return;
 	}
 
@@ -92,12 +50,15 @@ function _privatesquare_nypl_fetch_venues_onsuccess(rsp){
 			msg += ' that looks like <q>' + htmlspecialchars(rsp['query']) + '</q>';
 		}
 
-		msg += '. <a href="#" onclick="privatesquare_nypl_search();return false;">Try again</a>';
-		msg += ' or <a href="#" onclick="privatesquare_init(\'nypl\');return false;">start from scratch</a>?';
+		msg += '. <a href="#" onclick="privatesquare_search();return false;">Try again</a>';
+		msg += ' or <a href="#" onclick="privatesquare_init();return false;">start from scratch</a>?';
 
 		privatesquare_set_status(msg);
 		return;
 	}
+
+	var venues = $("#venues");
+	venues.attr("data-venues-provider", "foursquare");
 
 	var html = '';
 

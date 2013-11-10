@@ -2,7 +2,7 @@
 
 	<div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}>
 
-		<form method="POST" id="checkin_form">
+		<form method="POST" id="checkin_form" class="form" role="form">
 
 		<input type="hidden" id="where" value="{$venue.provider_venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
 

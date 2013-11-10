@@ -8,6 +8,7 @@
 			0 => 'user',
 			1 => 'foursquare',
 			2 => 'stateofmind',
+			3 => 'nypl',
 		);
 
 		if ($string_keys){

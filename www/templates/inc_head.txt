@@ -35,6 +35,9 @@
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js"></script>
 {else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.foursquare.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.stateofmind.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.nypl.js"></script>
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.api.js"></script>
 {/if}
 
