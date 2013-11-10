@@ -1,4 +1,4 @@
-function privatesquare_stateofmond_fetch_venues(lat, lon){
+function privatesquare_stateofmind_fetch_venues(lat, lon){
 
 	$("#broadcast").attr("disabled", "disabled");
 
