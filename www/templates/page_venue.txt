@@ -15,81 +15,73 @@
 	{$venue.name|escape}
 	<small><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></small>
 	</h3>
-
 </div>
 
 <div class="row">
-	{if 0}{include file="inc_checkin_venue.txt"}{/if}
-</div>
-
-<div class="row pull-right">
-	{if $has_visited}
-	<button id="iamhere" class="btn">I am here again</button>
-	{else}
-	<button id="iamhere" class="btn">I am here now</button>
-	{/if}
+	{include file="inc_checkin_venue.txt"}
 </div>
 
 <div class="row checkin" data-venue="{$venue.venue_id|escape}">
 
-	<div class="map map-wtf" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner" style="border: 5px solid #000;">
+	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner" style="border: 5px solid #000;">
 		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
+
+	<button id="iamhere" class="btn text-center">{if $has_visited}I am here again{else}I am here now{/if}</button>
 </div>
+
 
 <div class="row">
-<div class="col-md-5">
+	<div class="col-md-5">
 
-{if $venue.latitude and $venue.longitude}
-    <div class="geo">
-    <span property="geo:name">
+	{if $venue.latitude and $venue.longitude}
+	<div class="geo">
+	<span property="geo:name">
+	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
+	    <div class="vcard adr">
+	    <span class="abook address street-address">{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}</span>
+    	    </div>
+        {/if}
 
-    {if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
-    <span class="vcard adr">
-    <span class="abook address street-address">{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}</span>
-    </span>
-    
-    <br />
-    {/if}
+	<div>
+	{if $venue.data.location.city}<span class="locality"><a href="">{$venue.data.location.city}</a></span>{/if}   
+	{if $venue.data.location.state}<span="region" style="display:inline;">{$venue.data.location.state}</span>{/if}
+	{if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
+	</div>
 
-    {if $venue.data.location.city}<span class="locality">{$venue.data.location.city}</span>,{/if}   
-    {if $venue.data.location.state}<span="region">{$venue.data.location.state},</span>{/if}
-    {if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
+	</div>	
+	{/if}
 
-    <span class="coordinates" style="display:none;"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</span>
-    </div>	
-{/if}
+	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
+	{if $venue.data.contact.formattedPhone|escape}
+	<div class="abook phone tel">
+	<a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
+	</div>
+	{/if}
+	{/if}
 
-{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
-{if $venue.data.contact.formattedPhone|escape}
-<div class="abook phone tel">
-<a href="tel:{$venue.data.contact.formattedPhone|escape}">{$venue.data.contact.formattedPhone|escape}</a>
-</div>
-{/if}
-{/if}
+	{if $venue.latitude and $venue.longitude}
+	<div id="nearby">
+	<a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">Places you've been to, nearby.</a>
+	</div>
+	{/if}
 
-<div id="venue_details">
-<h4>Details</h4>
+	<div id="venue_details">
 
-<ul>
-{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
-<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
-{/if}
-<li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
-</ul>
+	<ul>
+	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
+	<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
+	{/if}
+	<li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
+    	<li><a href="geo:{$venue.latitude|escape},{$venue.longitude|escape}"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</a></li>
+	</ul>
 
-</div>
+	</div>
+
 
 </div>
 
 <div class="col-md-5 col-md-offset-1">
-
-{if $venue.latitude and $venue.longitude}
-<div id="nearby">
-     <a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">Places you've been to, nearby.</a>
-</div>
-{/if}
-
 <h4 id="youwerehere">You were here</h4>
 
 <ul class="checkins">
