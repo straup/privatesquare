@@ -19,9 +19,12 @@
     border: 1px solid #000;
 }
 
-input {
+input[type=submit] {
     border: 1px solid #000;
-    border-radius: 0 !important;
+    padding: .2em;
+    padding-left: .5em;
+    padding-right: .5em;
+    border-radius: 25 !important;
 }
 
 .alert {
