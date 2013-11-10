@@ -1,0 +1,7 @@
+{capture assign="page_title"}venues | {$venue.name} | visits{/capture}
+{include file="inc_head.txt"}
+
+{$checkins|@dumper}
+
+{include file="inc_pagination.txt"}
+{include file="inc_foot.txt"}

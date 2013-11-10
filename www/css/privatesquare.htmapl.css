@@ -13,13 +13,17 @@
 }
 
 .map {
-    height: 175px;
+    height: 150px;
     width: 100%;
     border: 5px solid #000;
 }
 
+.map-wtf {
+    border: 5px solid #000;
+}
+
 #displaymap {
-    height: 175px;
+    height: 150px;
     margin-bottom: 3em;
     border: 5px solid #000;
 }

@@ -4,38 +4,44 @@
 {/capture}
 {include file="inc_head.txt"}
 
-	<h3 class="header-left" data-venue-id="{$venue.venue_id|escape}">
+<div class="row">
+
 	{if $success}
 	{* TO DO: if success, check most recent status and adjust "Success..." language accordingly *}
-	Success! You have checked in to {$venue.name|escape}
-	{else}
-	{$venue.name|escape}
+	<div class="alert alert-success">Success! You have checked in to {$venue.name|escape}</div>
 	{/if}
-	<span class="header-loc"><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></span>
+
+	<h3 class="header-left" data-venue-id="{$venue.venue_id|escape}">
+	{$venue.name|escape}
+	<small><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></small>
 	</h3>
 
-{* sudo reconcile me with user history pages *}
+</div>
 
-<div class="checkin" data-venue="{$venue.venue_id|escape}">
+<div class="row">
+	{if 0}{include file="inc_checkin_venue.txt"}{/if}
+</div>
 
-	{include file="inc_checkin_venue.txt"}
-
-	{if $venue.provider_id|@venues_providers_id_to_label == 'stateofmind'}
-	{* uh.... *}
+<div class="row pull-right">
+	{if $has_visited}
+	<button id="iamhere" class="btn">I am here again</button>
 	{else}
-	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+	<button id="iamhere" class="btn">I am here now</button>
+	{/if}
+</div>
+
+<div class="row checkin" data-venue="{$venue.venue_id|escape}">
+
+	<div class="map map-wtf" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner" style="border: 5px solid #000;">
 		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
-	{/if}
+</div>
 
-	{if $has_visited}
-	<button id="iamhere">I am here again</button>
-	{else}
-	<button id="iamhere">I am here now</button>
-	{/if}
+<div class="row">
+<div class="col-md-5">
 
 {if $venue.latitude and $venue.longitude}
-<div class="geo">
+    <div class="geo">
     <span property="geo:name">
 
     {if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
@@ -51,7 +57,7 @@
     {if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
 
     <span class="coordinates" style="display:none;"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</span>
-</div>	
+    </div>	
 {/if}
 
 {if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
@@ -62,13 +68,27 @@
 {/if}
 {/if}
 
+<div id="venue_details">
+<h4>Details</h4>
+
+<ul>
+{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
+<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
+{/if}
+<li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
+</ul>
+
+</div>
+
+</div>
+
+<div class="col-md-5 col-md-offset-1">
+
 {if $venue.latitude and $venue.longitude}
 <div id="nearby">
      <a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">Places you've been to, nearby.</a>
 </div>
 {/if}
-
-</div>
 
 <h4 id="youwerehere">You were here</h4>
 
@@ -115,19 +135,9 @@
 
 </div>
 
-<div id="venue_details">
-<h4>Details</h4>
-
-<ul>
-{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
-<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
-{/if}
-<li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
-</ul>
-
 </div>
 
-{include file="inc_export_links.txt"}
+{if 0}{include file="inc_export_links.txt"}{/if}
 
 <script type="text/javascript">
 var is_checkin={if $success}1{else}0{/if};

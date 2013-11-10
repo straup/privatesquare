@@ -37,6 +37,10 @@ input[type=submit] {
     border: none;
 }
 
+.row {
+    border: 1px dotted red;
+}
+
 /* desktop-ish */
 
 @media (min-width: 768px){

@@ -1,10 +1,13 @@
-	<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
+<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
 
-	<div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}>
+<div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}>
 
-		<form method="POST" id="checkin_form" class="form" role="form">
+		<form method="POST" id="checkin_form" class="form-inline" role="form">
 
 		<input type="hidden" id="where" value="{$venue.provider_venue_id|escape}" data-crumb="{$checkin_crumb|escape}" />
+
+      <div class="form-group">
+        <label class="sr-only" for="what">What are you doing</label>
 
 		<select id="what">
 {foreach from=$status_map item="label" key="id"}
@@ -12,13 +15,24 @@
 {/foreach}
 		</select>
 
+		</div>
+
+      <div class="form-group">
+
+        <label class="sr-only" for="broadcast">Who do you want to tell</label>
+
 		<select id="broadcast">
 {foreach from=$broadcast_map item="label" key="id"}
 			<option value="{$id|escape}">{$label|escape}</option>
 {/foreach}
 		</select>
 
+	</div>
+
+      <div class="form-group">
+
 		<input type="submit" value="THIS HAPPENED" id="thishappened" />
+		</div>
 
 		</form>
 	</div>
