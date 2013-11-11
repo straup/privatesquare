@@ -1,19 +1,23 @@
 {capture assign="page_title"}{$owner.username} @ {$checkin.venue.name}{/capture}
 {include file="inc_head.txt"}
 
-<h3 class="header-left"><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a> <span class="header-loc"><a href="{$owner|@urls_places_for_user}{$checkin.locality.locality|escape}/">{$checkin.locality.name|escape}</a></span></h3>
-
-{if 0}{include file="inc_checkin_venue.txt" venue=$checkin.venue}{/if}
-
 {assign var="status_id" value=$checkin.status_id}
 
+<div class="row">
+<h3><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a> <small><a href="{$owner|@urls_places_for_user}{$checkin.locality.locality|escape}/">{$checkin.locality.name|escape}</a></small></h3>
+</div>
+
+<div class="row">
 <div class="checkin" id="map">
 	<div class="map" data-zoom="14" data-center="{$checkin.latitude|escape},{$checkin.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history" data-location="{$checkin.latitude|escape},{$checkin.longitude|escape}"><span class="marker-history-text">{$checkin.venue.name|escape}</span></div>
 	</div>
 </div>
+</div>
 
-<p style="font-size:small;" id="user_checkin_context">
+<div class="row">
+
+<p class="lead" id="user_checkin_context">
 {if $is_own}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q id="yousaid">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
@@ -22,7 +26,10 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
 </p>
 
+</div>
+
 {if $is_own}
+<div class="row">
 
 {if $checkin.status_id != 2}
 
@@ -62,8 +69,10 @@ Maybe something like
 <button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled">Delete this checkin</button>
 {/if}
 
+</div>
 {/if}
 
+{if 0}
 {* TO DO: next/previous *}
 
 {* TO DO: links *}
@@ -84,6 +93,7 @@ Maybe something like
 
 
 </div>
+{/if}
 
 <script type="text/javascript">
 

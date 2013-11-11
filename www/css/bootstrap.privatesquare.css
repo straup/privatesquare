@@ -38,7 +38,7 @@ input[type=submit] {
 }
 
 .row {
-    border: 1px dotted red;
+    /* border: 1px dotted red; */
 }
 
 /* desktop-ish */

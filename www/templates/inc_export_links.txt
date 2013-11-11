@@ -1,4 +1,4 @@
-{if $cfg.enable_feature_export}
+{if 0 and "export"|@features_is_enabled}
 
 <div id="export_links">
 export as
