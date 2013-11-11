@@ -93,6 +93,10 @@
 
 @media (min-width: 768px){
 
+    #displaymap {
+	height: 350px;
+    }
+
     #map-wrapper {
 	margin-bottom: 3em;
     }

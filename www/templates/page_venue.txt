@@ -23,9 +23,14 @@
 
 <div class="row checkin" data-venue="{$venue.venue_id|escape}">
 
+	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
 	<div class="map" data-zoom="14" data-center="{$venue.latitude|escape},{$venue.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner" style="border: 5px solid #000;">
 		<div class="marker marker-history{if !$has_visited} marker-history-todo{/if}" data-location="{$venue.latitude|escape},{$venue.longitude|escape}"><span class="marker-history-text">{$venue.name|escape}</span></div>
 	</div>
+	{else}
+
+	<div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">{include file="inc_map_header_markers.txt markers=$venue.checkins}</div>
+	{/if}
 
 	<button id="iamhere" class="btn text-center">{if $has_visited}I am here again{else}I am here now{/if}</button>
 </div>
@@ -72,12 +77,11 @@
 	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
 	<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
 	{/if}
-	<li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>
-    	<li><a href="geo:{$venue.latitude|escape},{$venue.longitude|escape}"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</a></li>
+	{if $venue.locality}<li><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">woe:locality={$venue.locality.locality|escape}</a></li>{/if}
+    	{if $venue.latitude and $venue.longitude}<li><a href="geo:{$venue.latitude|escape},{$venue.longitude|escape}"><span class="latitude" property="geo:lat">{$venue.latitude}</span>, <span class="longitude" property="geo:long">{$venue.longitude}</a></li>{/if}
 	</ul>
 
 	</div>
-
 
 </div>
 
@@ -89,13 +93,12 @@
 {assign var="status_id" value=$row.status_id}
 <li>
 {if $success and $smarty.foreach.checkins.first}
-	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}" title="&lt;keanu&gt;Whoa...&lt/keanu&gt;">You <em>are</em> here...</a>
+	<a href="{$row|@urls_checkin}" title="&lt;keanu&gt;Whoa...&lt/keanu&gt;">You <em>are</em> here...</a>
 {else}
-	<a href="{$cfg.user|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
+	<a href="{$row|@urls_checkin}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
 {/if}
  <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape} </span>
 {if $row.weather}{include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
-<span class="permalink">&#160;&#160;<a href="{$row|@urls_checkin}">◻</a></span>
 </li>
 {/foreach}
 </ul>

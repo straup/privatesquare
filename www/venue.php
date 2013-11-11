@@ -4,6 +4,7 @@
 
 	loadlib("foursquare_checkins");
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_checkins_utils");
 	loadlib("privatesquare_export");
 	loadlib("reverse_geoplanet");
 
@@ -39,7 +40,12 @@
 	);
 
 	$checkins = privatesquare_checkins_for_user($owner, $more);
+
 	$venue['checkins'] = $checkins['rows'];
+	$venue['total_checkins'] = $checkins['pagination']['total_count'];
+
+	$geo_stats = privatesquare_checkins_utils_geo_stats($checkins['rows']);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 	$status_map = privatesquare_checkins_status_map();
 	$broadcast_map = foursquare_checkins_broadcast_map();

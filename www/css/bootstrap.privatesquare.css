@@ -50,3 +50,10 @@ input[type=submit] {
 	padding-right: 2em;
     }
 }
+
+/* not bootstrap */
+
+#footer {
+    margin-top:2em;
+    padding-bottom:3em;
+}
