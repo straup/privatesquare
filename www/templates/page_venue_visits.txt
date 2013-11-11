@@ -1,7 +1,29 @@
 {capture assign="page_title"}venues | {$venue.name} | visits{/capture}
 {include file="inc_head.txt"}
 
-{$checkins|@dumper}
+{assign var="count" value=$pagination.total_count}
+
+{if $count==0}
+<div class="alert alert-warning"><p>Are you sure you've been here before?</p></div>
+{else}
+
+{if $count==1}
+<h2>You've checked in to <a href="{$venue|@urls_venue}">{$venue.name|escape}</a> once</h2>
+{else}
+<h2>You've checked in to <a href="{$venue|@urls_venue}">{$venue.name|escape}</a> {$count|@number_format|escape} times</h2>
+{/if}
+
+<ul>
+{foreach from=$checkins item="row"}
+	<li><a href="{$row|@urls_checkin}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
+ <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape} </span>
+{if $row.weather}{include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
+    </li>
+{/foreach}
+</ul>
 
 {include file="inc_pagination.txt"}
+
+{/if}
+
 {include file="inc_foot.txt"}
