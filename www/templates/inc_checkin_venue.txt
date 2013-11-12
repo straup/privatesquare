@@ -1,4 +1,4 @@
-<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>
+{if 0}<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>{/if}
 
 <div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}">
 
@@ -9,7 +9,7 @@
       <div class="form-group">
         <label class="sr-only" for="what">What are you doing</label>
 
-		<select id="what">
+		<select id="what" class="form-control">
 {foreach from=$status_map item="label" key="id"}
 			<option value="{$id|escape}">{$label|escape}</option>
 {/foreach}
@@ -21,7 +21,7 @@
 
         <label class="sr-only" for="broadcast">Who do you want to tell</label>
 
-		<select id="broadcast">
+		<select id="broadcast" class="form-control">
 {foreach from=$broadcast_map item="label" key="id"}
 			<option value="{$id|escape}">{$label|escape}</option>
 {/foreach}
@@ -31,7 +31,10 @@
 
       <div class="form-group">
 
-		<input type="submit" value="THIS HAPPENED" id="thishappened" />
+		{if 0}<input type="submit" value="THIS HAPPENED" id="thishappened" class="btn btn-default" />{/if}
+		<button class="btn">THIS HAPPENED</button>
+
+		<button class="btn btn-cancel" id="cancel-here-again">CANCEL</button>
 		</div>
 
 		</form>

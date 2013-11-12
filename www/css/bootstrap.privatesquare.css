@@ -1,3 +1,8 @@
+.row {
+    border: 1px dotted red;
+    margin-bottom: .75em;
+}
+
 .navbar {
     border-bottom: solid thin;
 }
@@ -11,6 +16,10 @@
 .navbar-brand {
     font-weight: 700;
     color: #000 !important;
+}
+
+.btn {
+    border: 1px solid #000;
 }
 
 .btn-primary {
@@ -37,10 +46,6 @@ input[type=submit] {
     border: none;
 }
 
-.row {
-    /* border: 1px dotted red; */
-}
-
 /* desktop-ish */
 
 @media (min-width: 768px){
@@ -56,4 +61,12 @@ input[type=submit] {
 #footer {
     margin-top:2em;
     padding-bottom:3em;
+}
+
+#venues-here-again {
+    display: none;
+}
+
+.btn-cancel {
+    background-color: #fff;
 }

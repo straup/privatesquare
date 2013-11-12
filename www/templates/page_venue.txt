@@ -17,7 +17,7 @@
 	</h3>
 </div>
 
-<div class="row">
+<div class="row" class="text-center" id="venues-here-again">
 	{include file="inc_checkin_venue.txt"}
 </div>
 
@@ -31,11 +31,12 @@
 
 	<div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">{include file="inc_map_header_markers.txt markers=$venue.checkins}</div>
 	{/if}
-
-	<button id="iamhere" class="btn text-center">{if $has_visited}I am here again{else}I am here now{/if}</button>
 </div>
 
-
+<div class="row text-center">
+	<button id="iamhere" class="btn">{if $has_visited}I am here again{else}I am here now{/if}</button>
+</div>
+   
 <div class="row">
 	<div class="col-md-5">
 
@@ -153,10 +154,16 @@ $(document).ready(function(){
 		privatesquare_unset_status();
 
 		$('#iamhere').attr('disabled', 'disabled');
-		$('#venues').show();
+		$('#venues-here-again').show();
 	};
 
 	$('#iamhere').click(show_checkin_form);
+
+	$('#cancel-here-again').click(function(){
+		$('#iamhere').removeAttr('disabled');
+		$("#venues-here-again").hide();
+		return false;
+	});
 
 	$('#checkin_form').submit(function(){
 
@@ -166,9 +173,10 @@ $(document).ready(function(){
 		}
 
 		var args = privatesquare_gather_args();
-		privatesquare_checkin(args, _onsuccess);
+		console.log(args);
+		// privatesquare_checkin(args, _onsuccess);
 
-		$("#checkin_venue").hide();
+		$("#venues-here-again").hide();
 
 		privatesquare_set_status("Talking to the sky...");
 		return false;	
