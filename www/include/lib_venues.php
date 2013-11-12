@@ -20,7 +20,7 @@
 		$enc_provider = AddSlashes($provider_id);
 		$enc_venue = AddSlashes($venue_id);
 
-		$sql = "SELECT * FROM Venues WHERE provider_id='{$enc_id}' AND provider_venue_id='{$enc_venue}'";
+		$sql = "SELECT * FROM Venues WHERE provider_id='{$enc_provider}' AND provider_venue_id='{$enc_venue}'";
 
 		$rsp = db_fetch($sql);
 		$row = db_single($rsp);
@@ -31,6 +31,11 @@
 	#################################################################
 
 	function venues_archive_venue_for_provider($venue_id, $provider_id){
+
+		if ($venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id)){
+
+			return array('ok' => 1, 'venue' => $venue);
+		}
 
 		$map = venues_providers_map();
 		$provider = $map[$provider_id];
@@ -79,23 +84,21 @@
 		$venue['provider_id'] = $provider_id;
 		$venue['provider_venue_id'] = $venue_id;
 
-		return venues_add_venue($venue);
+		$rsp = venues_add_venue($venue);
+		return $rsp;
 	}
 
-	# TO DO: reconcile this with the archive stuff above...
+	#################################################################
 
 	function venues_add_venue($venue){
 
-		if (! $venue['venue_id']){
+		$rsp = privatesquare_utils_generate_id(64);
 
-			$rsp = privatesquare_utils_generate_id(64);
-
-			if (! $rsp['ok']){
-				return $rsp;
-			}
-
-			$venue['venue_id'] = $rsp['id'];
+		if (! $rsp['ok']){
+			return $rsp;
 		}
+
+		$venue['venue_id'] = $rsp['id'];
 
 		$insert = array();
 
@@ -111,11 +114,8 @@
 
 		$rsp = db_insert('Venues', $insert);
 
-		# Hack...
-
-		if ((! $rsp['ok']) && ($rsp['error_code'] == 1062)){
+		if ($rsp['ok']){
 			$rsp['venue'] = $venue;
-			$rsp['ok'] = 1;
 		}
 
 		return $rsp;
