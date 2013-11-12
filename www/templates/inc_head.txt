@@ -67,6 +67,4 @@
 
     <div class="container">
 
-    <div class="row">
-    	 <p id="status" class="text-center"></p>
-    </div>
+    <div class="row" id="status" class="text-center"></div>

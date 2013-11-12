@@ -5,6 +5,7 @@
 
 .navbar {
     border-bottom: solid thin;
+    margin-bottom: .5em;
 }
 
 .navbar-default {
@@ -72,6 +73,22 @@ input[type=submit] {
     display: none;
 }
 
+#venue-details div {
+    margin-bottom:1em;
+}
+
+#venue-details ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+#venue-details ul li {
+    list-style-type: none;
+}
+
 .btn-cancel {
     background-color: #fff;
+}
+
+#status {
 }
