@@ -21,7 +21,7 @@
 
         <label class="sr-only" for="broadcast">Who do you want to tell</label>
 
-		<select id="broadcast" class="form-control">
+		<select id="broadcast" class="form-control"{if $venue.provider_id|@venues_providers_id_to_label != 'foursquare'} disabled="disabled"{/if}>
 {foreach from=$broadcast_map item="label" key="id"}
 			<option value="{$id|escape}">{$label|escape}</option>
 {/foreach}
@@ -31,11 +31,9 @@
 
       <div class="form-group">
 
-		{if 0}<input type="submit" value="THIS HAPPENED" id="thishappened" class="btn btn-default" />{/if}
 		<button class="btn">THIS HAPPENED</button>
-
 		<button class="btn btn-cancel" id="cancel-here-again">CANCEL</button>
-		</div>
+	</div>
 
 		</form>
-	</div>
+</div>

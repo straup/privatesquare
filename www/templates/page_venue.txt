@@ -174,7 +174,7 @@ $(document).ready(function(){
 
 		var args = privatesquare_gather_args();
 		console.log(args);
-		// privatesquare_checkin(args, _onsuccess);
+		privatesquare_checkin(args, _onsuccess);
 
 		$("#venues-here-again").hide();
 

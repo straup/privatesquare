@@ -66,3 +66,7 @@
     {include file="inc_head_navi.txt"}
 
     <div class="container">
+
+    <div class="row">
+    	 <p id="status" class="text-center"></p>
+    </div>
