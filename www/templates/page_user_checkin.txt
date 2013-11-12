@@ -21,7 +21,7 @@
 {if $is_own}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q id="yousaid">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <q>{$status_map.$status_id|escape}</q>.</p>
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
 {/if}
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
 </p>
@@ -33,13 +33,10 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 
 {if $checkin.status_id != 2}
 
-<div id="youmeanttosay">Did you mean to say something else?</div>
+<form class="form-inline" role="form">
+<label>Did you mean to say something else? Maybe something like:</label>
 
-<div id="status_update_wrapper">
-
-Maybe something like 
-
-<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}">
+<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}" class="form-control">
 	<optgroup>
 {foreach from=$status_map item="label" key="id"}
 	{if $id==0 or $id==2}
@@ -54,45 +51,20 @@ Maybe something like
 	</optgroup>
 </select>
 
-	... <span id="status_update_ornot">or not</span>
-</div>
+</form>
 
-{/if}
-
-{if $checkin.status_id==2}
-<button id="iamhere">I am here now</button>
-{else}
-<button id="iamhere">I am here again</button>
-{/if}
-
-{if $cfg.enable_feature_delete_checkins}
-<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled">Delete this checkin</button>
 {/if}
 
 </div>
-{/if}
 
-{if 0}
-{* TO DO: next/previous *}
+<div class="row">
 
-{* TO DO: links *}
+<button id="iamhere" class="btn">{if $checkin.status_id==2}I am here now{else}I am here again{/if}</button>
 
-<div id="user_checkin_details">
-
-<h3>Details</h3>
-
-<ul>
-{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
-<li><a href="{$checkin.venue|@foursquare_urls_venue}">foursquare:venue={$checkin.venue_id|escape}</a></li>
-{/if}
-{if $checkin.checkin_id}
-<li><a href="{$checkin|@foursquare_urls_checkin}">foursquare:id={$checkin.checkin_id|escape}</a></li>
-{/if}
-<li><a href="{$checkin|@urls_checkin}">privatesquare:id={$checkin.id|escape}</a></li>
-</ul>
-
+{if $cfg.enable_feature_delete_checkins}<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled" class="btn btn-danger pull-right">Delete this checkin</button>{/if}
 
 </div>
+
 {/if}
 
 <script type="text/javascript">
