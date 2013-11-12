@@ -82,17 +82,20 @@
 		return venues_add_venue($venue);
 	}
 
-	#################################################################
+	# TO DO: reconcile this with the archive stuff above...
 
 	function venues_add_venue($venue){
 
-		$rsp = privatesquare_utils_generate_id(64);
+		if (! $venue['venue_id']){
 
-		if (! $rsp['ok']){
-			return $rsp;
+			$rsp = privatesquare_utils_generate_id(64);
+
+			if (! $rsp['ok']){
+				return $rsp;
+			}
+
+			$venue['venue_id'] = $rsp['id'];
 		}
-
-		$venue['venue_id'] = $rsp['id'];
 
 		$insert = array();
 
@@ -100,10 +103,19 @@
 			$insert[$k] = AddSlashes($v);
 		}	
 
+		$now = time();
+
+		$on_dupe = array(
+			'last_checkin' => AddSlashes($now)
+		);
+
 		$rsp = db_insert('Venues', $insert);
 
-		if (($rsp['ok']) || ($rsp['error_code'] == 1062)){
+		# Hack...
+
+		if ((! $rsp['ok']) && ($rsp['error_code'] == 1062)){
 			$rsp['venue'] = $venue;
+			$rsp['ok'] = 1;
 		}
 
 		return $rsp;

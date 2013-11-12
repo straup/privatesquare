@@ -138,7 +138,7 @@
 
 </div>
 
-{if 0}{include file="inc_export_links.txt"}{/if}
+{include file="inc_export_links.txt"}
 
 <script type="text/javascript">
 var is_checkin={if $success}1{else}0{/if};
@@ -173,7 +173,6 @@ $(document).ready(function(){
 		}
 
 		var args = privatesquare_gather_args();
-		console.log(args);
 		privatesquare_checkin(args, _onsuccess);
 
 		$("#venues-here-again").hide();
