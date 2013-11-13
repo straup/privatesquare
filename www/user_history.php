@@ -38,7 +38,7 @@
 		$GLOBALS['smarty']->assign("deleted_checkin", 1);
 
 		if ($venue_id = get_str("venue_id")){
-			if ($venue = foursquare_venues_get_by_venue_id($venue_id)){
+			if ($venue = venues_get_by_venue_id($venue_id)){
 				$GLOBALS['smarty']->assign_by_ref("deleted_checkin_venue", $venue);
 			}
 		}

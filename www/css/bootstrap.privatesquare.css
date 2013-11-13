@@ -59,6 +59,7 @@ input[type=submit] {
     .navbar {
 	padding-left: 2em;
 	padding-right: 2em;
+	margin-bottom: 2em;
     }
 }
 
