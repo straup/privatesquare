@@ -7,6 +7,12 @@
 <h3><a href="{$checkin.venue|@urls_venue}">{$checkin.venue.name|escape}</a> <small><a href="{$owner|@urls_places_for_user}{$checkin.locality.locality|escape}/">{$checkin.locality.name|escape}</a></small></h3>
 </div>
 
+{if $is_own}
+<div class="row" class="text-center" id="venues-here-again">
+	{include file="inc_checkin_venue.txt" venue=$checkin.venue}
+</div>
+{/if}
+
 <div class="row">
 <div class="checkin" id="map">
 	<div class="map" data-zoom="14" data-center="{$checkin.latitude|escape},{$checkin.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
@@ -19,7 +25,7 @@
 
 <p class="lead" id="user_checkin_context">
 {if $is_own}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q id="yousaid">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q class="hey-look">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
 {/if}
@@ -72,12 +78,6 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {literal}
 
 $(document).ready(function(){
-
-	/*
-	  TO DO: merge with JS in page_venue.txt ... maybe
-	  it's basically all the same but with tiny subtle
-	  differences ... so, something (20120220/straup)
-	*/
 
 	privatesquare_htmapl();
 
@@ -198,7 +198,7 @@ $(document).ready(function(){
 
 		toggle_controls(0);
 
-		$('#checkin_venue').show();
+		$('#venues-here-again').show();
 	};
 
 	var show_status_update = function(){
@@ -233,7 +233,7 @@ $(document).ready(function(){
 		var args = privatesquare_gather_args();
 		privatesquare_checkin(args, _onsuccess);
 
-		$("#checkin_venue").hide();
+		$("#venues-here-again").hide();
 
 		privatesquare_set_status("Talking to the sky...");
 		return false;	

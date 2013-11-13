@@ -1,5 +1,3 @@
-{if 0}<div id="status" style="margin-top:15px;margin-bottom:20px;"></div>{/if}
-
 <div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}">
 
 	<form method="POST" id="checkin_form" class="form-inline" role="form">
