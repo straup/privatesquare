@@ -29,21 +29,14 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {else}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
 {/if}
+
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
-</p>
 
-</div>
+{if $is_own and $checkin.status_id != 2}
 
-{if $is_own}
-<div class="row">
+<label style="display:inline; font-weight: 200;">Did you mean to say something else? Maybe something like </label>
 
-{if $checkin.status_id != 2}
-
-<form class="form-inline" role="form">
-<label>Did you mean to say something else? Maybe something like:</label>
-
-<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}" class="form-control">
-	<optgroup>
+<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}" class="form-control" style="display:inline !important;">
 {foreach from=$status_map item="label" key="id"}
 	{if $id==0 or $id==2}
 	{* the problem is that mobile safari doesn't seem to honour the disabled flag *}
@@ -54,15 +47,15 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 	<option value="{$id|escape}">{$label|escape}</option>
 	{/if}
 {/foreach}
-	</optgroup>
 </select>
-
-</form>
 
 {/if}
 
+</p>
+
 </div>
 
+{if $is_own}
 <div class="row">
 
 <button id="iamhere" class="btn">{if $checkin.status_id==2}I am here now{else}I am here again{/if}</button>
@@ -70,7 +63,6 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 {if $cfg.enable_feature_delete_checkins}<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled" class="btn btn-danger pull-right">Delete this checkin</button>{/if}
 
 </div>
-
 {/if}
 
 <script type="text/javascript">
@@ -130,6 +122,8 @@ $(document).ready(function(){
 			$('#iamhere').show();
 			$('#deleteme').show();
 			toggle_controls(1);
+
+			privatesquare_set_status("Okay! Your checkin has been updated.");
 		};
 
 		privatesquare_api_call(method, args, on_success);
@@ -223,7 +217,7 @@ $(document).ready(function(){
 	/* this needs to be more nuanced */
 	$('#status_update').change(status_flow);
 
-	$('#checkin_form').submit(function(){
+	$('#checkin_form').change(function(){
 
 		var _onsuccess = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
