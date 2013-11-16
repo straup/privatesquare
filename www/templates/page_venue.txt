@@ -28,14 +28,13 @@ $(document).ready(function(){
 {/if}
 
 <div class="row">
-
-	<h3 class="header-left" data-venue-id="{$venue.venue_id|escape}">
+	<h3 data-venue-id="{$venue.venue_id|escape}">
 	{$venue.name|escape}
 	<small><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></small>
 	</h3>
 </div>
 
-<div class="row" class="text-center" id="venues-here-again">
+<div class="row text-center" id="venues-here-again">
 	{include file="inc_checkin_venue.txt"}
 </div>
 
@@ -164,6 +163,7 @@ $(document).ready(function(){
 		privatesquare_unset_status();
 
 		$('#iamhere').attr('disabled', 'disabled');
+		$('#iamhere').hide();
 		$('#venues-here-again').show();
 	};
 
@@ -171,6 +171,7 @@ $(document).ready(function(){
 
 	$('#cancel-here-again').click(function(){
 		$('#iamhere').removeAttr('disabled');
+		$('#iamhere').show();
 		$("#venues-here-again").hide();
 		return false;
 	});

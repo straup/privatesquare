@@ -176,6 +176,7 @@ select {
 
 #venues-here-again {
     display: none;
+    padding-bottom: 1.5em;
 }
 
 #venue-details div {
