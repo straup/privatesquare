@@ -11,6 +11,8 @@
 			array('id' => '51783659', 'name' => 'on a train'),
 			array('id' => '51783661', 'name' => 'on a boat'),
 			array('id' => '51866911', 'name' => 'in transit'),
+			array('id' => '52204033', 'name' => 'wish you were here'),
+			array('id' => '52204035', 'name' => 'kill me now'),
 			array('id' => '51866909', 'name' => 'so confused'),
 		);
 
