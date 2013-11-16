@@ -22,9 +22,9 @@ Okee dookee, your checkin has been deleted.
 </div>
 {/if}
 
-{if $when}
+{if 0 and $when}
 <div class="row pull-right">
-<h2 class="header-right">{$when|escape}</h2>
+<h3 class="header-right">{$when|escape}</h3>
 </div>
 {/if}
 
