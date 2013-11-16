@@ -32,11 +32,26 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
 
+</p>
+
+</div>
+
+{if $is_own}
+<div class="row checkin-dothis">
+
+<button id="iamhere" class="btn pull-left">{if $checkin.status_id==2}I am here now{else}I am here again{/if}</button>
+
+{if $cfg.enable_feature_delete_checkins}<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled" class="btn btn-danger pull-right">Delete this checkin</button>{/if}
+
+</div>
+{/if}
+
 {if $is_own and $checkin.status_id != 2}
+<div class="row checkin-maybe">
 
-<label style="display:inline; font-weight: 200;">Did you mean to say something else? Maybe something like </label>
+<label>Did you mean to say something else? Maybe something like </label>
 
-<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}" class="form-control" style="display:inline !important;">
+<select id="status_update" data-checkin-id="{$checkin.id|escape}" data-status-crumb="{$status_crumb|escape}" class="form-control-x">
 {foreach from=$status_map item="label" key="id"}
 	{if $id==0 or $id==2}
 	{* the problem is that mobile safari doesn't seem to honour the disabled flag *}
@@ -48,19 +63,6 @@ On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-
 	{/if}
 {/foreach}
 </select>
-
-{/if}
-
-</p>
-
-</div>
-
-{if $is_own}
-<div class="row">
-
-<button id="iamhere" class="btn">{if $checkin.status_id==2}I am here now{else}I am here again{/if}</button>
-
-{if $cfg.enable_feature_delete_checkins}<button id="deleteme" data-checkin-id="{$checkin.id|escape}" data-crumb="{$delete_crumb|escape}" disabled="disabled" class="btn btn-danger pull-right">Delete this checkin</button>{/if}
 
 </div>
 {/if}

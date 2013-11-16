@@ -10,9 +10,23 @@
     /*
       border: 1px dotted red;
       background-color: #fff;
-    */
+      */
+
     margin: 0;
     margin-bottom: .5em;
+}
+
+h3 {
+    margin-top: .25em;
+}
+
+h3 small {
+    font-weight: 300;
+    font-size:.5em;
+}
+
+#status {
+    margin-bottom: 0 !important;
 }
 
 .navbar {
@@ -87,6 +101,11 @@ input[type=submit] {
     border: none;
 }
 
+select {
+    border: solid thin !important;
+    border-radius: 0 !important;
+}
+
 /* desktop-ish */
 
 @media (min-width: 768px){
@@ -94,12 +113,40 @@ input[type=submit] {
     .navbar {
 	padding-left: 2em;
 	padding-right: 2em;
-	margin-bottom: 2em;
     }
 }
 
 @media (max-width: 768px){
 
+    h3 {
+	margin-top: 0 !important;
+    }
+
+    .checkin-history h3 small {
+	display: block;
+	margin-top: .25em;
+    }
+
+    /*
+    .checkin-history :first-child {
+	border-top: 1px dotted #000;
+	padding-top: 1em;
+    }
+    */
+
+    .checkin-history {
+	margin-bottom: .5em;
+	margin-top: 1em;
+	padding-bottom: .75em;
+	border-bottom: 1px dotted #000;
+    }
+    
+    .checkin-history .date {
+	font-weight: 300;
+	font-size: small;
+	margin-top: .5em;
+    }
+    
     .container {
 	padding: 1em !important;
     }
@@ -137,5 +184,32 @@ input[type=submit] {
 }
 
 .hey-look {
+    font-weight: 700;
+}
+
+.checkin-maybe {
+    margin-top: 2.5em;
+    padding-top: 1.5em;
+    border-top: 1px solid #000;
+}
+
+.checkin-maybe label {
+    font-weight: 300;
+    display: inline;
+}
+
+.checkin-maybe select {
+    display: inline;
+    border: none !important;
+    border-bottom: solid thin !important;
+    font-weight: 700;
+    background-color: #fff !important;
+}
+
+.checkin-dothis {
+    margin-top: 2em;
+}
+
+.permalink {
     font-weight: 700;
 }

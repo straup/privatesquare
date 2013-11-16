@@ -35,13 +35,13 @@ Okee dookee, your checkin has been deleted.
 </div>
 
 {foreach from=$checkins item="row"}
-<div class="row">
+<div class="row" class="checkins">
 
 {assign var="status_id" value=$row.status_id}
 {capture assign="lat"}{if $row.venue.latitude|escape}{$row.venue.latitude}{elseif $row.latitude|escape}{$row.latitude|escape}{else}{/if}{/capture}
 {capture assign="lon"}{if $row.venue.longitude|escape}{$row.venue.longitude}{elseif $row.longitude|escape}{$row.longitude|escape}{else}{/if}{/capture}
 
-<div id="history" class="checkin" data-venue="{$row.venue_id|escape}">
+<div class="checkin-history" data-venue="{$row.venue_id|escape}">
 
 	{* TO DO: make the actual checkin link a float-y thing *}
 
@@ -66,7 +66,7 @@ Okee dookee, your checkin has been deleted.
 		{if $row.weather} {include file="inc_weather_stringify.txt" weather=$row.weather}{/if}
 
 	<span class="permalink pull-right">
-	<a href="{$row|@urls_checkin}">permalink</a>
+	<a href="{$row|@urls_checkin}" class="permalink">permalink</a>
 	</span>
 
 	</div>
