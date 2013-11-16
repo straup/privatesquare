@@ -368,8 +368,11 @@ function privatesquare_set_status(msg, alert_type){
 	    alert_type = "info";
 	}
 
-	$("#status").attr("class", "alert alert-" + alert_type);
-	$("#status").html(msg);
+	var status = '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
+	status += msg;
+
+	$("#status").attr("class", "alert alert-dismissable alert-" + alert_type);
+	$("#status").html(status);
 	$("#status").show();
 }
 
