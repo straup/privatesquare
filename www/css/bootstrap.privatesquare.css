@@ -138,7 +138,9 @@ select {
 	margin-bottom: .5em;
 	margin-top: 1em;
 	padding-bottom: .75em;
-	border-bottom: 1px dotted #000;
+	/*
+	  border-bottom: 1px dotted #000;
+	  */
     }
     
     .checkin-history .date {
@@ -212,4 +214,20 @@ select {
 
 .permalink {
     font-weight: 700;
+}
+
+#atlas ul {
+    font-size: 1.5em;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+#atlas ul li {
+    list-style-type: none;
+}
+
+#atlas ul .nearbyhere {
+    font-size: .6em;
+    font-weight: 300;
+    margin-bottom: 1em;
 }
