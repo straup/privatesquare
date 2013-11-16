@@ -1,4 +1,4 @@
-<div id="venues" style="display:none;" class="text-center">
+<div id="venues" style="display:none;" class="text-center row">
 
 <form method="POST" id="checkin" class="form-inline" role="form">
 

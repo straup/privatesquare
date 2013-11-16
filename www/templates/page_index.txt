@@ -1,8 +1,6 @@
 {include file="inc_head.txt"}
 
-<div id="status"></div>
-
-<div id="map-wrapper"></div>
+<div id="map-wrapper" class="row"></div>
 
 {if $cfg.enable_feature_deferred_checkins}
 {include file="inc_deferred_checkin.txt"}
