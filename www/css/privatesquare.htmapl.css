@@ -25,6 +25,7 @@
 #displaymap {
     height: 150px;
     border: 5px solid #000;
+    margin-bottom: 1em;
 }
 
 .marker {
@@ -94,6 +95,7 @@
 
     #displaymap {
 	height: 350px;
+	margin-bottom: 2em;
     }
 
     #map-wrapper {

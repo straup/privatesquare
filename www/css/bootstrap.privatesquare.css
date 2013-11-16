@@ -11,7 +11,6 @@
       border: 1px dotted red;
       background-color: #fff;
       */
-
     margin: 0;
     margin-bottom: .5em;
 }
@@ -26,7 +25,7 @@ h3 small {
 }
 
 #status {
-    margin-bottom: 0 !important;
+    margin-bottom: 2em !important;
 }
 
 .navbar {
@@ -119,7 +118,7 @@ select {
 @media (max-width: 768px){
 
     .navbar {
-	margin-bottom: .25em !important;
+	margin-bottom: .0em !important;
     }
     
     h3 {
@@ -160,6 +159,12 @@ select {
     #venue-here-again {
 	float:none !important;
     }
+
+    #status {
+	margin-bottom: .5em !important;
+    }
+
+    
 }
 
 /* not bootstrap */

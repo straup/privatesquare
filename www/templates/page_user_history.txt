@@ -5,21 +5,25 @@
 {include file="inc_head.txt"}
 
 {if $deleted_checkin}
-<div class="row">
+<script type="text/javascript">
 
-<div class="alert alert-success">
-{if $deleted_checkin_venue}
-Pow! Your checkin at <a href="{$deleted_checkin_venue|@urls_venue}">{$deleted_checkin_venue.name|escape}</a> has been deleted.
-{else}
-Okee dookee, your checkin has been deleted.
-{/if}
-</div>
+var msg = '{if $deleted_checkin_venue}Pow! Your checkin at <a href="{$deleted_checkin_venue|@urls_venue}">{$deleted_checkin_venue.name|escape}</a> has been deleted.{else}Okee dookee, your checkin has been deleted.{/if}';
 
 {if $mock_checkin and $mock_checkin.checkin_id}
-<p>Keep in mind that this checkin <em>it is still sitting somewhere on the foursquare servers</em>. That's because there is no way to delete checkins using the foursquare API. You will need to <a href="{$mock_checkin|@foursquare_urls_checkin}" target="_foursquare">log in to the foursquare website</a> and delete the checkin by hand. Awesome, yeah?</p>
+msg += 'Keep in mind that this checkin <em>it is still sitting somewhere on the foursquare servers</em>. That's because there is no way to delete checkins using the foursquare API. You will need to <a href="{$mock_checkin|@foursquare_urls_checkin}" target="_foursquare">log in to the foursquare website</a> and delete the checkin by hand. Awesome, yeah?';
 {/if}
 
-</div>
+{literal}
+$(document).ready(function(){
+	privatesquare_set_status(msg);
+
+	setTimeout(function(){
+		privatesquare_unset_status();
+	}, 15000);
+});
+{/literal}
+
+</script>
 {/if}
 
 {if 0 and $when}
