@@ -31,7 +31,7 @@ h3 small {
 
 .navbar {
     border-bottom: solid thin;
-    margin-bottom: .5em;
+    margin-bottom: 2em;
 }
 
 .navbar-toggle {
@@ -118,6 +118,10 @@ select {
 
 @media (max-width: 768px){
 
+    .navbar {
+	margin-bottom: .25em !important;
+    }
+    
     h3 {
 	margin-top: 0 !important;
     }
