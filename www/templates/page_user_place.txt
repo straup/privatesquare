@@ -1,27 +1,30 @@
 {capture assign="page_title"}{$owner.username} | places | {$locality.name}{/capture}
 {include file="inc_head.txt"}
 
+<div class="row">
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 {include file="inc_map_header_markers.txt markers=$venues use_test='has visited'}
 </div>
+</div>
 
-<h3 class="header-right">{$locality.name|escape}</h3>
+{if 0}<h3 class="header-right">{$locality.name|escape}</h3>{/if}
 
 {foreach from=$venues item="row"}
-
-<div class="checkin" data-venue="{$row.venue_id|escape}">
+<div class="row" class="checkins checkins-venues">
+<div class="checkin-history" data-venue="{$venue_id|escape}">
 
 	<h3 class="header-left">
 		<a href="{$row|@urls_venue}">{$row.name|escape}</a>
-		<span class="header-loc">{if !$row.has_visited}you are wanting to go here{elseif $row.count == 1}you've been here once{else} you've been here {$row.count|escape} times{/if}</span>
+		<small>{if !$row.has_visited}you are wanting to go here{elseif $row.count == 1}you've been here <span class="hey-look"><a href="{$row|@urls_venue}visits/">once</a></span>{else} you've been here <span class="hey-look"><a href="{$row|@urls_venue}visits/">{$row.count|escape} times</a></span>{/if}</small>
 		{* TO DO: date ranges *}
 	</h3>
 
 	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history{if ! $row.has_visited} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
 	</div>
-</div>
 
+</div>
+</div>
 {/foreach}
 
 {include file="inc_pagination.txt"}

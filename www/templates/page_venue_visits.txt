@@ -4,15 +4,18 @@
 {assign var="count" value=$pagination.total_count}
 
 {if $count==0}
-<div class="alert alert-warning"><p>Are you sure you've been here before?</p></div>
+<div class="row alert alert-warning"><p>Are you sure you've been here before?</p></div>
 {else}
 
+<div class="row">
 {if $count==1}
-<h2>You've checked in to <a href="{$venue|@urls_venue}">{$venue.name|escape}</a> once</h2>
+<h3>You've checked in to <a href="{$venue|@urls_venue}">{$venue.name|escape}</a> once</h3>
 {else}
-<h2>You've checked in to <a href="{$venue|@urls_venue}">{$venue.name|escape}</a> {$count|@number_format|escape} times</h2>
+<h3>You've checked in to <a href="{$venue|@urls_venue}">{$venue.name|escape}</a> {$count|@number_format|escape} times</h3>
 {/if}
+</div>
 
+<div class="row">
 <ul>
 {foreach from=$checkins item="row"}
 	<li><a href="{$row|@urls_checkin}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
@@ -23,6 +26,7 @@
 </ul>
 
 {include file="inc_pagination.txt"}
+</div>
 
 {/if}
 

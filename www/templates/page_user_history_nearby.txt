@@ -16,7 +16,6 @@
 
 {foreach from=$venues item="row"}
 <div class="row" class="checkins checkins-venues">
-
 <div class="checkin-history" data-venue="{$venue_id|escape}">
 
 	<h3>

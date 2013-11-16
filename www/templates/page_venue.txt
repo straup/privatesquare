@@ -4,6 +4,10 @@
 {/capture}
 {include file="inc_head.txt"}
 
+<div class="row pull-right" id="venue-here-again">
+	<button id="iamhere" class="btn pull-right">{if $has_visited}I am here <span class="hey-look">again</span>{else}I am here <span class="hey-look">now</span>{/if}</button>
+</div>
+
 <div class="row">
 
 	{if $success}
@@ -31,10 +35,6 @@
 
 	<div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">{include file="inc_map_header_markers.txt markers=$venue.checkins}</div>
 	{/if}
-</div>
-
-<div class="row text-center">
-	<button id="iamhere" class="btn">{if $has_visited}I am here again{else}I am here now{/if}</button>
 </div>
    
 <div class="row" id="venue-details">

@@ -152,6 +152,10 @@ select {
     .container {
 	padding: 1em !important;
     }
+
+    #venue-here-again {
+	float:none !important;
+    }
 }
 
 /* not bootstrap */
