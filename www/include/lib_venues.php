@@ -77,8 +77,15 @@
 			return array('ok' => 0, 'error' => 'Unknown provider');
 		}
 
-		if ((isset($venue['latitude'])) && (isset($venue['longitude']))){
-			venues_geo_append_hierarchy($venue['latitude'], $venue['longitude'], $venue);
+		# See this? Not sure this is the best way to deal with the issue of
+		# 'place-less' places having a multiplicity of geographies...
+		# (20131117/straup)
+
+		if ($provider != 'stateofmind'){
+
+			if ((isset($venue['latitude'])) && (isset($venue['longitude']))){
+				venues_geo_append_hierarchy($venue['latitude'], $venue['longitude'], $venue);
+			}
 		}
 
 		$venue['provider_id'] = $provider_id;

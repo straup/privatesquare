@@ -13,7 +13,7 @@
 
 	<h3>
 		<a href="{$owner|@urls_places_for_user}{$row.locality|escape}">{$row.name|escape}</a> 
-		<small>{if $row.count==1}you've been here once{else}{if $row.venues|@count==1}you've been to one place here {$row.count|escape} times{else}you've been here {$row.count|escape} times in {$row.venues|@count} different places{/if}{/if}</small>
+		<small>{if $row.count==1}you've been here once{else}{if $row.venues|@count==1}you've been to one place here <span class="hey-look">{$row.count|escape} times</span>{else}you've been here <span class="hey-look">{$row.count|escape} times</span> in <span class="hey-look">{$row.venues|@count} different places</span>{/if}{/if}</small>
 	</h3>
 
 	<div class="map" data-zoom="11" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">

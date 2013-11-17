@@ -1,4 +1,4 @@
-<div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}">
+<div id="venues" data-venues-provider="{$venue.provider_id|@venues_providers_id_to_label|escape}"{if $venue.latitude} data-geolocation-latitude="{$venue.latitude|escape}"{/if}{if $venue.longitude} data-geolocation-longitude="{$venue.longitude|escape}"{/if}>
 
 	<form method="POST" id="checkin_form" class="form-inline" role="form">
 

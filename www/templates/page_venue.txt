@@ -178,17 +178,59 @@ $(document).ready(function(){
 
 	$('#checkin_form').submit(function(){
 
-		var _onsuccess = function(rsp){
+		var checkin_on_success = function(rsp){
 			privatesquare_checkin_onsuccess(rsp, show_checkin_form);
 			$('#iamhere').removeAttr('disabled');
 		}
 
-		var args = privatesquare_gather_args();
-		privatesquare_checkin(args, _onsuccess);
+		// See this? It's the code that actually calls the API. It
+		// is chunked out because we might need to fetch the user's
+		// current lat/lon (20131117/straup)
 
-		$("#venues-here-again").hide();
+		var do_checkin = function(){
+			var args = privatesquare_gather_args();
+			console.log(args);
+			return false;
 
-		privatesquare_set_status("Talking to the sky...");
+			privatesquare_checkin(args, checkin_on_success);
+
+			$("#venues-here-again").hide();
+
+			privatesquare_set_status("Talking to the sky...");
+		};
+
+		var v = $("#venues");
+
+		var lat = v.attr("data-geolocation-latitude");
+		var lon = v.attr("data-geolocation-longitude");
+
+		if ((lat) && (lon)){
+			do_checkin();
+		}
+
+		else {
+
+			var on_success = function(rsp){
+
+				var lat = rsp['coords']['latitude'];
+				var lon = rsp['coords']['longitude'];
+	
+				var v = $("#venues");
+				v.attr("data-geolocation-latitude", lat);
+				v.attr("data-geolocation-longitude", lon);
+
+				privatesquare_set_status("I can smell you!");		
+				do_checkin();
+			};
+
+			var on_error = function(){
+				privatesquare_set_status("Hrm... there was a problem locating you", "danger");
+			};
+
+			privatesquare_set_status("Okay! First, I need to ask the sky where you are...");
+			privatesquare_whereami(on_success, on_error);
+		}
+
 		return false;	
 	});
 

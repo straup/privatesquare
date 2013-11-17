@@ -70,6 +70,10 @@
 			$checkin['created'] = $created;
 		}
 
+		# Maybe: Never transfer hierarchy from venue? Always do lookup
+		# based on the lat,lon passed in by the user? Consider the list
+		# of possible geographies for a "state of mind"
+
 		if ($has_geo){
 
 			$checkin['latitude'] = $lat;
