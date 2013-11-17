@@ -19,6 +19,11 @@
 	if ($provider){
 
 		$provider_id = venues_providers_label_to_id($provider);
+
+		if (! venues_providers_is_valid_provider($provider_id)){
+			error_404();
+		}
+
 		$venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id);
 	}
 
@@ -33,10 +38,8 @@
 	$venue['data'] = json_decode($venue['data'], "as hash");
 	$venue['locality'] = reverse_geoplanet_get_by_woeid($venue['locality'], 'locality');
 
-	# TO DO: account for pagination and > n checkins
-
 	$more = array(
-		'venue_id' => $venue_id,
+		'venue_id' => $venue['venue_id'],
 	);
 
 	$checkins = privatesquare_checkins_for_user($owner, $more);
@@ -80,7 +83,7 @@
 	$success = get_str("success") ? 1 : 0;	
 	$GLOBALS['smarty']->assign("success", $success);
 
-	$GLOBALS['smarty']->assign("venue_id", $venue_id);
+	$GLOBALS['smarty']->assign("venue_id", $venue['venue_id']);
 
 	$export_formats = privatesquare_export_valid_formats();
 	$GLOBALS['smarty']->assign("export_formats", array_keys($export_formats));

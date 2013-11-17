@@ -184,17 +184,24 @@ select {
     padding-bottom: 1.5em;
 }
 
+#venue-details {
+    font-size: 1.3em;
+}
+
+#venue-details h4 {
+    /*
+    border-bottom: solid thin;
+    padding-bottom: .25em;
+    */
+    color: #ccc;
+}
+
 #venue-details div {
     margin-bottom:1em;
 }
 
-#venue-details ul {
-    margin: 0px;
-    padding: 0px;
-}
-
-#venue-details ul li {
-    list-style-type: none;
+.dl-horizontal dt {
+    text-align:left !important;
 }
 
 .btn-cancel {

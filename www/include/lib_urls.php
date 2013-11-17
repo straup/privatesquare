@@ -6,7 +6,10 @@
 
 	function urls_venue(&$venue){
 
-		return $GLOBALS['cfg']['abs_root_url'] . "venue/{$venue['venue_id']}/";
+		$provider = venues_providers_id_to_label($venue['provider_id']);
+		$provider_id = $venue['provider_venue_id'];
+
+		return $GLOBALS['cfg']['abs_root_url'] . "venue/{$provider}/{$provider_id}/";
 	}
 
  	#################################################################

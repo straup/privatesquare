@@ -4,7 +4,7 @@
 
 	function foursquare_urls_venue(&$venue){
 
-		return "http://www.foursquare.com/venue/{$venue['venue_id']}/";
+		return "http://www.foursquare.com/venue/{$venue['provider_venue_id']}/";
 	}
 
  	#################################################################

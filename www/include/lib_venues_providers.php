@@ -22,6 +22,10 @@
 
 	function venues_providers_is_valid_provider($id){
 
+		if (! isset($id)){
+			return 0;
+		}
+
 		$map = venues_providers_map();
 		return (isset($map[$id])) ? 1 : 0;
 	}

@@ -16,14 +16,15 @@
 </div>
 
 <div class="row">
-<ul>
+<dl class="dl-horizontal">
 {foreach from=$checkins item="row"}
-	<li><a href="{$row|@urls_checkin}">{$row.created|date_format:"%B %e, %Y"|escape}</a>
- <span style="color:#ccc;"> – {$row.created|date_format:"%A"|escape} </span>
-{if $row.weather}{include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
-    </li>
+	<dt><a href="{$row|@urls_checkin}">{$row.created|date_format:"%B %e, %Y"|escape}</a></dt>
+ 	<dd>
+	That was a {$row.created|date_format:"%A"|escape}
+	{if $row.weather} and it was {include file="inc_weather_stringify.txt" weather=$row.weather short_form=1}{/if}
+	</dd>
 {/foreach}
-</ul>
+</dl>
 
 {include file="inc_pagination.txt"}
 </div>
