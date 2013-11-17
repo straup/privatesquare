@@ -74,10 +74,16 @@
 		# based on the lat,lon passed in by the user? Consider the list
 		# of possible geographies for a "state of mind"
 
+		# $lat = 40.685246;
+		# $lon = -73.994409;
+
+		$checkin['latitude'] = ($venue['latitude']) ? $venue['latitude'] : $lat;
+		$checkin['longitude'] = ($venue['longitude']) ? $venue['longitude'] : $lon;
+
 		if ($has_geo){
 
-			$checkin['latitude'] = $lat;
-			$checkin['longitude'] = $lon;
+			# $checkin['latitude'] = $lat;
+			# $checkin['longitude'] = $lon;
 
 			venues_geo_append_hierarchy($lat, $lon, $checkin);
 		}

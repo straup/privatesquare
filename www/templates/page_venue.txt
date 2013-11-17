@@ -76,9 +76,11 @@ $(document).ready(function(){
 	{/if}
 
 	{if $venue.latitude and $venue.longitude}
+	{if $venue.checkins|@count}
 	<div id="nearby">
 	<a href="{$cfg.user|@urls_nearby_for_user}?latitude={$venue.latitude}&longitude={$venue.longitude}">Places you've been to, nearby.</a>
 	</div>
+	{/if}
 	{/if}
 
 	<div id="venue_details">
@@ -100,6 +102,9 @@ $(document).ready(function(){
 </div>
 
 <div class="col-md-5 col-md-offset-1">
+{if $venue.checkins|@count==0}
+{* copy? *}
+{else}
 <h4 id="youwerehere">You were here</h4>
 
 <ul class="checkins">
@@ -144,6 +149,7 @@ $(document).ready(function(){
 </ul>
 
 </div>
+{/if}
 
 </div>
 
@@ -189,15 +195,14 @@ $(document).ready(function(){
 
 		var do_checkin = function(){
 			var args = privatesquare_gather_args();
-			console.log(args);
-			return false;
+			// console.log(args);
+			// return false;
 
 			privatesquare_checkin(args, checkin_on_success);
-
-			$("#venues-here-again").hide();
-
 			privatesquare_set_status("Talking to the sky...");
 		};
+
+		$("#venues-here-again").hide();
 
 		var v = $("#venues");
 
