@@ -38,7 +38,7 @@
 	if (($lat) && ($lon)){
 
 		$more = array(
-			'dist' => 0.5,
+			'dist' => 1,
 		);
 
 		if ($d = get_float('dist')) {

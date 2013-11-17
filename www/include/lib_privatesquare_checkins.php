@@ -465,6 +465,8 @@
 
 			$venue['count'] = $count;
 
+			# sudo put this in a function?
+
 			$checkins_more = array(
 				'venue_id' => $venue_id,
 				'inflate_venue' => 0,
@@ -609,11 +611,26 @@
 		$venues = array();
 
 		foreach ($tmp as $venue_id => $count){
+
 			$venue = venues_get_by_venue_id($venue_id); 
 			$venue['count_checkins'] = $count;
 
 			$has_visited = privatesquare_checkins_utils_has_visited_venue($user, $venue_id);
 			$venue['has_visited'] = $has_visited;
+
+			# sudo put this in a function?
+
+			$checkins_more = array(
+				'venue_id' => $venue_id,
+				'inflate_venue' => 0,
+				'inflate_weather' => 0,
+			);
+
+			$checkins = privatesquare_checkins_for_user($user, $checkins_more);
+			$venue['checkins'] = $checkins['rows'];
+
+			$geo_stats = privatesquare_checkins_utils_geo_stats(array($venue));
+			$venue['geo_stats'] = $geo_stats;
 
 			$venues[] = $venue;
 		}

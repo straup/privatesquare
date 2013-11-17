@@ -5,6 +5,8 @@ js:
 	java -Xmx64m -jar lib/google-compiler/compiler-20100616.jar --js www/javascript/privatesquare.deferred.js > www/javascript/privatesquare.deferred.min.js
 	java -Xmx64m -jar lib/google-compiler/compiler-20100616.jar --js www/javascript/privatesquare.pending.js > www/javascript/privatesquare.pending.min.js
 
+t: templates
+
 templates:
 	php -q ./bin/compile-templates.php
 
