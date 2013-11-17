@@ -1,0 +1,5 @@
+{include file="inc_head.txt"}
+
+<div class="row"><h3>{$provider|escape}</h3></div>
+
+{include file="inc_foot.txt"}

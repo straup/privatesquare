@@ -30,6 +30,18 @@
 
 	#################################################################
 
+	function venues_get_by_provider($provider_id, $more=array()){
+
+		$enc_provider = AddSlashes($provider_id);
+
+		$sql = "SELECT * FROM Venues WHERE provider_id='{$enc_provider}' ORDER BY venue_id DESC";
+
+		$rsp = db_fetch_paginated($sql, $rsp);
+		return $rsp;
+	}
+
+	#################################################################
+
 	function venues_archive_venue_for_provider($venue_id, $provider_id){
 
 		if ($venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id)){
