@@ -7,6 +7,8 @@ function privatesquare_init(provider){
 	    provider = 'foursquare';
 	}
 
+	$("body").attr("data-privatesquare-provider", provider);
+
 	// it's possible the second test is pointless
 	// (20121220/straup)
 
@@ -194,10 +196,17 @@ function _privatesquare_what_onchange(){
 	var what = $("#what").val();
 	var broadcast = $("#broadcast");
 
+	// put me in a function?
+	var provider = $("body").attr("data-privatesquare-provider");
+
 	if (what == 2){
 		broadcast.attr("disabled", "disabled");
 	}
-	
+
+	else if (provider == 'stateofmind'){
+		// pass
+	}
+
 	else {
 		broadcast.removeAttr("disabled");
 	}

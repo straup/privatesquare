@@ -246,3 +246,11 @@ select {
     font-weight: 300;
     display:block;
 }
+
+select[disabled=disabled] {
+    text-decoration: line-through !important;
+}
+
+option[disabled=disabled] {
+    text-decoration: line-through !important;
+}

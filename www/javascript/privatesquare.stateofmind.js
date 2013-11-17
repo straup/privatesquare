@@ -1,5 +1,16 @@
 function privatesquare_stateofmind_fetch_venues(lat, lon){
 
+	// Really? Yeah, I think so. We'll see...
+	// (20131117/straup)
+
+	$("#what option").each(function(){
+		var opt = $(this);
+
+		if (opt.val() > 1){
+			opt.attr("disabled", "disabled");
+		}
+	});
+
 	$("#broadcast").attr("disabled", "disabled");
 
 	var method = 'stateofmind.venues.search';
