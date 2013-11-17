@@ -125,6 +125,11 @@ select {
 	margin-top: 0 !important;
     }
 
+    h3 small {
+	display: block;
+	margin-top:.25em;
+    }
+
     .checkin-history h3 small {
 	display: block;
 	margin-top: .25em;
