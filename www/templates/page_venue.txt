@@ -66,7 +66,7 @@ $(document).ready(function(){
 	<div>
 	    <span class="abook address street-address">{$venue.data.location.address|escape}{if $venue.data.location.crossStreet} {$venue.data.location.crossStreet|escape}{/if}</span>
 
-	{if $venue.data.location.city}<span class="locality"><a href="">{$venue.data.location.city}</a></span>{/if}   
+	{if $venue.data.location.city}<span class="locality hey-look">{$venue.data.location.city}</span>{/if}   
 	{if $venue.data.location.state}<span="region" style="display:inline;">{$venue.data.location.state}</span>{/if}
 	{if $venue.data.location.country}<span region="country">{$venue.data.location.country}</span>{/if}
 

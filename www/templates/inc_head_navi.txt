@@ -21,9 +21,22 @@
 
 		<ul class="dropdown-menu" aria-labelledby="navi-checkin" role="menu">
 
+		{foreach from=$cfg.privatesquare_venues_providers item="label"}
+		{if $label=='stateofmind'}
+		<li><a href="{$cfg.abs_root_url}{$label|escape:"url"}/">a <strong>state of mind</strong></a></li>
+		{elseif $label=='nypl'}
+		<li><a href="{$cfg.abs_root_url}{$label|escape:"url"}/">a <strong>building in new york city</strong></a></li>
+		{else}
+		<li><a href="{$cfg.abs_root_url}{$label|escape:"url"}/"> to <strong>{$label|escape}</strong></a></li>
+		{/if}
+		{/foreach}
+
+		{if 0}
 		<li><a href="{$cfg.abs_root_url}4sq/">to <strong>foursquare</strong></a></li>
 		<li><a href="{$cfg.abs_root_url}stateofmind/">a <strong>state of mind</strong></a></li>
 		<li><a href="{$cfg.abs_root_url}nypl/">a <strong>building in nyc</strong></a></li>
+		{/if}
+
 		</ul>
 		<li>
 
