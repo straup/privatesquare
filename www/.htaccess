@@ -63,6 +63,7 @@ RewriteRule   ^php.ini		- [R=404,L]
 
 RewriteRule   	^4sq/?$	index.php?provider=foursquare&%{QUERY_STRING}	[L]
 RewriteRule   	^stateofmind/?$	index.php?provider=stateofmind&%{QUERY_STRING}	[L]
+RewriteRule   	^nypl/?$	index.php?provider=nypl&%{QUERY_STRING}	[L]
 
 # Images
 

@@ -37,8 +37,9 @@ function privatesquare_nypl_search(){
 
 function privatesquare_nypl_fetch_venues(lat, lon, query){
 
+	var method = 'nypl.venues.search';
+
 	var args = {
-		'method': 'nypl.gazetteer.search',
 		'latitude': lat,
 		'longitude': lon
 	};
@@ -47,13 +48,8 @@ function privatesquare_nypl_fetch_venues(lat, lon, query){
 		args['query'] = query;
 	}
 
-	$.ajax({
-		'url': _cfg.abs_root_url + 'api/',
-		'data': args,
-		'success': _privatesquare_nypl_fetch_venues_onsuccess
-	});
- 
-	privatesquare_set_status("Fetching nearby places...");
+	privatesquare_api_call(method, args, _privatesquare_nypl_fetch_venues_onsuccess);
+	privatesquare_set_status("Asking the NYPL for buildings nearby...");
 }
 
 function _privatesquare_nypl_fetch_venues_onsuccess(rsp){

@@ -203,6 +203,8 @@ function _privatesquare_what_onchange(){
 		broadcast.attr("disabled", "disabled");
 	}
 
+	// hrm... this is not ideal (20131117/straup)
+
 	else if (provider == 'stateofmind'){
 		// pass
 	}
