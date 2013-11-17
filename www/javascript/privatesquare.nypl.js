@@ -37,6 +37,11 @@ function privatesquare_nypl_search(){
 
 function privatesquare_nypl_fetch_venues(lat, lon, query){
 
+	$("#broadcast").attr("disabled", "disabled");
+
+	var venues = $("#venues");
+	venues.attr("data-venues-provider", "nypl");
+
 	var method = 'nypl.venues.search';
 
 	var args = {

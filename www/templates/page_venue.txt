@@ -90,12 +90,13 @@ $(document).ready(function(){
 	{/if}
 
 	<div id="venue_details">
-
 	<ul>
 	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
-	<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue_id|escape}</a></li>
+	<li><a href="{$venue|@foursquare_urls_venue}">foursquare:venue={$venue.provider_venue_id|escape}</a></li>
 	{elseif $venue.provider_id|@venues_providers_id_to_label == 'stateofmind'}
 	<li>stateofmind:venue={$venue_id|escape}</a></li>
+	{elseif $venue.provider_id|@venues_providers_id_to_label == 'nypl'}
+	<li>nypl:venue={$venue.provider_venue_id|escape}</a></li>
 	{else}
 	{/if}
 

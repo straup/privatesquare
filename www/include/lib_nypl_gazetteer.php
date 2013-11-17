@@ -6,7 +6,7 @@
 
 	########################################################################
 
-	function nypl_gazetteer_get($path, $args, $more=array()){
+	function nypl_gazetteer_get($path, $args=array(), $more=array()){
 
 		$path = ltrim($path, "/");
 		$query = http_build_query($args);

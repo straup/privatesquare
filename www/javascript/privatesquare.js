@@ -96,6 +96,10 @@ function privatesquare_gather_args(){
 	var status_id = $("#what").val();
 	var broadcast = $("#broadcast").val();
 
+	if (! provider){
+		provider = $("body").attr("data-privatesquare-provider");
+	}
+
 	// not thrilled about this...
 	broadcast = (status_id==2) ? "" : broadcast;
 

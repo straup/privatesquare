@@ -73,6 +73,39 @@
 			);
 		}
 
+		else if ($provider == 'nypl'){
+
+			$rsp = venues_nypl_fetch_venue($venue_id);
+
+			if (! $rsp['ok']){
+				return $rsp;
+			}
+
+			$data = $rsp['data'];
+
+			loadlib("geo_geojson");
+			list($swlat, $swlon, $nelat, $nelon) = geo_geojson_features_to_bbox($data);
+
+			# See this: It is not checking to see if the point actually falls
+			# inside of the polygon. That's for later unless I can shame the NYPL
+			# peeps in to adding it to their API resonses first... (20131117/straup)
+
+			$lat = $swlat + (($nelat - $swlat) / 2);
+			$lon = $swlon + (($nelon - $swlon) / 2);
+
+			$venue = array(
+				'venue_id' => $data['properties']['id'],
+				'name' => $data['properties']['name'],
+				'latitude' => $lat,
+				'longitude' => $lon,
+				'data' => json_encode($data),
+			);
+
+			# dumper($data);
+			# dumper($venue);
+			# return array('ok' => 0, 'error' => 'debug');
+		}
+
 		else {
 			return array('ok' => 0, 'error' => 'Unknown provider');
 		}

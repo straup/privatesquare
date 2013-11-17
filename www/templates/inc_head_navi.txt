@@ -23,6 +23,7 @@
 
 		<li><a href="{$cfg.abs_root_url}4sq/">to <strong>foursquare</strong></a></li>
 		<li><a href="{$cfg.abs_root_url}stateofmind/">a <strong>state of mind</strong></a></li>
+		<li><a href="{$cfg.abs_root_url}nypl/">a <strong>building in nyc</strong></a></li>
 		</ul>
 		<li>
 
