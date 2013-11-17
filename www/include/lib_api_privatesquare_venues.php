@@ -187,4 +187,74 @@
 
  	#################################################################
 
+	function api_privatesquare_venues_create(){
+
+		$name = post_str("name");
+		$notes = post_str("notes");
+
+		if (! $name){
+			api_output_error(999, "Missing name");
+		}
+
+		$lat = post_float("latitude");
+		$lon = post_float("longitude");
+
+		if (($lat) && (! geo_utils_is_valid_latitude($lat))){
+			api_output_error(999, "Invalid latitude");
+		}
+
+		if (($lon) && (! geo_utils_is_valid_longitude($lon))){
+			api_output_error(999, "Invalid latitude");
+		}
+
+		$user = $GLOBALS['cfg']['user'];
+
+		$data = array(
+			'name' => $name,
+			'notes' => $notes,
+			'latitude' => $lat,
+			'longitude' => $lon,
+		);
+
+		$rsp = venues_privatesquare_add_venue($user, $data);
+
+		if (! $rsp['ok']){
+			api_output_error(999, $rsp['error']);
+		}
+
+		$out = array(
+			'venue' => $rsp['venue'],
+		);
+
+		api_output_ok($out);
+	}
+
+ 	#################################################################
+
+	function api_privatesquare_venues_search(){
+
+		api_output_error(999, "Not ready");
+
+		$lat = request_float('latitude');
+		$lon = request_float('longitude');
+
+		$query = request_str('query');
+
+		if (($lat) && (! geo_utils_is_valid_latitude($lat))){
+			api_output_error(999, "Missing or invalid latitude");
+		}
+
+		if (($lon) && (! geo_utils_is_valid_longitude($lon))){
+			api_output_error(999, "Missing or invalid longitude");
+		}
+
+		$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
+
+		$bbox = geo_utils_bbox_from_point($lat, $lon, .5, $unit='m');
+		$bbox = implode(",", array($bbox[1], $bbox[0], $bbox[3], $bbox[2]));
+
+	}
+
+ 	#################################################################
+
 	# the end
