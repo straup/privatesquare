@@ -9,6 +9,7 @@
 
 		$lat = request_float('latitude');
 		$lon = request_float('longitude');
+		$query = request_str('query');
 
 		if (($lat) && (! geo_utils_is_valid_latitude($lat))){
 			api_output_error(999, "Missing or invalid latitude");
@@ -25,9 +26,15 @@
 
 		$path = "/place/search.json";
 
+		$q = "feature_code:BLDG";
+
+		if ($query){
+			$q .= " AND {$query}";
+		}
+
 		$args = array(
 			'bbox' => $bbox,
-			'q' => 'feature_code:BLDG',
+			'q' => $q,
 		);
 
 		$rsp = nypl_gazetteer_get($path, $args);

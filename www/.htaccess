@@ -61,10 +61,6 @@ RewriteEngine on
 # See also: the 'php-ini' command in the root Makefile
 RewriteRule   ^php.ini		- [R=404,L]
 
-RewriteRule   	^4sq/?$	index.php?provider=foursquare&%{QUERY_STRING}	[L]
-RewriteRule   	^stateofmind/?$	index.php?provider=stateofmind&%{QUERY_STRING}	[L]
-RewriteRule   	^nypl/?$	index.php?provider=nypl&%{QUERY_STRING}	[L]
-
 # Images
 
 RewriteRule	^favicon.ico		images/favicon.ico	[L]
@@ -136,3 +132,8 @@ RewriteRule ^user/([0-9]+)/pending/?$			user_pending_checkins.php?foursquare_id=
 
 RewriteRule ^youarehere/?$				youarehere.php?%{QUERY_STRING}	[L]
 RewriteRule ^youarehere/auth/?$				youarehere_auth.php?%{QUERY_STRING}	[L]
+
+# See this. It's the *last* rule because it basically catches everything
+
+RewriteRule   	^4sq/?$	index.php?provider=foursquare&%{QUERY_STRING}	[L]
+RewriteRule	^([a-z]+)/$	index.php?provider=$1&%{QUERY_STRING}	[L]
