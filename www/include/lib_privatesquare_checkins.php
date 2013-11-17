@@ -465,6 +465,15 @@
 
 			$venue['count'] = $count;
 
+			$checkins_more = array(
+				'venue_id' => $venue_id,
+				'inflate_venue' => 0,
+				'inflate_weather' => 0,
+			);
+
+			$checkins = privatesquare_checkins_for_user($user, $checkins_more);
+			$venue['checkins'] = $checkins['rows'];
+
 			$rows[] = $venue;
 		}
 
@@ -478,11 +487,21 @@
 
 	function privatesquare_checkins_inflate_extras(&$row, $more=array()){
 
-		$venue_id = $row['venue_id'];
-		$venue = venues_get_by_venue_id($venue_id); 
-		$row['venue'] = $venue;
+		$defaults = array(
+			'inflate_venue' => 1,
+			'inflate_weather' => 1,
+		);
 
-		if ($row['weather']){
+		$more = array_merge($defaults, $more);
+
+		$venue_id = $row['venue_id'];
+
+		if ($more['inflate_venue']){
+			$venue = venues_get_by_venue_id($venue_id); 
+			$row['venue'] = $venue;
+		}
+
+		if (($row['weather']) && ($more['inflate_weather'])){
 
 			if ($weather = json_decode($row['weather'], "as hash")){
 				$row['weather'] = $weather;

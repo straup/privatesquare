@@ -1,4 +1,6 @@
 {foreach from=$markers item="row"}
+	 {if $row.latitude and $row.longitude}
+
 	 {* 2 == i want to go there *}
 	 {if $use_test=='has_visited' and !$row.has_visited}
 	<div class="marker marker-header marker-header-todo" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text"></span></div>
@@ -7,4 +9,21 @@
 	 {else}
 	<div class="marker marker-header" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text"></span></div>
 	{/if}
+
+	{elseif $row.checkins}
+	{foreach from=$row.checkins item="ch"}
+
+	 {* 2 == i want to go there *}
+	 {if $use_test=='has_visited' and !$row.has_visited}
+	<div class="marker marker-header marker-header-todo" data-location="{$ch.latitude|escape},{$ch.longitude|escape}"><span class="marker-history-text"></span></div>
+	 {elseif $row.status_id==2}
+	<div style="z-index:200;" class="marker marker-header marker-header-todo" data-location="{$ch.latitude|escape},{$ch.longitude|escape}"><span class="marker-history-text"></span></div>
+	 {else}
+	<div class="marker marker-header" data-location="{$ch.latitude|escape},{$ch.longitude|escape}"><span class="marker-history-text"></span></div>
+	{/if}
+
+	{/foreach}
+	{else}
+	{/if}
+
 {/foreach}
