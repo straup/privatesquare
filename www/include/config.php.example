@@ -26,6 +26,15 @@
 	$GLOBALS['cfg']['display_message'] = 0;
 	$GLOBALS['cfg']['display_message_text'] = 'This is the text that will appear in the message header.';
 
+	# Valid venues providers
+
+	$GLOBALS['cfg']['privatesquare_venues_providers'] = array(
+		# 0 => 'user',
+		1 => 'foursquare',
+		2 => 'stateofmind',
+		3 => 'nypl',
+	);
+
 	# You will need valid foursquare OAuth credentials
 	# See also: https://foursquare.com/oauth/register
 

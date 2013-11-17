@@ -4,12 +4,7 @@
 
 	function venues_providers_map($string_keys=0){
 
-		$map = array(
-			# 0 => 'user',
-			1 => 'foursquare',
-			2 => 'stateofmind',
-			3 => 'nypl',
-		);
+		$map = $GLOBALS['cfg']['privatesquare_venues_providers'];
 
 		if ($string_keys){
 			$map = array_flip($map);
