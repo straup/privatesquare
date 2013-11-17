@@ -4,6 +4,9 @@
 
  	#################################################################
 
+	# 'checkins' is the wrong name - it dates back to before you could 
+	# have places with multiple geographies (20131117/straup)
+
 	function privatesquare_checkins_utils_geo_stats($checkins, $more=array()){
 
 		$defaults = array(
@@ -15,6 +18,12 @@
 		if (count($checkins) == 1){
 			$lat = $checkins[0]['latitude'];
 			$lon = $checkins[0]['longitude'];
+
+			# see above...
+
+			if ((! $lat) && (! $lon) && ($checkins[0]['checkins'])){
+				return privatesquare_checkins_utils_geo_stats($checkins[0]['checkins'], $more);
+			}
 
 			$bbox = geo_utils_bbox_from_point($lat, $lon, 1);
 
@@ -29,14 +38,34 @@
 		$nelat = null;
 		$nelon = null;
 
+		# sudo put me in a function or something...
+
 		foreach ($checkins as $row){
+
 			$lat = $row['latitude'];
 			$lon = $row['longitude'];
 
-			$swlat = (isset($swlat)) ? min($swlat, $lat) : $lat;
-			$swlon = (isset($swlon)) ? min($swlon, $lon) : $lon;
-			$nelat = (isset($nelat)) ? max($nelat, $lat) : $lat;
-			$nelon = (isset($nelon)) ? max($nelon, $lon) : $lon;
+			if (($lat) && ($lon)){
+				$swlat = (isset($swlat)) ? min($swlat, $lat) : $lat;
+				$swlon = (isset($swlon)) ? min($swlon, $lon) : $lon;
+				$nelat = (isset($nelat)) ? max($nelat, $lat) : $lat;
+				$nelon = (isset($nelon)) ? max($nelon, $lon) : $lon;
+			}
+
+			else if ($row['checkins']){
+
+				foreach ($row['checkins'] as $ch){
+					$lat = $ch['latitude'];
+					$lon = $ch['longitude'];
+
+					$swlat = (isset($swlat)) ? min($swlat, $lat) : $lat;
+					$swlon = (isset($swlon)) ? min($swlon, $lon) : $lon;
+					$nelat = (isset($nelat)) ? max($nelat, $lat) : $lat;
+					$nelon = (isset($nelon)) ? max($nelon, $lon) : $lon;
+				}
+			}
+
+			else {}
 		}
 
 		# typically so that when creating a map by extent we don't

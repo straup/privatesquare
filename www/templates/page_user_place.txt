@@ -19,9 +19,23 @@
 		{* TO DO: date ranges *}
 	</h3>
 
+	{if $row.latitude and $row.longitude}
 	<div class="map" data-zoom="14" data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history{if ! $row.has_visited} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
 	</div>
+	{elseif $row.checkins|@count}
+
+	<div class="map"  data-extent="{$row.geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+
+	{foreach from=$row.checkins item="ch"}
+		<div class="marker marker-history{if ! $row.has_visited} marker-history-todo{/if}" data-location="{$ch.latitude|escape},{$ch.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
+	{/foreach}
+
+	{if 0}{include file="inc_map_header_markers.txt markers=$row.checkins}{/if}
+	</div>
+	
+	{else}
+	{/if}
 
 </div>
 </div>

@@ -474,6 +474,9 @@
 			$checkins = privatesquare_checkins_for_user($user, $checkins_more);
 			$venue['checkins'] = $checkins['rows'];
 
+			$geo_stats = privatesquare_checkins_utils_geo_stats(array($venue));
+			$venue['geo_stats'] = $geo_stats;
+
 			$rows[] = $venue;
 		}
 
