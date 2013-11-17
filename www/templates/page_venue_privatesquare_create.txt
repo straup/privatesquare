@@ -1,0 +1,110 @@
+{include file="inc_head.txt"}
+
+<div id="map-wrapper" class="row"></div>
+
+<div class="row">
+
+<form method="POST" class="form" role="form" id="create-form" style="display:none;">
+	{$crumb_key|crumb_input}
+
+	<div class="form-group">
+		<label for="name">Name</label>
+		<input type="text" name="name" id="name" class="form-control" />
+	</div>
+
+	<div class="form-group">
+		<label for="notes">Notes (if any)</label>
+		<textarea name="notes" id="notes" class="form-control"></textarea>
+	</div>
+
+	<div class="form-group">
+		<label for="static">This place has a fixed location</label>
+		<input type="checkbox" name="static" id="static" />
+	</div>
+
+	<div class="form-group">
+		<label for="checkin">Check-in to this place once it's been created</label>
+		<input type="checkbox" name="checkin" id="checkin" />
+	</div>
+
+	<div class="form-group text-center">
+	     <button id="create-button" class="btn btn-primary">MAKE IT SO</button>
+	</div>
+</form>
+</div>
+
+<script type="text/javascript">
+{literal}
+
+$(document).ready(function(){
+
+	var on_submit = function(){
+
+		var name = $("#name");
+		var notes = $("#notes");
+
+		var checkin = $("#checkin");
+		var static = $("#static");
+
+		checkin = (checkin.is(":checked")) ? 1 : 0;
+		static = (static.is(":checked")) ? 1 : 0;
+
+		var args = {
+			'name': name.val(),
+			'notes': notes.val(),
+			'checkin': checkin
+		};
+
+		if (static){
+
+			var map = $("#map-wrapper .map");
+			var center = map.attr("data-center");
+			var ll = center.split(",");
+
+			args['latitude'] = ll[0];
+			args['longitude'] = ll[1];
+		}
+
+		console.log(args);
+		return false;
+
+		// get crumb here...
+
+		var method = 'privatesquare.venues.create';
+
+		var on_success_create = function(rsp){
+
+		}
+
+		$("create-form").attr("disabled", "disabled");		
+
+		privatesquare_api_call(method, args, on_success_create);
+		privatesquare_set_status("Okay, creating your new place...");
+	};
+
+	$("#create-form").submit(on_submit);
+
+	var on_success = function(rsp){
+
+		privatesquare_unset_status();
+
+		var lat = rsp['coords']['latitude'];
+		var lon = rsp['coords']['longitude'];
+		_privatesquare_show_map(lat, lon);
+
+		$("#create-form").show();
+	};
+
+	var on_error = function(rsp){
+		privatesquare_set_status("Huh. I have no idea where you are...");
+	};
+
+	privatesquare_whereami(on_success, on_error);
+
+	privatesquare_set_status("First, let's ask the sky where you are...");
+});
+
+{/literal}
+</script>
+
+{include file="inc_foot.txt"}
