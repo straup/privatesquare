@@ -4,6 +4,10 @@
 {/capture}
 {include file="inc_head.txt"}
 
+<div class="row">
+<h3>Places nearby here</h3>
+</div>
+
 {if $latitude and $longitude}
 {if $venues|@count}
 
@@ -63,7 +67,9 @@ $(document).ready(function(){literal}{{/literal}
 
 {else}
 	<div class="row">
-	<p class="alert alert-warning">You do not appear to have been here before... that or the computers are having a <q>computer moment</q> (where <em>here</em> means: {$latitude|escape}, {$longitude|escape})</p> 
+	<p class="lead">You do not appear to have been here before. That or the computers are having a <span class="hey-look">computer moment</span>.</p> 
+
+	<p>Where "here" means <span class="hey-look">{$latitude|escape}, {$longitude|escape}</span>.</p>
 	</div>
 {/if}
 {else}

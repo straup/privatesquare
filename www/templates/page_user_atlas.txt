@@ -43,11 +43,14 @@ $(document).ready(function(){literal}{{/literal}
 
 {else}
 
-<h3 class="header-right">{$str_status|escape}</h3>
+<div class="row">
+<h3>{$str_status|escape}</h3>
+</div>
 
-<p>You haven't said <q>{$str_status|escape}</q> about any places.</p>
-
+<div class="row">
+<p class="lead">You haven't said <q>{$str_status|escape}</q> about any places.</p>
 <p>Would you to <a href="{$owner|@urls_atlas_of_desire_for_user}">return</a> to your atlas of desire?</p>
+</div>
 
 {/if}
 

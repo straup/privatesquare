@@ -24,7 +24,7 @@ h3 small {
     font-size:.5em;
 }
 
-#status {
+#status:visible {
     margin-bottom: 2em !important;
 }
 
@@ -238,10 +238,11 @@ select {
 
 #atlas ul li {
     list-style-type: none;
+    margin-bottom: 1em;
 }
 
-#atlas ul .nearbyhere {
+#atlas ul li small {
     font-size: .6em;
     font-weight: 300;
-    margin-bottom: 1em;
+    display:block;
 }

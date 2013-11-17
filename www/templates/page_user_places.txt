@@ -1,6 +1,8 @@
 {capture assign="page_title"}{$owner.username} | places{/capture}
 {include file="inc_head.txt"}
 
+{if 0}<div class="row"><h3>Cities you've checked in to</h3></div>{/if}
+
 <div class="row">
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 {include file="inc_map_header_markers.txt markers=$places}
