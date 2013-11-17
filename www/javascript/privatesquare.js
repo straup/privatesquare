@@ -168,17 +168,42 @@ function privatesquare_search(){
 		return false;
 	}
 
-	var _onsuccess = function(rsp){
-		var lat = rsp['coords']['latitude'];
-		var lon = rsp['coords']['longitude'];
-		privatesquare_fetch_foursquare_venues(lat, lon, query);
-		searching = false;
-		return;
-	};
+	var provider = privatesquare_venues_provider();
+	var on_success = null;
 
-	var _onerror = function(rsp){};
+	if (provider == 'foursquare'){
 
-	privatesquare_whereami(_onsuccess, _onerror);
+		on_success = function(rsp){
+			var lat = rsp['coords']['latitude'];
+			var lon = rsp['coords']['longitude'];
+
+			privatesquare_foursquare_fetch_venues(lat, lon, query);
+			searching = false;
+			return;
+		};
+	}
+
+	else if (provider == 'nypl'){
+
+		on_success = function(rsp){
+			var lat = rsp['coords']['latitude'];
+			var lon = rsp['coords']['longitude'];
+
+			privatesquare_nypl_fetch_venues(lat, lon, query);
+			searching = false;
+			return;
+		};
+	}
+
+	else {
+
+		privatesquare_set_status("Hrm... I don't know how to search for that", "warning");
+		return false;
+	}
+
+	var on_error = function(rsp){};
+
+	privatesquare_whereami(on_success, on_error);
 
 	privatesquare_set_status("Re-checking your location first...");
 	return false;
@@ -415,4 +440,8 @@ function privatesquare_whereami(onsuccess, onerror){
 
 function privatesquare_abs_root_url(){
 	return document.body.getAttribute("data-abs-root-url");
+}
+
+function privatesquare_venues_provider(){
+	 return $("body").attr("data-privatesquare-provider");
 }
