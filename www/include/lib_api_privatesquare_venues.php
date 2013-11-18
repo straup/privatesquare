@@ -233,8 +233,6 @@
 
 	function api_privatesquare_venues_search(){
 
-		api_output_error(999, "Not ready");
-
 		$lat = request_float('latitude');
 		$lon = request_float('longitude');
 

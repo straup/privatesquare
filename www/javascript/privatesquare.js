@@ -36,6 +36,10 @@ function privatesquare_init(provider){
 			privatesquare_nypl_fetch_venues(lat, lon);
 		}
 
+		else if (provider=='privatesquare'){
+			privatesquare_venues_fetch_venues(lat, lon);
+		}
+
 		else {
 			privatesquare_foursquare_fetch_venues(lat, lon);
 		}
@@ -170,6 +174,8 @@ function privatesquare_search(){
 
 	var provider = privatesquare_venues_provider();
 	var on_success = null;
+
+	console.log('provider is ' + provider);
 
 	if (provider == 'foursquare'){
 

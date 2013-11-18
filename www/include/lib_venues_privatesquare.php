@@ -51,20 +51,30 @@
 
 	function venues_privatesquare_search(&$user, $lat, $lon, $more=array()){
 
-		$bbox = geo_utils_bbox_from_point($lat, $lon, .5, $unit='m');
-		$bbox = implode(",", array($bbox[1], $bbox[0], $bbox[3], $bbox[2]));
+		# TO DO: defaults and pagination stuff
 
-		$query = array(
-			"user_id=" . AddSlashes($user['id']),
-			"latitude BETWEEN " . AddSlashes($bbox[0]) . " AND " . AddSlashes($bbox[2]),
-			"longitude BETWEEN " . AddSlashes($bbox[1]) . " AND " . AddSlashes($bbox[3])
+		$bbox = geo_utils_bbox_from_point($lat, $lon, .5, $unit='m');
+
+		$enc_bbox = array();
+
+		foreach ($bbox as $coord){
+			$enc_bbox[] = AddSlashes($coord);
+		}
+
+		$enc_user = AddSlashes($user['id']);
+
+		# TO DO: indexes
+
+		$where = array(
+			"(user_id='{$enc_user}' AND latitude IS NULL AND longitude IS NULL)",
+			"(user_id='{$enc_user}' AND latitude BETWEEN {$enc_bbox[0]} AND {$enc_bbox[2]} AND longitude BETWEEN {$bbox[1]} AND {$bbox[3]})"
 		);
 
-		$query = implode(" AND ", $query);
+		$where = implode(" OR ", $where);
 
-		$sql = "SELECT * FROM Venues WHERE {$query}";
+		$sql = "SELECT * FROM Venues WHERE {$where}";
+
 		$rsp = db_fetch_paginated($sql, $more);
-
 		return $rsp;
 	}
 
