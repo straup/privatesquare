@@ -4,15 +4,14 @@
 
 <div class="row">
 
-<form method="POST" class="form" role="form" id="create-form" style="display:none;">
-	{$crumb_key|crumb_input}
+<form method="POST" class="form" role="form" id="create-form" style="display:none;" data-create-crumb="{$create_crumb|escape}">
 
 	<div class="form-group">
 		<label for="name">Name</label>
 		<input type="text" name="name" id="name" class="form-control" />
 	</div>
 
-	<div class="form-group">
+	<div class="form-group" style="display:none;">
 		<label for="notes">Notes (if any)</label>
 		<textarea name="notes" id="notes" class="form-control"></textarea>
 	</div>
@@ -49,10 +48,13 @@ $(document).ready(function(){
 		checkin = (checkin.is(":checked")) ? 1 : 0;
 		static = (static.is(":checked")) ? 1 : 0;
 
+		var crumb = $("#create-form").attr("data-create-crumb");
+
 		var args = {
 			'name': name.val(),
 			'notes': notes.val(),
-			'checkin': checkin
+			'checkin': checkin,
+			'crumb': crumb
 		};
 
 		if (static){
@@ -65,21 +67,26 @@ $(document).ready(function(){
 			args['longitude'] = ll[1];
 		}
 
-		console.log(args);
-		return false;
-
-		// get crumb here...
+		// console.log(args);
 
 		var method = 'privatesquare.venues.create';
 
 		var on_success_create = function(rsp){
 
-		}
+			if (rsp['checkin']){
 
-		$("create-form").attr("disabled", "disabled");		
+			}
+
+			var url = rsp['venue']['url'];
+			location.href = url + "?created=1";
+		};
+
+		$("#create-form").attr("disabled", "disabled");		
 
 		privatesquare_api_call(method, args, on_success_create);
 		privatesquare_set_status("Okay, creating your new place...");
+
+		return false;
 	};
 
 	$("#create-form").submit(on_submit);

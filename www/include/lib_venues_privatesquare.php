@@ -15,6 +15,8 @@
 		$venue = array(
 			'venue_id' => $id,
 			'name' => $data['name'],
+			'latitude' => $data['latitude'],
+			'longitude' => $data['longitude'],
 			'user_id' => $user['id'],
 			'provider_id' => 0,
 			'provider_venue_id' => $id,
@@ -37,7 +39,9 @@
 		$rsp = db_insert('Venues', $insert);
 
 		if ($rsp['ok']){
-			$rsp['venue'] = $rsp;
+
+			$venue['url'] = urls_venue($venue);
+			$rsp['venue'] = $venue;
 		}
 
 		return $rsp;
