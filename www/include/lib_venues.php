@@ -52,7 +52,12 @@
 		$map = venues_providers_map();
 		$provider = $map[$provider_id];
 
-		if ($provider == 'foursquare'){
+		if ($provider == 'privatesquare'){
+
+			return array('ok' => 0, 'error' => 'How did you get here?');
+		}
+
+		else if ($provider == 'foursquare'){
 
 			$rsp = venues_foursquare_fetch_venue($venue_id);
 

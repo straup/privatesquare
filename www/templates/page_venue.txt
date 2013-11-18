@@ -97,14 +97,13 @@ $(document).ready(function(){
 
 	<h4>Details</h4>
 
+	{capture assign="provider_label"}{$venue.provider_id|@venues_providers_id_to_label}{/capture}
+
 	<dl class="dl-horizontal">
-	{if $venue.provider_id|@venues_providers_id_to_label == 'foursquare'}
+	{if $provider_label == 'foursquare'}
 	<dt>4sq:venue</dt><dd><a href="{$venue|@foursquare_urls_venue}">{$venue.provider_venue_id|escape}</a></dd>
-	{elseif $venue.provider_id|@venues_providers_id_to_label == 'stateofmind'}
-	<dt>stateofmind:venue</dt><dd>{$venue_id|escape}</a></dd>
-	{elseif $venue.provider_id|@venues_providers_id_to_label == 'nypl'}
-	<dt>nypl:venue</dt><dd>{$venue.provider_venue_id|escape}</dd>
 	{else}
+	<dt>{$provider_label|escape}:venue</dt><dd>{$venue_id|escape}</a></dd>
 	{/if}
 
 	{if $venue.locality}<dt>woe:locality</dt><dd><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.locality|escape}</a></dd>{/if}

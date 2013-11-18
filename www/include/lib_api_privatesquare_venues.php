@@ -159,29 +159,6 @@
 			'checkin' => $rsp['checkin']
 		);
 
-		#
-
-		$status_map = privatesquare_checkins_status_map('string keys');
-
-		$send_to_littleprinter = 0;
-
-		if ((features_is_enabled("bergcloud_users")) && (features_is_enabled("bergcloud_littleprinter"))){
-
-			$send_to_littleprinter = 1;
-		}
-
-		if (($send_to_littleprinter) && ($status_id == $status_map['i want to go there'])){
-
-			loadlib("bergcloud_users");
-			loadlib("littleprinter");
-
-			$berg_user = bergcloud_users_get_by_user_id($GLOBALS['cfg']['user']['id']);
-
-			if (($berg_user) && ($berg_user['direct_print_code']) && ($berg_user['littleprinter_updates'])){
-				$rsp = littleprinter_print_venue($venue, $berg_user);
-			}
-		}
-
 		api_output_ok($out);
 	}
 
