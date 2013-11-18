@@ -253,11 +253,20 @@
 			api_output_error(999, $rsp['error']);
 		}
 
+		$venues = array();
+
+		foreach ($rsp['rows'] as $v){
+			$v['id'] = $v['venue_id'];
+			$venues[] = $v;
+		}
+
 		$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
 
 		$out = array(
 			'crumb' => $checkin_crumb,
-			'venues' => $rsp['rows']
+			'latitude' => $lat,
+			'longitude' => $lon,
+			'venues' => $venues,
 		);
 		
 		api_output_ok($out);
