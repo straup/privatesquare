@@ -60,6 +60,8 @@
 			api_output_error(999, "Failed to archive venue");
 		}
 
+		# sudo put me in a function...
+
 		$checkin = array(
 			'user_id' => $GLOBALS['cfg']['user']['id'],
 			'status_id' => $status_id,
@@ -73,9 +75,6 @@
 		# Maybe: Never transfer hierarchy from venue? Always do lookup
 		# based on the lat,lon passed in by the user? Consider the list
 		# of possible geographies for a "state of mind"
-
-		# $lat = 40.685246;
-		# $lon = -73.994409;
 
 		$checkin['latitude'] = ($venue['latitude']) ? $venue['latitude'] : $lat;
 		$checkin['longitude'] = ($venue['longitude']) ? $venue['longitude'] : $lon;
@@ -147,9 +146,9 @@
 			}
 		}
 
-		# Actually store the checkin
-
 		$rsp = privatesquare_checkins_create($checkin);
+
+		# end of sudo put me in a function
 
 		if (! $rsp['ok']){
 			api_output_error(999, "Check in failed");
@@ -168,6 +167,8 @@
 
 		$name = post_str("name");
 		$notes = post_str("notes");
+
+		$checkin = post_str("checkin");
 
 		if (! $name){
 			api_output_error(999, "Missing name");
@@ -202,6 +203,19 @@
 		$out = array(
 			'venue' => $rsp['venue'],
 		);
+
+		/*
+
+		if ($checkin){
+
+			$rsp = _api_privatesquare_do_checkin($venue, $lat, $lon);
+
+			if ($rsp['ok']){
+				$out['checkin'] = $rsp['checkin'];
+			}
+		}
+
+		*/
 
 		api_output_ok($out);
 	}
@@ -247,6 +261,103 @@
 		);
 		
 		api_output_ok($out);
+	}
+
+ 	#################################################################
+
+	# maybe... something... dunno... work in progress (20131118/straup)
+
+	function _api_privatesquare_do_checkin(&$venue, &$user, $lat, $lon){
+
+		$provider = 'fixme';
+		$status_id = 'fixme';
+
+		$checkin = array(
+			'user_id' => $user['id'],
+			'status_id' => $status_id,
+			'venue_id' => $venue['venue_id']
+		);
+
+		if ($created = post_int32("created")){
+			$checkin['created'] = $created;
+		}
+
+		# Maybe: Never transfer hierarchy from venue? Always do lookup
+		# based on the lat,lon passed in by the user? Consider the list
+		# of possible geographies for a "state of mind"
+
+		$checkin['latitude'] = ($venue['latitude']) ? $venue['latitude'] : $lat;
+		$checkin['longitude'] = ($venue['longitude']) ? $venue['longitude'] : $lon;
+
+		if ($has_geo){
+
+			# $checkin['latitude'] = $lat;
+			# $checkin['longitude'] = $lon;
+
+			venues_geo_append_hierarchy($lat, $lon, $checkin);
+		}
+
+		else if ($venue){
+			venues_geo_transfer_hierarchy($venue, $checkin);
+		}
+
+		else {}
+
+		# Check to see if we're checking in to 4sq too
+
+		# If this is a deferred checkin then we're just going to
+		# ignore foursquare (for the time being) since there's no
+		# way to back date checkins. One possibility is to make a
+		# note of the backdating in the shout-out but in the interest
+		# of keeping things simple to start, we're not going to.
+		# (20120501/straup)
+
+		if ($provider == 'foursquare'){
+
+			if (($broadcast = post_str("broadcast")) && (! isset($checkin['created']))){
+
+				$fsq_user = foursquare_users_get_by_user_id($user['id']);
+				$method = 'checkins/add';
+
+				$args = array(
+					'oauth_token' => $fsq_user['oauth_token'],
+					'venueId' => $venue_id,
+					'broadcast' => $broadcast,
+				);
+
+				$more = array(
+					'method' => 'POST',
+				);
+
+				$rsp = foursquare_api_call($method, $args, $more);
+
+				if ($rsp['ok']){
+					$checkin['checkin_id'] = $rsp['rsp']['checkin']['id'];
+				}
+
+				# on error, then what?
+			}
+		}
+
+		# If we already have a 'created' data that means this is a deferred
+		# checkin being processed which means it's in the past which makes
+		# it hard to ask for the weather. (20120501/straup)
+
+		if ((features_is_enabled("weather_tracking")) && ($has_geo) && (! isset($checkin['created']))){
+
+			loadlib("weather_yahoo");
+
+			$rsp = weather_yahoo_conditions($checkin['latitude'], $checkin['longitude'], $checkin['locality']);
+
+			if ($rsp['ok']){
+				$conditions = $rsp['conditions'];
+				$conditions['source'] = $rsp['source'];
+				$checkin['weather'] = json_encode($conditions);
+			}
+		}
+
+		$rsp = privatesquare_checkins_create($checkin);
+		return $rsp;		
 	}
 
  	#################################################################

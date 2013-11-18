@@ -50,7 +50,7 @@ $(document).ready(function(){
 	{if $venue.checkins|@count}
 	{include file="inc_map_header_markers.txt markers=$venue.checkins}
 	{else}
-	<div class="marker marker-history marker-history-todo" data-location="0,0"><span class="marker-history-text">{$venue.name|escape} ⇽ you have never here</span></div>
+	<div class="marker marker-history marker-history-todo" data-location="0,0"><span class="marker-history-text">{$venue.name|escape} ⇽ you have never been here</span></div>
 	{/if}
 	</div>
 	{/if}

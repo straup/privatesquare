@@ -23,7 +23,7 @@
 
 	<div class="form-group">
 		<label for="checkin">Check-in to this place</label>
-		<input type="checkbox" name="checkin" id="checkin" />
+		<input type="checkbox" name="checkin" id="checkin" disabled="disabled" />
 	</div>
 
 	<div class="form-group text-center">
