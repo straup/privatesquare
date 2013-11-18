@@ -248,11 +248,21 @@
 			api_output_error(999, "Missing or invalid longitude");
 		}
 
+		$user = $GLOBALS['cfg']['user'];
+		$rsp = venues_privatesquare_search($user, $lat, $lon);
+
+		if (! $rsp['ok']){
+			api_output_error(999, $rsp['error']);
+		}
+
 		$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
 
-		$bbox = geo_utils_bbox_from_point($lat, $lon, .5, $unit='m');
-		$bbox = implode(",", array($bbox[1], $bbox[0], $bbox[3], $bbox[2]));
-
+		$out = array(
+			'crumb' => $checkin_crumb,
+			'venues' => $rsp['rows']
+		);
+		
+		api_output_ok($out);
 	}
 
  	#################################################################
