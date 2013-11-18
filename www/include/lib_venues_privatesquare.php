@@ -15,13 +15,16 @@
 		$venue = array(
 			'venue_id' => $id,
 			'name' => $data['name'],
-			'latitude' => $data['latitude'],
-			'longitude' => $data['longitude'],
 			'user_id' => $user['id'],
 			'provider_id' => 0,
 			'provider_venue_id' => $id,
 			'created' => $now,
 		);
+
+		if (($data['latitude']) && ($data['longitude'])){
+			$venue['latitude'] = $data['latitude'];
+			$venue['longitude'] = $data['longitude'];
+		}
 
 		if ((isset($venue['latitude'])) && (isset($venue['longitude']))){
 			venues_geo_append_hierarchy($venue['latitude'], $venue['longitude'], $venue);

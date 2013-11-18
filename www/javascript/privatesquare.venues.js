@@ -4,17 +4,6 @@
 
 function privatesquare_venues_fetch_venues(lat, lon){
 
-	// Really? Yeah, I think so. We'll see...
-	// (20131117/straup)
-
-	$("#what option").each(function(){
-		var opt = $(this);
-
-		if (opt.val() > 1){
-			opt.attr("disabled", "disabled");
-		}
-	});
-
 	$("#broadcast").attr("disabled", "disabled");
 
 	var method = 'privatesquare.venues.search';
@@ -30,28 +19,23 @@ function privatesquare_venues_fetch_venues(lat, lon){
 
 function _privatesquare_venues_fetch_venues_onsuccess(rsp){
 
-	 console.log(rsp);
-
 	privatesquare_unset_status();
 
 	if (rsp['stat'] != 'ok'){
 
-		var _okay = function(rsp){
+		var okay = function(rsp){
 			var lat = rsp['coords']['latitude'];
 			var lon = rsp['coords']['longitude'];
 			privatesquare_deferred_checkin(lat, lon, 'api error');
 		};
 
-		var _not_okay = function(){
+		var not_okay = function(){
 			privatesquare_api_error(rsp);
 		}
 
-		privatesquare_whereami(_okay, _not_okay);
+		privatesquare_whereami(okay, not_okay);
 		return;
 	}
-
-	var venues = $("#venues");
-	venues.attr("data-venues-provider", "stateofmind");
 
     	var count = rsp['venues'].length;
 
@@ -70,8 +54,6 @@ function _privatesquare_venues_fetch_venues_onsuccess(rsp){
 	where.change(_privatesquare_where_onchange);
 
 	$("#what").change(_privatesquare_what_onchange);
-
-	// draw the map...
 
 	_privatesquare_show_map(rsp['latitude'], rsp['longitude']);
 
