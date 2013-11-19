@@ -60,7 +60,12 @@
 			api_output_error(999, "Failed to archive venue");
 		}
 
-		# sudo put me in a function...
+		# see below - this function is the new new and the commented-out
+		# bits are the old old (20131119/straup)
+
+		$rsp = _api_privatesquare_do_checkin($GLOBALS['cfg']['user'], $venue, $lat, $lon);
+
+		/* 
 
 		$checkin = array(
 			'user_id' => $GLOBALS['cfg']['user']['id'],
@@ -148,7 +153,9 @@
 
 		$rsp = privatesquare_checkins_create($checkin);
 
-		# end of sudo put me in a function
+		*/
+
+		# end of the old old
 
 		if (! $rsp['ok']){
 			api_output_error(999, "Check in failed");
@@ -200,22 +207,24 @@
 			api_output_error(999, $rsp['error']);
 		}
 
-		$out = array(
-			'venue' => $rsp['venue'],
-		);
+		$venue = $rsp['venue'];
 
-		/*
+		$out = array(
+			'venue' => $venue,
+		);
 
 		if ($checkin){
 
-			$rsp = _api_privatesquare_do_checkin($venue, $lat, $lon);
+			# THIS IS NOT PASSING LAT LON CORRECTLY... (20131119/straup)
+
+			$rsp = _api_privatesquare_do_checkin($GLOBALS['cfg']['user'], $venue, $lat, $lon);
 
 			if ($rsp['ok']){
-				$out['checkin'] = $rsp['checkin'];
+				$checkin = $rsp['checkin'];
+				$checkin['url'] = urls_checkin($checkin);
+				$out['checkin'] = $checkin;
 			}
 		}
-
-		*/
 
 		api_output_ok($out);
 	}
@@ -267,10 +276,27 @@
 
 	# maybe... something... dunno... work in progress (20131118/straup)
 
-	function _api_privatesquare_do_checkin(&$venue, &$user, $lat, $lon){
+	function _api_privatesquare_do_checkin(&$user, &$venue, $lat, $lon){
 
-		$provider = 'fixme';
-		$status_id = 'fixme';
+		# See all these POST variables? I do not love that we are
+		# invoking them again but I'm not sure how to do it better
+		# right now so if it works then it will do... for now
+		# (20131118/straup)
+
+		# It is also assumed that these values have all been sanitized
+		# and validated by the time you get here... which further
+		# suggests this is profoundly stupid but it will do... for now
+		# (20131119/straup)
+
+		$provider_id = post_int32("provider_id");
+		$provider = post_str("provider");
+
+		$status_id = post_int32("status_id");
+		$broadcast = post_str("broadcast");
+
+		$created = post_int32("created");
+
+		#
 
 		$checkin = array(
 			'user_id' => $user['id'],
@@ -278,7 +304,7 @@
 			'venue_id' => $venue['venue_id']
 		);
 
-		if ($created = post_int32("created")){
+		if ($created){
 			$checkin['created'] = $created;
 		}
 
@@ -314,7 +340,7 @@
 
 		if ($provider == 'foursquare'){
 
-			if (($broadcast = post_str("broadcast")) && (! isset($checkin['created']))){
+			if (($broadcast) && (! isset($checkin['created']))){
 
 				$fsq_user = foursquare_users_get_by_user_id($user['id']);
 				$method = 'checkins/add';
