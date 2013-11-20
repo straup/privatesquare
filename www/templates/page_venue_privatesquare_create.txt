@@ -50,37 +50,33 @@ $(document).ready(function(){
 
 		var crumb = $("#create-form").attr("data-create-crumb");
 
+		var map = $("#map-wrapper .map");
+		var center = map.attr("data-center");
+		var ll = center.split(",");
+
 		var args = {
 			'name': name.val(),
 			'notes': notes.val(),
 			'checkin': checkin,
-			'crumb': crumb
+			'static': static,
+			'crumb': crumb,
+			'latitude': ll[0],
+			'longitude': ll[1],
 		};
-
-		if (static){
-
-			var map = $("#map-wrapper .map");
-			var center = map.attr("data-center");
-			var ll = center.split(",");
-
-			args['latitude'] = ll[0];
-			args['longitude'] = ll[1];
-		}
-
-		// console.log(args);
 
 		var method = 'privatesquare.venues.create';
 
 		var on_success_create = function(rsp){
 
-			console.log(rsp);
-
 			if (rsp['checkin']){
-				return;			
+				var url = rsp['checkin']['url'];
+				location.href = url + "?created=1";
 			}
 
-			var url = rsp['venue']['url'];
-			location.href = url + "?created=1";
+			else {
+				var url = rsp['venue']['url'];
+				location.href = url + "?created=1";
+			}
 		};
 
 		$("#create-form").attr("disabled", "disabled");		

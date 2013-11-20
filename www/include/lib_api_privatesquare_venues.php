@@ -175,7 +175,8 @@
 		$name = post_str("name");
 		$notes = post_str("notes");
 
-		$checkin = post_str("checkin");
+		$static = post_int32("static");
+		$checkin = post_int32("checkin");
 
 		if (! $name){
 			api_output_error(999, "Missing name");
@@ -192,14 +193,25 @@
 			api_output_error(999, "Invalid latitude");
 		}
 
+		if (($static) && ((! $lat) || (! $lon))){
+			api_output_error(999, "Missing lat, lon for static venue");
+		}
+
+		if (($checkin) && ((! $lat) || (! $lon))){
+			api_output_error(999, "Missing lat, lon for checkin");
+		}
+
 		$user = $GLOBALS['cfg']['user'];
 
 		$data = array(
 			'name' => $name,
 			'notes' => $notes,
-			'latitude' => $lat,
-			'longitude' => $lon,
 		);
+
+		if ($static){
+			$data['latitude'] = $lat;
+			$data['longitude'] = $lon;
+		}
 
 		$rsp = venues_privatesquare_add_venue($user, $data);
 
@@ -214,8 +226,6 @@
 		);
 
 		if ($checkin){
-
-			# THIS IS NOT PASSING LAT LON CORRECTLY... (20131119/straup)
 
 			$rsp = _api_privatesquare_do_checkin($GLOBALS['cfg']['user'], $venue, $lat, $lon);
 
@@ -314,6 +324,8 @@
 
 		$checkin['latitude'] = ($venue['latitude']) ? $venue['latitude'] : $lat;
 		$checkin['longitude'] = ($venue['longitude']) ? $venue['longitude'] : $lon;
+
+		$has_geo = (($lat) && ($lon)) ? 1 : 0;
 
 		if ($has_geo){
 
