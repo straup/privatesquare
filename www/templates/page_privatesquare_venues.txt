@@ -1,0 +1,15 @@
+{include file="inc_head.txt"}
+
+{if ! $venues|@count}
+<div class="row"><p class="lead">You haven't created any venues yet. <a href="">Would you like to></a>.</p></div>
+{else}
+
+{foreach from=$venues item="row"}
+<div class="row">
+<h3><a href="">{$row.name|escape}</a> <small>{$row.created|date_format}</small></h3>
+</div>
+{/foreach}
+
+{/if}
+
+{include file="inc_foot.txt"}

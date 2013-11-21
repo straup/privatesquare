@@ -106,8 +106,8 @@ RewriteRule ^want(/([a-f0-9]+))?/?$		venue_i_want_to_go_there.php?venue_id=$2&%{
 
 RewriteRule ^venues?/([a-z]+)(/page([0-9]+))?/?$	venues_provider.php?provider=$1&page=$3&%{QUERY_STRING}	[L]
 
-# please rename PHP/templates (20131120/straup)
-RewriteRule ^privatesquare/create/?$			venue_privatesquare_create.php?%{QUERY_STRING}		[L]
+RewriteRule ^privatesquare/create/?$					privatesquare_create.php?%{QUERY_STRING}		[L]
+RewriteRule ^privatesquare/venues(/page([0-9]+))?/?$			privatesquare_venues.php?page=$2&%{QUERY_STRING}		[L]
 
 RewriteRule ^venue/([0-9]+)/?$				venue.php?venue_id=$1&%{QUERY_STRING}	[L]
 RewriteRule ^venue/([a-z]+)/([a-f0-9]+)/?$		venue.php?provider=$1&venue_id=$2&%{QUERY_STRING}	[L]

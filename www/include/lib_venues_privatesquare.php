@@ -52,6 +52,20 @@
 
 	#################################################################
 
+	function venues_privatesquare_get_for_user(&$user, $more=array()){
+
+		$enc_user = AddSlashes($user['id']);
+
+		# THIS NEEDS INDEXES (20131121/straup)
+
+		$sql = "SELECT * FROM Venues WHERE provider_id=0 AND user_id='{$enc_user}' ORDER BY created DESC";
+		$rsp = db_fetch_paginated($sql, $more);
+
+		return $rsp;
+	}
+
+	#################################################################
+
 	function venues_privatesquare_search(&$user, $lat, $lon, $more=array()){
 
 		# TO DO: defaults and pagination stuff
