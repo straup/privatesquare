@@ -54,6 +54,31 @@
 
 	#################################################################
 
+	# This will delete all the checkins associated with a venue and the
+	# venue itself. Or more specifically it will delete all the checkins
+	# (for a venue) belonging to the user who created the venue. This
+	# may need to change at some point but since (privatesquare) venues
+	# can't be shared between users at this point we're not going to
+	# worry about it right now. (20131123/straup)
+
+	function venues_privatesquare_delete_venue(&$venue){
+
+		$user = users_get_by_id($venue['user_id']);
+
+		$rsp = privatesquare_checkins_delete_for_venue($user, $venue);
+
+		if (! $rsp['ok']){
+			return $rsp;
+		}
+
+		$enc_venue = AddSlashes($venue['venue_id']);
+
+		$sql = "DELETE FROM Venues WHERE venue_id='{$enc_venue}'";
+		return db_write($sql);
+	}
+
+	#################################################################
+
 	function venues_privatesquare_get_for_user(&$user, $more=array()){
 
 		$enc_user = AddSlashes($user['id']);

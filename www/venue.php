@@ -78,10 +78,18 @@
 	$checkin_crumb = crumb_generate("api", "privatesquare.venues.checkin");
 	$GLOBALS['smarty']->assign("checkin_crumb", $checkin_crumb);
 
+	if (venues_providers_id_to_label($venue['provider_id']) == 'privatesquare'){
+		$delete_crumb = crumb_generate("api", "privatesquare.venues.delete");
+		$GLOBALS['smarty']->assign("delete_crumb", $delete_crumb);
+	}
+
 	# did we arrive here from a checkin page?
 
 	$success = get_str("success") ? 1 : 0;	
 	$GLOBALS['smarty']->assign("success", $success);
+
+	$created = get_str("created") ? 1 : 0;	
+	$GLOBALS['smarty']->assign("created", $created);
 
 	$GLOBALS['smarty']->assign("venue_id", $venue['venue_id']);
 

@@ -52,6 +52,15 @@
 			"library": "api_privatesquare_venues"
 		},
 
+		"privatesquare.venues.delete": {
+			"documented": 0,
+			"enabled": 1,
+			"requires_auth": 1,
+			"requires_crumb": 1,
+			"crumb_ttl": 600,
+			"library": "api_privatesquare_venues"
+		},
+
 		"privatesquare.venues.search": {
 			"documented": 0,
 			"enabled": 1,

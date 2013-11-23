@@ -711,6 +711,23 @@
 
  	#################################################################
 
+	# See notes in venues_privatesquare_delete_venue (20131123/straup)
+
+	function privatesquare_checkins_delete_for_venue(&$user, &$venue){
+
+		# $user = $venue['user_id'];
+
+		$cluster_id = $user['cluster_id'];
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_venue = AddSlashes($venue['venue_id']);
+
+		$sql = "DELETE FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND venue_id='{$enc_venue}'";
+		return db_write_users($cluster_id, $sql);	
+	}
+
+ 	#################################################################
+
 	function privatesquare_checkins_bookends_for_date(&$user, $ymd){
 
 		$bookends = array(

@@ -177,6 +177,52 @@ $(document).ready(function(){
 
 </div>
 
+{if $provider_label=='privatesquare'}
+<div class="row pull-right">
+<button id="delete-venue" data-venue-id="{$venue.venue_id|escape}" data-delete-crumb="{$delete_crumb|escape}" class="btn btn-danger">Delete this venue</button>
+
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+
+	$("#delete-venue").click(function(){
+
+		var prompt = "Are you sure you want to delete this venue (and all your checkins here)? THERE IS NO UNDO.";
+
+		if (! confirm(prompt)){
+			return false;
+		}
+
+		var b = $(this);
+
+		var venue_id = b.attr("data-venue-id");
+		var crumb = b.attr("data-delete-crumb");
+
+		var method = "privatesquare.venues.delete";
+
+		var args = {
+			'venue_id': venue_id,
+			'crumb': crumb
+		};
+
+		var on_success = function(rsp){
+			// Maybe redirect somewhere else?
+			var redirect = privatesquare_abs_root_url() + 'privatesquare/venues/?delete=1';
+			location.href = redirect;
+		};
+
+		b.attr("disabled", "disabled");
+		privatesquare_api_call(method, args, on_success);
+
+		privatesquare_set_status("Okay, I am deleting this venue now...");
+		return false;
+	});
+});
+{/literal}
+</script>
+</div>
+{/if}
+
 {include file="inc_export_links.txt"}
 
 <script type="text/javascript">
