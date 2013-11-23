@@ -1,5 +1,7 @@
 <?php
 
+	loadlib("privatesquare_checkins_utils");
+
 	#################################################################
 
 	function venues_privatesquare_add_venue(&$user, $data){
@@ -61,6 +63,28 @@
 		$sql = "SELECT * FROM Venues WHERE provider_id=0 AND user_id='{$enc_user}' ORDER BY created DESC";
 		$rsp = db_fetch_paginated($sql, $more);
 
+		$venues = array();
+
+		foreach ($rsp['rows'] as $venue){
+
+			$venue_id = $venue['venue_id'];
+
+			$checkins_more = array(
+				'venue_id' => $venue_id,
+				'inflate_venue' => 0,
+				'inflate_weather' => 0,
+			);
+
+			$checkins = privatesquare_checkins_for_user($user, $checkins_more);
+			$venue['checkins'] = $checkins['rows'];
+
+			$geo_stats = privatesquare_checkins_utils_geo_stats(array($venue));
+			$venue['geo_stats'] = $geo_stats;
+
+			$venues[] = $venue;
+		}
+
+		$rsp['rows'] = $venues;
 		return $rsp;
 	}
 

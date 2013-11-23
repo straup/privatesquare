@@ -11,10 +11,9 @@
 	}
 
 	$user = $GLOBALS['cfg']['user'];
-	$rsp = venues_privatesquare_get_for_user($user, $more);
 
-	$venues = $rsp['rows'];
-	$GLOBALS['smarty']->assign_by_ref("venues", $venues);
+	$rsp = venues_privatesquare_get_for_user($user, $more);
+	$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 
 	$GLOBALS['smarty']->display("page_privatesquare_venues.txt");
 	exit();

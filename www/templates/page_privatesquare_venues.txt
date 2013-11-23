@@ -4,11 +4,58 @@
 <div class="row"><p class="lead">You haven't created any venues yet. <a href="">Would you like to></a>.</p></div>
 {else}
 
-{foreach from=$venues item="row"}
 <div class="row">
-<h3><a href="">{$row.name|escape}</a> <small>{$row.created|date_format}</small></h3>
+<div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+{include file="inc_map_header_markers.txt markers=$venues use_test='has_visited'}
 </div>
+</div>
+
+{foreach from=$venues item="row"}
+<div class="row" class="checkins checkins-venues">
+<div class="checkin-history" data-venue="{$venue_id|escape}">
+
+	<h3>
+	<a href="{$row|@urls_venue}">{$row.name|escape}</a>
+	<small>You created this place on {$row.created|date_format|escape}</small>
+	</h3>
+
+	<div class="map" data-extent="{$row.geo_stats.bounding_box|@join:","|escape}" x-data-zoom="14" x-data-center="{$row.latitude|escape},{$row.longitude|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+
+		{if $row.latitude and $row.longitude}
+
+		{if $row.latitude==$latitude and $row.longitude==$longitude}
+		<div class="marker marker-history{if !$row.has_visited} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape} ⇽ you are here</span></div>
+		{else}
+
+		<div class="marker marker-history{if !$row.has_visited} marker-history-todo{/if}" data-location="{$row.latitude|escape},{$row.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
+		{/if}
+
+		{elseif $row.checkins|@count}
+
+		{foreach from=$row.checkins item="ch"}
+
+		{if $ch.latitude==$latitude and $ch.longitude==$longitude}
+		<div class="marker marker-history{if !$row.has_visited} marker-history-todo{/if}" data-location="{$ch.latitude|escape},{$ch.longitude|escape}"><span class="marker-history-text">{$row.name|escape} ⇽ you are here</span></div>
+		{else}
+		<div class="marker marker-history{if !$row.has_visited} marker-history-todo{/if}" data-location="{$ch.latitude|escape},{$ch.longitude|escape}"><span class="marker-history-text">{$row.name|escape}</span></div>
+		{/if}
+
+		{/foreach}
+
+		{else}{/if}
+
+	</div>
+
+</div>
+</div>
+
 {/foreach}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	privatesquare_htmapl();
+{literal}}{/literal});
+</script>
 
 {/if}
 
