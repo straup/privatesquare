@@ -13,6 +13,8 @@
 			array('id' => '51783661', 'name' => 'on a boat'),
 			array('id' => '52204085', 'name' => 'on the water'),
 			array('id' => '51866911', 'name' => 'in transit'),
+			array('id' => '68234601', 'name' => 'in a meeting'),
+			array('id' => '68234603', 'name' => 'on a telco'),
 			array('id' => '52204033', 'name' => 'wish you were here'),
 			array('id' => '52204035', 'name' => 'kill me now'),
 			array('id' => '52204045', 'name' => 'EXTERMINATE!!!!'),
