@@ -241,6 +241,58 @@
 
  	#################################################################
 
+	function api_privatesquare_venues_edit(){
+
+		$venue_id = post_str("venue_id");
+
+		if (! $venue_id){
+			api_output_error(999, "Missing venue ID");
+		}
+
+		$provider_map = venues_providers_map("string keys");
+		$provider_id = $provider_map['privatesquare'];
+
+		$venue = venues_get_by_venue_id_for_provider($venue_id, $provider_id);
+
+		if (! $venue){
+			api_output_error(999, "Invalid venue ID");
+		}
+
+		if ($venue['user_id'] != $GLOBALS['cfg']['user']['id']){
+			api_output_error(999, "Insufficient permissions");
+		}
+
+		$name = post_str("name");
+
+		if (! $name){
+			api_output_error(999, "Missing or invalid venue name");
+		}
+
+		# Throw an error on principle...? (20131124/straup)
+
+		if ($venue['name'] == $name){
+			api_output_ok();
+		}
+
+		$update = array(
+			'name' => $name,
+		);
+
+		$rsp = venues_privatesquare_update_venue($venue, $update);
+
+		if (! $rsp['ok']){
+			api_output_error(999, $rsp['error']);
+		}
+
+		$out = array(
+			'name' => $rsp['venue']['name'],
+		);
+
+		api_output_ok($out);
+	}
+
+ 	#################################################################
+
 	function api_privatesquare_venues_delete(){
 
 		$venue_id = post_str("venue_id");

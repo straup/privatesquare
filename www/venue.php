@@ -79,7 +79,11 @@
 	$GLOBALS['smarty']->assign("checkin_crumb", $checkin_crumb);
 
 	if (venues_providers_id_to_label($venue['provider_id']) == 'privatesquare'){
+
+		$edit_crumb = crumb_generate("api", "privatesquare.venues.edit");
 		$delete_crumb = crumb_generate("api", "privatesquare.venues.delete");
+
+		$GLOBALS['smarty']->assign("edit_crumb", $edit_crumb);
 		$GLOBALS['smarty']->assign("delete_crumb", $delete_crumb);
 	}
 

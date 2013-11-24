@@ -54,6 +54,29 @@
 
 	#################################################################
 
+	function venues_privatesquare_update_venue(&$venue, $update){
+
+		$insert = array();
+
+		foreach ($update as $k => $v){
+			$insert[$k] = AddSlashes($v);
+		}
+
+		$enc_venue = AddSlashes($venue['venue_id']);
+		$where = "venue_id='{$enc_venue}'";
+
+		$rsp = db_update('Venues', $insert, $where);
+
+		if ($rsp['ok']){
+			$venue = array_merge($venue, $update);
+			$rsp['venue'] = $venue;
+		}
+
+		return $rsp;
+	}
+
+	#################################################################
+
 	# This will delete all the checkins associated with a venue and the
 	# venue itself. Or more specifically it will delete all the checkins
 	# (for a venue) belonging to the user who created the venue. This

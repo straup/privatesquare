@@ -30,44 +30,44 @@ $(document).ready(function(){
 {capture assign="provider_label"}{$venue.provider_id|@venues_providers_id_to_label}{/capture}
 
 <div class="row">
-	<h3 data-venue-id="{$venue.venue_id|escape}" data-venue-id="{$venue.venue_id|escape}" id="venue-title"{if $provider_label=='privatesquare'} data-edit-crumb="{$edit_crumb|escape}"{/if}>
+	<h3 data-venue-id="{$venue.venue_id|escape}" data-venue-id="{$venue.venue_id|escape}" id="venue-name"{if $provider_label=='privatesquare'} data-edit-crumb="{$edit_crumb|escape}"{/if}>
 	{if $provider_label=='privatesquare'}
-	<span id="venue-title-body" contenteditable="true">{$venue.name|escape}</span>
+	<span id="venue-name-body" contenteditable="true">{$venue.name|escape}</span>
 	{else}
 	{$venue.name|escape}
 	{/if}
 	<small><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></small>
 	</h3>
 	{if $provider_label=='privatesquare'}
-	<div id="venue-title-controls" style="display:none;">
-	<button id="venue-title-save" class="btn btn-primary">SAVE</button>
-	<button id="venue-title-cancel" class="btn">CANCEL</button>
+	<div id="venue-name-controls" style="display:none;">
+	<button id="venue-name-save" class="btn btn-primary">SAVE</button>
+	<button id="venue-name-cancel" class="btn">CANCEL</button>
 	</div>
 	<script type="text/javascript">
 	{literal}
 
 $(document).ready(function(){
 
-	$("#venue-title-save").removeAttr("disabled");
-	$("#venue-title-cancel").removeAttr("disabled");
+	$("#venue-name-save").removeAttr("disabled");
+	$("#venue-name-cancel").removeAttr("disabled");
 
-	$("#venue-title").click(function(){
-		$("#venue-title-controls").show();
+	$("#venue-name").click(function(){
+		$("#venue-name-controls").show();
 	});
 
-	$("#venue-title-cancel").click(function(){
-		$("#venue-title-controls").hide();
+	$("#venue-name-cancel").click(function(){
+		$("#venue-name-controls").hide();
 	});
 
-	$("#venue-title-save").click(function(){
+	$("#venue-name-save").click(function(){
 
-		//$("#venue-title-save").attr("disabled", "disabled");
-		//$("#venue-title-cancel").attr("disabled", "disabled");
+		$("#venue-name-save").attr("disabled", "disabled");
+		$("#venue-name-cancel").attr("disabled", "disabled");
 
-		var t = $("#venue-title");
-		var b = $("#venue-title-body");
+		var t = $("#venue-name");
+		var b = $("#venue-name-body");
 
-		var title = b.html();
+		var name = b.html();
 		var venue_id = t.attr("data-venue-id");
 		var crumb = t.attr("data-edit-crumb");
 
@@ -76,20 +76,22 @@ $(document).ready(function(){
 		var args = {
 			'venue_id': venue_id,
 			'crumb': crumb,
-			'title': title
+			'name': name
 		};
 
 		var on_success = function(rsp){
 
-			$("#venue-title-save").removeAttr("disabled");
-			$("#venue-title-cancel").removeAttr("disabled");
-			$("#venue-title-controls").hide();
+			$("#venue-name-save").removeAttr("disabled");
+			$("#venue-name-cancel").removeAttr("disabled");
+			$("#venue-name-controls").hide();
 
 			privatesquare_set_status("Okay. Your venue has been updated!");
 
-			b.html(rsp['title']);
+			b.html(rsp['name']);
 		};
 
+		privatesquare_set_status("Updating your venue...");
+		privatesquare_api_call(method, args, on_success);
 		console.log(args);
 	});
 });
