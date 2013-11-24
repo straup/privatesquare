@@ -53,10 +53,12 @@ $(document).ready(function(){
 
 	$("#venue-name").click(function(){
 		$("#venue-name-controls").show();
+		$("#venue-here-again").hide();
 	});
 
 	$("#venue-name-cancel").click(function(){
 		$("#venue-name-controls").hide();
+		$("#venue-here-again").show();
 	});
 
 	$("#venue-name-save").click(function(){
@@ -84,6 +86,8 @@ $(document).ready(function(){
 			$("#venue-name-save").removeAttr("disabled");
 			$("#venue-name-cancel").removeAttr("disabled");
 			$("#venue-name-controls").hide();
+
+			$("#venue-here-again").show();
 
 			privatesquare_set_status("Okay. Your venue has been updated!");
 
