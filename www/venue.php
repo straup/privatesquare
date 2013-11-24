@@ -36,7 +36,10 @@
 	}
 
 	$venue['data'] = json_decode($venue['data'], "as hash");
-	$venue['locality'] = reverse_geoplanet_get_by_woeid($venue['locality'], 'locality');
+
+	if ($venue['locality']){
+		$venue['locality'] = reverse_geoplanet_get_by_woeid($venue['locality'], 'locality');
+	}
 
 	$more = array(
 		'venue_id' => $venue['venue_id'],

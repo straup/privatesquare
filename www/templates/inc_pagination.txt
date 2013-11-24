@@ -44,21 +44,21 @@
     	    {assign var=i value=$smarty.section.paglp.index}
    
     	    {if $range.0 > 2 && $i == $range.0}
-    	        <li class="disabled"><a href="#">...</a></li>
+    	        <li class="disabled pagination-numbered"><a href="#">...</a></li>
     	    {/if}
     	    
     	    {if $i == 1 || $i == $pagination.page_count || $i|in_array:$range}
    	        {if $i == $pagination.page}
-    	                <li class="active"><a href="#">{$i}</a></li>
+    	                <li class="active pagination-numbered"><a href="#">{$i}</a></li>
     	        {elseif $pagination_page_as_queryarg}
-        		<li><a href="{$pagination_url}&page={$i}">{$i}</a></li>
+        		<li class="pagination-numbered"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
        		{else}
-        		<li><a href="{$pagination_url}page{$i}">{$i}</a></li>
+        		<li class="pagination-numbered"><a href="{$pagination_url}page{$i}">{$i}</a></li>
        		{/if}
     	    {/if}
     	    
     	    {if $range.$rlen < $pagination.page_count-1 && $i == $range.$rlen}
-    	    <li class="disabled"><a href="#">...</a></li>
+    	    <li class="disabled pagination-numbered"><a href="#">...</a></li>
     	    {/if}
     	    
     	{/section}
@@ -69,12 +69,12 @@
     	    {assign var=i value=$smarty.section.paglp.index}
 
     	    {if $i == $pagination.page}
-    	        <li class="active"><a href="#">{$i}</a></li>
+    	        <li class="active pagination-numbered"><a href="#">{$i}</a></li>
     	    {else}
     	        {if $pagination_page_as_queryarg}
-        		<li><a href="{$pagination_url}&page={$i}">{$i}</a></li>
+        		<li class="pagination-numbered"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
         		{else}
-        		<li><a href="{$pagination_url}page{$i}">{$i}</a></li>
+        		<li class="pagination-numbered"><a href="{$pagination_url}page{$i}">{$i}</a></li>
         		{/if}
     	    {/if}
     	    

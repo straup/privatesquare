@@ -289,3 +289,10 @@ h3[contenteditable="true"]:active,
     padding-bottom: .1em;
     padding-right: .5em;
 }
+
+@media (max-width: 320px) {
+
+    .pagination-numbered {
+	display: none !important;
+    }
+}

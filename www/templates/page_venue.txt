@@ -36,7 +36,9 @@ $(document).ready(function(){
 	{else}
 	{$venue.name|escape}
 	{/if}
+	{if $venue.locality}
 	<small><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></small>
+	{/if}
 	</h3>
 	{if $provider_label=='privatesquare'}
 	<div id="venue-name-controls" style="display:none;">

@@ -50,14 +50,13 @@
 		}
 
 		$rsp = privatesquare_checkins_for_user_nearby($owner, $lat, $lon, $more);
+		$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 
 		$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
 		$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 		$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 		$GLOBALS['smarty']->assign_by_ref("is_own", $is_own);
-
-		$GLOBALS['smarty']->assign_by_ref("venues", $rsp['rows']);
 
 		$GLOBALS['smarty']->assign("latitude", $lat);
 		$GLOBALS['smarty']->assign("longitude", $lon);
