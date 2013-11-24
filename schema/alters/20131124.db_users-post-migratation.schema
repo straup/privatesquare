@@ -1,0 +1,1 @@
+ALTER TABLE `PrivatesquareCheckins` CHANGE `venue_id` `venue_id` BIGINT(20) UNSIGNED NOT NULL;

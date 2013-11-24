@@ -23,9 +23,27 @@
 		}
 
 		dumper($venue);
+		return;
 
-		# $rsp = venues_add_venue($venue);
-		# return $rsp;
+		$rsp = venues_add_venue($venue);
+
+		if (! $rsp['ok']){
+			dumper($rsp);
+			exit;
+		}
+
+		$venue_id = $rsp['venue']['venue_id'];
+		$foursquare_id = $rsp['venue']['provider_venue_id'];
+
+		$enc_venue_id = AddSlashes($venue_id);
+		$enc_foursquare_id = AddSlashes($foursquare_id);
+
+		$sql = "UPDATE PrivatesquareCheckins SET venue_id='{$enc_venue_id}' WHERE venue_id='{$enc_foursquare_id}'";
+
+		foreach ($GLOBALS['cfg']['db_users']['host'] as $cluster_id => $ignore){
+			db_write_users($cluster_id, $sql);
+		}
+
 	}
 
 	$sql = "SELECT * FROM FoursquareVenues";
