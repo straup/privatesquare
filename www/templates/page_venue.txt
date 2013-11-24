@@ -32,7 +32,7 @@ $(document).ready(function(){
 <div class="row">
 	<h3 data-venue-id="{$venue.venue_id|escape}" data-venue-id="{$venue.venue_id|escape}" id="venue-name"{if $provider_label=='privatesquare'} data-edit-crumb="{$edit_crumb|escape}"{/if}>
 	{if $provider_label=='privatesquare'}
-	<span id="venue-name-body" contenteditable="true">{$venue.name|escape}</span>
+	<span id="venue-name-body" class="venue-name" contenteditable="true">{$venue.name|escape}</span>
 	{else}
 	{$venue.name|escape}
 	{/if}
@@ -87,12 +87,15 @@ $(document).ready(function(){
 
 			privatesquare_set_status("Okay. Your venue has been updated!");
 
-			b.html(rsp['name']);
+			// Note the way we are update a class of elements so that
+			// our changes are reflected in the "see other checkins"
+			// list (20131124/straup)
+
+			$(".venue-name").html(rsp['name']);
 		};
 
 		privatesquare_set_status("Updating your venue...");
 		privatesquare_api_call(method, args, on_success);
-		console.log(args);
 	});
 });
 	{/literal}
@@ -207,7 +210,7 @@ $(document).ready(function(){
 {/foreach}
 
 	<dt></dt>
-	<dd><small><a href="{$venue|@urls_venue}visits/">See all your checkins at <span class="hey-look">{$venue.name|escape}</span></a> {if $venue.checkins|@count < $venue.total_checkins} &#8212; there are {$venue.total_checkins|@number_format|escape} of them{/if}</small></dd>
+	<dd><small><a href="{$venue|@urls_venue}visits/">See all your checkins at <span class="hey-look venue-name">{$venue.name|escape}</span></a> {if $venue.checkins|@count < $venue.total_checkins} &#8212; there are {$venue.total_checkins|@number_format|escape} of them{/if}</small></dd>
 </dl>
 
 
