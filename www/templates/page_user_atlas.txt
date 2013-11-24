@@ -20,7 +20,7 @@
 <div class="checkin-history" data-venue="{$row.venue_id|escape}">
 
 	<h3>
-		<a href="{$row|@urls_venue}">{$row.venue.name|escape}</a>
+		<a href="{$row.venue|@urls_venue}">{$row.venue.name|escape}</a>
 		<small>{if $row.locality} in <a href="{$owner|@urls_atlas_of_desire_for_user}{$status_id|escape}/{$row.venue.locality|escape}/">{$row.locality.name|escape}</a>{/if}, {$row.created|date_format|escape}{if $row.count_checkins} &#8212; {if $row.count_checkins == 1}you've been here once since then{else}you've been here {$row.count_checkins|escape} times since{/if}{/if}</small>
 	</h3>
 
