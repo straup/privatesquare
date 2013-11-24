@@ -79,6 +79,22 @@ h3 small {
     color: #fff;
 }
 
+.btn-danger:hover {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger[disabled],
+.btn-danger.active {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}
+
 input, select {
     border-radius: 0 !importand;
 }
