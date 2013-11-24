@@ -27,11 +27,75 @@ $(document).ready(function(){
 </script>
 {/if}
 
+{capture assign="provider_label"}{$venue.provider_id|@venues_providers_id_to_label}{/capture}
+
 <div class="row">
-	<h3 data-venue-id="{$venue.venue_id|escape}">
+	<h3 data-venue-id="{$venue.venue_id|escape}" data-venue-id="{$venue.venue_id|escape}" id="venue-title"{if $provider_label=='privatesquare'} data-edit-crumb="{$edit_crumb|escape}"{/if}>
+	{if $provider_label=='privatesquare'}
+	<span id="venue-title-body" contenteditable="true">{$venue.name|escape}</span>
+	{else}
 	{$venue.name|escape}
+	{/if}
 	<small><a href="{$owner|@urls_places_for_user}{$venue.locality.locality|escape}/">{$venue.locality.name|escape}</a></small>
 	</h3>
+	{if $provider_label=='privatesquare'}
+	<div id="venue-title-controls" style="display:none;">
+	<button id="venue-title-save" class="btn btn-primary">SAVE</button>
+	<button id="venue-title-cancel" class="btn">CANCEL</button>
+	</div>
+	<script type="text/javascript">
+	{literal}
+
+$(document).ready(function(){
+
+	$("#venue-title-save").removeAttr("disabled");
+	$("#venue-title-cancel").removeAttr("disabled");
+
+	$("#venue-title").click(function(){
+		$("#venue-title-controls").show();
+	});
+
+	$("#venue-title-cancel").click(function(){
+		$("#venue-title-controls").hide();
+	});
+
+	$("#venue-title-save").click(function(){
+
+		//$("#venue-title-save").attr("disabled", "disabled");
+		//$("#venue-title-cancel").attr("disabled", "disabled");
+
+		var t = $("#venue-title");
+		var b = $("#venue-title-body");
+
+		var title = b.html();
+		var venue_id = t.attr("data-venue-id");
+		var crumb = t.attr("data-edit-crumb");
+
+		var method = 'privatesquare.venues.edit';
+
+		var args = {
+			'venue_id': venue_id,
+			'crumb': crumb,
+			'title': title
+		};
+
+		var on_success = function(rsp){
+
+			$("#venue-title-save").removeAttr("disabled");
+			$("#venue-title-cancel").removeAttr("disabled");
+			$("#venue-title-controls").hide();
+
+			privatesquare_set_status("Okay. Your venue has been updated!");
+
+			b.html(rsp['title']);
+		};
+
+		console.log(args);
+	});
+});
+	{/literal}
+	</script>
+	{/if}
 </div>
 
 <div class="row text-center" id="venues-here-again">
@@ -96,8 +160,6 @@ $(document).ready(function(){
 	<div id="venue_details">
 
 	<h4>Details</h4>
-
-	{capture assign="provider_label"}{$venue.provider_id|@venues_providers_id_to_label}{/capture}
 
 	<dl class="dl-horizontal">
 	{if $provider_label == 'foursquare'}

@@ -266,3 +266,10 @@ select[disabled=disabled] {
 option[disabled=disabled] {
     text-decoration: line-through !important;
 }
+
+h3[contenteditable="true"]:active,
+[contenteditable="true"]:focus{
+    padding:.25em;
+    padding-bottom: .1em;
+    padding-right: .5em;
+}
