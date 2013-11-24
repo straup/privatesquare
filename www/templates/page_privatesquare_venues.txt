@@ -11,7 +11,7 @@ $(document).ready(function(){
 {/if}
 
 {if ! $venues|@count}
-<div class="row"><p class="lead">You haven't created any venues yet. <a href="{$cfg.abs_root_url}privatesquare/create/">Would you like to></a>.</p></div>
+<div class="row"><p class="lead">You haven't created any venues yet. <a href="{$cfg.abs_root_url}privatesquare/create/">Would you like to</a>.</p></div>
 {else}
 
 <div class="row">
