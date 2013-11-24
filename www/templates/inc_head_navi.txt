@@ -31,12 +31,6 @@
 		{/if}
 		{/foreach}
 
-		{if 0}
-		<li><a href="{$cfg.abs_root_url}4sq/">to <strong>foursquare</strong></a></li>
-		<li><a href="{$cfg.abs_root_url}stateofmind/">a <strong>state of mind</strong></a></li>
-		<li><a href="{$cfg.abs_root_url}nypl/">a <strong>building in nyc</strong></a></li>
-		{/if}
-
 		</ul>
 		<li>
 
@@ -65,6 +59,13 @@
 		<li><a href="{$cfg.user|@urls_history_for_user}">history</a></li>
 		<li><a href="{$cfg.user|@urls_lists_for_user}">atlas</a></li>
 		<li><a href="{$cfg.user|@urls_places_for_user}">places</a></li>
+
+		{if "privatesquare"|@venues_providers_is_enabled}
+		<li class="divider"></li>
+		<li><a href="{$cfg.abs_root_url}privatesquare/venues/">venues you've created</a></li>
+		<li><a href="{$cfg.abs_root_url}privatesquare/create/">create a new venue</a></li>
+		{/if}
+
 		<li class="divider"></li>
 		<li><a href="{$cfg.abs_root_url}account/">account</a></li>
 		<li><a href="{$cfg.abs_root_url}signout/">logout</a></li>

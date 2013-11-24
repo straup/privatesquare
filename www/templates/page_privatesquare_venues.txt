@@ -1,13 +1,28 @@
 {include file="inc_head.txt"}
 
+{if $smarty.get.deleted}
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	privatesquare_set_status("Okay. That venue has been deleted.");
+});
+{/literal}
+</script>
+{/if}
+
 {if ! $venues|@count}
-<div class="row"><p class="lead">You haven't created any venues yet. <a href="">Would you like to></a>.</p></div>
+<div class="row"><p class="lead">You haven't created any venues yet. <a href="{$cfg.abs_root_url}privatesquare/create/">Would you like to></a>.</p></div>
 {else}
 
 <div class="row">
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 {include file="inc_map_header_markers.txt markers=$venues use_test='has_visited'}
 </div>
+
+<div class="pull-right" style="margin-top:-1em;">
+	<a href="{$cfg.abs_root_url}privatesquare/create/">Create a new venue</a>
+</div>
+
 </div>
 
 {foreach from=$venues item="row"}

@@ -278,7 +278,7 @@ $(document).ready(function(){
 
 		var on_success = function(rsp){
 			// Maybe redirect somewhere else?
-			var redirect = privatesquare_abs_root_url() + 'privatesquare/venues/?delete=1';
+			var redirect = privatesquare_abs_root_url() + 'privatesquare/venues/?deleted=1';
 			location.href = redirect;
 		};
 

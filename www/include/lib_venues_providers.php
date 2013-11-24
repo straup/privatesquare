@@ -43,6 +43,16 @@
 
 	#################################################################
 
+	# TO DO: read actual feature flags...
+
+	function venues_providers_is_enabled($label){
+
+		$map = venues_providers_map('string keys');
+		return (isset($map[$label])) ? 1 : 0;		
+	}
+
+	#################################################################
+
 	function venues_providers_is_valid_provider_id($id){
 
 		$map = venues_providers_map();
