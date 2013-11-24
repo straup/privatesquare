@@ -14,4 +14,27 @@ $(document).ready(function(){literal}{{/literal}
 {literal}}{/literal});
 </script>
 
+{* temporary? please... (20131124/straup) *}
+
+<script type="text/javascript">
+{literal}
+
+try {
+	var appCache = window.applicationCache;
+
+	if (appCache.status != window.applicationCache.UNCACHED){
+		appCache.update(); // Attempt to update the user's cache.
+
+		if (appCache.status == window.applicationCache.UPDATEREADY) {
+			appCache.swapCache();  // The fetch was successful, swap in the new cache.
+		}
+	}
+
+} catch(e){
+	console.log("debugging failed..." + e);
+}
+
+{/literal}
+</script>
+
 {include file="inc_foot.txt"}
