@@ -83,10 +83,14 @@
 
 		# prefix keys with machinetag namespaces?
 
+		# TODO: venue_provider_id and provider_id I think... (20131124/straup)
+
 		if (isset($row['venue'])){
 			$row['venue_name'] = $row['venue']['name'];
 			unset($row['venue']);
 		}
+
+		# TODO: better geo dumps
 
 		if ($row['locality']){
 			$loc = reverse_geoplanet_get_by_woeid($row['locality'], 'locality');
@@ -117,4 +121,5 @@
 	}
 
 	##############################################################################
-?>
+
+	# the end
