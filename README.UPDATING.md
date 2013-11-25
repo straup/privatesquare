@@ -1,6 +1,6 @@
 # 2.0
 
-aka the `other-venues` branch. This branch has not been merged with `master` yet.
+Aka the `other-venues` branch. This branch has not been merged with `master` yet.
 
 ### Update your config file
 
