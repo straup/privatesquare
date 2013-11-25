@@ -2,6 +2,17 @@
 
 Aka the `other-venues` branch. This branch has not been merged with `master` yet.
 
+## In broad strokes
+
+Changed a bunch of the backend code to allow for multiple venue "sources"
+including user-defined places.
+
+## Removed
+
+* Removed `bin/export-user-cities.php` (replaced by `bin/export-checkins.php`)
+
+## Updating
+
 ### Update your config file
 
 Add the following to your `www/include/config.php` file:
