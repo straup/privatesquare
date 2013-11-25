@@ -17,6 +17,9 @@
 	$GLOBALS['fh'] = fopen("php://stdout", "w");
 	$GLOBALS['header'] = 0;
 
+	# TO DO: please reconcile me with all the other export stuff.
+	# Or not, maybe? E_EXCESSIVE_FUSSY... (20131125/straup)
+
 	function export_checkins($row, $more=array()){
 
 		$row['venue'] = venues_get_by_venue_id($row['venue_id']);
@@ -54,10 +57,19 @@
 		exit();
 	}
 
-	$sql = privatesquare_checkins_for_user_sql($user);
-	$more = array('cluster_id' => $user['cluster_id']);
+	$sql_more = array();
 
-	backfill_db_users($sql, "export_checkins", $more);
+	foreach ($possible as $what){
+
+		if (isset($options[$what])){
+			$sql_more[$what] = $options[$what];
+		}
+	}
+
+	$backfill_more = array('cluster_id' => $user['cluster_id']);
+
+	$sql = privatesquare_checkins_for_user_sql($user, $sql_more);
+	backfill_db_users($sql, "export_checkins", $backfill_more);
 
 	exit();
 
