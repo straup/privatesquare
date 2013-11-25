@@ -76,28 +76,49 @@
 
 	##############################################################################
 
+	# prefix keys with machinetag namespaces?
+
 	function privatesquare_export_massage_checkin(&$row, $more=array()){
+
+		$defaults = array(
+			'inflate_weather' => 0,
+			'inflate_all' => 0,
+		);
+
+		$more = array_merge($defaults, $more);
+
+		if ($row['checkin_id']){
+			$row['provider_checkin_id'] = $row['checkin_id'];
+			unset($row['checkin_id']);
+		}
 
 		$status_map = privatesquare_checkins_status_map();
 		$row['status_name'] = $status_map[$row['status_id']];
 
-		# prefix keys with machinetag namespaces?
-
-		# TODO: venue_provider_id and provider_id I think... (20131124/straup)
-
 		if (isset($row['venue'])){
 			$row['venue_name'] = $row['venue']['name'];
+			$row['provider_id'] = $row['venue']['provider_id'];
+			$row['provider_venue_id'] = $row['venue']['provider_venue_id'];
 			unset($row['venue']);
 		}
 
 		# TODO: better geo dumps
 
-		if ($row['locality']){
-			$loc = reverse_geoplanet_get_by_woeid($row['locality'], 'locality');
-			$row['locality_name'] = $loc['name'];
+		$places = array(
+			'neighbourhood',
+			'locality',
+			'region',
+			'country'
+		);
+
+		foreach ($places as $type){
+
+			if ((! $row[$type]) && ($row['venue']) && ($row['venue'][$type])){
+				$row[$type] = $row['venue'][$type];
+			}
 		}
 
-		if ((isset($row['weather'])) && (isset($more['inflate_weather']))){
+		if ((isset($row['weather'])) && (($more['inflate_weather']) || ($more['inflate_all']))){
 
 			if (is_array($row['weather'])){
 				$data = $row['weather'];

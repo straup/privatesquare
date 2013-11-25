@@ -17,6 +17,11 @@
 
 		$GLOBALS['backfill_tick'] = 0;
 
+		if (isset($more['cluster_id'])){
+			_backfill_db_users_shard($more['cluster_id'], $sql, $callback, $more);
+			return;
+		}
+
 		foreach ($GLOBALS['cfg']['db_users']['host'] as $cluster_id => $ignore){
 			_backfill_db_users_shard($cluster_id, $sql, $callback, $more);
 		}

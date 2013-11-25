@@ -120,9 +120,8 @@
 
  	#################################################################
 
-	function privatesquare_checkins_for_user(&$user, $more=array()){
+	function privatesquare_checkins_for_user_sql(&$user, $more=array()){
 
-		$cluster_id = $user['cluster_id'];
 		$enc_user = AddSlashes($user['id']);
 
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
@@ -146,7 +145,14 @@
 		}
 
 		$sql .= " ORDER BY created DESC";
+		return $sql;
+	}
 
+	function privatesquare_checkins_for_user(&$user, $more=array()){
+
+		$cluster_id = $user['cluster_id'];
+
+		$sql = privatesquare_checkins_for_user_sql($user, $more);
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
 
 		if (! $rsp['ok']){
