@@ -37,25 +37,14 @@ CREATE TABLE `FoursquareUsers` (
   KEY `by_token` (`oauth_token`)
 )  ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `FoursquareVenues`;
-
-CREATE TABLE `FoursquareVenues` (
-  `venue_id` VARCHAR(64),
-  `name` VARCHAR(255),
-  `data` TEXT,
-  `locality` INT(11) UNSIGNED NOT NULL,
-  `latitude` DECIMAL(9,6) DEFAULT NULL,
-  `longitude` DECIMAL(9,6) DEFAULT NULL,
-  PRIMARY KEY (`venue_id`),
-  KEY `by_location` (`latitude`, `longitude`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `Venues`;
 
 CREATE TABLE `Venues` (
   `venue_id` BIGINT(20) UNSIGNED NOT NULL,       
   `provider_id` TINYINT(3) UNSIGNED NOT NULL,
   `provider_venue_id` VARCHAR(64) NOT NULL,
+  `user_id` INT(11) UNSIGNED NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
   `name` VARCHAR(255),
   `data` TEXT,
   `neighbourhood` INT(11) UNSIGNED NOT NULL,
@@ -68,6 +57,7 @@ CREATE TABLE `Venues` (
   UNIQUE KEY `provider_venue` (`provider_id`, `provider_venue_id`),
   KEY `by_location` (`latitude`, `longitude`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `ApiKeys`;
 

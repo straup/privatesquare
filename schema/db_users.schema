@@ -7,7 +7,7 @@ CREATE TABLE `PrivatesquareCheckins` (
   `created` INT(11) UNSIGNED NOT NULL,
   `latitude` decimal(6,3) DEFAULT NULL,
   `longitude` decimal(6,3) DEFAULT NULL,
-  `venue_id` VARCHAR(64),
+  `venue_id` BIGINT(20) UNSIGNED NOT NULL,
   `neighbourhood` INT(11) UNSIGNED NOT NULL,
   `locality` INT(11) UNSIGNED NOT NULL,
   `region` INT(11) UNSIGNED NOT NULL,
