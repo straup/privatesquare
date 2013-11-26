@@ -46,7 +46,7 @@
 	}
 
 	$export_lib = "privatesquare_export_{$format}";
-	$export_func = "privatesquare_export_{$format}";
+	$export_func = "privatesquare_export_{$format}_row";
 
 	loadlib($export_lib);
 
@@ -66,13 +66,19 @@
 		$fetch_more['locality'] = $locality;
 	}
 
+	# the new new
+	
+	$fh = fopen("php://output", "w");
+
+	privatesquare_checkins_export_for_user($owner, $fetch_more, $export_func, $fh);
+	exit();
+
+	# the old old
+
 	# TO DO: something about nearby here...
 
 	$rsp = privatesquare_checkins_export_for_user($owner, $fetch_more);
 	$checkins = $rsp['rows'];
-
-	# When we have generators... (20131125/straup)
-	$checkins = privatesquare_checkins_export_for_user($owner, $fetch_more);
 
 	$fh = privatesquare_export_filehandle();
 

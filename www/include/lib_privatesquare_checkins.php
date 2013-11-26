@@ -535,13 +535,62 @@
 
  	#################################################################
 
+	function privatesquare_checkins_export_for_user(&$user, $more=array(), $callback, $fh){
+
+		$count_pages = null;
+		$count_index = 0;
+
+		$args = array(
+			'page' => 1,
+			'per_page' => 100,
+		);
+
+		# Note the order of things here: don't overwrite
+		# what we've set in $args above
+
+		if (count($more)){
+			$args = array_merge($more, $args);
+		}
+
+		while ((! isset($count_pages)) || ($args['page'] <= $count_pages)){
+
+			if (! isset($count_pages)){
+				$count_pages = $rsp['pagination']['page_count'];
+			}
+
+			# per the above we may need to add a flag to *not* fetch
+			# the full venue listing out of the database (20120226/straup)
+
+			$rsp = privatesquare_checkins_for_user($user, $args, $more);
+
+			foreach ($rsp['rows'] as $row){
+
+				$count_index ++;
+
+				$callback_more = array('index' => $count_index);
+				call_user_func($callback, $row, $fh, $callback_more);
+			}
+
+			# php 5.5+
+			# us2.php.net/manual/en/language.generators.overview.php
+			#
+			# foreach ($rsp['rows'] as $row){
+			# 	yield $row;
+			# }
+
+			$args['page'] += 1;
+		}
+
+		return array('ok' => 1);
+	}
+
 	# Here's the thing: This will probably need to be cached and added
 	# to incrementally at some point in the not too distant future. How
 	# that's done remains an open question. MySQL blob? Write to disk?
 	# Dunno. On the other hand we're just going to enjoy not having to
 	# think about it for the moment. KTHXBYE (20120226/straup)
 
-	function privatesquare_checkins_export_for_user(&$user, $more=array()){
+	function privatesquare_checkins_export_for_user_old(&$user, $more=array()){
 
 		$rows = array();
 
