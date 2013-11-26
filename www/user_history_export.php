@@ -2,13 +2,11 @@
 
 	include("include/init.php");
 
-	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_checkins_export");
 	loadlib("privatesquare_export");
 	loadlib("foursquare_users");
 
-	if (! $GLOBALS['cfg']['enable_feature_export']){
-		error_disabled();
-	}
+	features_ensure_enabled("export");
 
 	$fsq_id = get_int32("foursquare_id");
 
@@ -50,45 +48,25 @@
 
 	loadlib($export_lib);
 
-	$fetch_more = array();
+	$fetch_what = array(
+		'user_id' => $owner['id'],
+	);
 		
-	# No, you can't merge these yet. Maybe never.
-
 	if ($when = get_str('when')){
-		$fetch_more['when'] = $when;
+		$fetch_what['when'] = $when;
 	}
 
 	else if ($venue_id = get_str('venue_id')){
-		$fetch_more['venue_id'] = $venue_id;
+		$fetch_what['venue_id'] = $venue_id;
 	}
 
 	else if ($locality = get_str('locality')){
-		$fetch_more['locality'] = $locality;
+		$fetch_what['locality'] = $locality;
 	}
 
-	# the new new
-	
 	$fh = fopen("php://output", "w");
 
-	privatesquare_checkins_export_for_user($owner, $fetch_more, $export_func, $fh);
-	exit();
-
-	# the old old
-
-	# TO DO: something about nearby here...
-
-	$rsp = privatesquare_checkins_export_for_user($owner, $fetch_more);
-	$checkins = $rsp['rows'];
-
-	$fh = privatesquare_export_filehandle();
-
-	$export_more = array();
-		
-	if (get_str('inline')){
-		$export_more['inline'] = 1;
-	}
-
-	call_user_func($export_func, $fh, $checkins, $export_more);
+	privatesquare_checkins_export($fetch_what, $export_func, $fh);
 	exit();
 
 ?>

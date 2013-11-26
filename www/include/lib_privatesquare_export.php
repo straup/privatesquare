@@ -5,13 +5,6 @@
 
 	##############################################################################
 
-	function privatesquare_export_filehandle(){
-		$fh = fopen("php://temp", "w");
-		return $fh;
-	}
-
-	##############################################################################
-
 	function privatesquare_export_is_valid_format($format){
 
 		$valid = privatesquare_export_valid_formats();
@@ -38,30 +31,6 @@
 
 	##############################################################################
 
-	function privatesquare_export_send(&$fh, &$headers, $more=array()){
-
-		rewind($fh);
-		$data = stream_get_contents($fh);
-
-		$headers['Content-length'] = strlen($data);
-
-		if ((! isset($more['filename'])) && (! isset($more['inline']))){
-
-			$map = privatesquare_export_valid_formats("by mimetype");
-			$ext = $map[$headers['Content-type']];
-			$hash = md5($data);
-
-			$more['filename'] = "privatesquare-{$hash}.{$ext}";
-		}
-
-		privatesquare_export_send_headers($headers, $more);
-
-		echo $data;
-		exit();
-	}
-
-	##############################################################################
-
 	function privatesquare_export_send_headers(&$headers, $more=array()){
 
 		foreach ($headers as $k => $v){
@@ -69,7 +38,7 @@
 		}
 
 		if (! isset($more['inline'])){
-			header("Content-Disposition: attachment; filename=\"{$more['filename']}\"");
+#		 	header("Content-Disposition: attachment; filename=\"{$more['filename']}\"");
 		}
 
 	}
@@ -83,6 +52,7 @@
 		$defaults = array(
 			'inflate_weather' => 0,
 			'inflate_all' => 0,
+			'flatten_all' => 0,
 		);
 
 		$more = array_merge($defaults, $more);
@@ -138,7 +108,49 @@
 			unset($row['weather']);			
 		}
 
+		if ($more['flatten_all']){
+
+			foreach ($row as $k => $v){
+				if (is_array($v)){
+					$row[$k] = json_encode($v);
+				}
+			}
+		}
+
 		# note the pass-by-ref
+	}
+
+	##############################################################################
+
+	# deprecated... (20131126/straup)
+
+	function privatesquare_export_send(&$fh, &$headers, $more=array()){
+
+		rewind($fh);
+		$data = stream_get_contents($fh);
+
+		$headers['Content-length'] = strlen($data);
+
+		if ((! isset($more['filename'])) && (! isset($more['inline']))){
+
+			$map = privatesquare_export_valid_formats("by mimetype");
+			$ext = $map[$headers['Content-type']];
+			$hash = md5($data);
+
+			$more['filename'] = "privatesquare-{$hash}.{$ext}";
+		}
+
+		privatesquare_export_send_headers($headers, $more);
+
+		echo $data;
+		exit();
+	}
+
+	##############################################################################
+
+	function privatesquare_export_filehandle(){
+		$fh = fopen("php://temp", "w");
+		return $fh;
 	}
 
 	##############################################################################

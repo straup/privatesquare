@@ -2,6 +2,9 @@
 
 	loadlib("privatesquare_export");
 
+	# THIS IS BROKEN AND NEEDS TO BE UPDATED TO WORK WITH php://output
+	# OR CONVINCE EVERYTHING ELSE TO WRITE TO php://temp (20131126/straup)
+
 	##############################################################################
 
 	function privatesquare_export_geojson($fh, $checkins, $more=array()){
