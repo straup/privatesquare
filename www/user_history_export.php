@@ -71,7 +71,8 @@
 	$rsp = privatesquare_checkins_export_for_user($owner, $fetch_more);
 	$checkins = $rsp['rows'];
 
-	#
+	# When we have generators... (20131125/straup)
+	$checkins = privatesquare_checkins_export_for_user($owner, $fetch_more);
 
 	$fh = privatesquare_export_filehandle();
 

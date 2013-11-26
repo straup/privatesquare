@@ -571,6 +571,13 @@
 			$rsp = privatesquare_checkins_for_user($user, $args, $more);
 			$rows = array_merge($rows, $rsp['rows']);
 
+			# php 5.5+
+			# us2.php.net/manual/en/language.generators.overview.php
+			#
+			# foreach ($rsp['rows'] as $row){
+			# 	yield $row;
+			# }
+
 			$args['page'] += 1;
 		}
 
