@@ -19,7 +19,7 @@
 
 		$map = array(
 			'csv' => 'text/plain',
-			# 'geojson' => 'application/json',
+			'geojson' => 'application/json',
 		);
 
 		if ($by_mimetype){
