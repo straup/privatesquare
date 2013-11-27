@@ -14,7 +14,7 @@
 		$more = array_merge($defaults, $more);
 
 		$massage_more = array(
-			'flatten_all' => 1,
+			'collapse_all' => 1,
 		);
 
 		privatesquare_export_massage_checkin($row, $massage_more);

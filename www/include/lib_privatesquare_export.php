@@ -49,9 +49,14 @@
 
 	function privatesquare_export_massage_checkin(&$row, $more=array()){
 
+		# inflate: json_decode all the arrays
+		# collapse: json_encode all the arrays
+		# flatten: flatten all the arrays in to foo_bar_baz key/value pairs - TBW (20131127/straup)
+
 		$defaults = array(
 			'inflate_weather' => 0,
 			'inflate_all' => 0,
+			'collapse_all' => 0,
 			'flatten_all' => 0,
 		);
 
@@ -88,27 +93,34 @@
 			}
 		}
 
-		if ((isset($row['weather'])) && (($more['inflate_weather']) || ($more['inflate_all']))){
+		$inflatables = array(
+			'weather',
+			'sun_inthe_sky',
+			# 'venue',	
+		);
 
-			if (is_array($row['weather'])){
-				$data = $row['weather'];
+		foreach ($inflatables as $what){
+
+			if (! isset($row[$what])){
+				continue;
 			}
 
-			else {
-				$data = json_decode($row['weather'], 'as hash');
+			if (is_array($row[$what])){
+				continue;
 			}
 
-			if (is_array($data)){
+			$inflate_this = "inflate_{$what}";
 
-				foreach ($data as $k => $v){
-					$row[ "weather_{$k}" ] = $v;
-				}
+			if ((! $more[$inflate_this]) && (! $more['inflate_all'])){
+				continue;
 			}
-		
-			unset($row['weather']);			
+
+			if ($data = json_decode($row[$what], 'as hash')){
+				$row[$what] = $data;
+			}
 		}
 
-		if ($more['flatten_all']){
+		if ($more['collapse_all']){
 
 			foreach ($row as $k => $v){
 				if (is_array($v)){
@@ -117,40 +129,9 @@
 			}
 		}
 
+		# TBW: flatten...
+
 		# note the pass-by-ref
-	}
-
-	##############################################################################
-
-	# deprecated... (20131126/straup)
-
-	function privatesquare_export_send(&$fh, &$headers, $more=array()){
-
-		rewind($fh);
-		$data = stream_get_contents($fh);
-
-		$headers['Content-length'] = strlen($data);
-
-		if ((! isset($more['filename'])) && (! isset($more['inline']))){
-
-			$map = privatesquare_export_valid_formats("by mimetype");
-			$ext = $map[$headers['Content-type']];
-			$hash = md5($data);
-
-			$more['filename'] = "privatesquare-{$hash}.{$ext}";
-		}
-
-		privatesquare_export_send_headers($headers, $more);
-
-		echo $data;
-		exit();
-	}
-
-	##############################################################################
-
-	function privatesquare_export_filehandle(){
-		$fh = fopen("php://temp", "w");
-		return $fh;
 	}
 
 	##############################################################################
