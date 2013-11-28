@@ -1,8 +1,8 @@
 {if "export"|@features_is_enabled}
 
 <div class="row pull-right" style="text-align:right;">
-<h5>Export</h5>
-<ul class="list-unstyled">
+<ul class="list-inline">
+<li>export as</li>
 {foreach from=$export_formats item="fmt" name="export_formats"}
 {capture assign="link"}
 {$owner|@urls_history_for_user}export.{$fmt|escape}{if $when}?when={$when|escape}{elseif $venue_id}?venue_id={$venue_id|escape}{elseif $locality}?locality={$locality.locality}{/if}
