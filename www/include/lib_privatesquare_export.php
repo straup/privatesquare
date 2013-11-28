@@ -33,12 +33,18 @@
 
 	function privatesquare_export_send_headers(&$headers, $more=array()){
 
+		$defaults = array(
+			'inline' => 0
+		);
+
+		$more = array_merge($defaults, $more);
+
 		foreach ($headers as $k => $v){
 			header("{$k}: {$v}");
 		}
 
-		if (! isset($more['inline'])){
-#		 	header("Content-Disposition: attachment; filename=\"{$more['filename']}\"");
+		if (! $more['inline']){
+		 	header("Content-Disposition: attachment; filename=\"{$more['filename']}\"");
 		}
 
 	}

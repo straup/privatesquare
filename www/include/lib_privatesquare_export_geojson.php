@@ -33,15 +33,7 @@
 			),
 		);
 
-		if (($more['is_first']) && ($more['send_headers'])){
-
-			$map = privatesquare_export_valid_formats();
-
-			$headers = array(
-				'Content-type' => $map['geojson'],
-			);
-
-			privatesquare_export_send_headers($headers);
+		if ($more['is_first']){
 
 			# Grnnnnngnnnhnhnnnh...
 			fwrite($fh, '{"type":"FeatureCollection", "features":[');

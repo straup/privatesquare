@@ -20,17 +20,6 @@
 		privatesquare_export_massage_checkin($row, $massage_more);
 		ksort($row);
 
-		if (($more['is_first']) && ($more['send_headers'])){
-
-			$map = privatesquare_export_valid_formats();
-
-			$headers = array(
-				'Content-type' => $map['csv'],
-			);
-
-			privatesquare_export_send_headers($headers);
-		}
-
 		if ($more['is_first']){
 			fputcsv($fh, array_keys($row));
 		}

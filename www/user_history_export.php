@@ -66,6 +66,19 @@
 
 	$fh = fopen("php://output", "w");
 
+	$map = privatesquare_export_valid_formats();
+	$type = $map[$format];
+
+	$headers = array(
+		'Content-type' => $type,
+	);
+
+	$more = array();
+
+	$more['inline'] = (get_isset("inline")) ? 1 : 0;
+
+	privatesquare_export_send_headers($headers, $more);
+
 	privatesquare_checkins_export($fetch_what, $export_func, $fh);
 	exit();
 
