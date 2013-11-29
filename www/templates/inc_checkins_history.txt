@@ -17,7 +17,7 @@
 
 	<h3>
 		<a href="{$row.venue|@urls_venue}">{$row.venue.name|escape}</a>
-		<small><a href="{$owner|@urls_places_for_user}{$row.locality.locality|escape}/">{$row.locality.name|escape}</a></small>
+		{if $row.locality}<small><a href="{$owner|@urls_places_for_user}{$row.locality.locality|escape}/">{$row.locality.name|escape}</a></small>{/if}
 	</h3>
 
 	<div class="map" data-zoom="14" data-center="{$lat|escape},{$lon|escape}" data-hash="false" data-interactive="false" data-provider="toner">
