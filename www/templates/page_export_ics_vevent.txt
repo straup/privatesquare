@@ -1,13 +1,16 @@
+{* https://code.google.com/p/calagator/wiki/IcalLocation#iCal_GEO_property *}
 BEGIN:VEVENT
+BEGIN:VVENUE
 {* timezone *}
-CREATED:{$checkin.created|date_format:"%Y%m%dT%H%M%S"|escape}
+CREATED:{$checkin.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
 UID:{$checkin.id|escape}
-SUMMARY:{$checkin.venue_name|escape}
-DTSTAMP:{$checkin.created|date_format:"%Y%m%dT%H%M%S"|escape}
-LOCATION:{$checkin.venue.locality.name|escape}
-GEO-LATITUDE:{$checkin.latitude|escape}
-GEO-LONGITUDE:{$checkin.longitude|escape}
+NAME:{$checkin.venue_name|escape}
+DTSTAMP:{$checkin.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
+{* TO DO: inflate locality *}
+{if $checkin.venue.locality}LOCATION:{$checkin.venue.locality.name|escape}{/if}
+GEO:{$checkin.latitude|escape};{$checkin.longitude|escape}
 X-PRIVATESQUARE-PROVIDER-VENUE-ID:{$checkin.provider_venue_id|escape}
 X-PRIVATESQUARE-PROVIDER-ID:{$checkin.provider_id|escape}
 X-PRIVATESQUARE-STATUS:{$checkin.status_name|escape}
+END:VVENUE
 END:VEVENT

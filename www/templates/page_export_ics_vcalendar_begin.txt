@@ -3,5 +3,4 @@ METHOD:PUBLISH
 VERSION:2.0
 X-WR-CALNAME:privatesquare
 PRODID:-//privatesquare//EN
-X-APPLE-CALENDAR-COLOR:#FFFF00
 X-WR-TIMEZONE:{$timezone|escape}

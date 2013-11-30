@@ -40,6 +40,10 @@
 
 		$more = array_merge($defaults, $more);
 
+		if (($more['inline']) && (! preg_match("/^image/", $headers['Content-type']))){
+			$headers['Content-type'] = 'text/plain';
+		}
+
 		foreach ($headers as $k => $v){
 			header("{$k}: {$v}");
 		}

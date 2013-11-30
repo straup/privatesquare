@@ -66,6 +66,13 @@
 
 	$fh = fopen("php://output", "w");
 
+	# NOT A FEATURE. PART OF THE GENERAL MESS/TODO LIST
+	# AROUND PER-USER (CHECKINS REALLY) TIMEZONES...
+	# (20131130/straup)
+
+	$timezone = date_default_timezone_get();
+	$GLOBALS['smarty']->assign("timezone", $timezone);
+
 	$map = privatesquare_export_valid_formats();
 	$type = $map[$format];
 
