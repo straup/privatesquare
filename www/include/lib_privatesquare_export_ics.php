@@ -29,7 +29,7 @@
 		$event = $GLOBALS['smarty']->fetch("page_export_ics_vevent.txt");
 		fwrite($fh, $event);
 
-		if (! $more['is_last']){
+		if ($more['is_last']){
 			$end = $GLOBALS['smarty']->fetch("page_export_ics_vcalendar_end.txt");
 			fwrite($fh, $end);
 		}

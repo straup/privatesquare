@@ -1,1 +1,3 @@
 END:VCALENDAR
+
+{* note the extra new line *}
