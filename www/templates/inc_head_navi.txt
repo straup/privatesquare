@@ -24,6 +24,8 @@
 		{foreach from=$cfg.privatesquare_venues_providers item="label"}
 		{if $label=='stateofmind'}
 		<li><a href="{$cfg.abs_root_url}{$label|escape:"url"}/">a <strong>state of mind</strong></a></li>
+		{elseif $label=='privatesquare'}
+		<li><a href="{$cfg.abs_root_url}{$label|escape:"url"}/">a <strong>place of your own</strong></a></li>
 		{elseif $label=='nypl'}
 		<li><a href="{$cfg.abs_root_url}{$label|escape:"url"}/">a <strong>building in new york city</strong></a></li>
 		{else}
