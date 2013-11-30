@@ -7,7 +7,6 @@
 	function privatesquare_export_ics_row($row, $fh, $more=array()){
 
 		$defaults = array(
-			'index' => 0,
 			'send_headers' => 1
 		);
 

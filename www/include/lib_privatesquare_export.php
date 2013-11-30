@@ -19,6 +19,7 @@
 
 		$map = array(
 			'csv' => 'text/plain',
+			'ics' => 'text/plain',			
 			'geojson' => 'application/json',
 		);
 

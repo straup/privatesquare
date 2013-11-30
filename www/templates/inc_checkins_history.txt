@@ -21,7 +21,7 @@
 	</h3>
 
 	<div class="map" data-zoom="14" data-center="{$lat|escape},{$lon|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$lat|escape},{$lon|escape}"><span class="marker-history-text">{$row.venue.name|escape}</span></div>
+		<div class="marker marker-history{if $row.status_id==2} marker-history-todo{/if}" data-location="{$lat|escape},{$lon|escape}"><span class="marker-history-text">{$row.venue.name|truncate:20:"..."|escape}</span></div>
 	</div>
 
 	<div class="lead date" data-created="{$row.created|escape}">
