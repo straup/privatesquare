@@ -55,9 +55,10 @@ CREATE TABLE `Venues` (
   `longitude` DECIMAL(9,6) DEFAULT NULL,
   PRIMARY KEY (`venue_id`),
   UNIQUE KEY `provider_venue` (`provider_id`, `provider_venue_id`),
-  KEY `by_location` (`latitude`, `longitude`)
+  KEY `by_location` (`latitude`, `longitude`),
+  KEY `provider_user` (`provider_id`, `user_id`, `created`),
+  KEY `by_user` (`user_id`, `created`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `ApiKeys`;
 
