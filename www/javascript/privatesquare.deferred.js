@@ -31,7 +31,7 @@ function privatesquare_deferred_checkin(lat, lon, reason){
 		return;
 	}
 
-	privatesquare_set_status(htmlspecialchars(reason) + ' / write a postcard to the future?');
+	privatesquare_set_status(htmlspecialchars(reason) + ' / would you like to write a postcard to the future?');
 
 	var w = $("#deferred_where");
 	w.val("");
@@ -79,7 +79,7 @@ function privatesquare_deferred_checkin_submit(){
 
 function privatesquare_deferred_checkin_stored(checkin){
 
-	console.log(checkin);
+	// console.log(checkin);
 
 	var msg = "Okay! Your checkin at '" + checkin['venue'] + "' has been recorded.";
 	privatesquare_set_status(msg);
