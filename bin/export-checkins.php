@@ -6,71 +6,49 @@
 	set_time_limit(0);
 
 	include("include/init.php");
-
-	loadlib("backfill");
 	loadlib("cli");
 
-	loadlib("privatesquare_checkins");
-	loadlib("privatesquare_export_geojson");
-	loadlib("privatesquare_export_csv");
-
-	$GLOBALS['fh'] = fopen("php://stdout", "w");
-	$GLOBALS['header'] = 0;
-
-	# TO DO: please reconcile me with all the other export stuff.
-	# Or not, maybe? E_EXCESSIVE_FUSSY... (20131125/straup)
-
-	function export_checkins($row, $more=array()){
-
-		$row['venue'] = venues_get_by_venue_id($row['venue_id']);
-		privatesquare_export_massage_checkin($row);
-
-		ksort($row);
-
-		if (! $GLOBALS['header']){
-			$keys = array_keys($row);
-			fputcsv($GLOBALS['fh'], $keys);
-
-			$GLOBALS['header'] = 1;
-		}
-
-		fputcsv($GLOBALS['fh'], $row);
-	}
-
-	# main()
+	loadlib("privatesquare_export");
+	loadlib("privatesquare_checkins_export");
 
 	$spec = array(
-		'u' => array('name' => 'user', 'required' => 0, 'help' => '...'),
+		'u' => array('name' => 'user', 'required' => 1, 'help' => '...'),
+		'f' => array('name' => 'format', 'required' => 1, 'help' => '...'),
+		'o' => array('name' => 'output', 'required' => 0, 'help' => '...'),
 	);
 
 	$opts = cli_getopts($spec);
 
-	if (! $opts['u']){
-		echo "Missing user\n";
-		exit();
-	}
+	$user_id = $opts['u'];
+	$format = $opts['f'];
 
-	$user = users_get_by_id($opts['u']);
+	$user = users_get_by_id($user_id);
 
 	if (! $user){
 		echo "Invalid user ID\n";
 		exit();
 	}
 
-	$sql_more = array();
-
-	foreach ($possible as $what){
-
-		if (isset($options[$what])){
-			$sql_more[$what] = $options[$what];
-		}
+	if (! privatesquare_export_is_valid_format($format)){
+		echo "Invalid format\n";
+		exit();
 	}
 
-	$backfill_more = array('cluster_id' => $user['cluster_id']);
+	$output = ($opts['o']) ? $opts['o'] : 'php://stdout';
+	$fh = fopen($output, 'w');
 
-	$sql = privatesquare_checkins_for_user_sql($user, $sql_more);
-	backfill_db_users($sql, "export_checkins", $backfill_more);
+	$fetch_what = array(
+		'user_id' => $user['id'],
+	);
 
+	# TO DO: ADD MORE THINGS TO FILTER BY
+
+	$export_lib = "privatesquare_export_{$format}";
+	$export_func = "privatesquare_export_{$format}_row";
+
+	loadlib($export_lib);
+
+	privatesquare_checkins_export($fetch_what, $export_func, $fh);
 	exit();
 
 ?>
