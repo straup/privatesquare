@@ -1,27 +1,32 @@
 {assign var="page_title" value="account"}
 {include file="inc_head.txt"}
 
-<h1>Your account</h1>
-
+<div class="row">
 <h3>Export</h3>
 
 <ul>
 	<li><a href="{$cfg.user|@urls_history_for_user}export/">Export your check-ins</a></li>
 </ul>
 
+</div>
+
+<div class="row">
 <h3>Foursquare</h3>
 
 <ul>
 	<li><a href="{$cfg.abs_root_url}account/foursquare/sync/">Sync missing or old foursquare checkins</a></li>
 </ul>
 
-{if "bergcloud_users"|@features_is_enabled and "bergcloud_littleprinter"|@features_is_enabled}
+</div>
 
+{if "bergcloud_users"|@features_is_enabled and "bergcloud_littleprinter"|@features_is_enabled}
+<div class="row">
 <h3>BERG Cloud</h3>
 
 <ul>
 	<li><a href="{$cfg.abs_root_url}account/bergcloud/">Teach privatesquare to hold hands with your Little Printer</a></li>
 </ul>
+</div>
 
 {/if}
 
