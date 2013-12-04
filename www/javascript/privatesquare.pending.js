@@ -41,6 +41,7 @@ function privatesquare_pending_init(){
 	checkins.html(html);
 
 	var meh = $("#meh");
+	meh.show();    
 	meh.click(privatesquare_pending_purge_checkins);
 
 	var deferred = $("#deferred");

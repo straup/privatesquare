@@ -9,10 +9,12 @@ function privatesquare_init(provider){
 
 	$("body").attr("data-privatesquare-provider", provider);
 
+	/*    
 	if (! window.navigator.onLine){
 		privatesquare_deferred_checkin(null, null, 'offline');
 		return;
 	}
+	*/
 
 	var _privatesquare_geolocation_onsuccess = function(rsp){
 
