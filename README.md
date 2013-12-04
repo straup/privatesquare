@@ -1,19 +1,31 @@
 # privatesquare 
 
 ## Gentle Introduction
-privatesquare is a simple web application to record and manage a private database of [Foursquare](http://foursquare.com) check-ins.
 
-It uses the Foursquare API as a single-sign-on provider, for user accounts, and to query for nearby locations (using your web browser's built-in geolocation support).
+privatesquare is a simple web application to record and manage a private
+database of [Foursquare](http://foursquare.com) check-ins.
 
-Check-ins can be sent on to Foursquare (and again re-broadcast to Twitter, etc, or to your followers or just *"off the grid"*) but the important part is: *They don't have to be.*
+It uses the Foursquare API as a single-sign-on provider, for user accounts, and
+to query for nearby locations (using your web browser's built-in geolocation
+support).
+
+Check-ins can be sent on to Foursquare (and again re-broadcast to Twitter, etc,
+or to your followers or just *"off the grid"*) but the important part is: *They
+don't have to be.*
 
 Meanwhile, [here's a blog post](http://nearfuturelaboratory.com/2012/01/22/privatesquare/).
 
 ## Installation - The Short Version
 
-privatesquare is built on top of [Flamework](https://github.com/exflickr/flamework) which means it's nothing more than a vanilla Apache + PHP + MySQL application. You can run it as a dedicated virtual host or as a subdirectory of an existing host.
+privatesquare is built on top of
+[Flamework](https://github.com/exflickr/flamework) which means it's nothing more
+than a vanilla Apache + PHP + MySQL application. You can run it as a dedicated
+virtual host or as a subdirectory of an existing host.
 
-You will need to make a copy of the [config.php.example](https://github.com/straup/privatesquare/blob/master/www/include/config.php.example) file and name it `config.php`. You will need to update this new file and add the various specifics for databases and third-party APIs.
+You will need to make a copy of the
+[config.php.example](https://github.com/straup/privatesquare/blob/master/www/include/config.php.example)
+file and name it `config.php`. You will need to update this new file and add the
+various specifics for databases and third-party APIs.
 
 	# You will need valid foursquare OAuth credentials
 	# See also: https://foursquare.com/oauth/register
