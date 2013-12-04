@@ -2,7 +2,7 @@
 
 <div id="map-wrapper" class="row"></div>
 
-{if $cfg.enable_feature_deferred_checkins}
+{if "deferred_checkins"|@features_is_enabled}
 {include file="inc_deferred_checkin.txt"}
 {/if}
 

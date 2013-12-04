@@ -19,7 +19,8 @@
 
 		$map = array(
 			'csv' => 'text/plain',
-			'ics' => 'text/calendar',			
+			# this doesn't work yet (20131204/straup)
+			# 'ics' => 'text/calendar',			
 			'geojson' => 'application/json',
 		);
 

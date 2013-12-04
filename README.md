@@ -241,10 +241,7 @@ To enable the use of artisanal integers please ensure that the following variabl
 
 The currently supported artisanal integer providers are: [Mission Integers](http://www.missionintegers.com/), [Brooklyn Integers](http://www.brooklynintegers.com/) and [London Integers](http://www.londonintegers.com/). For a very very (very) long and thorough discussion of artisanal integers [you should read this blog post](http://www.aaronland.info/weblog/2012/12/01/coffee-and-wifi#timepixels).
 
-## Configuring fancy stuff – Checking in offline
-
-Support for checking in offline is a subset of the `deferred checkins`
-feature.
+## Configuring fancy stuff – deferred checkins
 
 A deferred check-in might happen when the foursquare servers are busted, like when everyone is at SXSW and trying to check-in at the same time. If that
 happens privatesquare will know _where_ you are in geographic space (latitude
@@ -272,44 +269,21 @@ _At some point in the future privatesquare might keep a local cache of all the
 cities you're checked in from and try to be clever about auto-filling that field but for the
 time being you'll need to add that information by hand._
 
-As with deferred checkins you can only indicate that "you are here". Check-ins
+With deferred checkins you can only indicate that "you are here". Check-ins
 are _not_ passed along to foursquare since there's no way to check-in to the
 past with foursquare. That's a perfectly legitimate choice for them to
 make. I've been tossing around the possibility of working around that
 constraint by adding a mention about the past-iness of a deferred or offline
 check-in in the notes field, but it's not something I've done yet.
 
-To enable offline check-ins make sure the following flags are enabled in your `config.php` file:
+To enable deferred check-ins make sure the following flags are enabled in your
+`config.php` file:
 
 	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
-	$GLOBALS['cfg']['enable_feature_offline_appcache'] = 1;
 
-Offline check-ins are built using the [HTML5 Application
-Cache](https://developer.mozilla.org/en-US/docs/HTML/Using_the_application_cache)
-(sometimes just referred to as "appcache") which is a
-temperamental beast, at best. Jake Archibald's article [Application Cache is a
-Douchebag](http://www.alistapart.com/articles/application-cache-is-a-douchebag/)
-is pretty much much the definitive word on the subject.
-
-In addition to the vagueries of appcache itself there are also individual
-browser caches and sometimes even network proxy caches thrown in to the
-mix. Rarely do they place nicely with one another. By the time this
-functionality will have been checked in to the `master` branch (and you are
-reading this) it is all code that I will have been using on a regular basis in
-the network-challenged subways of New York City for several weeks. So it
-_should_ work.
-
-Barring any really stupid bugs, though, there are still plenty of reasons why it
-might not work which is why the feature is disabled by default. Please keep that
-in mind if you do enable it and [let me
-know](https://github.com/straup/privatesquare/issues) if and where it doesn't
-work for you.
-
-As of this writing the only part of privatesquare that works in offline mode is
-the ability to check-in. History pages, the Atlas of Desire and all the other
-good stuff is absolutely _not_ available for viewing in offline mode since it
-would quickly turn in to a poison soup of caching issues and other gotchas that
-life is too short to bother dealing with.
+_Note: Offline checkins used to be part of privatesquare prior to version "2"
+but were removed because it never seemed to work very well and HTML5's offline
+cache is still a giant pool of pain and confusion._
 
 ## Configuring fancy stuff - sending check-ins to Little Printer
 

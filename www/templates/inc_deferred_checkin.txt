@@ -1,9 +1,21 @@
-<div id="deferred" style="display:none;">
+<div id="deferred" class="row text-center" style="display:none;">
 
-<form method="POST" id="deferred_checkin">
-	<input type="text" id="deferred_where" placeholder="Where are you?" />
-	<input type="text" id="deferred_city" placeholder="What city are you in?" />
-	<input type="submit" value="THIS WILL HAPPEN" />
+<form method="POST" id="deferred_checkin" role="form" class="form-inline">
+
+      <div class="form-group">
+      <label class="sr-only" for="deferred_where">Where are you?</label>
+	<input type="text" id="deferred_where" placeholder="Where are you?" class="form-control" />
+      </div>
+
+      <div class="form-group">
+      <label class="sr-only" for="deferred_city">What city are you in?</label>
+	<input type="text" id="deferred_city" placeholder="What city are you in?" class="form-control" />
+	</div>
+
+      <div class="form-group">
+      	<input type="submit" class="btn btn-primary" value="THIS WILL HAPPEN" />
+	</div>
+
 </form>
 
 </div>

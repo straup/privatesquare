@@ -9,13 +9,8 @@ function privatesquare_init(provider){
 
 	$("body").attr("data-privatesquare-provider", provider);
 
-	// it's possible the second test is pointless
-	// (20121220/straup)
-
-	if ((! window.navigator.onLine) && (_cfg['offline_appcache'])){
+	if (! window.navigator.onLine){
 		privatesquare_deferred_checkin(null, null, 'offline');
-		$("#navi-online").hide();
-		$("#navi-offline").show();
 		return;
 	}
 
@@ -45,18 +40,15 @@ function privatesquare_init(provider){
 		}
 	};
 
-	$("#navi-online").show();
-	$("#navi-offline").hide();
+	var _privatesquare_geolocation_onerror = function(rsp){
+		privatesquare_set_status("Huh. I have no idea where you are...");
+	};
 
 	privatesquare_whereami(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);
 	$("#checkin").submit(privatesquare_submit);
 	$("#again").click(privatesquare_reset);
 
 	privatesquare_set_status("Asking the sky where you are...");
-}
-
-function _privatesquare_geolocation_onerror(rsp){
-	privatesquare_set_status("Huh. I have no idea where you are...");
 }
 
 // to do : capture current source...

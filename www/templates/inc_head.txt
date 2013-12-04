@@ -63,7 +63,6 @@
   <div class="alert alert-info"><p class="text-center">{$cfg.display_message_text|escape}</p></div>
   {/if}
   
-    {if 0}'offline_appcache': {if "offline_appcache"|@features_is_enabled}1{else}0{/if}{/if}
     {include file="inc_head_navi.txt"}
 
     <div class="container">
