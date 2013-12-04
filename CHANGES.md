@@ -11,9 +11,15 @@ including user-defined places.
 
 * Removed `bin/export-user-cities.php` (replaced by `bin/export-checkins.php`)
 
-## Updating
+* Removed support for youarehere (.spum.org) until there is time to revisit
+  pairing the projects properly.
 
-### Update your config file
+* Removed support for HTML5 offline cache because it's still a bit of a
+  nightmare of edge-cases.
+
+## Updating your config file
+
+### New things
 
 Add the following to your `www/include/config.php` file:
 
@@ -23,6 +29,8 @@ Add the following to your `www/include/config.php` file:
 		2 => 'stateofmind',
 		# 3 => 'nypl',
 	);
+
+### Old things (no longer necessary)
 
 ### Database alters (db_main)
 
@@ -36,6 +44,23 @@ Apply `schema/alters/20131124.db_users-pre-migration.schema` to your database.
 
 Run `bin/backfill_migrate_foursquare_venues.php`
 
+Basically this moves all the venues listed in the FoursquareVenues table and
+moves them into the Venues table assigning a provider ID (foursquare) and 
+creating an artisanal venue ID. It will also update the PrivatesquareCheckins
+table to point to the newly created venue ID.
+
+Depending on where you are running this you may need to update Venues and checkins
+separately. You can update all the checkins to point to the new Venues (once they've
+been created) with a single SQL statement, as is:
+
+	UPDATE PrivatesquareCheckins c, Venues v SET c.venue_id = v.venue_id WHERE c.venue_id=v.provider_venue_id;
+
+The place where this happens in code (and which is enabled by default) is around
+line 48.
+
 ### Database alters (db_users, part two)
 
 Apply `schema/alters/20131124.db_users-post-migration.schema` to your database.
+
+Note this *will* delete the old `FoursquareVenues` table unless you change this
+file yourself.
