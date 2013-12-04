@@ -57,7 +57,7 @@ function privatesquare_reset(){
 	$("#venues").hide();
 
 	privatesquare_unset_status();
-	_privatesquare_hide_map()
+	privatesquare_hide_map()
 	privatesquare_init();
 }
 
@@ -74,7 +74,7 @@ function privatesquare_submit(){
 
 	$("#venues").hide();
 
-	_privatesquare_hide_map()
+	privatesquare_hide_map()
 
 	privatesquare_set_status("Checking in...");
 	return false;
@@ -149,7 +149,7 @@ function privatesquare_search(){
 
 	searching = true;
 
-	_privatesquare_hide_map();
+	privatesquare_hide_map();
 	$("#venues").hide();
 
 	var query = prompt("Search for a particular place");
@@ -393,7 +393,7 @@ function privatesquare_htmapl(map){
 	}
 }
 
-function _privatesquare_hide_map(){
+function privatesquare_hide_map(){
 	var wrapper = $("#map-wrapper");
 	var map = $(".map");
 	wrapper.hide();

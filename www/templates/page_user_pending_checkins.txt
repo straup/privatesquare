@@ -1,17 +1,9 @@
 {capture assign="page_title"}{$owner.username} | pending checkins{/capture}
-{capture assign="extra_head"}
-{if $cfg.environment=='prod'}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.min.js"></script>
-{else}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.js"></script>
-{/if}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
-{/capture}
 {include file="inc_head.txt"}
 
 <div id="map-wrapper"></div>
 
-<div class="row text-center">
+<div class="row text-center" id="pending-form">
 
 	<form id="deferred" role="form" class="form-inline">
 
@@ -34,7 +26,7 @@
 	</div>
 
 	<div class="form-group">
-	<button class="btn btn-danger btn-primary">meh... just delete it all</button>
+	<button class="btn btn-danger btn-primary" id="meh">meh... just delete it all</button>
 	</div>
 
 	</form>
@@ -43,10 +35,6 @@
 </div>
 
 {include file="inc_checkin_venues.txt" donot_doitagain=1}
-
-<div id="meh" style="display:none;margin-top:40px;text-align:right;">
-<button style="background-color:#ccc;padding:10px;">meh... just delete this</button>
-</div>
 
 <script type="text/javascript">
 {literal}
@@ -58,7 +46,7 @@ $(document).ready(function(){
 		return;
 	}
 
-	// privatesquare_pending_init();
+	privatesquare_pending_init();
 });
 
 {/literal}

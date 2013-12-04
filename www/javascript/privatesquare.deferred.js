@@ -84,7 +84,7 @@ function privatesquare_deferred_checkin_stored(checkin){
 	var msg = "Okay! Your checkin at '" + checkin['venue'] + "' has been recorded.";
 	privatesquare_set_status(msg);
 
-	_privatesquare_hide_map();
+	privatesquare_hide_map();
 	$("#deferred_checkin").hide();
 }
 

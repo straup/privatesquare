@@ -4,6 +4,9 @@ function privatesquare_pending_init(){
 
 	if (pending.length == 0){
 		privatesquare_set_status("There are no pending checkins to administriviate.");
+
+		privatesquare_hide_map();
+		$("#pending-form").hide();
 		return;
 	}
 
@@ -51,7 +54,7 @@ function privatesquare_pending_init(){
 
 function privatesquare_pending_onselect(){
 
-	_privatesquare_hide_map();
+	privatesquare_hide_map();
 
 	var deferred = $("#deferred");
 	deferred.hide();
@@ -77,8 +80,9 @@ function privatesquare_pending_onselect(){
 
 function privatesquare_pending_fetch_venues(checkin){
 
+	var method = 'foursquare.venues.search';
+
 	var args = {
-		'method': 'foursquare.venues.search',
 		'query': '"' + checkin['venue'] + '"'
 	};
 
@@ -91,15 +95,12 @@ function privatesquare_pending_fetch_venues(checkin){
 		args['near'] =  checkin['near'];
 	}
 
-	$.ajax({
-		'url': _cfg.abs_root_url + 'api/',
-		'data': args,
-		'success': function(rsp){
-			rsp['checkin'] = checkin;
-			_privatesquare_pending_fetch_venues_onload(rsp);
-		}
-	});
- 
+	var on_success = function(rsp){
+		rsp['checkin'] = checkin;
+		_privatesquare_pending_fetch_venues_onload(rsp);
+	};
+
+	privatesquare_api_call(method, args);     
 	privatesquare_set_status("Looking for '" + htmlspecialchars(checkin['venue']) + "'");
 }
 
@@ -191,16 +192,29 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 
 function _privatesquare_pending_onsubmit(){
 
+	var where = $("#where");
+	var what = $("#whatnow");
+
+	var id = where.attr("data-checkin-id");
+	var checkin = privatesquare_deferred_get_by_id(id);
+
+	if (what.val() == 'delete'){
+
+		var prompt = 'Are you sure you want to delete this pending checkin?';
+
+		if (confirm(prompt)){
+			privatesquare_pending_delete_checkin(checkin);
+		}
+
+		return false;
+	}
+
 	$("#venues").hide();
 	$("#meh").hide();
 
-	_privatesquare_hide_map();
+	privatesquare_hide_map();
 
 	var args = privatesquare_gather_args();
-
-	var where = $("#where");
-	var id = where.attr("data-checkin-id");
-	var checkin = privatesquare_deferred_get_by_id(id);
 
 	args['created'] = checkin['created'];
 
@@ -245,7 +259,7 @@ function privatesquare_pending_delete_checkin(checkin){
 	$("#venues").hide();
 	$("#meh").hide();
 
-	_privatesquare_hide_map()
+	privatesquare_hide_map()
 
 	privatesquare_deferred_remove(checkin['id']);
 
