@@ -1,6 +1,8 @@
 {capture assign="page_title"}{$owner.username} | pending checkins{/capture}
 {include file="inc_head.txt"}
 
+<div class="row"><h3>Pending checkins</h3></div>
+
 <div id="map-wrapper"></div>
 
 <div class="row text-center-x" id="pending-form">
