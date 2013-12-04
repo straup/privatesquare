@@ -1,3 +1,6 @@
 ALTER TABLE `PrivatesquareCheckins` ADD `neighbourhood` INT(11) UNSIGNED NOT NULL;
 ALTER TABLE `PrivatesquareCheckins` ADD `region` INT(11) UNSIGNED NOT NULL;
 ALTER TABLE `PrivatesquareCheckins` ADD `country` INT(11) UNSIGNED NOT NULL;
+
+DROP TABLE `FoursquareVenues`;
+DROP TABLE `YouarehereUsers`;

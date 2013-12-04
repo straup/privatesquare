@@ -97,16 +97,6 @@
 	$GLOBALS['cfg']['enable_feature_bergcloud_users'] = 0;
 	$GLOBALS['cfg']['enable_feature_bergcloud_littleprinter'] = 0;
 
-	# youarehere.spum.org integration - this should still be considered
-	# experimental if only because there's still no UI for doing anything
-	# with this API (20130606/straup)
-
-	$GLOBALS['cfg']['enable_feature_youarehere'] = 0;
-	$GLOBALS['cfg']['youarehere_api_endpoint'] = 'https://youarehere.spum.org/api/rest/';
-	$GLOBALS['cfg']['youarehere_grant_endpoint'] = 'https://youarehere.spum.org/api/oauth2/authenticate/';
-	$GLOBALS['cfg']['youarehere_token_endpoint'] = 'https://youarehere.spum.org/api/oauth2/access_token/';
-	$GLOBALS['cfg']['youarehere_api_key'] = '';
-
 	# See also: 'Configuring fancy stuff – Artisanal Integers'
 	# in the README.md file for details
 
