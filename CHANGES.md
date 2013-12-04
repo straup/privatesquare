@@ -7,6 +7,20 @@ Aka the `other-venues` branch. This branch has not been merged with `master` yet
 Changed a bunch of the backend code to allow for multiple venue "sources"
 including user-defined places.
 
+## Added
+
+* The ability to create user-defined places (venues) which may or may not have
+  fixed geographies.
+
+* The ability to check-in to "states of mind".
+
+* The ability to check-in to historic NYPL buildings.
+
+## Updated
+
+* Switch to using Bootstrap 3.0 and updated the menu-ing system to actually work
+  on a phone.
+
 ## Removed
 
 * Removed `bin/export-user-cities.php` (replaced by `bin/export-checkins.php`)
@@ -32,7 +46,15 @@ Add the following to your `www/include/config.php` file:
 
 ### Old things (no longer necessary)
 
+(TBW)
+
 ### Database alters (db_main)
+
+This is important. Nothing will work properly until you update the
+database. Basically we're creating a new `Venues` table which will replace the
+`FoursquareVenues` and we're adding a few extra columns to
+`PrivatesquareCheckins` as well as changing the column type for the `venue_id`
+column.
 
 Apply `schema/alters/20131124.db_main.schema` to your database.
 
