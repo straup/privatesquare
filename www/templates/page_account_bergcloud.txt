@@ -1,26 +1,32 @@
 {capture assign="page_title"}account | berg cloud{/capture}
 {include file="inc_head.txt"}
 
+<div class="row">
+
 <h2>Your BERG Cloud settings</h2>
 
-<div style="margin-bottom:2em;line-height:1.5em;">
-     <p>If you have a <a href="http://bergcloud.com/littleprinter/">Little Printer</a> you can configure privatesquare to print out <q>I want to go there</q> check-ins. We use the BERG Cloud <code>Direct Print API</code> to do this, so you'll need to enter that code here. You can find your code at the bottom of the <a href="http://remote.bergcloud.com/developers/direct_print_codes">Direct Print API page</a> on the BERG Cloud developers website.</p>
-</div>
+    <p class="lead">If you have a <a href="http://bergcloud.com/littleprinter/">Little Printer</a> you can configure privatesquare to print out <q>I want to go there</q> check-ins. We use the BERG Cloud <code>Direct Print API</code> to do this, so you'll need to enter that code here. You can find your code at the bottom of the <a href="http://remote.bergcloud.com/developers/direct_print_codes">Direct Print API page</a> on the BERG Cloud developers website.</p>
 
-<form method="POST" action="{$cfg.abs_root_url}account/bergcloud/">
+
+<form method="POST" action="{$cfg.abs_root_url}account/bergcloud/" role="form" class="role">
 	{$crumb_key|crumb_input}
 	<input type="hidden" name="update" value="1" />
 
-	<h3>Your Little Printer Direct Print API code</h3>
+	<div class="form-group">
+	<label for="direct_print_code">Your Little Printer Direct Print API code</label>
+	<input type="text" name="direct_print_code" value="{if $berg_user}{$berg_user.direct_print_code|escape}{/if}" class="form-control" />
+	</div>
 
-	<input type="text" name="direct_print_code" value="{if $berg_user}{$berg_user.direct_print_code|escape}{/if}" />
+	<div class="form-group">
+	<label for="littleprinter_updates">Send <q>I want to go there</q> check-ins to Little Printer</label>
+	<input type="checkbox" name="littleprinter_updates" {if $berg_user.littleprinter_updates} checked="true"{/if} />
+	</div>
 
-	<h3>Send <q>I want to go there</q> check-ins to Little Printer</h3>
-	<input type="checkbox" name="littleprinter_updates" {if $berg_user.littleprinter_updates} checked="true"{/if}/><label for="littleprinter_updates"> Yes, please!</label>
-
-	<div style="margin-top:2em;text-align:center;">
-	<input type="submit" value="UPDATE" />
+	<div class="form-group text-center">
+	<input type="submit" value="UPDATE" class="btn btn-primary btn-lg" />
 	</div>
 </form>
+
+</div>
 
 {include file="inc_foot.txt"}
