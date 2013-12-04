@@ -9,7 +9,7 @@ function privatesquare_init(provider){
 
 	$("body").attr("data-privatesquare-provider", provider);
 
-	if (window.navigator.onLine){
+	if (! window.navigator.onLine){
 		privatesquare_deferred_checkin(null, null, 'offline');
 		return;
 	}
@@ -292,7 +292,7 @@ function privatesquare_api_error(rsp, tryagain_func){
 
 }
 
-function _privatesquare_show_map(lat, lon, label){
+function privatesquare_show_map(lat, lon, label){
 
 	if (! label){
 		label = "you are here-ish";
@@ -329,7 +329,7 @@ function _privatesquare_show_map(lat, lon, label){
 	privatesquare_htmapl(map);
 }
 
-function _privatesquare_show_map_bbox(bbox,venues){
+function privatesquare_show_map_bbox(bbox,venues){
 
 	var wrapper = $("#map-wrapper");
 

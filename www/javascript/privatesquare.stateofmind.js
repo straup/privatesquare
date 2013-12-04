@@ -67,7 +67,7 @@ function _privatesquare_stateofmind_fetch_venues_onsuccess(rsp){
 
 	// draw the map...
 
-	_privatesquare_show_map(rsp['latitude'], rsp['longitude']);
+	privatesquare_show_map(rsp['latitude'], rsp['longitude']);
 
 	privatesquare_unset_status();
 	$("#venues").show();

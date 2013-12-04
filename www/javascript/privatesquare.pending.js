@@ -144,7 +144,7 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 	$("#broadcast").attr("disabled", "disabled");
 
 	if (rsp['latitude'] && rsp['longitude']){
-		_privatesquare_show_map(rsp['latitude'], rsp['longitude'], '"' + rsp['checkin']['venue'] + '"');
+		privatesquare_show_map(rsp['latitude'], rsp['longitude'], '"' + rsp['checkin']['venue'] + '"');
 	}
 
 	else {
@@ -173,7 +173,7 @@ function _privatesquare_pending_fetch_venues_onload(rsp){
 
 		var bbox = [swlat, swlon, nelat, nelon];
 
-		_privatesquare_show_map_bbox(bbox, venues);
+		privatesquare_show_map_bbox(bbox, venues);
 	}
 
 	$("#venues").show();

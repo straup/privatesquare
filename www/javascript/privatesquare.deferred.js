@@ -13,7 +13,7 @@ function privatesquare_deferred_has_local_storage(){
 function privatesquare_deferred_checkin(lat, lon, reason){
 
 	if (lat && lon){
-		_privatesquare_show_map(lat, lon);
+		privatesquare_show_map(lat, lon);
 	}
 
 	privatesquare_unset_status();
