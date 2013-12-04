@@ -40,7 +40,7 @@ function privatesquare_pending_init(){
 	var checkins = $("#checkins");
 	checkins.html(html);
 
-	var meh = $("#meh-all");
+	var meh = $("#meh");
 	meh.click(privatesquare_pending_purge_checkins);
 
 	var deferred = $("#deferred");
@@ -235,17 +235,19 @@ function privatesquare_pending_purge_checkins(){
 	var count_pending = deferred.attr('data-count-pending');
 
 	if (count_pending == 1){
-		q = 'Are you sure you want to delete this checkin?';
+		q = 'Are you sure you want to delete all this checkin?';
 	}
 
 	if (! confirm(q)){
-		return;
+		return false;
 	}
 
 	deferred.hide();
 
 	privatesquare_deferred_purge();
 	privatesquare_set_status("Okay all your pending checkins have been deleted.");
+
+	return false;
 }
 
 function privatesquare_pending_delete_checkin(checkin){
