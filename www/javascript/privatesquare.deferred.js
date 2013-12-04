@@ -79,7 +79,7 @@ function privatesquare_deferred_checkin_submit(){
 
 function privatesquare_deferred_checkin_stored(checkin){
 
-	// console.log(checkin);
+	console.log(checkin);
 
 	var msg = "Okay! Your checkin at '" + checkin['venue'] + "' has been recorded.";
 	privatesquare_set_status(msg);
@@ -98,8 +98,13 @@ function privatesquare_deferred_indicator(){
 	var wrapper = $("#pending");
 	var indicator = $("#pending_count");
 
-	if (count){
-		indicator.html('<a href="' + _cfg.abs_root_url + 'me/pending/">pending</a>');
+	if (count == 1){
+		indicator.html('<a href="' + privatesquare_abs_root_url() + 'me/pending/">(1) pending checkin</a>');
+		wrapper.show();
+	}
+
+	else if (count){
+		indicator.html('<a href="' + privatesquare_abs_root_url() + 'me/pending/">(' + count + ') pending checkins</a>');
 		wrapper.show();
 	}
 

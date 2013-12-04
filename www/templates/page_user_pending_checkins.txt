@@ -9,25 +9,32 @@
 {/capture}
 {include file="inc_head.txt"}
 
-<div id="status"></div>
-
 <div id="map-wrapper"></div>
 
-<div>
+<div class="row text-center">
 
-	<form id="deferred">
-	<select id="checkins" data-crumb="{$search_crumb|escape}">
-	</select>
+	<form id="deferred" role="form" class="form-inline">
 
-	<select id="whatnow">
+	<div class="form-group">
+	      <label class="sr-only" for="checkins">Checkins</label>
+	      <select id="checkins" data-crumb="{$search_crumb|escape}" class="form-control">
+	      </select>
+	</div>
+
+	<div class="form-group">
+      <label class="sr-only" for="whatnow">What would you like to do about this?</label>
+	<select id="whatnow" class="form-control">
 		<option value="checkin">This happened</option>
 		<option value="delete">Er... yeah, whatever</option>
 	</select>
+	</div>
 
-	<input type="submit" value="MAKE IT SO" />
+	<div class="form-group">
+	<input type="submit" value="MAKE IT SO" class="btn btn-primary" />
+	</div>
 
-	<div id="meh-all" style="margin-top:60px;text-align:right;">
-	<button style="background-color:#ccc;padding:10px;">meh... just delete it all</button>
+	<div class="form-group">
+	<button class="btn btn-danger btn-primary">meh... just delete it all</button>
 	</div>
 
 	</form>
@@ -51,7 +58,7 @@ $(document).ready(function(){
 		return;
 	}
 
-	privatesquare_pending_init();
+	// privatesquare_pending_init();
 });
 
 {/literal}
