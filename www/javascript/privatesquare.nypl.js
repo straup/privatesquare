@@ -1,5 +1,7 @@
 function privatesquare_nypl_fetch_venues(lat, lon, query){
 
+	// TO DO: CHECK TO SEE IF CURRENT LAT LON IS EVEN IN NEW YORK...
+
 	$("#broadcast").attr("disabled", "disabled");
 
 	var venues = $("#venues");

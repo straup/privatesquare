@@ -2,7 +2,7 @@
 
 	include("include/init.php");
 
-	# This is probably to creepy of a leaky privacy fuckup
+	# This is probably too creepy of a leaky privacy fuck-up
 	# waiting to happen so it's just stubbed out and disabled
 	# for the time being... (20131117/straup)
 
