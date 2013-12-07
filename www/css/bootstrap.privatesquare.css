@@ -185,7 +185,16 @@ select {
 	margin-bottom: .5em !important;
     }
 
-    
+    .dropdown {
+	font-size: 1.2em !important;
+    }
+
+    .dropdown-menu li a {
+	font-weight: 300 !important;
+	font-size: 1.15em !important;
+	line-height: 1.8em;
+	color: 999 !important;
+    }
 }
 
 /* not bootstrap */
