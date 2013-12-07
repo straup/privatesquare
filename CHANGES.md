@@ -7,6 +7,9 @@ Aka the `other-venues` branch. This branch has not been merged with `master` yet
 Changed a bunch of the backend code to allow for multiple venue "sources"
 including user-defined places.
 
+**If you are updating privatesquare from a version older than 2.0 there are
+changes that will require your time and attention. See below for details.**
+
 ## Added
 
 * The ability to create user-defined places (venues) which may or may not have
@@ -41,12 +44,18 @@ Add the following to your `www/include/config.php` file:
 		0 => 'privatesquare',
 		1 => 'foursquare',
 		2 => 'stateofmind',
-		# 3 => 'nypl',
+		3 => 'nypl',
 	);
 
 ### Old things (no longer necessary)
 
-(TBW)
+	$GLOBALS['cfg']['enable_feature_offline_appcache'] = 0;
+
+	$GLOBALS['cfg']['enable_feature_youarehere'] = 0;
+	$GLOBALS['cfg']['youarehere_api_endpoint'] = 'https://youarehere.spum.org/api/rest/';
+	$GLOBALS['cfg']['youarehere_grant_endpoint'] = 'https://youarehere.spum.org/api/oauth2/authenticate/';
+	$GLOBALS['cfg']['youarehere_token_endpoint'] = 'https://youarehere.spum.org/api/oauth2/access_token/';
+	$GLOBALS['cfg']['youarehere_api_key'] = '';
 
 ### Database alters (db_main)
 
