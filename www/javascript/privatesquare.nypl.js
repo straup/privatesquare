@@ -1,9 +1,16 @@
 function privatesquare_nypl_fetch_venues(lat, lon, query){
 
-	// TO DO: CHECK TO SEE IF CURRENT LAT LON IS EVEN IN NEW YORK...
-	// 40.495682, -74.255653, 40.917622, -73.689484    
-	// http://woe.spum.org/id/2459115
-    
+	// See also: http://woe.spum.org/id/2459115
+	// This is not an ideal bouning box but it will do for now
+    	// (20131207/straup)
+
+	var bbox = [ 40.495682, -74.255653, 40.917622, -73.689484 ];
+
+	if ((lat < bbox[0]) || (lat > bbox[2]) || (lon < bbox[1]) || (lon > bbox[3])){
+		privatesquare_set_status("Hrm... You don't appear to be in the New York area!");
+		return false
+	}
+
 	$("#broadcast").attr("disabled", "disabled");
 
 	var venues = $("#venues");

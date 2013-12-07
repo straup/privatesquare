@@ -25,6 +25,10 @@ function privatesquare_init(provider){
 		v.attr("data-geolocation-latitude", lat);
 		v.attr("data-geolocation-longitude", lon);
 
+		// For debugging, 16th and Mission (SF)
+		// var lat = 37.764751;
+		// var lon = -122.419511;
+
 		if (provider=='stateofmind'){
 			privatesquare_stateofmind_fetch_venues(lat, lon);
 		}
