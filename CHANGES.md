@@ -1,6 +1,6 @@
 # 2.0
 
-Aka the `other-venues` branch. This branch has not been merged with `master` yet.
+Merged in to `master` 20131207.
 
 ## In broad strokes
 
@@ -64,6 +64,8 @@ database. Basically we're creating a new `Venues` table which will replace the
 `FoursquareVenues` and we're adding a few extra columns to
 `PrivatesquareCheckins` as well as changing the column type for the `venue_id`
 column.
+
+First of all just do a `mysqldump` of your existing database. It will only take a couple minutes and probably won't be necessary but won't you be glad if it is...
 
 Apply `schema/alters/20131124.db_main.schema` to your database.
 
