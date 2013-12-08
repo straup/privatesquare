@@ -14,8 +14,11 @@
 
 	error_reporting((E_ALL | E_STRICT) ^ E_NOTICE);
 
-	putenv('TZ=PST8PDT');
-	date_default_timezone_set('America/Los_Angeles');
+	# putenv('TZ=PST8PDT');
+	# date_default_timezone_set('America/Los_Angeles');
+
+	putenv('TZ=GMT');
+	date_default_timezone_set('Europe/London');
 
 	$GLOBALS['timings'] = array();
 	$GLOBALS['timings']['execution_start'] = microtime_ms();
