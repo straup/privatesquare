@@ -88,10 +88,14 @@
 		$auth_cookie = login_generate_auth_cookie($user);
 		login_set_cookie($GLOBALS['cfg']['auth_cookie_name'], $auth_cookie, $expires);
 
-		$redir = $redir;
-		$redir = urlencode($redir);
+		$loc = "{$GLOBALS['cfg']['abs_root_url']}checkcookie/";
 
-		header("location: {$GLOBALS['cfg']['abs_root_url']}checkcookie?redir={$redir}");
+		if ($redir){
+			$query = array('redir' => $redir);
+			$loc = $loc . "?" . http_build_query($query);
+		}	
+
+		header("location: $loc");
 		exit;
 	}
 
