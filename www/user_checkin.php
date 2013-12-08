@@ -37,6 +37,10 @@
 		error_404();
 	}
 
+	# debugging... (20131208/straup)
+	# loadlib("privatesquare_checkins_timezones");
+	# privatesquare_checkins_timezones_get_timezone($checkin);
+
 	$checkin['locality'] = reverse_geoplanet_get_by_woeid($checkin['locality'], 'locality');
 
 	$status_map = privatesquare_checkins_status_map();
