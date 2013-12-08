@@ -28,13 +28,20 @@
 	function privatesquare_checkins_dates_format_where(&$checkin){
 
 		$locality = $checkin['locality'];
-		$loc = reverse_geoplanet_get_by_woeid($locality, 'locality');
 
-		if (! $loc){
-			return privatesquare_checkins_dates_format_timezone($checkin);
+		if (! $locality){
+			return null;
 		}
 
-		$parts = explode(", ", $loc['name']);
+		if (! is_array($locality)){
+			$locality = reverse_geoplanet_get_by_woeid($locality, 'locality');
+		}
+
+		if (! $locality){
+			return null;
+		}
+
+		$parts = explode(", ", $locality['name']);
 		return $parts[0];
 	}
 
@@ -48,15 +55,22 @@
 
 	function privatesquare_checkins_dates_format(&$checkin, $fmt){
 
-		$tzid = timezones_woeid_to_tzid($checkin['timezone']);
-		$tz = new DateTimeZone($tzid);
+		try {
+			$tzid = timezones_woeid_to_tzid($checkin['timezone']);
+			$tz = new DateTimeZone($tzid);
 
-		$ts = $checkin['created'];
-		$dt = new DateTime("@$ts");
+			$ts = $checkin['created'];
+			$dt = new DateTime("@$ts");
+			$dt->setTimezone($tz);
 
-		$dt->setTimezone($tz);
+			return $dt->format($fmt);
 
-		return $dt->format($fmt);
+		}
+
+		catch (Exception $e){
+			log_error("[PRIVATESQUARE] failed to format date for checkin, because: " . $e->getMessage());
+			return null;
+		}
 	}
 
 	#################################################################

@@ -222,6 +222,7 @@
 	loadlib('foursquare_urls');
 
 	loadlib("privatesquare_checkins");
+	loadlib("privatesquare_checkins_dates");
 
 	loadlib("foursquare_users");
 	loadlib("foursquare_api");

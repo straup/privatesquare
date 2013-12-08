@@ -24,10 +24,14 @@
 <div class="row">
 
 <p class="lead" id="user_checkin_context">
+{capture assign="where"}
+{capture assign="locality"}{$checkin|@privatesquare_checkins_dates_format_where}{/capture}
+{if $locality}in {$locality|escape}{else}{$checkin|@privatesquare_checkins_dates_format_timezone}{/if}
+{/capture}
 {if $is_own}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q class="hey-look" id="yousaid">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
+On <a href="{$owner|@urls_history_for_user}{$checkin|@privatesquare_checkins_dates_format_ymd|escape}">{$checkin|@privatesquare_checkins_dates_format_date|escape}</a> at {$checkin|@privatesquare_checkins_dates_format_time|escape} {$where|escape} you said <q class="hey-look" id="yousaid">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d EDT"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
+On <a href="{$owner|@urls_history_for_user}{$checkin|@privatesquare_checkins_dates_format_ymd|escape}">{$checkin|@privatesquare_checkins_dates_format_date|escape}</a> at {$checkin|@privatesquare_checkins_dates_format_time|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
 {/if}
 
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
