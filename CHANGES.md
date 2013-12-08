@@ -1,3 +1,17 @@
+# 2.1
+
+## In broad strokes
+
+Record and display timezones for individual check-ins correctly.
+
+## Database alters (db_users)
+
+Apply `schema/alters/20131208.db_users.schema` to your database.
+
+## Database migration
+
+Run `bin/backfill_set_timezone.php`
+
 # 2.0
 
 Merged in to `master` 20131207.

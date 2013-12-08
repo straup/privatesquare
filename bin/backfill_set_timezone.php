@@ -11,8 +11,6 @@
 	loadlib("privatesquare_checkins_dates");
 	loadlib("privatesquare_checkins_timezones");
 
-	# THIS HAS NOT BEEN TESTED YET (20131208/straup)
-
 	function set_timezone($row){
 
 		$tz = privatesquare_checkins_timezones_get_timezone($row);
