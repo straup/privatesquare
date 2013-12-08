@@ -55,16 +55,24 @@
 
 	function privatesquare_checkins_dates_format(&$checkin, $fmt){
 
-		try {
-			$tzid = timezones_woeid_to_tzid($checkin['timezone']);
-			$tz = new DateTimeZone($tzid);
+		if (! $checkin['timezone']){
+			return null;
+		}
 
+		$tzid = timezones_woeid_to_tzid($checkin['timezone']);
+
+		if (! $tzid){
+			return null;
+		}
+
+		try {
 			$ts = $checkin['created'];
 			$dt = new DateTime("@$ts");
+
+			$tz = new DateTimeZone($tzid);
 			$dt->setTimezone($tz);
 
 			return $dt->format($fmt);
-
 		}
 
 		catch (Exception $e){
