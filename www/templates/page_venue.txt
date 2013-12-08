@@ -21,7 +21,7 @@ setTimeout(function(){
 }, 10000);
 
 $(document).ready(function(){
-	privatesquare_set_status("Success! You have checked in to " + {/literal}{$venue.name|escape}{literal});
+	privatesquare_set_status("Success! You have checked in to " + {/literal}"{$venue.name|escape}"{literal});
 });
 {/literal}
 </script>
