@@ -383,8 +383,25 @@
 			}
 		}
 
+		# Assign creation time here so that the timezone/ymd stuff
+		# below will work correctly (20131208/straup)
+
+		$now = time();
+		$checkin['created'] = $now;
+
 		$tz = privatesquare_checkins_timezones_get_timezone($checkin);
 		$checkin['timezone'] = $tz;
+
+		# Unclear still which one of these we'll use in the end so
+		# for now just do them both (20131208/straup)
+
+		$ymd = privatesquare_checkins_dates_format_ymd($checkin);
+		$checkin['ymd'] = $ymd;
+
+		list($year, $month, $day) = explode("-", $ymd);
+		$checkin['year'] = $year;
+		$checkin['month'] = $month;
+		$checkin['day'] = $day;
 
 		$rsp = privatesquare_checkins_create($checkin);
 		return $rsp;		
