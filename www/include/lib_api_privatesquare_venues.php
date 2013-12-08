@@ -383,6 +383,9 @@
 			}
 		}
 
+		$tz = privatesquare_checkins_timezones_get_timezone($checkin);
+		$checkin['timezone'] = $tz;
+
 		$rsp = privatesquare_checkins_create($checkin);
 		return $rsp;		
 	}
