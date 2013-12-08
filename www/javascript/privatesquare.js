@@ -25,14 +25,6 @@ function privatesquare_init(provider){
 		v.attr("data-geolocation-latitude", lat);
 		v.attr("data-geolocation-longitude", lon);
 
-		// For debugging
-	    	// 16th and Mission (SF)
-		// var lat = 37.764751;
-		// var lon = -122.419511;
-		// NYPL main branch
-	    	// var lat = 40.753206;
-		// var lon = -73.982196;
-
 		if (provider=='stateofmind'){
 			privatesquare_stateofmind_fetch_venues(lat, lon);
 		}
@@ -431,13 +423,35 @@ function privatesquare_unset_status(){
 
 function privatesquare_whereami(onsuccess, onerror){
 
-	/* this shouldn't be necessary but it also seems to be
-	   where the weirdness with /nearby is happening...
-	   (20120604/straup) */
+	var debug = 0;
 
+	var onsuccess_debug = function(rsp){
+
+	    	// 16th and Mission (SF)
+		var lat = 37.764751;
+		var lon = -122.419511;
+
+		// NYPL main branch
+	    	// var lat = 40.753206;
+		// var lon = -73.982196;
+
+		var coords = {
+			'latitude': lat,
+			'longitude': lon
+		};
+
+		var mock_rsp = {
+			'coords': coords
+		};
+
+		onsuccess(mock_rsp);
+	};
+
+	var do_onsuccess = (debug) ? onsuccess_debug : onsuccess;
+    
 	try {
 		var args = { enableHighAccuracy:true, maximumAge: 1000 };
-		navigator.geolocation.getCurrentPosition(onsuccess, onerror, args);
+		navigator.geolocation.getCurrentPosition(do_onsuccess, onerror, args);
 	}
 
 	catch (e) {
