@@ -11,6 +11,11 @@
 {capture assign="lat"}{if $row.venue.latitude|escape}{$row.venue.latitude}{elseif $row.latitude|escape}{$row.latitude|escape}{else}{/if}{/capture}
 {capture assign="lon"}{if $row.venue.longitude|escape}{$row.venue.longitude}{elseif $row.longitude|escape}{$row.longitude|escape}{else}{/if}{/capture}
 
+{capture assign="where"}
+{capture assign="locality"}{$row|@privatesquare_checkins_dates_format_where}{/capture}
+{if $locality}in {$locality|escape}{else}{$row|@privatesquare_checkins_dates_format_timezone|escape}{/if}
+{/capture}
+
 <div class="checkin-history" data-venue="{$row.venue_id|escape}">
 
 	{* TO DO: make the actual checkin link a float-y thing *}
@@ -27,11 +32,11 @@
 	<div class="lead date" data-created="{$row.created|escape}">
 
 		{if $status_id and $status_id <= 1}
-		On <a href="{$owner|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> you said <span class="hey-look">{$status_map.$status_id|escape}</span>.
+		On <a href="{$owner|@urls_history_for_user}{$row|@privatesquare_checkins_dates_format_ymd|escape}">{$row|@privatesquare_checkins_dates_format_date|escape}</a> {$where} you said <span class="hey-look">{$status_map.$status_id|escape}</span>.
 		{elseif $status_id}
-		On <a href="{$owner|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> you said <span class="hey-look">{$status_map.$status_id|escape}</span>.
+		On <a href="{$owner|@urls_history_for_user}{$row|@privatesquare_checkins_dates_format_ymd|escape}">{$row|@privatesquare_checkins_dates_format_date|escape}</a> {$where} you said <span class="hey-look">{$status_map.$status_id|escape}</span>.
 		{else}
-		You were here on <a href="{$owner|@urls_history_for_user}{$row.created|date_format:"%Y-%m-%d"|escape}">{$row.created|date_format:"%A, %B %e, %Y"|escape}</a> at {$row.created|date_format:"%k:%M"|escape}.
+		You were here on <a href="{$owner|@urls_history_for_user}{$row|@privatesquare_checkins_dates_format_ymd|escape}">{$row|@privatesquare_checkins_dates_format_date|escape}</a> at {$row|@privatesquare_checkins_dates_format_time|escape} {$where}.
 		{/if}
 		{if $row.weather} {include file="inc_weather_stringify.txt" weather=$row.weather}{/if}
 

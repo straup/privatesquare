@@ -128,8 +128,20 @@
 
 		if (isset($more['when'])){
 			list($start, $stop) = datetime_when_parse($more['when']);
-			$enc_start = AddSlashes(strtotime($start));
-			$enc_stop = AddSlashes(strtotime($stop));
+
+			# Assuming all dates are stored in GMT goose the numbers
+			# enough to try and account for all the other places you
+			# might have been when you checked in. Un-comfident with
+			# this approach... (20131208/straup)
+
+			$offset = 3600 * 12;
+			# $offset = 0;
+
+			$start = strtotime($start) - $offset;
+			$stop = strtotime($stop) + $offset;
+
+			$enc_start = AddSlashes($start);
+			$enc_stop = AddSlashes($stop);
 
 			$sql .= " AND created BETWEEN '{$enc_start}' AND '{$enc_stop}'";
 		}
