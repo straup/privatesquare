@@ -38,9 +38,10 @@
 	}
 
 	# debugging... (20131208/straup)
-	# loadlib("privatesquare_checkins_timezones");
-	# $tz = privatesquare_checkins_timezones_get_timezone($checkin);
-	# dumper($tz);
+	# loadlib("privatesquare_checkins_dates");
+	# dumper(privatesquare_checkins_dates_format_date($checkin));
+	# dumper(privatesquare_checkins_dates_format_time($checkin));
+	# dumper(privatesquare_checkins_dates_format_where($checkin));
 
 	$checkin['locality'] = reverse_geoplanet_get_by_woeid($checkin['locality'], 'locality');
 

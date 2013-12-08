@@ -1,5 +1,7 @@
 <?php
 
+	# See also: https://github.com/iamcal/lib_timezones/
+
 	#################################################################
 
 	function timezones_get_by_tzid($tzid){
@@ -72,7 +74,7 @@
 		}
 
 		if (count($rsp['rows']) == 1){
-
+			return $rsp;
 		}
 
 		# please so point-in-poly here...

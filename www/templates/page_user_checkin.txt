@@ -27,7 +27,7 @@
 {if $is_own}
 On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} you said <q class="hey-look" id="yousaid">{if $status_id >= 2}<a href="{$cfg.abs_root_url}me/status/{$status_id|escape}">{$status_map.$status_id|escape}</a>{else}{$status_map.$status_id|escape}{/if}</q>.{if $checkin.checkin_id} You also told foursquare about it.{/if}
 {else}
-On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
+On <a href="{$owner|@urls_history_for_user}{$checkin.created|date_format:"%Y-%m-%d EDT"|escape}">{$checkin.created|date_format|escape}</a> at {$checkin.created|date_format:"%k:%M"|escape} {$owner.username|escape} said <strong>{$status_map.$status_id|escape}</strong>.</p>
 {/if}
 
 {if $checkin.weather} {include file="inc_weather_stringify.txt" weather=$checkin.weather}{/if}
