@@ -1,9 +1,5 @@
 <?php
 
-	#
-	# $Id$
-	#
-
 	define("GEO_UTILS_R_M", 3963.1676);
 	define("GEO_UTILS_R_KM", 6378.1);
 	define("GEO_UTILS_KM_PER_M", (GEO_UTILS_R_M / GEO_UTILS_R_KM));
@@ -135,4 +131,14 @@
 
 	#################################################################
 
-?>
+	# See also:
+	# http://www.sidvind.com/wiki/Point-in-polygon:_Jordan_Curve_Theorem
+	# http://alienryderflex.com/polygon/
+	# http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+	function geo_utils_is_point_in_polygon(){
+
+		 # please write me...
+	}
+
+	# the end
