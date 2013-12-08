@@ -8,6 +8,8 @@
 	include("include/init.php");
 	loadlib("backfill");
 
+	loadlib("privatesquare_checkins_timezones");
+
 	# THIS HAS NOT BEEN TESTED YET (20131208/straup)
 
 	function set_timezone($row){
@@ -23,6 +25,7 @@
 		);
 
 		$rsp = privatesquare_checkins_update($row, $update);
+		echo "{$row['id']} – {$tz}: {$rsp['ok']}\n";
 	}
 
 	$sql = "SELECT * FROM PrivatesquareCheckins";
