@@ -5,6 +5,7 @@ CREATE TABLE `PrivatesquareCheckins` (
   `user_id` INT(11) UNSIGNED NOT NULL,
   `status_id` TINYINT(3) UNSIGNED NOT NULL,
   `created` INT(11) UNSIGNED NOT NULL,
+  `timezone` INT(11) UNSIGNED NOT NULL,
   `latitude` decimal(6,3) DEFAULT NULL,
   `longitude` decimal(6,3) DEFAULT NULL,
   `venue_id` BIGINT(20) UNSIGNED NOT NULL,

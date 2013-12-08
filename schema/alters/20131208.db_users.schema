@@ -1,0 +1,1 @@
+ALTER TABLE PrivatesquareCheckins ADD timezone INT(11) UNSIGNED NOT NULL;
