@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 		var lat = rsp['coords']['latitude'];
 		var lon = rsp['coords']['longitude'];
-		_privatesquare_show_map(lat, lon);
+		privatesquare_show_map(lat, lon);
 
 		$("#create-form").show();
 	};
