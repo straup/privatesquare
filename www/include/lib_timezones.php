@@ -79,21 +79,34 @@
 			return $rsp;
 		}
 
-		return $rsp;
-
-		# This doesn't work yet...
+		# This isn't ideal but it will do for now (20131215/straup)
 
 		$inside = array();
 
 		foreach ($rsp['rows'] as $row){
 
-			$coords = json_decode($row['coords']);
-dumper($coords);
-dumper("$lat, $lon");
-$w = geo_utils_is_point_in_polygon($lat, $lon, $coords);
-dumper($w);
-			if (geo_utils_is_point_in_polygon($lat, $lon, $coords) == 'inside'){
-				$inside[] = $row;
+			$geom = json_decode($row['geom'], 'as hash');
+
+			if ($geom['type'] == 'Polygon'){
+				$geom['coordinates'] = array(
+					$geom['coordinates']
+				);
+			}
+
+			foreach ($geom['coordinates'] as $poly){
+
+				$possible = array();
+
+				foreach ($poly[0] as $pt){
+					$possible[] = array($pt[1], $pt[0]);
+				}
+
+				$pos = geo_utils_is_point_in_polygon($lat, $lon, $possible);
+
+				if ($pos == 'inside'){
+					$inside[] = $row;
+					break;
+				}
 			}
 		}
 

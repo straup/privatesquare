@@ -22,22 +22,10 @@
 		$woeid = $row['woeid'];
 		$geom = $row['geom'];
 
-		$geom = json_decode($geom, 'as hash');
-
-		# THIS IS BROKEN... THE US IS A MULTIPOLYGON BECAUSE...
-
-		$geom = ($geom['type'] == 'MultiPolygon') ? $geom['coordinates'][0][0] : $geom['coordinates'][0];
-
-		$coords = array();
-
-		foreach ($geom as $pt){
-			$coords[] = array($pt[1], $pt[0]);
-		}
-
-		$coords = json_encode($coords);
+		# $geom = json_decode($geom, 'as hash');
 
 		$update = array(
-			'coords' => $coords,
+			'geom' => $geom,
 		);
 
 		$enc_woeid = AddSlashes($woeid);
@@ -46,7 +34,6 @@
 		$rsp = db_update('Timezones', $update, $where);
 
 		echo "update {$enc_woeid} {$row['tzid']} : {$rsp['ok']}\n";
-
 	}
 
 	$spec = array(
