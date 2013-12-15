@@ -24,7 +24,8 @@
 
 		$geom = json_decode($geom, 'as hash');
 
-		# Hack... (20131215/straup)
+		# THIS IS BROKEN... THE US IS A MULTIPOLYGON BECAUSE...
+
 		$geom = ($geom['type'] == 'MultiPolygon') ? $geom['coordinates'][0][0] : $geom['coordinates'][0];
 
 		$coords = array();
@@ -44,7 +45,8 @@
 
 		$rsp = db_update('Timezones', $update, $where);
 
-		echo "update {$woeid} : {$rsp['ok']}\n";
+		echo "update {$enc_woeid} {$row['tzid']} : {$rsp['ok']}\n";
+
 	}
 
 	$spec = array(

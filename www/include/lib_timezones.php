@@ -2,6 +2,8 @@
 
 	# See also: https://github.com/iamcal/lib_timezones/
 
+	loadlib("geo_utils");
+
 	#################################################################
 
 	function timezones_get_by_tzid($tzid){
@@ -79,16 +81,18 @@
 
 		return $rsp;
 
-		# untested still (20131215/straup)
+		# This doesn't work yet...
 
 		$inside = array();
 
 		foreach ($rsp['rows'] as $row){
 
-			$geom = json_decode($row['geom']);
-			$coords = "fix me";	# derive from $geom
-
-			if (geo_utils_is_point_polygon($lat, $lon, $coords)){
+			$coords = json_decode($row['coords']);
+dumper($coords);
+dumper("$lat, $lon");
+$w = geo_utils_is_point_in_polygon($lat, $lon, $coords);
+dumper($w);
+			if (geo_utils_is_point_in_polygon($lat, $lon, $coords) == 'inside'){
 				$inside[] = $row;
 			}
 		}
