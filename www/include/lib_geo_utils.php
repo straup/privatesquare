@@ -135,15 +135,13 @@
 	# http://www.sidvind.com/wiki/Point-in-polygon:_Jordan_Curve_Theorem
 	# http://alienryderflex.com/polygon/
 	# http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
-	# http://assemblysys.com/php-point-in-polygon-algorithm/
 
+	# This is derived from:
+	# http://assemblysys.com/php-point-in-polygon-algorithm/
 	# $coords are assumed to be a array(array($lat, $lon) ... )
 
 	function geo_utils_is_point_in_polygon($lat, $lon, &$coords){
 
-	# please write me...
-
-		 /*
 		$intersections = 0;
 		$count_coords = count($coords);
  
@@ -154,32 +152,38 @@
 
 			# Check if point is on an horizontal polygon boundary
 
-			if ($vertex1['y'] == $vertex2['y'] &&
-			    $vertex1['y'] == $point['y'] &&
-			    $point['x'] > min($vertex1['x'], $vertex2['x']) &&
-			    $point['x'] < max($vertex1['x'], $vertex2['x'])){
+			if ($vertex1[0] == $vertex2[0] &&
+			    $vertex1[0] == $lat &&
+			    $lon > min($vertex1[1], $vertex2[1]) &&
+			    $lon < max($vertex1[1], $vertex2[1])){
 
 				return "boundary";
 			}
 
 
-			if ($point['y'] > min($vertex1['y'], $vertex2['y']) and $point['y'] <= max($vertex1['y'], $vertex2['y']) and $point['x'] <= max($vertex1['x'], $vertex2['x']) and $vertex1['y'] != $vertex2['y']) {
-                $xinters = ($point['y'] - $vertex1['y']) * ($vertex2['x'] - $vertex1['x']) / ($vertex2['y'] - $vertex1['y']) + $vertex1['x'];
-                if ($xinters == $point['x']) { // Check if point is on the polygon boundary (other than horizontal)
-                    return "boundary";
-                }
-                if ($vertex1['x'] == $vertex2['x'] || $point['x'] <= $xinters) {
-                    $intersections++;
-                }
-            }
-        }
+			if ($lat > min($vertex1[0], $vertex2[0]) &&
+			    $lat <= max($vertex1[0], $vertex2[0]) &&
+			    $lon <= max($vertex1[1], $vertex2[1]) &&
+			    $vertex1[0] != $vertex2[0]){
+
+				$xinters = ($lat - $vertex1[0]) * ($vertex2[1] - $vertex1[1]) / ($vertex2[0] - $vertex1[0]) + $vertex1[1];
+
+				# Check if point is on the polygon boundary (other than horizontal)
+
+				if ($xinters == $lon){ 
+					return "boundary";
+				}
+
+				if ($vertex1[1] == $vertex2[1] || $lon <= $xinters){
+					$intersections++;
+				}
+			}
+		}
 
 		# If the number of edges we passed through is odd
 		# then it's in the polygon.
 
 		return ($intersections % 2 != 0) ? "inside" : "outside";
-
-		*/
 	}
 
 	# the end

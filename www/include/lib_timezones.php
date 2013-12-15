@@ -77,7 +77,24 @@
 			return $rsp;
 		}
 
-		# please so point-in-poly here...
+		return $rsp;
+
+		# untested still (20131215/straup)
+
+		$inside = array();
+
+		foreach ($rsp['rows'] as $row){
+
+			$geom = json_decode($row['geom']);
+			$coords = "fix me";	# derive from $geom
+
+			if (geo_utils_is_point_polygon($lat, $lon, $coords)){
+				$inside[] = $row;
+			}
+		}
+
+		$rsp['rows'] = $inside;
+		return $rsp;
 	}
 
 	#################################################################
