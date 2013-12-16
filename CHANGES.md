@@ -4,13 +4,17 @@
 
 Record and display timezones for individual check-ins correctly.
 
+## Database alters (db_main)
+
+Apply `schema/alters/20131215.db_main.schema` to your database.
+
 ## Database alters (db_users)
 
 Apply `schema/alters/20131208.db_users.schema` to your database.
 
 ## Database migration
 
-Run `bin/backfill_set_timezone.php`
+Run `bin/backfill_set_privatesquare_checkins_timezones.php`
 
 # 2.0
 
