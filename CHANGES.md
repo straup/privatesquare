@@ -16,6 +16,21 @@ Apply `schema/alters/20131208.db_users.schema` to your database.
 
 Run `bin/backfill_set_privatesquare_checkins_timezones.php`
 
+# 2.03
+
+Merged in to `master` 20140105.
+
+The `backfill-two-dot-oh` which fixed the `bin/sync-foursquare.php` script to
+work with all the changes introduced in version 2.0.
+
+# 2.02
+
+"Bug fixes" which really just means I forgot to update this file at the time.
+
+# 2.01
+
+"Bug fixes" which really just means I forgot to update this file at the time.
+
 # 2.0
 
 Merged in to `master` 20131207.
