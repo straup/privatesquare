@@ -79,6 +79,7 @@
 			log_error("[PRIVATESQUARE] failed to format date for checkin, because: " . $e->getMessage());
 			return null;
 		}
+
 	}
 
 	#################################################################

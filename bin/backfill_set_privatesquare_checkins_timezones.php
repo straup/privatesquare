@@ -19,13 +19,24 @@
 			'timezone' => $tz,
 		);
 
-		$ymd = privatesquare_checkins_dates_format_ymd($row);
+		$mock = $row;
+		$mock['timezone'] = $tz;
+
+		$ymd = privatesquare_checkins_dates_format_ymd($mock);
 		$update['ymd'] = $ymd;
+
+		if (! $ymd){
+			echo "failed to determine timezone for check-in ID '{$row['id']}\n";
+			return;
+		}
 
 		list($year, $month, $day) = explode("-", $ymd);
 		$update['year'] = $year;
 		$update['month'] = $month;
 		$update['day'] = $day;
+
+		# echo json_encode($update) . "\n";
+		# return;
 
 		$rsp = privatesquare_checkins_update($row, $update);
 		echo "{$row['id']} – {$tz}: {$rsp['ok']}\n";
