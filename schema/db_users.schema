@@ -14,6 +14,11 @@ CREATE TABLE `PrivatesquareCheckins` (
   `region` INT(11) UNSIGNED NOT NULL,
   `country` INT(11) UNSIGNED NOT NULL,
   `checkin_id` VARCHAR(64),
+  `timezone` INT(11) UNSIGNED NOT NULL,
+  `ymd` DATE,
+  `year` SMALLINT UNSIGNED NOT NULL,
+  `month` TINYINT UNSIGNED NOT NULL,
+  `day` TINYINT UNSIGNED NOT NULL,
   `weather` TEXT,
   PRIMARY KEY (`id`),
   KEY `by_status` (`user_id`, `status_id`),
@@ -24,5 +29,6 @@ CREATE TABLE `PrivatesquareCheckins` (
   KEY `by_location` (`user_id`, `latitude`, `longitude`),
   KEY `by_privatesquare_id` (`user_id`, `id`),
   KEY `by_foursquare_id` (`user_id`, `checkin_id`),
+  KEY `by_ymd` (`user_id`, `ymd`, `created`),	
   UNIQUE KEY `by_checkin` (`created`, `venue_id`, `user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

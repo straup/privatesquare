@@ -127,23 +127,32 @@
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 
 		if (isset($more['when'])){
-			list($start, $stop) = datetime_when_parse($more['when']);
 
-			# Assuming all dates are stored in GMT goose the numbers
-			# enough to try and account for all the other places you
-			# might have been when you checked in. Un-comfident with
-			# this approach... (20131208/straup)
+			if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $more['when'])){
 
-			$offset = 3600 * 12;
-			# $offset = 0;
+				$enc_when = AddSlashes($more['when']);
+				$sql .= " AND ymd = '{$enc_when}'";
+			}
 
-			$start = strtotime($start) - $offset;
-			$stop = strtotime($stop) + $offset;
+			else {
 
-			$enc_start = AddSlashes($start);
-			$enc_stop = AddSlashes($stop);
+				list($start, $stop) = datetime_when_parse($more['when']);
 
-			$sql .= " AND created BETWEEN '{$enc_start}' AND '{$enc_stop}'";
+				# Assuming all dates are stored in GMT goose the numbers
+				# enough to try and account for all the other places you
+				# might have been when you checked in. Un-comfident with
+				# this approach... (20131208/straup)
+
+				$offset = 3600 * 12;
+
+				$start = strtotime($start) - $offset;
+				$stop = strtotime($stop) + $offset;
+
+				$enc_start = AddSlashes($start);
+				$enc_stop = AddSlashes($stop);
+
+				$sql .= " AND created BETWEEN '{$enc_start}' AND '{$enc_stop}'";
+			}
 		}
 
 		else if (isset($more['venue_id'])){
@@ -709,14 +718,29 @@
 			'after' => null,
 		);
 
-		$fmt = "Y-m-d";
-
 		$cluster_id = $user['cluster_id'];
+
+		$enc_user = AddSlashes($user['id']);
+		$enc_ymd = AddSlashes($ymd);
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND ymd < '{$enc_ymd}' ORDER BY created DESC LIMIT 1";
+
+		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
+			$bookends['before'] = date($fmt, $row['created']);
+		}
+
+		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}' AND ymd > '{$enc_ymd}'";
+
+		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
+			$bookends['after'] = date($fmt, $row['created']);
+		}
+
+		/*
+		$fmt = "Y-m-d";
 
 		$start = strtotime("{$ymd} 00:00:00");
 		$stop = strtotime("{$ymd} 23:59:59");
 
-		$enc_user = AddSlashes($user['id']);
 		$enc_start = AddSlashes($start);
 		$enc_stop = AddSlashes($stop);
 
@@ -731,7 +755,8 @@
 		if ($row = db_single(db_fetch_users($cluster_id, $sql))){
 			$bookends['after'] = date($fmt, $row['created']);
 		}
-
+		*/
+		
 		return $bookends;
 	}
 

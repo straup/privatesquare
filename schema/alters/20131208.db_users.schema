@@ -4,3 +4,5 @@ ALTER TABLE PrivatesquareCheckins ADD ymd DATE;
 ALTER TABLE PrivatesquareCheckins ADD year SMALLINT UNSIGNED NOT NULL;
 ALTER TABLE PrivatesquareCheckins ADD month TINYINT UNSIGNED NOT NULL;
 ALTER TABLE PrivatesquareCheckins ADD day TINYINT UNSIGNED NOT NULL;
+
+CREATE INDEX `by_ymd` ON PrivatesquareCheckins (`user_id`, `ymd`, `created`);
