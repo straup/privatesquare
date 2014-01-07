@@ -1,5 +1,7 @@
 # 2.1
 
+Merged in to `master` 20140107.
+
 ## In broad strokes
 
 Record and display timezones for individual check-ins correctly.
