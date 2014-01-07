@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS `Trips`;
+
+CREATE TABLE `Trips` (
+  `id` BIGINT(128) UNSIGNED NOT NULL,
+  `user_id` INT(11) UNSIGNED NOT NULL,
+  `dopplr_id` INT(11) UNSIGNED NOT NULL,
+  `departure_woeid` INT(11) UNSIGNED NOT NULL,
+  `departure_timezone` INT(11) UNSIGNED NOT NULL,
+  `departure_date` DATE,
+  `departure_notes` TEXT NOT NULL,
+  `arrival_woeid` INT(11) UNSIGNED NOT NULL,
+  `arrival_timezone` INT(11) UNSIGNED NOT NULL,
+  `arrival_date` DATE,
+  `arrival_notes` TEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `by_dopplr` (`dopplr_id`),
+  KEY `by_user` (`user_id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
