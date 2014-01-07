@@ -74,14 +74,9 @@
 
 	$rsp = privatesquare_checkins_for_user($owner, $more);
 
-	# TO DO: oh god...timezones :-(
-
 	if ($when){
-		list($start, $stop) = datetime_when_parse($more['when']);
 
 		$GLOBALS['smarty']->assign("when", $when);
-		$GLOBALS['smarty']->assign("start", $start);
-		$GLOBALS['smarty']->assign("stop", $stop);
 
 		$bookends = privatesquare_checkins_bookends_for_date($owner, $when);
 		$GLOBALS['smarty']->assign("bookends", $bookends);

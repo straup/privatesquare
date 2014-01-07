@@ -6,6 +6,7 @@
 	loadlib("privatesquare_checkins_utils");
 	loadlib("privatesquare_export");
 	loadlib("foursquare_users");
+	loadlib("geo_utils");
 
 	$fsq_id = get_int32("foursquare_id");
 
@@ -71,9 +72,11 @@
 	$lon = get_float('longitude');
 	$dist = .5;	# in miles
 
-	# TO DO: validate lat/lon
-
 	if (($lat) && ($lon)){
+
+		if ((! geo_utils_is_valid_latitude($lat)) || (! geo_utils_is_valid_longitude($lon))){
+			error_404();
+		}
 
 		$more = array(
 			'latitude' => $lat,
