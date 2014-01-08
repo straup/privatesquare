@@ -1,0 +1,28 @@
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
+{/capture}
+{include file="inc_head.txt"}
+
+Where are you going?
+
+    <div class="input-append date" id="dp-departure" data-date="2014-01-07" data-date-format="yyyy-mm-dd">
+    <input class="span2" size="16" type="text" value="">
+    <span class="add-on"><i class="icon-th">departure</i></span>
+    </div>
+
+    <div class="input-append date" id="dp-arrival" data-date="2014-01-07" data-date-format="yyyy-mm-dd">
+    <input class="span2" size="16" type="text" value="">
+    <span class="add-on"><i class="icon-th">arrival</i></span>
+    </div>
+
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	$("#dp-departure").datepicker({'language':'en'});
+	$("#dp-arrival").datepicker();
+});
+{/literal}
+</script>
+
+{include file="inc_foot.txt"}
