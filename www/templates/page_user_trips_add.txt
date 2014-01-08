@@ -1,11 +1,24 @@
 {capture assign="extra_head"}
+{* see also: http://www.eyecon.ro/bootstrap-datepicker/ *}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
 {/capture}
 {include file="inc_head.txt"}
 
-Where are you going?
+<h3>Where are you going?</h3>
 
+<input type="text" value="" data-woeid="" id="where" placeholder="what city" />
+
+<h3>When are you going?</h3>
+
+<h4>Arriving</h4>	 
+<input class="span2" size="16" type="text" value="" id="dp-arrival" placeholder="date of departure" data-data-format="yyyy-mm-dd" data-date="2014-01-08">
+
+<h4>Departing</h4>
+<input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival">
+
+    
+    {if 0}
     <div class="input-append date" id="dp-departure" data-date="2014-01-07" data-date-format="yyyy-mm-dd">
     <input class="span2" size="16" type="text" value="">
     <span class="add-on"><i class="icon-th">departure</i></span>
@@ -15,6 +28,7 @@ Where are you going?
     <input class="span2" size="16" type="text" value="">
     <span class="add-on"><i class="icon-th">arrival</i></span>
     </div>
+    {/if}
 
 <script type="text/javascript">
 {literal}
