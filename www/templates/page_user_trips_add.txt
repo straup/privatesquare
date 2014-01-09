@@ -1,5 +1,6 @@
 {capture assign="extra_head"}
 {* see also: http://www.eyecon.ro/bootstrap-datepicker/ *}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/typeahead.min.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
 {/capture}
@@ -35,6 +36,14 @@
 $(document).ready(function(){
 	$("#dp-departure").datepicker({'language':'en'});
 	$("#dp-arrival").datepicker();
+
+	// https://github.com/twitter/typeahead.js
+	
+	$('#where').typeahead({
+		name: 'accounts',
+		local: ['Moscow', 'Berlin', 'San Francisco', 'San Diego']
+	});
+
 });
 {/literal}
 </script>
