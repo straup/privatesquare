@@ -41,7 +41,8 @@ $(document).ready(function(){
 	
 	$('#where').typeahead({
 		name: 'accounts',
-		local: ['Moscow', 'Berlin', 'San Francisco', 'San Diego']
+		local: ['Moscow', 'Berlin'],
+		valueKey: { 'Moscow': 1, 'Berlin': 2 },
 	});
 
 });
