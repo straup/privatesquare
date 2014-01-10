@@ -1,14 +1,18 @@
 {capture assign="extra_head"}
 {* see also: http://www.eyecon.ro/bootstrap-datepicker/ *}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/typeahead.min.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
 {/capture}
 {include file="inc_head.txt"}
 
 <h3>Where are you going?</h3>
 
-<input type="text" value="" data-woeid="" id="where" placeholder="what city" />
+<input type="hidden" id="where" class="select2-offscreen" style="width:300px;" />
+{if 0}<input type="text" value="" data-woeid="" id="where" placeholder="what city" />{/if}
 
 <h3>When are you going?</h3>
 
@@ -39,11 +43,27 @@ $(document).ready(function(){
 
 	// https://github.com/twitter/typeahead.js
 	
+	/*	
 	$('#where').typeahead({
 		name: 'accounts',
 		local: ['Moscow', 'Berlin'],
 		valueKey: { 'Moscow': 1, 'Berlin': 2 },
 	});
+
+	*/
+
+    $("#where").select2({
+    minimumInputLength: 1,
+    query: function (query) {
+    var data = {results: []}, i, j, s;
+    for (i = 1; i < 5; i++) {
+    s = "";
+    for (j = 0; j < i; j++) {s = s + query.term;}
+    data.results.push({id: query.term + i, text: s});
+    }
+    query.callback(data);
+    }
+    });
 
 });
 {/literal}
