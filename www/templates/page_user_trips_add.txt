@@ -1,6 +1,6 @@
 {capture assign="extra_head"}
-{* see also: http://www.eyecon.ro/bootstrap-datepicker/ *}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/typeahead.min.js"></script>
+{* see also: http://www.eyecon.ro/bootstrap-datepicker *}
+{* see also: https://github.com/ivaynberg/select2 *}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
@@ -12,7 +12,6 @@
 <h3>Where are you going?</h3>
 
 <input type="hidden" id="where" class="select2-offscreen" style="width:300px;" />
-{if 0}<input type="text" value="" data-woeid="" id="where" placeholder="what city" />{/if}
 
 <h3>When are you going?</h3>
 
@@ -21,48 +20,24 @@
 
 <h4>Departing</h4>
 <input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival">
-
-    
-    {if 0}
-    <div class="input-append date" id="dp-departure" data-date="2014-01-07" data-date-format="yyyy-mm-dd">
-    <input class="span2" size="16" type="text" value="">
-    <span class="add-on"><i class="icon-th">departure</i></span>
-    </div>
-
-    <div class="input-append date" id="dp-arrival" data-date="2014-01-07" data-date-format="yyyy-mm-dd">
-    <input class="span2" size="16" type="text" value="">
-    <span class="add-on"><i class="icon-th">arrival</i></span>
-    </div>
-    {/if}
-
+   
 <script type="text/javascript">
 {literal}
 $(document).ready(function(){
 	$("#dp-departure").datepicker({'language':'en'});
 	$("#dp-arrival").datepicker();
 
-	// https://github.com/twitter/typeahead.js
-	
-	/*	
-	$('#where').typeahead({
-		name: 'accounts',
-		local: ['Moscow', 'Berlin'],
-		valueKey: { 'Moscow': 1, 'Berlin': 2 },
-	});
-
-	*/
-
     $("#where").select2({
-    minimumInputLength: 1,
-    query: function (query) {
-    var data = {results: []}, i, j, s;
-    for (i = 1; i < 5; i++) {
-    s = "";
-    for (j = 0; j < i; j++) {s = s + query.term;}
-    data.results.push({id: query.term + i, text: s});
-    }
-    query.callback(data);
-    }
+        minimumInputLength: 1,
+    	query: function (query){
+	    var results = [
+	    {'id': 1234, 'text': 'Berlin'},
+	    {'id': 999, 'text': 'San Diego'},
+	    {'id': 222, 'text': 'San Francisco'}
+	    ];
+	    var data = {'results': results };
+    	    query.callback(data);
+    	    }
     });
 
 });
