@@ -20,10 +20,10 @@
 
 {capture assign="today"}{$smarty.now|date_format:"%Y-%m-%d"}{/capture}
 <h4>Arriving</h4>	 
-<input class="span2" size="16" type="text" value="" id="dp-arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+<input class="span2" size="16" type="text" value="" id="arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
 <h4>Departing</h4>
-<input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+<input class="span2" size="16" type="text" value="" id="departure" placeholder="date of arrival" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
 <h4>Notes</h4>
 

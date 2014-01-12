@@ -1,6 +1,33 @@
 <?php
 
 	########################################################################
+	
+	function trips_travel_type_map($string_keys=0){
+
+		$map = array(
+			0 => 'none of your business',
+			1 => 'two wheels',
+			2 => 'four wheels',
+			3 => 'more wheels',
+			4 => 'boat',
+			5 => 'plane',
+		);
+
+		if ($string_keys){
+			$map = array_flip($map);
+		}
+
+		return $map;
+	}
+
+	########################################################################
+
+	function trips_is_valid_travel_type($id){
+		$map = trips_travel_type_map();
+		return (isset($map[$id])) ? 1 : 0;
+	}
+
+	########################################################################
 
 	function trips_add_trip($trip){
 
@@ -17,6 +44,9 @@
 
 		$trip['id'] = $id;
 		$trip['created'] = $now;
+
+		# TO DO: timezones for dates
+		# TO DO: explode dates in to year, month, day
 
 		$insert = array();
 
