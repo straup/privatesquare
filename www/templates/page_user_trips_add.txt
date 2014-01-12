@@ -22,8 +22,22 @@
 <h4>Arriving</h4>	 
 <input class="span2" size="16" type="text" value="" id="arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
+traveling by
+<select name="arrive_by" id="arrive_by">
+{foreach from=$travel_map item="label" key="id"}
+<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+</select>
+
 <h4>Departing</h4>
 <input class="span2" size="16" type="text" value="" id="departure" placeholder="date of arrival" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+
+traveling by
+<select name="depart_by" id="depart_by">
+{foreach from=$travel_map item="label" key="id"}
+<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+</select>
 
 <h4>Notes</h4>
 
