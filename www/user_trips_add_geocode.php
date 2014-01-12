@@ -18,6 +18,8 @@
 		'query' => $query
 	);
 
+	# TO DO: http timeout nonsense...
+
 	$rsp = flickr_api_call($method, $args);
 
 	if (! $rsp['ok']){
@@ -26,14 +28,26 @@
 
 	$rsp = $rsp['rsp'];
 
-	$typeahead = array();
+	$results = array();
 
 	foreach ($rsp['places']['place'] as $pl){
-		$typeahead[] = $pl['_content'];
+
+		if ($pl['place_type'] != 'locality'){
+			continue;
+		}
+
+		$results[] = array(
+			'id' => $pl['woeid'],
+			'text' => $pl['_content'],
+		);
 	}
 
 	header("Content-type: text/javascript");
 
-	echo json_encode($typeahead);
+	$rsp = array(
+		'results' => $results,
+	);
+
+	echo json_encode($rsp);
 	exit();
 ?>

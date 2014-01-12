@@ -3,11 +3,14 @@
 {* see also: https://github.com/ivaynberg/select2 *}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
 {/capture}
 {include file="inc_head.txt"}
+
+<form class="form" role="form">
 
 <h3>Where are you going?</h3>
 
@@ -16,30 +19,18 @@
 <h3>When are you going?</h3>
 
 <h4>Arriving</h4>	 
-<input class="span2" size="16" type="text" value="" id="dp-arrival" placeholder="date of departure" data-data-format="yyyy-mm-dd" data-date="2014-01-08">
+<input class="span2" size="16" type="text" value="" id="dp-arrival" placeholder="date of departure" data-data-format="yyyy-mm-dd" data-date="{$smarty.now|date_format:"%Y-%m-%d"|escape}">
 
 <h4>Departing</h4>
-<input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival">
+<input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival" data-data-format="yyyy-mm-dd" data-date="{$smarty.now|date_format:"%Y-%m-%d"|escape
+}">
+
+</form>
    
 <script type="text/javascript">
 {literal}
 $(document).ready(function(){
-	$("#dp-departure").datepicker({'language':'en'});
-	$("#dp-arrival").datepicker();
-
-    $("#where").select2({
-        minimumInputLength: 1,
-    	query: function (query){
-	    var results = [
-	    {'id': 1234, 'text': 'Berlin'},
-	    {'id': 999, 'text': 'San Diego'},
-	    {'id': 222, 'text': 'San Francisco'}
-	    ];
-	    var data = {'results': results };
-    	    query.callback(data);
-    	    }
-    });
-
+	privatesquare_trips_add_init();
 });
 {/literal}
 </script>
