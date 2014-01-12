@@ -6,6 +6,9 @@ function privatesquare_trips_add_init(){
     // TO DO: on change event handler to update dp-departure
     // when dp-arrival changes (20140112/straup)
 
+    // TO DO: on change event handler to ensure dp-departure
+    // is not before dp-arrival (20140112/straup)
+
     $("#where").select2({
         minimumInputLength: 3,
 	ajax: {
@@ -24,4 +27,22 @@ function privatesquare_trips_add_init(){
 	}
     });
 
+    $("#add-trip").submit(function(){
+
+	var woeid = $("#where").val();
+	var arr = $("#dp-arrival").val();
+	var dept = $("#dp-departure").val();
+
+	var method = 'privatesquare.trips.add';
+
+	var args = {
+	    'woeid': woeid,
+	    'arrival': arr,
+	    'departure': dept
+	};
+
+	console.log(args);
+
+	return false;
+    });
 }

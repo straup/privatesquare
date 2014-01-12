@@ -10,7 +10,7 @@
 {/capture}
 {include file="inc_head.txt"}
 
-<form class="form" role="form">
+<form class="form" role="form" id="add-trip" method="POST">
 
 <h3>Where are you going?</h3>
 
@@ -18,12 +18,19 @@
 
 <h3>When are you going?</h3>
 
+{capture assign="today"}{$smarty.now|date_format:"%Y-%m-%d"}{/capture}
 <h4>Arriving</h4>	 
-<input class="span2" size="16" type="text" value="" id="dp-arrival" placeholder="date of departure" data-data-format="yyyy-mm-dd" data-date="{$smarty.now|date_format:"%Y-%m-%d"|escape}">
+<input class="span2" size="16" type="text" value="" id="dp-arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
 <h4>Departing</h4>
-<input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival" data-data-format="yyyy-mm-dd" data-date="{$smarty.now|date_format:"%Y-%m-%d"|escape
-}">
+<input class="span2" size="16" type="text" value="" id="dp-departure" placeholder="date of arrival" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+
+<h4>Notes</h4>
+
+<textarea id="notes"></textarea>
+
+<br />
+<input type="submit" class="btn btn-primary" value="ADD TRIP" />
 
 </form>
    
