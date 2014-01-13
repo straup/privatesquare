@@ -29,10 +29,17 @@ function privatesquare_trips_add_init(){
 
     $("#add-trip").submit(function(){
 
+	var form = $("#add-trip");
+	var crumb = form.attr("data-add-trip-crumb");
+
 	var woeid = $("#where").val();
 	var arr = $("#arrival").val();
 	var dept = $("#departure").val();
-	var notes = $("#notes").val();
+
+	var arr_by = $("#arrive_by").val();
+	var dept_by = $("#depart_by").val();
+
+	var note = $("#note").val();
 
 	var method = 'privatesquare.trips.add';
 
@@ -40,11 +47,25 @@ function privatesquare_trips_add_init(){
 	    'woeid': woeid,
 	    'arrival': arr,
 	    'departure': dept,
-	    'notes': notes,
+	    'arrive_by': arr_by,
+	    'depart_by': dept_by,
+	    'note': note,
+	    'crumb': crumb
 	};
 
 	console.log(args);
 
+	try {
+	privatesquare_api_call(method, args, _privatesquare_trips_add_trip_onsuccess);
+	privatesquare_set_status("Adding trip to [FIX ME]");
+	    } catch(e){
+		console.log(e);
+	    }
+
 	return false;
     });
+}
+
+function _privatesquare_trips_add_trip_onsuccess(rsp){
+	console.log(rsp);
 }

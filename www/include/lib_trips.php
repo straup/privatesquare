@@ -9,8 +9,11 @@
 			1 => 'two wheels',
 			2 => 'four wheels',
 			3 => 'more wheels',
-			4 => 'boat',
-			5 => 'plane',
+			4 => 'water vessel',
+			5 => 'sky vessel',
+			6 => 'space vessel',
+			7 => 'force of will',
+			8 => 'any means necessary',
 		);
 
 		if ($string_keys){
@@ -36,17 +39,31 @@
 
 		$now = time();
 
-		$id = privatesquare_utils_generate_id();
+		$rsp = privatesquare_utils_generate_id();
 
-		if (! $id){
+		if (! $rsp['ok']){
 			return array('ok' => 0, 'error' => 'Failed to generate trip ID');
 		}
 
-		$trip['id'] = $id;
+		$trip['id'] = $rsp['id'];
 		$trip['created'] = $now;
 
-		# TO DO: timezones for dates
-		# TO DO: explode dates in to year, month, day
+		#
+
+		$loc = geo_flickr_get_woeid($trip['locality']);
+
+		$tz = timezones_get_by_tzid($loc['timezone']);
+		$trip['timezone'] = $tz['woeid'];
+
+		$region = $loc['region'];
+		$trip['region'] = $region['woeid'];
+
+		$country = $loc['country'];
+		$trip['country'] = $country['woeid'];
+
+		return array('ok' => 1, 'trip' => $trip);
+	
+		#
 
 		$insert = array();
 

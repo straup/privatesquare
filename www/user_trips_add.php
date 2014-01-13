@@ -11,6 +11,9 @@
 	$travel_map = trips_travel_type_map();
 	$GLOBALS['smarty']->assign_by_ref("travel_map", $travel_map);
 
+	$trip_crumb = crumb_generate("api", "privatesquare.trips.add");
+	$GLOBALS['smarty']->assign("trip_crumb", $trip_crumb);
+
 	$GLOBALS['smarty']->display("page_user_trips_add.txt");
 	exit();
 

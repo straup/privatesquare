@@ -10,7 +10,7 @@
 {/capture}
 {include file="inc_head.txt"}
 
-<form class="form" role="form" id="add-trip" method="POST">
+<form class="form" role="form" id="add-trip" method="POST" data-add-trip-crumb="{$trip_crumb|escape}">
 
 <h3>Where are you going?</h3>
 
@@ -41,7 +41,7 @@ traveling by
 
 <h4>Notes</h4>
 
-<textarea id="notes"></textarea>
+<textarea id="note"></textarea>
 
 <br />
 <input type="submit" class="btn btn-primary" value="ADD TRIP" />
