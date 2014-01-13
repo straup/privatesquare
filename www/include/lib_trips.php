@@ -61,17 +61,13 @@
 		$country = $loc['country'];
 		$trip['country'] = $country['woeid'];
 
-		return array('ok' => 1, 'trip' => $trip);
-	
-		#
-
 		$insert = array();
 
 		foreach ($trip as $k => $v){
 			$insert[$k] = AddSlashes($v);
 		}
 
-		$rsp = db_insert_users('Trips', $insert, $cluster_id);
+		$rsp = db_insert_users($cluster_id, 'Trips', $insert);
 
 		if ($rsp['ok']){
 			$rsp['trip'] = $trip;
