@@ -1,0 +1,5 @@
+{include file="inc_head.txt"}
+
+{$trip|@dumper}
+
+{include file="inc_foot.txt"}

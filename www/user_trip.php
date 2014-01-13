@@ -27,6 +27,8 @@
 		error_403();
 	}
 
+	$trips_inflate_trip($trip);
+
 	$GLOBALS['smarty']->assign_by_ref("trip", $trip);
 	
 	$GLOBALS['smarty']->display("page_user_trip.txt");

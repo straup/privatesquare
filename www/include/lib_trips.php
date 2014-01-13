@@ -78,6 +78,36 @@
 
 	########################################################################
 
+	# SEE THIS: IT MEANS WE NEED TO FIGURE OUT WHERE WE STORE Trips...
+
+	function trips_get_by_id($id){
+
+		$enc_id = AddSlashes($id);
+
+		$sql = "SELECT * FROM Trips WHERE id='{$enc_id}'";
+		$rsp = db_fetch($sql);
+		$row = db_single($rsp);
+
+		return $row;
+	}
+
+	########################################################################
+
+	# SEE THIS: IT MEANS WE NEED TO FIGURE OUT WHERE WE STORE Trips...
+
+	function trips_get_by_dopplr_id($id){
+
+		$enc_id = AddSlashes($id);
+
+		$sql = "SELECT * FROM Trips WHERE dopplr_id='{$enc_id}'";
+		$rsp = db_fetch($sql);
+		$row = db_single($rsp);
+
+		return $row;
+	}
+
+	########################################################################
+
 	function trips_get_for_user(&$user, $more=array()){
 
 		$cluster_id = $user['cluster_id'];
