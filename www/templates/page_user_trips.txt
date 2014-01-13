@@ -1,0 +1,6 @@
+{capture assign="page_title"}Trips{/capture}
+{include file="inc_head.txt"}
+
+{$trips|@dumper}
+
+{include file="inc_foot.txt"}

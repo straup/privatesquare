@@ -13,8 +13,14 @@
 	}
 
 	$rsp = trips_get_for_user($user, $more);
+	$trips = array();
 
-	$GLOBALS['smarty']->assign_by_ref("trips", $rsp['rows']);
+	foreach ($rsp['rows'] as $row){
+		trips_inflate_trip($row);
+		$trips[] = $row;
+	}
+
+	$GLOBALS['smarty']->assign_by_ref("trips", $trips);
 	
 	$GLOBALS['smarty']->display("page_user_trips.txt");
 	exit();

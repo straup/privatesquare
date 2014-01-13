@@ -63,11 +63,11 @@
 
 		$trip = array(
 			'user_id' => $GLOBALS['cfg']['user']['id'],
-			'locality' => $woeid,
+			'locality_id' => $woeid,
 			'arrival' => $arrival,
 			'departure' => $departure,
-			'arrival_type_id' => $arrive_by,
-			'departure_type_id' => $depart_by,
+			'arrive_by_id' => $arrive_by,
+			'depart_by_id' => $depart_by,
 			'note' => $note,
 		);
 

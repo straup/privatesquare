@@ -50,16 +50,16 @@
 
 		#
 
-		$loc = geo_flickr_get_woeid($trip['locality']);
+		$loc = geo_flickr_get_woeid($trip['locality_id']);
 
 		$tz = timezones_get_by_tzid($loc['timezone']);
-		$trip['timezone'] = $tz['woeid'];
+		$trip['timezone_id'] = $tz['woeid'];
 
 		$region = $loc['region'];
-		$trip['region'] = $region['woeid'];
+		$trip['region_id'] = $region['woeid'];
 
 		$country = $loc['country'];
-		$trip['country'] = $country['woeid'];
+		$trip['country_id'] = $country['woeid'];
 
 		$insert = array();
 
@@ -74,6 +74,25 @@
 		}
 
 		return $rsp;
+	}
+
+	########################################################################
+
+	function trips_get_for_user(&$user, $more=array()){
+
+		$cluster_id = $user['cluster_id'];
+		$enc_id = AddSlashes($user['id']);
+
+		$sql = "SELECT * FROM Trips WHERE user_id='{$enc_id}' ORDER BY arrival, departure DESC";
+		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
+
+		return $rsp;
+	}
+
+	########################################################################
+
+	function trips_inflate_trip(&$trip){
+
 	}
 
 	########################################################################
