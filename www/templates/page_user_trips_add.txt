@@ -40,6 +40,8 @@ traveling by
 </select>
 
 <div>
+<h4>Status</h4>
+
 this trip is 
 <select name="status_id" id="status_id">
 {foreach from=$status_map item="label" key="id"}
