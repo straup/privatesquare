@@ -29,6 +29,8 @@
 
 	trips_inflate_trip($trip);
 
+	# TO DO: other trips to this locality
+
 	# TO DO: get checkins and atlas (want to go here) for locality
 
 	$GLOBALS['smarty']->assign_by_ref("trip", $trip);
