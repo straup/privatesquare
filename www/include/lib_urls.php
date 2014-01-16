@@ -30,6 +30,26 @@
 		return $GLOBALS['cfg']['abs_root_url'] . "user/{$fsq_user['foursquare_id']}/places/";
 	}
 
+
+ 	#################################################################
+
+	function urls_trip(&$trip){
+
+		$user = users_get_by_id($trip['user_id']);
+		$root = urls_user($user);
+
+		$enc_trip = urlencode($trip['id']);
+		return "{$root}trips/{$enc_trip}/";
+	}
+
+ 	#################################################################
+
+	function urls_user(&$user){
+
+		$fsq_user = foursquare_users_get_by_user_id($user['id']);
+		return $GLOBALS['cfg']['abs_root_url'] . "user/{$fsq_user['foursquare_id']}/";
+	}
+
  	#################################################################
 
 	# deprecated

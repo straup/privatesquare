@@ -39,6 +39,15 @@ traveling by
 {/foreach}
 </select>
 
+<div>
+this trip is 
+<select name="status_id" id="status_id">
+{foreach from=$status_map item="label" key="id"}
+<option value="{$id|escape}">{$label|escape}</option>
+{/foreach}
+</select>
+</div>
+
 <h4>Notes</h4>
 
 <textarea id="note"></textarea>

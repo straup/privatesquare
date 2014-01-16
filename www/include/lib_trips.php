@@ -25,8 +25,32 @@
 
 	########################################################################
 
+	function trips_travel_status_map($string_keys=0){
+
+		$map = array(
+			0 => 'tentative',
+			1 => 'confirmed',
+			2 => 'wishful thinking',
+		);
+
+		if ($string_keys){
+			$map = array_flip($map);
+		}
+
+		return $map;
+	}
+
+	########################################################################
+
 	function trips_is_valid_travel_type($id){
 		$map = trips_travel_type_map();
+		return (isset($map[$id])) ? 1 : 0;
+	}
+
+	########################################################################
+
+	function trips_is_valid_status_id($id){
+		$map = trips_travel_status_map();
 		return (isset($map[$id])) ? 1 : 0;
 	}
 
@@ -122,6 +146,18 @@
 	########################################################################
 
 	function trips_inflate_trip(&$trip){
+
+		$locality = geo_flickr_get_woeid($trip['locality_id']);
+		$trip['locality'] = $locality;
+
+		$arrival_ts = strtotime($trip['arrival']);
+		$departure_ts = strtotime($trip['departure']);
+
+		$trip['arrival_ts'] = $arrival_ts;
+		$trip['arrival_past'] = ($arrival_ts < $now) ? 1 : 0;
+
+		$trip['departure_ts'] = $arrival_ts;
+		$trip['departure_past'] = ($arrival_ts < $now) ? 1 : 0;
 
 	}
 

@@ -12,6 +12,7 @@ CREATE TABLE `Trips` (
   `region_id` INT(11) UNSIGNED NOT NULL,
   `country_id` INT(11) UNSIGNED NOT NULL,
   `timezone_id` INT(11) UNSIGNED NOT NULL,
+  `status_id` TINYINT(3) UNSIGNED NOT NULL,
   `created` INT(11) UNSIGNED NOT NULL,
   `note` TEXT NOT NULL,
   PRIMARY KEY (`id`),

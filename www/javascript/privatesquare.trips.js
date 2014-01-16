@@ -39,6 +39,8 @@ function privatesquare_trips_add_init(){
 	var arr_by = $("#arrive_by").val();
 	var dept_by = $("#depart_by").val();
 
+	var status = $("#status_id").val();
+
 	var note = $("#note").val();
 
 	var method = 'privatesquare.trips.add';
@@ -49,6 +51,7 @@ function privatesquare_trips_add_init(){
 	    'departure': dept,
 	    'arrive_by': arr_by,
 	    'depart_by': dept_by,
+	    'status_id': status,
 	    'note': note,
 	    'crumb': crumb
 	};

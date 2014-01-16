@@ -1,5 +1,10 @@
+{capture assign="page_title"}trips | {$trip.locality.name} | {if $trip.arrival==$trip.departure}{$trip.arrival}{else}{$trip.arrival} | {$trip.departure}{/if}{/capture}
 {include file="inc_head.txt"}
 
-{$trip|@dumper}
+{include file="inc_user_trip.txt" trip=$trip}
+
+{if $trip.note}
+<div>{$trip.note|escape}</div>
+{/if}
 
 {include file="inc_foot.txt"}

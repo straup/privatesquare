@@ -57,6 +57,12 @@
 			api_output_error(999, "Invalid departure travel type");
 		}
 
+		$status_id = post_int32("status_id");
+
+		if (! trips_is_valid_status_id($status_id)){
+			api_output_error(999, "Invalid status ID");
+		}
+
 		$note = post_str("note");
 
 		#
@@ -68,6 +74,7 @@
 			'departure' => $departure,
 			'arrive_by_id' => $arrive_by,
 			'depart_by_id' => $depart_by,
+			'status_id' => $status_id,
 			'note' => $note,
 		);
 

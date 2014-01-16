@@ -21,6 +21,9 @@
 	}
 
 	$GLOBALS['smarty']->assign_by_ref("trips", $trips);
+
+	$status_map = trips_travel_status_map();
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 	
 	$GLOBALS['smarty']->display("page_user_trips.txt");
 	exit();

@@ -7,7 +7,7 @@
 
 	$user = $GLOBALS['cfg']['user'];
 
-	if ($id = get_int32("id")){
+	if ($id = get_int32("trip_id")){
 		$trip = trips_get_by_id($id);
 	}
 
@@ -27,7 +27,9 @@
 		error_403();
 	}
 
-	$trips_inflate_trip($trip);
+	trips_inflate_trip($trip);
+
+	# TO DO: get checkins and atlas (want to go here) for locality
 
 	$GLOBALS['smarty']->assign_by_ref("trip", $trip);
 	

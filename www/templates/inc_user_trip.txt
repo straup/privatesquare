@@ -1,0 +1,44 @@
+<div class="row" class="checkins">
+{assign var="status" value=$trip.status_id}
+	<h3>
+		<a href="{$trip|@urls_trip}">{$trip.locality.name|escape}</a>
+		<small>
+		{if $status_map.$status=='tentative'}
+		{if $trip.arrival == $trip.departure}
+		This trip is still <span class="hey-look">tentative</span> but you would be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
+		{else}
+		This trip is still <span class="hey-look">tentative</span> but you would be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
+		{/if}
+		{elseif $status_map.$status=='wishful thinking'}
+		{if $trip.arrival == $trip.departure}
+		This trip is still <span class="hey-look">wishful thinking</span> and you would like to be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
+		{else}
+		This trip is still <span class="hey-look">wishful thinking</span> and you would like to be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
+		{/if}
+		{else}
+		{if $trip.arrival == $trip.departure}You will be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>
+		{else}
+		You are arriving <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and departing <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>{/if}
+		{/if}
+		(TODO: past dates)
+		
+		</small>
+	</h3>
+
+	{if 0}
+	<div class="map" data-zoom="14" data-center="{$lat|escape},{$lon|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+		<div class="marker marker-history{if $trip.status_id==2} marker-history-todo{/if}" data-location="{$lat|escape},{$lon|escape}"><span class="marker-history-text">{$trip.venue.name|truncate:20:"..."|escape}</span></div>
+	</div>
+	{/if}
+
+	{if 0}
+	<div class="lead date" data-created="{$trip.created|escape}">
+
+	<span class="permalink pull-right">
+	<a href="{$trip|@urls_trip}" class="permalink">permalink</a>
+	</span>
+
+	</div>
+	{/if}
+
+</div>
