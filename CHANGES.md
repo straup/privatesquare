@@ -1,3 +1,11 @@
+# 2.1.1
+
+Merged in to `master` 2014-01-16
+
+## In broad strokes
+
+Addes `stateofmind` venues for "on a highway" and "at an intersection".
+
 # 2.1
 
 Merged in to `master` 20140107.
