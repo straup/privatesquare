@@ -12,6 +12,8 @@
 			array('id' => '51783659', 'name' => 'on a train'),
 			array('id' => '51783661', 'name' => 'on a boat'),
 			array('id' => '52204085', 'name' => 'on the water'),
+			array('id' => '68246787', 'name' => 'on a highway'),
+			array('id' => '68246789', 'name' => 'at an intersection'),
 			array('id' => '51866911', 'name' => 'in transit'),
 			array('id' => '68234601', 'name' => 'in a meeting'),
 			array('id' => '68234603', 'name' => 'on a telco'),
