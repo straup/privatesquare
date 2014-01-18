@@ -133,9 +133,13 @@ RewriteRule ^user/([0-9]+)/history/([0-9\-\;\:T]+)(/page([0-9]+))?/?$	user_histo
 
 RewriteRule ^user/([0-9]+)/pending/?$			user_pending_checkins.php?foursquare_id=$1&%{QUERY_STRING}	[L]
 
-RewriteRule ^user/([0-9]+)/trips/add/?$				user_trips_add.php?foursquare_id=$1&%{QUERY_STRING}	[L]
-RewriteRule ^user/([0-9]+)/trips(/page([0-9]+))?/?$		user_trips.php?foursquare_id=$1&%{QUERY_STRING}	[L]
-RewriteRule ^user/([0-9]+)/trips/past/(/page([0-9]+))?/?$	user_trips_past.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/trips/add/?$					user_trips_add.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/trips(/page([0-9]+))?/?$			user_trips.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/trips/past/(/page([0-9]+))?/?$		user_trips_past.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/trips/archive/?$				user_trips_archvive.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/trips/archive/([0-9]+)(/page([0-9]+))?/?$		user_trips_archive.php?foursquare_id=$1&year=$2&page=$4&%{QUERY_STRING}	[L]
+RewriteRule ^user/([0-9]+)/trips/archive/([0-9]+)/([0-9]+)(/page([0-9]+))?/?$	user_trips_archive.php?foursquare_id=$1&year=$2&month=$3&page=$5&%{QUERY_STRING}	[L]
+
 RewriteRule ^user/([0-9]+)/trips/([0-9]+)/?$			user_trip.php?foursquare_id=$1&trip_id=$2&%{QUERY_STRING}	[L]
 
 # See this. It's the *last* rule because it basically catches everything

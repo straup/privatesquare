@@ -132,10 +132,14 @@
 
 	########################################################################
 
+	# TO DO: database indexes (20140118/straup)
+
 	function trips_get_for_user(&$user, $more=array()){
 
 		$defaults = array(
-			'when' => 'current',
+			'when' => 'upcoming',
+			'year' => null,
+			'month' => null,
 		);
 
 		$more = array_merge($defaults, $more);
@@ -151,6 +155,44 @@
 			$sql[] = "AND departure <= NOW()";
 		}
 
+		else if (($more['year']) && ($more['month'])){
+
+			$days = cal_days_in_month(CAL_GREGORIAN, $more['month'], $more['year']);
+
+			$start = "{$more['year']}-{$more['month']}-01";
+			$end = "{$more['year']}-{$more['month']}-{$days}";
+
+			$enc_start = AddSlashes($start);
+			$enc_end = AddSlashes($end);
+
+			# TO DO: figure out trips that span a single month (20140118/straup)
+
+			$conditions = array();
+
+			$conditions[] = "arrival BETWEEN '{$enc_start}' AND '{$enc_end}'";
+			$conditions = implode(" OR ", $conditions);
+
+			$sql[] = "AND ({$conditions})";
+		}
+
+		else if ($more['year']){
+
+			$start = "{$more['year']}-01-01";
+			$end = "{$more['year']}-12-31";
+
+			$enc_start = AddSlashes($start);
+			$enc_end = AddSlashes($end);
+
+			# TO DO: figure out trips that span a single year (20140118/straup)
+
+			$conditions = array();
+
+			$conditions[] = "arrival BETWEEN '{$enc_start}' AND '{$enc_end}'";
+			$conditions = implode(" OR ", $conditions);
+
+			$sql[] = "AND ({$conditions})";
+		}
+
 		else {
 			$sql[] = "AND departure >= NOW()";
 		}
@@ -158,6 +200,7 @@
 		$sql[] = "ORDER BY arrival, departure DESC";
 
 		$sql = implode(" ", $sql);
+
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
 
 		return $rsp;
@@ -181,6 +224,8 @@
 		$trip['departure_ts'] = $arrival_ts;
 		$trip['departure_past'] = ($arrival_ts < $now) ? 1 : 0;
 
+		$user = users_get_by_id($trip['user_id']);
+		$trip['user'] = $user;
 	}
 
 	########################################################################

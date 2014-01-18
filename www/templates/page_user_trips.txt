@@ -13,18 +13,6 @@
 </div>
 {/if}
 
-{assign var="display_month" value=""}
-
-{foreach from=$trips item="row"}
-{capture assign="current_month"}{$row.arrival_ts|@date_format:"%B, %Y"}{/capture}
-
-{if $current_month != $display_month}
-<h4><a href="">{$current_month|escape}</a></h4>
-{assign var="display_month" value=$current_month}
-{/if}
-
-{include file="inc_user_trip.txt" trip=$row}
-
-{/foreach}
+{include file="inc_user_trips.txt" trips=$trips}
 
 {include file="inc_foot.txt"}
