@@ -11,8 +11,6 @@
 {/capture}
 {include file="inc_head.txt"}
 
-{$trip|@dumper}
-
 <form class="form" role="form" id="edit-trip" method="POST" data-edit-trip-crumb="{$trip_crumb|escape}">
 {include file="inc_user_trip_edit.txt" trip=$trip}
 </form>

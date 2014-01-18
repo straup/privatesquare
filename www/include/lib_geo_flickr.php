@@ -1,9 +1,5 @@
 <?php
 
-	#
-	# $Id$
-	#
-
 	loadlib("flickr_api");
 	loadlib("geohash");
 

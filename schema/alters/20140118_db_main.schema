@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `WhereOnEarth`;
+
+CREATE TABLE `WhereOnEarth` (
+  `id` BIGINT(20) UNSIGNED NOT NULL,
+  `flickr` TEXT NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
