@@ -16,6 +16,7 @@ CREATE TABLE `Trips` (
   `created` INT(11) UNSIGNED NOT NULL,
   `note` TEXT NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY (`dopplr_id`),
   KEY `by_dopplr` (`dopplr_id`),
   KEY `by_user` (`user_id`, `arrival`, `departure`),
   KEY `by_user_created` (`user_id`, `created`),

@@ -13,3 +13,5 @@
 {include file="inc_user_trip.txt" trip=$row}
 
 {/foreach}
+
+{include file="inc_pagination.txt"}

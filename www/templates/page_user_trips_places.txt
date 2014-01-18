@@ -26,4 +26,6 @@
 </div>
 {/foreach}
 
+{include file="inc_pagination.txt"}
+
 {include file="inc_foot.txt"}

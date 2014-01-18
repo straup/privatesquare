@@ -281,7 +281,7 @@
 
 		$sql = implode(" ", $sql);
 
-		$rsp = db_fetch_paginated_users($cluster, $sql, $more);
+		$rsp = db_fetch_users($cluster, $sql, $more);
 		return $rsp;
 	}
 

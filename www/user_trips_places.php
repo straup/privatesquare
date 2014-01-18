@@ -16,7 +16,7 @@
 
 	$rsp = trips_get_places_for_user($user, $more);
 	$places = array();
-
+dumper($rsp);
 	foreach ($rsp['rows'] as $row){
 		$rsp2 = whereonearth_fetch_woeid($row['locality_id']);
 		$row['locality'] = $rsp2['data'];
