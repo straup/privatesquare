@@ -1,5 +1,7 @@
 <?php
 
+	loadlib("whereonearth");
+
 	########################################################################
 	
 	function trips_travel_type_map($string_keys=0){
@@ -63,6 +65,15 @@
 
 		$now = time();
 
+
+		$rsp = whereonearth_fetch_woeid($trip['locality_id']);
+
+		if (! $rsp['ok']){
+			return array('ok' => 0, 'error' => 'Failed to retrieve locality data');
+		}
+
+		$loc = $rsp['data'];
+
 		$rsp = privatesquare_utils_generate_id();
 
 		if (! $rsp['ok']){
@@ -71,10 +82,6 @@
 
 		$trip['id'] = $rsp['id'];
 		$trip['created'] = $now;
-
-		#
-
-		$loc = geo_flickr_get_woeid($trip['locality_id']);
 
 		$tz = timezones_get_by_tzid($loc['timezone']);
 		$trip['timezone_id'] = $tz['woeid'];
@@ -249,7 +256,9 @@
 
 	function trips_inflate_trip(&$trip){
 
-		$locality = geo_flickr_get_woeid($trip['locality_id']);
+		$rsp = whereonearth_fetch_woeid($trip['locality_id']);
+		$locality = $rsp['data'];
+
 		$trip['locality'] = $locality;
 
 		$arrival_ts = strtotime($trip['arrival']);
