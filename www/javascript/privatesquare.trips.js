@@ -1,4 +1,4 @@
-function privatesquare_trips_init(){
+function privatesquare_trips_datepicker_init(){
 
     $("#arrival").datepicker({'language':'en'});
     $("#departure").datepicker({'language':'en'});
@@ -8,6 +8,9 @@ function privatesquare_trips_init(){
 
     // TO DO: on change event handler to ensure departure
     // is not before arrival (20140112/straup)
+}
+
+function privatesquare_trips_select2_init(){
 
     $("#where").select2({
         minimumInputLength: 3,
@@ -55,7 +58,8 @@ function privatesquare_trips_gather_trip_info(){
 
 function privatesquare_trips_add_init(){
 
-    privatesquare_trips_init();
+    privatesquare_trips_datepicker_init();
+    privatesquare_trips_select2_init();
 
     $("#add-trip").submit(function(){
 
@@ -85,7 +89,12 @@ function _privatesquare_trips_add_trip_onsuccess(rsp){
 
 function privatesquare_trips_edit_init(){
 
-    privatesquare_trips_init();
+    privatesquare_trips_datepicker_init();
+
+    $("#trip-locality small").click(function(){
+	privatesquare_trips_select2_init();
+	// What to do after this... (20140118/straup)
+    });
 
     $("#edit-trip").submit(function(){
 

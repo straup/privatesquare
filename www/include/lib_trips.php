@@ -134,10 +134,30 @@
 
 	function trips_get_for_user(&$user, $more=array()){
 
+		$defaults = array(
+			'when' => 'current',
+		);
+
+		$more = array_merge($defaults, $more);
+
 		$cluster_id = $user['cluster_id'];
 		$enc_id = AddSlashes($user['id']);
 
-		$sql = "SELECT * FROM Trips WHERE user_id='{$enc_id}' ORDER BY arrival, departure DESC";
+		$sql = array();
+
+		$sql[] = "SELECT * FROM Trips WHERE user_id='{$enc_id}'";
+
+		if ($more['when'] == 'past'){
+			$sql[] = "AND departure <= NOW()";
+		}
+
+		else {
+			$sql[] = "AND departure >= NOW()";
+		}
+
+		$sql[] = "ORDER BY arrival, departure DESC";
+
+		$sql = implode(" ", $sql);
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
 
 		return $rsp;
@@ -152,6 +172,8 @@
 
 		$arrival_ts = strtotime($trip['arrival']);
 		$departure_ts = strtotime($trip['departure']);
+
+		$now = time();
 
 		$trip['arrival_ts'] = $arrival_ts;
 		$trip['arrival_past'] = ($arrival_ts < $now) ? 1 : 0;
