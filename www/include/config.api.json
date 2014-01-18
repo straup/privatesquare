@@ -34,7 +34,7 @@
 			"library": "api_nypl_venues"
 		},
 
-		"privatesquare.trips.add": {
+		"privatesquare.trips.addTrip": {
 			"documented": 0,
 			"enabled": 1,
 			"requires_auth": 1,

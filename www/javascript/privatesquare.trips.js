@@ -69,7 +69,7 @@ function privatesquare_trips_add_init(){
 	var args = privatesquare_trips_gather_trip_info();
 	args['crumb'] = crumb;
 
-	var method = 'privatesquare.trips.add';
+	var method = 'privatesquare.trips.addTrip';
 	console.log(args);
 
 	try {
@@ -104,11 +104,11 @@ function privatesquare_trips_edit_init(){
 	var args = privatesquare_trips_gather_trip_info();
 	args['crumb'] = crumb;
 
-	var method = 'privatesquare.trips.edit';
+	var method = 'privatesquare.trips.editTrip';
 	console.log(args);
 
 	try {
-	privatesquare_api_call(method, args, _privatesquare_trips_add_trip_onsuccess);
+	privatesquare_api_call(method, args, _privatesquare_trips_edit_trip_onsuccess);
 	privatesquare_set_status("Adding trip to [FIX ME]");
 	    } catch(e){
 		console.log(e);

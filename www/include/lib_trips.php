@@ -102,6 +102,45 @@
 
 	########################################################################
 
+	function trips_update_trip(&$trip, $update){
+
+		$user = users_get_by_id($trip['user_id']);
+		$cluster = $user['cluster_id'];
+
+		$insert = array();
+
+		foreach ($update as $k => $v){
+			$insert[$k] = AddSlashes($v);
+		}
+
+		$enc_id = AddSlashes($trip['id']);
+		$where = "id='{$enc_id}'";
+
+		$rsp = db_update_users($cluster, 'Trips', $insert, $where);
+
+		if ($rsp['ok']){
+			$rsp['trip'] = $trip;
+		}
+
+		return $rsp;
+	}
+
+	########################################################################
+
+	function trips_delete_trip(&$trip, $update){
+
+		$user = users_get_by_id($trip['user_id']);
+		$cluster = $user['cluster_id'];
+
+		$enc_id = AddSlashes($trip['id']);
+		$sql = "DELETE FROM Tripes WHERE id='{$enc_id}'";
+
+		$rsp = db_write_users($cluster, $sql);
+		return $rsp;
+	}
+
+	########################################################################
+
 	# SEE THIS: IT MEANS WE NEED TO FIGURE OUT WHERE WE STORE Trips...
 
 	function trips_get_by_id($id){

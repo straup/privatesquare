@@ -4,7 +4,7 @@
 
  	#################################################################
 
-	function api_privatesquare_trips_add(){
+	function api_privatesquare_trips_addTrip(){
 
 		$woeid = post_int32("woeid");
 		$arrival = post_str("arrival");
@@ -89,6 +89,67 @@
 		);
 
 		api_output_ok($out);
+	}
+
+ 	#################################################################
+
+	function api_privatesquare_trips_editTrip(){
+
+		$trip = _api_privatesquare_get_trip();
+
+		$update = array();	
+
+		$rsp = trips_update_trip($trip, $update);
+
+		if (! $rsp['ok']){
+			api_output_error(999, $rsp['error']);
+		}
+
+		$out = array(
+			'trip' => $rsp['trip'],
+		);
+
+		api_output_ok($out);
+	}
+
+ 	#################################################################
+
+	function api_privatesquare_trips_deleteTrip(){
+
+		$trip = _api_privatesquare_get_trip();
+
+		$rsp = trips_delete_trip($trip);
+
+		if (! $rsp['ok']){
+			api_output_error(999, $rsp['error']);
+		}
+
+		api_output_ok();
+	}
+
+ 	#################################################################
+
+	function _api_privatesquare_trips_get_trip(){
+
+		# TO DO: dopplr IDs (20140118/straup)
+
+		$trip_id = post_int64("id");
+
+		if (! $trip_id){
+			api_output_error(999, "Missing trip ID");
+		}
+
+		$trip = trips_get_by_id($id);
+
+		if (! $trip){
+			api_output_error(999, "Invalid trip ID");
+		}
+
+		if ($trip['user_id'] != $GLOBALS['cfg']['user']['id']){
+			api_output_error(999, "Insufficient permissions");
+		}
+
+		return $trip;
 	}
 
  	#################################################################

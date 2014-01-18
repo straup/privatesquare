@@ -7,7 +7,7 @@
 
 	$user = $GLOBALS['cfg']['user'];
 
-	if ($id = get_int32("trip_id")){
+	if ($id = get_int64("trip_id")){
 		$trip = trips_get_by_id($id);
 	}
 
