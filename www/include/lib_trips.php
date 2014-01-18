@@ -268,6 +268,25 @@
 
 	########################################################################
 
+	function trips_get_places_for_user(&$user, $more=array()){
+
+		$enc_user = AddSlashes($user['id']);
+		$cluster = $user['cluster_id'];
+
+		$sql = array();
+
+		$sql[] = "SELECT locality_id, COUNT(id) AS count_trips FROM Trips";
+		$sql[] = "WHERE user_id='{$enc_user}'";
+		$sql[] = "GROUP BY locality_id ORDER BY count_trips DESC";
+
+		$sql = implode(" ", $sql);
+
+		$rsp = db_fetch_paginated_users($cluster, $sql, $more);
+		return $rsp;
+	}
+
+	########################################################################
+
 	function trips_inflate_trip(&$trip){
 
 		$rsp = whereonearth_fetch_woeid($trip['locality_id']);

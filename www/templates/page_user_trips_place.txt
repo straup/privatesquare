@@ -1,9 +1,9 @@
-{capture assign="page_title"}trips | places{/capture}
+{capture assign="page_title"}trips | places | {$place.name}{/capture}
 {include file="inc_head.txt"}
 
 <div class="row">
      <h3>
-     Your trips 
+     Your trips to {$place.woe_name|escape}
          <small><a href="{$cfg.abs_root_url}user/trips/add/">Add a trip</a></small>
      </h3>
 </div>
@@ -16,14 +16,6 @@
 </div>
 {/if}
 
-{foreach from=$places item="row"}
-<div>
-
-<h3>
-<a href="{$cfg.user|@urls_user}trips/places/{$row.locality_id|escape}">{$row.locality.name|escape}</a>
-<small>{if $row.count_trips==1}You've added <span class="hey-look">one trip</span> to this city.{else}You've added <span class="hey-look">{$row.count_trips|escape} trips</span> to this city.{/if}</small>
-</h3>
-</div>
-{/foreach}
+{include file="inc_user_trips.txt trips=$trips}
 
 {include file="inc_foot.txt"}
