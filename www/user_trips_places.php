@@ -2,6 +2,7 @@
 
 	include("include/init.php");
 	loadlib("trips");
+	loadlib("whereonearth");
 
 	login_ensure_loggedin();
 
@@ -13,7 +14,13 @@
 		error_404();
 	}
 
-	$loc = geo_flickr_get_woeid($woeid);
+	$rsp = whereonearth_fetch_woeid($woeid);
+
+	if (! $rsp['ok']){
+		error_500();
+	}
+
+	$loc = $rsp['data'];
 
 	$placetypes = array(
 		'locality', 'region', 'country'
@@ -21,13 +28,14 @@
 
 	# maybe something more useful than a 404?
 
-	if (! in_array($loc['placetype'], $placetypes)){
+	if (! in_array($loc['place_type'], $placetypes)){
 		error_404();
 	}
 
 	$more = array();
 
-	$more[$loc['placetype_id']] = $woeid;
+	$more['where'] = $loc['place_type'];
+	$more['woeid'] = $woeid;
 
 	if ($page = get_int32("page")){
 		$more['page'] = $page;
@@ -43,7 +51,7 @@
 
 	$GLOBALS['smarty']->assign_by_ref("trips", $trips);
 	
-	$GLOBALS['smarty']->display("page_user_trips.txt");
+	$GLOBALS['smarty']->display("page_user_trips_places.txt");
 	exit();
 
 ?>

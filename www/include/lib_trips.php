@@ -185,6 +185,8 @@
 
 		$defaults = array(
 			'when' => 'upcoming',
+			'where' => null,
+			'woeid' => null,
 			'year' => null,
 			'month' => null,
 		);
@@ -199,7 +201,17 @@
 		$sql[] = "SELECT * FROM Trips WHERE user_id='{$enc_id}'";
 
 		if ($more['when'] == 'past'){
-			$sql[] = "AND departure <= NOW()";
+			$sql[] = "AND `departure` <= NOW()";
+		}
+
+		else if (($more['where']) && ($more['woeid'])){
+
+			$col = $more['where'] . '_id';
+
+			$enc_col = AddSlashes($col);
+			$enc_id = AddSlashes($more['woeid']);
+
+			$sql[] = "AND `{$enc_col}`='{$enc_id}'";
 		}
 
 		else if (($more['year']) && ($more['month'])){
@@ -216,7 +228,7 @@
 
 			$conditions = array();
 
-			$conditions[] = "arrival BETWEEN '{$enc_start}' AND '{$enc_end}'";
+			$conditions[] = "`arrival` BETWEEN '{$enc_start}' AND '{$enc_end}'";
 			$conditions = implode(" OR ", $conditions);
 
 			$sql[] = "AND ({$conditions})";
@@ -234,19 +246,20 @@
 
 			$conditions = array();
 
-			$conditions[] = "arrival BETWEEN '{$enc_start}' AND '{$enc_end}'";
+			$conditions[] = "`arrival` BETWEEN '{$enc_start}' AND '{$enc_end}'";
 			$conditions = implode(" OR ", $conditions);
 
 			$sql[] = "AND ({$conditions})";
 		}
 
 		else {
-			$sql[] = "AND departure >= NOW()";
+			$sql[] = "AND `departure` >= NOW()";
 		}
 
 		$sql[] = "ORDER BY arrival, departure DESC";
 
 		$sql = implode(" ", $sql);
+		# dumper($sql);
 
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
 

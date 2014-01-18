@@ -1,0 +1,21 @@
+{capture assign="page_title"}trips | places{/capture}
+{include file="inc_head.txt"}
+
+<div class="row">
+     <h3>
+     Your trips to PLACE
+         <small><a href="{$cfg.abs_root_url}user/trips/add/">Add a trip</a></small>
+     </h3>
+</div>
+
+{if 0}
+<div class="row">
+<div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
+{include file="inc_map_header_markers.txt markers=$checkins}
+</div>
+</div>
+{/if}
+
+{include file="inc_user_trips.txt trips=$trips}
+
+{include file="inc_foot.txt"}
