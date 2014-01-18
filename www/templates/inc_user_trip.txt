@@ -1,6 +1,6 @@
 <div class="row" class="checkins">
 {assign var="status" value=$trip.status_id}
-	<h3>
+	<h4>
 		<a href="{$trip|@urls_trip}">{$trip.locality.name|escape}</a>
 		<small>
 
@@ -72,7 +72,7 @@
 		{/if}
 		
 		</small>
-	</h3>
+	</h4>
 
 	{if 0}
 	<div class="map" data-zoom="14" data-center="{$lat|escape},{$lon|escape}" data-hash="false" data-interactive="false" data-provider="toner">

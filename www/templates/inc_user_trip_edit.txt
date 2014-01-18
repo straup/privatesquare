@@ -5,7 +5,7 @@
 <h3>Where are you going?</h3>
 
 {if $trip}
-<h4 id="trip-locality">{$trip.locality.name|escape} <small>change</small></h4>
+<h4 id="trip-locality"><a href="{$cfg.user|@urls_user}trips/places/{$trip.locality.woeid|escape}">{$trip.locality.name|escape}</a> <small>change</small></h4>
 {/if}
 
 <input type="hidden" id="where" {if $trip}value="{$trip.locality_id|escape}" {/if} class="select2-offscreen" style="width:300px;" />
