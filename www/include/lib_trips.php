@@ -302,8 +302,8 @@
 		$trip['arrival_ts'] = $arrival_ts;
 		$trip['arrival_past'] = ($arrival_ts < $now) ? 1 : 0;
 
-		$trip['departure_ts'] = $arrival_ts;
-		$trip['departure_past'] = ($arrival_ts < $now) ? 1 : 0;
+		$trip['departure_ts'] = $departure_ts;
+		$trip['departure_past'] = ($departure_ts < $now) ? 1 : 0;
 
 		$user = users_get_by_id($trip['user_id']);
 		$trip['user'] = $user;
