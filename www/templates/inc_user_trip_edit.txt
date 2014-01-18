@@ -1,3 +1,7 @@
+{if $trip}
+<input type="hidden" id="trip" value="{$trip.id|escape}" />
+{/if}
+
 <h3>Where are you going?</h3>
 
 {if $trip}

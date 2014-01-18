@@ -53,6 +53,10 @@ function privatesquare_trips_gather_trip_info(){
 	'note': note
     };
 
+    if (var trip = $("#trip")){
+	args['id'] = trip.val();
+    }
+
     return args;
 }
 
