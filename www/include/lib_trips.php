@@ -8,14 +8,15 @@
 
 		$map = array(
 			0 => 'none of your business',
-			1 => 'two wheels',
-			2 => 'four wheels',
-			3 => 'more wheels',
-			4 => 'water vessel',
-			5 => 'sky vessel',
-			6 => 'space vessel',
-			7 => 'force of will',
-			8 => 'any means necessary',
+			1 => 'bicycle',
+			2 => 'car',
+			3 => 'bus',
+			4 => 'train',
+			5 => 'boat',
+			6 => 'plane',
+			7 => 'helicopter',
+			8 => 'force of will',
+			9 => 'any means necessary',
 		);
 
 		if ($string_keys){
