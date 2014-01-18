@@ -1,8 +1,8 @@
-{capture assign="page_title"}Your Past Trips{/capture}
+{capture assign="page_title"}trips | past{/capture}
 {include file="inc_head.txt"}
 
 <div class="row">
-     <h3>Trips <small><a href="{$cfg.abs_root_url}user/trips/add/">Add a trip</a></small></h3>
+     <h3>Your past trips <small><a href="{$cfg.user|@urls_user}trips/">Current or upcoming trips</a></small></h3>
 </div>
 
 {if 0}
