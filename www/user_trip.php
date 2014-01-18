@@ -41,8 +41,8 @@
 	$status_map = trips_travel_status_map();
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 
-	# $trip_crumb = crumb_generate("api", "privatesquare.trips.add");
-	# $GLOBALS['smarty']->assign("trip_crumb", $trip_crumb);
+	$trip_crumb = crumb_generate("api", "privatesquare.trips.editTrip");
+	$GLOBALS['smarty']->assign("trip_crumb", $trip_crumb);
 
 	$GLOBALS['smarty']->display("page_user_trip.txt");
 	exit();

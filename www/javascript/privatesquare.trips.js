@@ -113,7 +113,7 @@ function privatesquare_trips_edit_init(){
 
 	try {
 	privatesquare_api_call(method, args, _privatesquare_trips_edit_trip_onsuccess);
-	privatesquare_set_status("Adding trip to [FIX ME]");
+	privatesquare_set_status("Updating your trip");
 	    } catch(e){
 		console.log(e);
 	    }
