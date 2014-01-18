@@ -34,7 +34,16 @@
 	# TO DO: get checkins and atlas (want to go here) for locality
 
 	$GLOBALS['smarty']->assign_by_ref("trip", $trip);
-	
+
+	$travel_map = trips_travel_type_map();
+	$GLOBALS['smarty']->assign_by_ref("travel_map", $travel_map);
+
+	$status_map = trips_travel_status_map();
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
+	# $trip_crumb = crumb_generate("api", "privatesquare.trips.add");
+	# $GLOBALS['smarty']->assign("trip_crumb", $trip_crumb);
+
 	$GLOBALS['smarty']->display("page_user_trip.txt");
 	exit();
 

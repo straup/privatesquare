@@ -12,50 +12,7 @@
 
 <form class="form" role="form" id="add-trip" method="POST" data-add-trip-crumb="{$trip_crumb|escape}">
 
-<h3>Where are you going?</h3>
-
-<input type="hidden" id="where" class="select2-offscreen" style="width:300px;" />
-
-<h3>When are you going?</h3>
-
-{capture assign="today"}{$smarty.now|date_format:"%Y-%m-%d"}{/capture}
-<h4>Arriving</h4>	 
-<input class="span2" size="16" type="text" value="" id="arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
-
-traveling by
-<select name="arrive_by" id="arrive_by">
-{foreach from=$travel_map item="label" key="id"}
-<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-</select>
-
-<h4>Departing</h4>
-<input class="span2" size="16" type="text" value="" id="departure" placeholder="date of arrival" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
-
-traveling by
-<select name="depart_by" id="depart_by">
-{foreach from=$travel_map item="label" key="id"}
-<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-</select>
-
-<div>
-<h4>Status</h4>
-
-this trip is 
-<select name="status_id" id="status_id">
-{foreach from=$status_map item="label" key="id"}
-<option value="{$id|escape}">{$label|escape}</option>
-{/foreach}
-</select>
-</div>
-
-<h4>Notes</h4>
-
-<textarea id="note"></textarea>
-
-<br />
-<input type="submit" class="btn btn-primary" value="ADD TRIP" />
+{include file="inc_user_trip_edit.txt"}
 
 </form>
    

@@ -1,10 +1,28 @@
 {capture assign="page_title"}trips | {$trip.locality.name} | {if $trip.arrival==$trip.departure}{$trip.arrival}{else}{$trip.arrival} | {$trip.departure}{/if}{/capture}
+{capture assign="extra_head"}
+{* see also: http://www.eyecon.ro/bootstrap-datepicker *}
+{* see also: https://github.com/ivaynberg/select2 *}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
+{/capture}
 {include file="inc_head.txt"}
 
-{include file="inc_user_trip.txt" trip=$trip}
+{$trip|@dumper}
 
-{if $trip.note}
-<div>{$trip.note|escape}</div>
-{/if}
+<form class="form" role="form" id="edit-trip" method="POST" data-edit-trip-crumb="{$trip_crumb|escape}">
+{include file="inc_user_trip_edit.txt" trip=$trip}
+</form>
+
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	privatesquare_trips_edit_init();
+});
+{/literal}
+</script>
 
 {include file="inc_foot.txt"}
