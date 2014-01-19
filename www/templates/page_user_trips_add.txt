@@ -10,7 +10,7 @@
 {/capture}
 {include file="inc_head.txt"}
 
-<form class="form" role="form" id="add-trip" method="POST" data-add-trip-crumb="{$trip_crumb|escape}">
+<form class="form" role="form-horizontal" id="add-trip" method="POST" data-add-trip-crumb="{$trip_crumb|escape}">
 
 {include file="inc_user_trip_edit.txt"}
 
