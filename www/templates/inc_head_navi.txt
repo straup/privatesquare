@@ -67,6 +67,13 @@
 		<li><a href="{$cfg.abs_root_url}privatesquare/create/">create a new venue</a></li>
 		{/if}
 
+		{if "trips"|@features_is_enabled}
+		<li class="divider"></li>
+		<li><a href="{$cfg.abs_root_url}me/trips/add/">add a new trip</a></li>
+		<li><a href="{$cfg.abs_root_url}me/trips/">upcoming trips</a></li>
+		<li><a href="{$cfg.abs_root_url}me/trips/past/">previous trips</a></li>
+		{/if}
+
 		<li class="divider"></li>
 		<li><a href="{$cfg.abs_root_url}account/">account</a></li>
 		<li><a href="{$cfg.abs_root_url}signout/">logout</a></li>

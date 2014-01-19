@@ -4,6 +4,7 @@
 	loadlib("trips");
 	loadlib("whereonearth");
 
+	features_ensure_enabled("trips");
 	login_ensure_loggedin();
 
 	$user = $GLOBALS['cfg']['user'];

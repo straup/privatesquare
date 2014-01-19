@@ -3,6 +3,7 @@
 	include("include/init.php");
 	loadlib("trips");
 
+	features_ensure_enabled("trips");
 	login_ensure_loggedin();
 
 	$user = $GLOBALS['cfg']['user'];

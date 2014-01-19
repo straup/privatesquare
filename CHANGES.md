@@ -19,6 +19,13 @@ basis by running
 
 	$> php -q bin/backfill_import_dopplr_trips.php -d full_data.json -u USER_ID
 
+## Updating your config file
+
+Add the following to your `config.php` file:
+
+	# Trips
+	$GLOBALS['cfg']['enable_feature_trips'] = 1;
+
 # 2.1.1
 
 Merged in to `master` 2014-01-16
