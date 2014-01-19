@@ -78,10 +78,11 @@
 			api_output_error(999, $rsp['error']);
 		}
 
-		$rsp['trip']['trip_url'] = urls_trip($rsp['trip']);
+		$trip = $rsp['trip'];
+		_api_privatesquare_trips_inflate_trip_rsp($trip);
 
 		$out = array(
-			'trip' => $rsp['trip'],
+			'trip' => $trip,
 		);
 
 		api_output_ok($out);
@@ -207,8 +208,11 @@
 			api_output_error(999, $rsp['error']);
 		}
 
+		$trip = $rsp['trip'];
+		_api_privatesquare_trips_inflate_trip_rsp($trip);
+
 		$out = array(
-			'trip' => $rsp['trip'],
+			'trip' => $trip,
 		);
 
 		api_output_ok($out);
@@ -252,6 +256,24 @@
 		}
 
 		return $trip;
+	}
+
+ 	#################################################################
+
+	function _api_privatesquare_trips_inflate_trip_rsp(&$trip){
+
+		$trip['trip_url'] = urls_trip($trip);
+
+		$rsp = whereonearth_fetch_woeid($trip['locality_id']);
+		$loc = $rsp['data'];
+
+		$trip['locality'] = array(
+			'woeid' => $loc['woeid'],
+			'name' => $loc['name'],
+			'woe_name' => $loc['woe_name'],
+		);
+
+		# pass-by-ref
 	}
 
  	#################################################################

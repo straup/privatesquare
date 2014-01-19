@@ -1,6 +1,7 @@
 function privatesquare_trips_datepicker_init(){
 
     // http://www.eyecon.ro/bootstrap-datepicker/
+    // Yay... method chaining o_O (20140119/straup)
 
     var arr = $("#arrival").datepicker({
 	'language':'en'
@@ -33,7 +34,7 @@ function privatesquare_trips_select2_init(){
     // TO DO: sort out FQ URL for this (20140119/straup)	 
     var geocoder = privatesquare_abs_root_url() + "user_trips_add_geocode.php";
 	 
-    $("#where").select2({
+    var s = $("#where").select2({
         minimumInputLength: 3,
 	ajax: {
 	    url: geocoder,
@@ -50,6 +51,7 @@ function privatesquare_trips_select2_init(){
 	    }
 	}
     });
+
 }
 
 function privatesquare_trips_gather_trip_info(){
@@ -126,12 +128,20 @@ function privatesquare_trips_edit_init(){
 
     privatesquare_trips_datepicker_init();
 
-    $("#trip-locality small").click(function(){
+    $("#change-city").click(function(){
+
+	var el = $(this);
+	el.hide();
+
 	privatesquare_trips_select2_init();
-	// What to do after this... (20140118/straup)
+
+	$("#where").select2("open");
+	return false;
     });
 
     $("#edit-trip").submit(function(){
+
+	$("#where").select2("close");
 
 	var form = $("#edit-trip");
 	var crumb = form.attr("data-edit-trip-crumb");
@@ -180,6 +190,18 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
 	return false;
     }
 
+    var trip = rsp['trip'];
+
+    var short_name = $("#short_name");
+    short_name.html(trip['locality']['woe_name']);
+    // short_name.attr("href", "fix-me");
+
+    var long_name = $("#long_name");
+    long_name.html(trip['locality']['name']);
+
+    // $("#change-city").show();
+
+    console.log(rsp);
     privatesquare_set_status("Your trip has been updated!");
 }
 

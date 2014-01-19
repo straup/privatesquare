@@ -129,6 +129,7 @@
 		$rsp = db_update_users($cluster, 'Trips', $insert, $where);
 
 		if ($rsp['ok']){
+			$trip = array_merge($trip, $update);
 			$rsp['trip'] = $trip;
 		}
 
