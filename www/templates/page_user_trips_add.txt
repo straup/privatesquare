@@ -1,3 +1,4 @@
+{capture assign="page_title"}trips | add a new trip{/capture}
 {capture assign="extra_head"}
 {* see also: http://www.eyecon.ro/bootstrap-datepicker *}
 {* see also: https://github.com/ivaynberg/select2 *}
@@ -10,6 +11,11 @@
 {/capture}
 {include file="inc_head.txt"}
 
+<div class="row">
+<h3>Add a new trip</h3>
+</div>
+
+<div class="row">
 <form class="form" role="form-horizontal" id="add-trip" method="POST" data-add-trip-crumb="{$trip_crumb|escape}">
 
 {include file="inc_user_trip_edit.txt"}
@@ -19,7 +25,8 @@
 </div>
 
 </form>
-   
+</div>
+
 <script type="text/javascript">
 {literal}
 $(document).ready(function(){

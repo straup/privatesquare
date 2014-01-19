@@ -95,8 +95,9 @@ h3 small {
     border: 1px solid #000;
 }
 
-input, select {
-    border-radius: 0 !importand;
+input[type=text] {
+    border-radius: 0 !important;
+    border: 1px solid #000;
 }
 
 input[type=submit] {
@@ -104,6 +105,11 @@ input[type=submit] {
     padding: .2em;
     padding-left: .5em;
     padding-right: .5em;
+}
+
+textarea {
+    border: solid thin !important;
+    border-radius: 0 !important;
 }
 
 .alert {
@@ -299,9 +305,18 @@ h3[contenteditable="true"]:active,
     padding-right: .5em;
 }
 
+/* select2 .js - for trips (20140119/straup) */
+
+.select2-container {
+    border: 1px solid #000 !important;
+    border-radius: 0 !important;
+}
+
+
 @media (max-width: 320px) {
 
     .pagination-numbered {
 	display: none !important;
     }
 }
+
