@@ -15,7 +15,7 @@
 {include file="inc_user_trip_edit.txt"}
 
 <div class="form-group">
-<button type="submit" class="btn btn-primary">Add trip</button>
+<button id="add-trip" type="submit" class="btn btn-primary">Add trip</button>
 </div>
 
 </form>

@@ -81,6 +81,8 @@ function privatesquare_trips_add_init(){
 	var sel = $("#select2-chosen-1");
 	var name = sel.html();
 
+	$("#add-trip").attr("disabled", "disabled");
+
 	privatesquare_api_call(method, args, _privatesquare_trips_add_trip_onsuccess);
 	privatesquare_set_status("Adding trip to " + htmlspecialchars(name));
 
@@ -92,6 +94,9 @@ function _privatesquare_trips_add_trip_onsuccess(rsp){
 
     if (rsp['stat'] != 'ok'){
 	privatesquare_set_status(rsp['error']['error'], "danger");
+
+	$("#add-trip").removeAttr("disabled");
+
 	return false;
     }
 
