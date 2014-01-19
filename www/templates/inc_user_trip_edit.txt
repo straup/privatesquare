@@ -2,6 +2,7 @@
 <input type="hidden" id="trip" value="{$trip.id|escape}" />
 {/if}
 
+<div class="form-group">
 <h3>Where are you going?</h3>
 
 {if $trip}
@@ -9,41 +10,44 @@
 {/if}
 
 <input type="hidden" id="where" value="{if $trip}{$trip.locality_id|escape}{/if}" class="select2-offscreen" style="width:300px;" />
+</div>
 
-<h3>When are you going?</h3>
+<div class="form-group">
 
 {capture assign="today"}{$smarty.now|date_format:"%Y-%m-%d"}{/capture}
-<h4>Arriving</h4>	 
-<input class="span2" size="16" type="text" value="{if $trip}{$trip.arrival|escape}{/if}" id="arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+<label for="arrival">Arriving</label>
+<input class="form-control" size="16" type="text" value="{if $trip}{$trip.arrival|escape}{/if}" id="arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
-traveling by
-<select name="arrive_by" id="arrive_by">
+<label for="arrive_by">traveling by</label>
+<select name="arrive_by" id="arrive_by" class="form-control">
 {foreach from=$travel_map item="label" key="id"}
 <option value="{$id|escape}"{if $trip and $trip.arrive_by_id==$id} selected{/if}>{$label|escape}</option>
 {/foreach}
 </select>
 
-<h4>Departing</h4>
-<input class="span2" size="16" type="text" value="{if $trip}{$trip.departure|escape}{/if}" id="departure" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+<label for="departure">Departing</label>
+<input class="form-control span2" size="16" type="text" value="{if $trip}{$trip.departure|escape}{/if}" id="departure" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
-traveling by
-<select name="depart_by" id="depart_by">
+<label for="depart_by">traveling by</label>
+<select name="depart_by" id="depart_by" class="form-control">
 {foreach from=$travel_map item="label" key="id"}
 <option value="{$id|escape}"{if $trip and $trip.depart_by_id==$id} selected{/if}>{$label|escape}</option>
 {/foreach}
 </select>
 
-<div>
-<h4>Status</h4>
+</div>
 
-this trip is 
-<select name="status_id" id="status_id">
+<div class="form-group">
+
+<label for="status_id">this trip is</label>
+<select name="status_id" id="status_id" class="form-control">
 {foreach from=$status_map item="label" key="id"}
 <option value="{$id|escape}"{if $trip and $trip.status_id==$id} selected{/if}>{$label|escape}</option>
 {/foreach}
 </select>
 </div>
 
-<h4>Notes</h4>
-
-<textarea id="note">{if $trip.note}{$trip.note|escape}{/if}</textarea>
+<div class="form-group">
+<label for="note">Notes</label>
+<textarea id="note" class="form-control">{if $trip.note}{$trip.note|escape}{/if}</textarea>
+</div>
