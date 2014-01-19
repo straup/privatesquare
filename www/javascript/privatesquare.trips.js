@@ -74,7 +74,6 @@ function privatesquare_trips_add_init(){
 	args['crumb'] = crumb;
 
 	var method = 'privatesquare.trips.addTrip';
-	console.log(args);
 
 	var sel = $("#select2-chosen-1");
 	var name = sel.html();
@@ -138,8 +137,6 @@ function privatesquare_trips_edit_init(){
 	    'id': trip_id,
 	    'crumb': crumb
 	};
-
-	console.log(args);
 
 	var method = 'privatesquare.trips.deleteTrip';
 
