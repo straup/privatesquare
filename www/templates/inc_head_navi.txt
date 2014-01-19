@@ -71,7 +71,7 @@
 		<li class="divider"></li>
 		<li><a href="{$cfg.abs_root_url}me/trips/add/">add a new trip</a></li>
 		<li><a href="{$cfg.abs_root_url}me/trips/">upcoming trips</a></li>
-		<li><a href="{$cfg.abs_root_url}me/trips/past/">previous trips</a></li>
+		<li><a href="{$cfg.abs_root_url}me/trips/past/">past trips</a></li>
 		{/if}
 
 		<li class="divider"></li>

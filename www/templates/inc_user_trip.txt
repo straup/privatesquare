@@ -1,8 +1,11 @@
 <div class="row" class="checkins">
 {assign var="status" value=$trip.status_id}
 	<h4>
-		<a href="{$trip|@urls_trip}">{$trip.locality.name|escape}</a>
+		<a href="{$cfg.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.woe_name|escape}</a>
 		<small>
+		&#8212; {$trip.locality.name|escape}.
+		</small>
+		<small style="display:block;margin-top:.5em;">
 
 		{if $trip.arrival_past and $trip.departure_past}
 
@@ -71,22 +74,16 @@
 
 		{/if}
 		
+		<span class="pull-right-x">
+		<a href="{$trip|@urls_trip}" class="permalink-sm">permalink</a>
+		</span>
 		</small>
+
 	</h4>
 
 	{if 0}
 	<div class="map" data-zoom="14" data-center="{$lat|escape},{$lon|escape}" data-hash="false" data-interactive="false" data-provider="toner">
 		<div class="marker marker-history{if $trip.status_id==2} marker-history-todo{/if}" data-location="{$lat|escape},{$lon|escape}"><span class="marker-history-text">{$trip.venue.name|truncate:20:"..."|escape}</span></div>
-	</div>
-	{/if}
-
-	{if 0}
-	<div class="lead date" data-created="{$trip.created|escape}">
-
-	<span class="permalink pull-right">
-	<a href="{$trip|@urls_trip}" class="permalink">permalink</a>
-	</span>
-
 	</div>
 	{/if}
 
