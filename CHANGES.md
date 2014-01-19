@@ -1,3 +1,24 @@
+# 2.2
+
+## In broad strokes
+
+Trips! Dopplr!!
+
+## Database alters (db_main)
+
+Apply `schema/alters/20140118_db_main.schema` to your database.
+
+## Database alters (db_users)
+
+Apply `schema/alters/20140107_db_users.schema` to your database.
+
+## Database migration
+
+Dopplr's `full_data.json` files can be imported in to privatesquare a per-user
+basis by running
+
+	$> php -q bin/backfill_import_dopplr_trips.php -d full_data.json -u USER_ID
+
 # 2.1.1
 
 Merged in to `master` 2014-01-16
