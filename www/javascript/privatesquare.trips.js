@@ -148,9 +148,22 @@ function privatesquare_trips_edit_init(){
 }
 
 function _privatesquare_trips_edit_trip_onsuccess(rsp){
-	console.log(rsp);
+
+    if (rsp['stat'] != 'ok'){
+	privatesquare_set_status(rsp['error']['error'], "danger");
+	return false;
+    }
+
+    privatesquare_set_status("Your trip has been updated!");
 }
 
 function _privatesquare_trips_delete_trip_onsuccess(rsp){
-	console.log(rsp);
+
+    if (rsp['stat'] != 'ok'){
+	privatesquare_set_status(rsp['error']['error'], "danger");
+	return false;
+    }
+
+    var trips = privatesquare_abs_root_url() + "me/trips/?deleted=1";
+    location.href = trips;
 }
