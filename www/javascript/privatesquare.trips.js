@@ -1,13 +1,31 @@
 function privatesquare_trips_datepicker_init(){
 
-    $("#arrival").datepicker({'language':'en'});
-    $("#departure").datepicker({'language':'en'});
+    // http://www.eyecon.ro/bootstrap-datepicker/
 
-    // TO DO: on change event handler to update departure
-    // when arrival changes (20140112/straup)
+    var arr = $("#arrival").datepicker({
+	'language':'en'
+    }).on('changeDate', function(e){
+	var next_day = new Date(e.date);
+	next_day.setDate(next_day.getDate() + 1);
 
-    // TO DO: on change event handler to ensure departure
-    // is not before arrival (20140112/straup)
+	if (dpt.date.valueOf() <= next_day.valueOf()){
+	    dpt.setValue(next_day);
+	}
+
+	arr.hide();
+	 $('#departure')[0].focus();
+
+    }).data('datepicker');
+
+    var dpt = $("#departure").datepicker({
+	'language':'en',
+	'onRender': function(date) {
+	    return date.valueOf() <= arr.date.valueOf() ? 'disabled' : '';
+	}
+    }).on('changeDate', function(e){
+	dpt.hide();
+    }).data('datepicker');
+
 }
 
 function privatesquare_trips_select2_init(){

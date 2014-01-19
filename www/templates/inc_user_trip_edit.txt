@@ -15,7 +15,7 @@
 
 {capture assign="today"}{$smarty.now|date_format:"%Y-%m-%d"}{/capture}
 <label for="arrival">Arriving on</label>
-<input class="form-control" size="16" type="text" value="{if $trip}{$trip.arrival|escape}{/if}" name="arrival" id="arrival" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
+<input class="form-control" size="16" type="text" value="{if $trip}{$trip.arrival|escape}{/if}" name="arrival" id="arrival" placeholder="date of arrival" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 
 <label for="arrive_by">Arriving by</label>
 <select name="arrive_by" id="arrive_by" class="form-control">
