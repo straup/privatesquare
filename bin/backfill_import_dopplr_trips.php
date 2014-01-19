@@ -30,23 +30,8 @@
 
 	foreach ($trips as $dopplr_trip){
 
-		# $rsp = trips_dopplr_import_trip($dopplr_trip, $user);
-
-		$trip = array(
-			'user_id' => $opts['user_id'],
-			'dopplr_id' => $dopplr_trip['id'],
-			'arrival' => $dopplr_trip['start'],
-			'departure' => $dopplr_trip['finish'],
-			'locality_id' => $dopplr_trip['city']['woeid'],
-			'status_id' => 1,
-		);
-
-		# TO DO: sort out transport type
-
-		dumper($trip);
-
-		$rsp = trips_add_trip($trip);
-		# dumper($rsp);
+		$rsp = trips_dopplr_import_trip($dopplr_trip, $user);
+		echo "import dopplr trip {$dopplr_trip['id']}: {$rsp['ok']}\n";
 	}
 
 	exit();

@@ -8,8 +8,10 @@
 
 		$map = array(
 			0 => 'none of your business',
+			10 => 'on foot',
 			1 => 'bicycle',
 			2 => 'car',
+			11 => 'motorcycle',
 			3 => 'bus',
 			4 => 'train',
 			5 => 'boat',
