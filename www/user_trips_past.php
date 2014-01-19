@@ -27,6 +27,9 @@
 
 	$status_map = trips_travel_status_map();
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
+	$pagination_url = urls_user($user) . "trips/past/";
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 	
 	$GLOBALS['smarty']->display("page_user_trips_past.txt");
 	exit();

@@ -258,7 +258,13 @@
 			$sql[] = "AND `departure` >= NOW()";
 		}
 
-		$sql[] = "ORDER BY arrival, departure DESC";
+		if ($more['when'] == 'past'){
+			$sql[] = "ORDER BY arrival DESC, departure DESC";
+		}
+
+		else {
+			$sql[] = "ORDER BY arrival, departure";
+		}
 
 		$sql = implode(" ", $sql);
 		# dumper($sql);

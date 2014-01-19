@@ -16,7 +16,7 @@
 
 	$rsp = trips_get_places_for_user($user, $more);
 	$places = array();
-dumper($rsp);
+
 	foreach ($rsp['rows'] as $row){
 		$rsp2 = whereonearth_fetch_woeid($row['locality_id']);
 		$row['locality'] = $rsp2['data'];
@@ -26,6 +26,9 @@ dumper($rsp);
 	}
 
 	$GLOBALS['smarty']->assign_by_ref("places", $places);
+
+	$pagination_url = urls_user($user) . "trips/places/";
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 	
 	$GLOBALS['smarty']->display("page_user_trips_places.txt");
 	exit();

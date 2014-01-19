@@ -51,6 +51,11 @@
 
         $GLOBALS['smarty']->assign_by_ref("trips", $trips);
         $GLOBALS['smarty']->assign_by_ref("place", $loc);
+
+	$enc_woeid = urlencode($woeid);
+
+	$pagination_url = urls_user($user) . "trips/places/{$enc_woeid}/";
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
         
         $GLOBALS['smarty']->display("page_user_trips_place.txt");
         exit();

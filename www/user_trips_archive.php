@@ -10,8 +10,6 @@
 	$year = get_int32("year");
 	$month = get_int32("month");
 
-	# TO DO: something (20140118/straup)
-
 	if (! $year){
 		error_404();
 	}
@@ -52,6 +50,14 @@
 	
 	$GLOBALS['smarty']->assign("year", $year);
 	$GLOBALS['smarty']->assign("month", $month);
+
+	$pagination_url = urls_user($user) . "trips/archives/{$year}/";
+
+	if ($month){
+		$pagination_url .= "{$month}/";
+	}
+
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$GLOBALS['smarty']->display("page_user_trips_archive.txt");
 	exit();
