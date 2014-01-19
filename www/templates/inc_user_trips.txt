@@ -6,7 +6,7 @@
 {if $current_month != $display_month}
 {capture assign="yyyy"}{$row.arrival_ts|@date_format:"%Y"}{/capture}
 {capture assign="mm"}{$row.arrival_ts|@date_format:"%m"}{/capture}
-<h3><a href="{$row.user|@urls_user}trips/archive/{$yyyy|escape}/{$mm|escape}/">{$current_month|escape}</a></h3>
+<h3><a href="{$row.user|@urls_user}trips/archives/{$yyyy|escape}/{$mm|escape}/">{$current_month|escape}</a></h3>
 {assign var="display_month" value=$current_month}
 {/if}
 
