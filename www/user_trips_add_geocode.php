@@ -3,9 +3,6 @@
 	include("include/init.php");
 	loadlib("flickr_api");
 
-	# THIS IS SO NOT FINISHED. OR EVEN NECESSARILY
-	# GOING TO WORK THIS WAY... (20140109/straup)
-
 	if (! login_check_login()){
 		exit();
 	}
@@ -43,6 +40,7 @@
 	}
 
 	header("Content-type: text/javascript");
+	header("Access-Control-Allow-Origin: {$GLOBALS['cfg']['abs_root_url']}");
 
 	$rsp = array(
 		'results' => $results,

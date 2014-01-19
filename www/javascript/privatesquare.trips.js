@@ -12,10 +12,13 @@ function privatesquare_trips_datepicker_init(){
 
 function privatesquare_trips_select2_init(){
 
+    // TO DO: sort out FQ URL for this (20140119/straup)	 
+    var geocoder = privatesquare_abs_root_url() + "user_trips_add_geocode.php";
+	 
     $("#where").select2({
         minimumInputLength: 3,
 	ajax: {
-	    url: "http://privatesquare/user_trips_add_geocode.php",
+	    url: geocoder,
 	    dataType: 'json',
 	    data: function (term, page){
        		return {
