@@ -31,6 +31,8 @@ function privatesquare_trips_datepicker_init(){
 
 function privatesquare_trips_select2_init(){
 
+    // http://ivaynberg.github.io/select2/
+
     // TO DO: sort out FQ URL for this (20140119/straup)	 
     var geocoder = privatesquare_abs_root_url() + "user_trips_add_geocode.php";
 	 
