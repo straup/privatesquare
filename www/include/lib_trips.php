@@ -263,6 +263,10 @@
 			$sql[] = "ORDER BY arrival DESC, departure DESC";
 		}
 
+		else if ($more['where']){
+			$sql[] = "ORDER BY arrival DESC, departure DESC";
+		}
+
 		else {
 			$sql[] = "ORDER BY arrival, departure";
 		}
