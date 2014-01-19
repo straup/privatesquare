@@ -78,6 +78,8 @@
 			api_output_error(999, $rsp['error']);
 		}
 
+		$rsp['trip']['trip_url'] = urls_trip($rsp['trip']);
+
 		$out = array(
 			'trip' => $rsp['trip'],
 		);

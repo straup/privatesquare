@@ -11,11 +11,15 @@
 {/capture}
 {include file="inc_head.txt"}
 
-<form class="form" role="form" id="edit-trip" method="POST" data-edit-trip-crumb="{$trip_crumb|escape}">
+<form class="form" role="form" id="edit-trip" method="POST" data-edit-trip-crumb="{$edit_crumb|escape}" data-delete-trip-crumb="{$delete_crumb|escape}">
 {include file="inc_user_trip_edit.txt" trip=$trip}
 
 <div>
 <button class="btn btn-primary">Update trip</button>
+</div>
+
+<div>
+<button id="delete-trip" class="btn btn-primary">Delete this trip</button>
 </div>
 
 </form>

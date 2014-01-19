@@ -76,19 +76,25 @@ function privatesquare_trips_add_init(){
 	var method = 'privatesquare.trips.addTrip';
 	console.log(args);
 
-	try {
+	var sel = $("#select2-chosen-1");
+	var name = sel.html();
+
 	privatesquare_api_call(method, args, _privatesquare_trips_add_trip_onsuccess);
-	privatesquare_set_status("Adding trip to [FIX ME]");
-	    } catch(e){
-		console.log(e);
-	    }
+	privatesquare_set_status("Adding trip to " + htmlspecialchars(name));
 
 	return false;
     });
 }
 
 function _privatesquare_trips_add_trip_onsuccess(rsp){
-	console.log(rsp);
+
+    if (rsp['stat'] != 'ok'){
+	privatesquare_set_status(rsp['error']['error'], "danger");
+	return false;
+    }
+
+    var url = rsp['trip']['trip_url'];
+    location.href = url + "?success=1";
 }
 
 function privatesquare_trips_edit_init(){
@@ -109,19 +115,45 @@ function privatesquare_trips_edit_init(){
 	args['crumb'] = crumb;
 
 	var method = 'privatesquare.trips.editTrip';
-	console.log(args);
 
-	try {
 	privatesquare_api_call(method, args, _privatesquare_trips_edit_trip_onsuccess);
 	privatesquare_set_status("Updating your trip");
-	    } catch(e){
-		console.log(e);
-	    }
+
+	return false;
+    });
+
+    $("#delete-trip").click(function(){
+
+	if (! confirm("Are you sure you want to delete this trip?")){
+	    return false;
+	}
+
+	var form = $("#edit-trip");
+	var crumb = form.attr("data-delete-trip-crumb");
+
+	var trip = $("#trip");
+	var trip_id = trip.val();
+
+	var args = {
+	    'id': trip_id,
+	    'crumb': crumb
+	};
+
+	console.log(args);
+
+	var method = 'privatesquare.trips.deleteTrip';
+
+	privatesquare_api_call(method, args, _privatesquare_trips_delete_trip_onsuccess);
+	privatesquare_set_status("Deleting your trip");
 
 	return false;
     });
 }
 
 function _privatesquare_trips_edit_trip_onsuccess(rsp){
+	console.log(rsp);
+}
+
+function _privatesquare_trips_delete_trip_onsuccess(rsp){
 	console.log(rsp);
 }

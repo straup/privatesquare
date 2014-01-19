@@ -45,7 +45,7 @@
 
 		"privatesquare.trips.deleteTrip": {
 			"documented": 0,
-			"enabled": 0,
+			"enabled": 1,
 			"requires_auth": 1,
 			"requires_crumb": 1,
 			"crumb_ttl": 600,

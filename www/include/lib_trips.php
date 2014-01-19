@@ -137,13 +137,13 @@
 
 	########################################################################
 
-	function trips_delete_trip(&$trip, $update){
+	function trips_delete_trip(&$trip){
 
 		$user = users_get_by_id($trip['user_id']);
 		$cluster = $user['cluster_id'];
 
 		$enc_id = AddSlashes($trip['id']);
-		$sql = "DELETE FROM Tripes WHERE id='{$enc_id}'";
+		$sql = "DELETE FROM Trips WHERE id='{$enc_id}'";
 
 		$rsp = db_write_users($cluster, $sql);
 		return $rsp;

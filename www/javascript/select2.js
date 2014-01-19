@@ -31,9 +31,8 @@ the specific language governing permissions and limitations under the Apache Lic
                     ++i < l
                     && (j.context = j[0] = this[i])
                     && c.call(j[0], i, j) !== false //"this"=DOM, i=index, j=jQuery object
-                ){
+                );
                 return this;
-		}
             }
         });
     }
