@@ -48,9 +48,15 @@
 
 	$status_map = trips_travel_status_map();
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
 	
 	$GLOBALS['smarty']->assign("year", $year);
 	$GLOBALS['smarty']->assign("month", $month);
+
+	if ($month){
+		$ts = strtotime("{$year}-{$month}");
+		$GLOBALS['smarty']->assign("yearmonth_ts", $ts);
+	}
 
 	$pagination_url = urls_user($user) . "trips/archives/{$year}/";
 

@@ -1,6 +1,7 @@
 {assign var="display_month" value=""}
 
 {foreach from=$trips item="row"}
+{if !$no_header}
 {capture assign="current_month"}{$row.arrival_ts|@date_format:"%B, %Y"}{/capture}
 
 {if $current_month != $display_month}
@@ -9,9 +10,9 @@
 <h3><a href="{$row.user|@urls_user}trips/archives/{$yyyy|escape}/{$mm|escape}/">{$current_month|escape}</a></h3>
 {assign var="display_month" value=$current_month}
 {/if}
+{/if}
 
 {include file="inc_user_trip.txt" trip=$row}
-
 {/foreach}
 
 {include file="inc_pagination.txt"}

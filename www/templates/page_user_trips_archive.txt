@@ -4,7 +4,7 @@
 <div class="row">
      <h3>
      {if $year and $month}
-     Your trips in {$month|escape}, {$year|escape}
+     Your trips in {$yearmonth_ts|@date_format:"%B, %Y"|escape}
      {else}
      Your trips in {$year|escape}
      {/if}
@@ -20,6 +20,10 @@
 </div>
 {/if}
 
+{if $month}
+{include file="inc_user_trips.txt trips=$trips no_header=1}
+{else}
 {include file="inc_user_trips.txt trips=$trips}
+{/if}
 
 {include file="inc_foot.txt"}
