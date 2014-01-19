@@ -264,6 +264,13 @@
 
 		$trip['trip_url'] = urls_trip($trip);
 
+		# please put me in a function...
+		# (20140119/straup)
+
+		$user = users_get_by_id($trip['user_id']);
+		$enc_woeid = urlencode($trip['locality_id']);
+		$trip['place_url'] = urls_user($user) . "trips/places/{$enc_woeid}/";
+
 		$rsp = whereonearth_fetch_woeid($trip['locality_id']);
 		$loc = $rsp['data'];
 

@@ -192,16 +192,16 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
 
     var trip = rsp['trip'];
 
-    var short_name = $("#short_name");
+    var short_name = $("#short-name");
     short_name.html(trip['locality']['woe_name']);
-    // short_name.attr("href", "fix-me");
+    short_name.attr("href", trip['place_url']);
 
-    var long_name = $("#long_name");
+    var long_name = $("#long-name");
     long_name.html(trip['locality']['name']);
 
-    // $("#change-city").show();
+    $("#where").select2("destroy");
+    $("#change-city").show();
 
-    console.log(rsp);
     privatesquare_set_status("Your trip has been updated!");
 }
 
