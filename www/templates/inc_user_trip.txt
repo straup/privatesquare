@@ -5,7 +5,7 @@
 		<small>
 		&#8212; {$trip.locality.name|escape}.
 		</small>
-		<small style="display:block;margin-top:.5em;">
+		<small>
 
 		{if $trip.arrival_past and $trip.departure_past}
 
@@ -24,7 +24,7 @@
 		{else}
 		{if $trip.arrival == $trip.departure}You were here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
 		{else}
-		You arrived <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and left on <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
+		You arrived on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and left on <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
 		{/if}
 		{/if}
 
@@ -47,7 +47,7 @@
 		{else}
 		{if $trip.arrival == $trip.departure}You were here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
 		{else}
-		You arrived <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and will be leaving <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
+		You arrived on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and will be leaving <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
 		{/if}
 		{/if}
 
@@ -75,7 +75,7 @@
 		{/if}
 		
 		<span class="pull-right-x">
-		<a href="{$trip|@urls_trip}" class="permalink-sm">permalink</a>
+		<a href="{$trip|@urls_trip}" class="permalink-sm">View this trip.</a>
 		</span>
 		</small>
 

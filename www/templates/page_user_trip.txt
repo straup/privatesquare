@@ -11,6 +11,8 @@
 {/capture}
 {include file="inc_head.txt"}
 
+<div class="row col-md-8">
+
 <form class="form" role="form" id="edit-trip" method="POST" data-edit-trip-crumb="{$edit_crumb|escape}" data-delete-trip-crumb="{$delete_crumb|escape}">
 {include file="inc_user_trip_edit.txt" trip=$trip}
 
@@ -21,6 +23,11 @@
 </div>
 
 </form>
+</div>
+
+<div class="row col-md-4">
+STUFF GOES HERE
+</div>
 
 <script type="text/javascript">
 {literal}

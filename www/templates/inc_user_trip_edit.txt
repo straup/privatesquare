@@ -5,7 +5,7 @@
 <div class="form-group">
 
 {if $trip}
-<button id="change-city" class="btn btn-sm pull-right">change</button>
+<button id="change-city" class="btn btn-sm pull-right">change city</button>
 <h4 id="trip-locality"><a href="{$cfg.user|@urls_user}trips/places/{$trip.locality.woeid|escape}" id="short-name">{$trip.locality.woe_name|escape}</a> <small id="long-name">{$trip.locality.name|escape}</small> </h4>
 {/if}
 
