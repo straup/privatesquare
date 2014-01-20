@@ -37,15 +37,15 @@
 
 	$loc = $trip['locality'];
 
-        $more = array();
+      	$tr_more = array();
 
-        $more['where'] = $loc['place_type'];
-        $more['woeid'] = $loc['woeid'];
+        $tr_more['where'] = $loc['place_type'];
+        $tr_more['woeid'] = $loc['woeid'];
 
-        $rsp = trips_get_for_user($user, $more);
+        $tr_rsp = trips_get_for_user($user, $tr_more);
         $other_trips = array();
 
-        foreach ($rsp['rows'] as $row){
+        foreach ($tr_rsp['rows'] as $row){
 		trips_inflate_trip($row);
                 $other_trips[] = $row;
         }
@@ -53,6 +53,16 @@
  	$GLOBALS['smarty']->assign_by_ref("other_trips", $other_trips);
 
 	# TO DO: get checkins and atlas (want to go here) for locality
+
+	$ch_more = array(
+		'locality' => $loc['woeid'],
+	);
+
+	$ch_rsp = privatesquare_checkins_venues_for_user($user, $ch_more);
+	$GLOBALS['smarty']->assign_by_ref("venues", $ch_rsp['rows']);
+	$GLOBALS['smarty']->assign_by_ref("venues_pagination", $ch_rsp['pagination']);
+
+	# TO DO: sort out pagination nonsense... (20140120/straup)
 
 	$travel_map = trips_travel_type_map();
 	$GLOBALS['smarty']->assign_by_ref("travel_map", $travel_map);

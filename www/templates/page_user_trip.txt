@@ -17,9 +17,12 @@
 <div><button class="btn btn-primary pull-right" id="trip-editor-show">Edit this trip</button></div>
 
 <h3>
-	<a href="{$trip.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.name|escape}</a> <small><a href="">Add a trip</a></small>
+	<a href="{$trip.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.woe_name|escape}</a>
 </h3>
-{include file="inc_user_trip_dates.txt" trip="$trip}
+
+<p>
+<span class="hey-look">{$trip.locality.name|escape}</span>. {include file="inc_user_trip_dates.txt" trip="$trip}
+</p>
 
 {if $trip.note}
 <div>{$trip.note|escape}</div>
@@ -46,6 +49,22 @@
 
 <div id="trip-checkins">
 <h4>Checkins</h4>
+
+{if !$venues|@count}
+<p>You haven't checked in to any places in {$trip.locality.woe_name|escape} yet.</p>
+{else}
+<ul>
+{foreach from=$venues item="row"}
+<li><a href="">{$row.name}</a> &#8212; {if $row.count==1}you've been here <span class="hey-look">once</span>{elseif $row.count==2}you've been <span class="hey-look">twice</span>{else}you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}</li>
+{/foreach}
+{if $venues_pagination.page_count>1}
+{assign var="venues_count" value=$venues|@count}
+{assign var="venues_remaining" value=$venues_pagination.total_count-$venues_count}
+<li><a href="">See <span class="hey-look">all the places</span></a> you've checked in to in {$trip.locality.woe_name|escape}</li>
+{/if}
+</ul>
+{/if}
+
 </div>
 
 <div id="trip-other-trips">
