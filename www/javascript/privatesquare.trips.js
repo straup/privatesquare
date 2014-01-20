@@ -130,6 +130,18 @@ function privatesquare_trips_edit_init(){
 
     privatesquare_trips_datepicker_init();
 
+    $("#trip-editor-show").click(function(){
+    	$("#trip-summary").hide();
+	$("#trip-editor").show();
+	return false;
+    });
+
+    $("#trip-editor-cancel").click(function(){
+	$("#trip-editor").hide();
+    	$("#trip-summary").show();
+	return false;
+    });
+
     $("#change-city").click(function(){
 
 	var el = $(this);
@@ -203,6 +215,9 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
 
     $("#where").select2("destroy");
     $("#change-city").show();
+
+    $("#trip-editor").hide();
+    $("#trip-summary").show();
 
     privatesquare_set_status("Your trip has been updated!");
 }

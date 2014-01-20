@@ -46,6 +46,7 @@
         $other_trips = array();
 
         foreach ($rsp['rows'] as $row){
+		trips_inflate_trip($row);
                 $other_trips[] = $row;
         }
 

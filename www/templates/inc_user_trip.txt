@@ -6,74 +6,7 @@
 		&#8212; {$trip.locality.name|escape}.
 		</small>
 		<small>
-
-		{if $trip.arrival_past and $trip.departure_past}
-
-		{if $status_map.$status=='tentative'}
-		{if $trip.arrival == $trip.departure}
-		This trip was <span class="hey-look">tentative</span> but you had thought to be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		This trip was <span class="hey-look">tentative</span> but you had thought to be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{elseif $status_map.$status=='wishful thinking'}
-		{if $trip.arrival == $trip.departure}
-		This trip was <span class="hey-look">wishful thinking</span> but you had wanted to be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		This trip was <span class="hey-look">wishful thinking</span> but you had wanted to be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{else}
-		{if $trip.arrival == $trip.departure}You were here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		You arrived on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and left on <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{/if}
-
-		{elseif $trip.arrival_past}
-
-		{* mmmmaybe? (20140118/straup) *}
-
-		{if $status_map.$status=='tentative'}
-		{if $trip.arrival == $trip.departure}
-		This trip was <span class="hey-look">tentative</span> but you had thought to be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		This trip was <span class="hey-look">tentative</span> but you had thought to be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{elseif $status_map.$status=='wishful thinking'}
-		{if $trip.arrival == $trip.departure}
-		This trip was <span class="hey-look">wishful thinking</span> but you had wanted to be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		This trip was <span class="hey-look">wishful thinking</span> but you had wanted to be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{else}
-		{if $trip.arrival == $trip.departure}You were here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		You arrived on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and will be leaving <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{/if}
-
-		{else}
-
-		{if $status_map.$status=='tentative'}
-		{if $trip.arrival == $trip.departure}
-		This trip is still <span class="hey-look">tentative</span> but you would be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		This trip is still <span class="hey-look">tentative</span> but you would be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{elseif $status_map.$status=='wishful thinking'}
-		{if $trip.arrival == $trip.departure}
-		This trip is still <span class="hey-look">wishful thinking</span> and you would like to be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		This trip is still <span class="hey-look">wishful thinking</span> and you would like to be here between <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{else}
-		{if $trip.arrival == $trip.departure}You will be here on <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span>.
-		{else}
-		You are arriving <span class="hey-look">{$trip.arrival_ts|@date_format|escape}</span> and departing <span class="hey-look">{$trip.departure_ts|@date_format|escape}</span>.
-		{/if}
-		{/if}
-
-		{/if}
-		
+		{include file="inc_user_trip_dates.txt" trip=$trip}		
 		<span class="pull-right-x">
 		<a href="{$trip|@urls_trip}" class="permalink-sm">View this trip.</a>
 		</span>

@@ -313,6 +313,14 @@ h3[contenteditable="true"]:active,
 }
 
 
+/* trips */
+
+#trip-editor {
+    display:none;
+}
+
+/* end trips */
+
 @media (max-width: 320px) {
 
     .pagination-numbered {

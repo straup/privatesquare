@@ -11,28 +11,48 @@
 {/capture}
 {include file="inc_head.txt"}
 
-<div class="row col-md-8">
+<div class="row">
 
+<div id="trip-summary">
+<div><button class="btn btn-primary pull-right" id="trip-editor-show">Edit this trip</button></div>
+
+<h3>
+	<a href="{$trip.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.name|escape}</a> <small><a href="">Add a trip</a></small>
+</h3>
+{include file="inc_user_trip_dates.txt" trip="$trip}
+
+{if $trip.note}
+<div>{$trip.note|escape}</div>
+{/if}
+
+</div>
+
+<div id="trip-editor">
 <form class="form" role="form" id="edit-trip" method="POST" data-edit-trip-crumb="{$edit_crumb|escape}" data-delete-trip-crumb="{$delete_crumb|escape}">
 {include file="inc_user_trip_edit.txt" trip=$trip}
 
 <div>
 <button class="btn btn-primary">Update trip</button>
-
-<button id="delete-trip" class="btn btn-danger pull-right">Delete this trip</button>
+<button id="trip-editor-cancel" class="btn btn-primary pull-right">Cancel</button>
 </div>
 
 </form>
 </div>
 
-<div class="row col-md-4">
+</div>
 
+
+<div class="row">
 <ul>
 {foreach from=$other_trips item="row"}
-<li><a href="">{$row.arrival|escape}</a></li>
+<li><a href="{$row|@urls_trip}">{$row.arrival_ts|@date_format|escape}</a></li>
 {/foreach}
 </ul>
 
+</div>
+
+<div class="row">
+<button id="delete-trip" class="btn btn-danger pull-right">Delete this trip</button>
 </div>
 
 <script type="text/javascript">
