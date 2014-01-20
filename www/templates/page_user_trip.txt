@@ -18,6 +18,7 @@
 
 <h3>
 	<a href="{$trip.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.woe_name|escape}</a>
+	<small>trip ID {$trip.id|escape}</small>
 </h3>
 
 <p>
@@ -25,7 +26,7 @@
 </p>
 
 {if $trip.note}
-<div>{$trip.note|escape}</div>
+<div id="trip-note">{$trip.note|escape}</div>
 {/if}
 
 </div>
@@ -51,7 +52,7 @@
 <h4>Checkins</h4>
 
 {if !$venues|@count}
-<p>You haven't checked in to any places in {$trip.locality.woe_name|escape} yet.</p>
+<p>You <span class="hey-look">haven't checked in</span> to any places in {$trip.locality.woe_name|escape} yet.</p>
 {else}
 <ul>
 {foreach from=$venues item="row"}
@@ -71,11 +72,11 @@
 <h4>Other visits</h4>
 
 {if !$other_trips|@count}
-<p>This is your first trip to <span class="hey-look">{$trip.locality.woe_name|escape}</span>.</p>
+<p>This is your <span class="hey-look">first trip</span> to {$trip.locality.woe_name|escape}.</p>
 {elseif $other_trips|@count == 1}
-<p>You've added one other trip to <span class="hey-look">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've added <span class="hey-look">one other trip</span> to <span class="woe-name">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
-<p>You've added {$other_trips|@count} other trips to <span class="hey-look">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've added <span class="hey-look">{$other_trips|@count} other trips</span> to <span class="woe-name">{$trip.locality.woe_name|escape}</span>.</p>
 <ul>
 {foreach from=$other_trips item="row"}
 <li><a href="{$row|@urls_trip}">{include file="inc_user_trip_dates.txt" trip=$row}</a></li>

@@ -315,6 +315,10 @@ h3[contenteditable="true"]:active,
 
 /* trips */
 
+#trip-note {
+    font-style: italic;
+}
+
 #trip-editor {
     display:none;
 }
