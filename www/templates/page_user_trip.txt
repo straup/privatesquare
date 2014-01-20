@@ -26,7 +26,13 @@
 </div>
 
 <div class="row col-md-4">
-STUFF GOES HERE
+
+<ul>
+{foreach from=$other_trips item="row"}
+<li><a href="">{$row.arrival|escape}</a></li>
+{/foreach}
+</ul>
+
 </div>
 
 <script type="text/javascript">
