@@ -319,6 +319,11 @@ h3[contenteditable="true"]:active,
     display:none;
 }
 
+#trip-delete {
+    margin-top: 5em !important;
+    /* background-color: #adadad; */
+}
+
 /* end trips */
 
 @media (max-width: 320px) {

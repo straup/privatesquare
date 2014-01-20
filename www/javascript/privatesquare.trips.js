@@ -132,6 +132,7 @@ function privatesquare_trips_edit_init(){
 
     $("#trip-editor-show").click(function(){
     	$("#trip-summary").hide();
+    	$("#trip-related").hide();
 	$("#trip-editor").show();
 	return false;
     });
@@ -139,6 +140,7 @@ function privatesquare_trips_edit_init(){
     $("#trip-editor-cancel").click(function(){
 	$("#trip-editor").hide();
     	$("#trip-summary").show();
+    	$("#trip-related").show();
 	return false;
     });
 
@@ -218,6 +220,7 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
 
     $("#trip-editor").hide();
     $("#trip-summary").show();
+    $("#trip-related").show();
 
     privatesquare_set_status("Your trip has been updated!");
 }

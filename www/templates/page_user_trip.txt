@@ -42,17 +42,34 @@
 </div>
 
 
-<div class="row">
+<div class="row" id="trip-related">
+
+<div id="trip-checkins">
+<h4>Checkins</h4>
+</div>
+
+<div id="trip-other-trips">
+<h4>Other visits</h4>
+
+{if !$other_trips|@count}
+<p>This is your first trip to <span class="hey-look">{$trip.locality.woe_name|escape}</span>.</p>
+{elseif $other_trips|@count == 1}
+<p>You've added one other trip to <span class="hey-look">{$trip.locality.woe_name|escape}</span>.</p>
+{else}
+<p>You've added {$other_trips|@count} other trips to <span class="hey-look">{$trip.locality.woe_name|escape}</span>.</p>
 <ul>
 {foreach from=$other_trips item="row"}
-<li><a href="{$row|@urls_trip}">{$row.arrival_ts|@date_format|escape}</a></li>
+<li><a href="{$row|@urls_trip}">{include file="inc_user_trip_dates.txt" trip=$row}</a></li>
 {/foreach}
 </ul>
+{/if}
 
 </div>
 
-<div class="row">
-<button id="delete-trip" class="btn btn-danger pull-right">Delete this trip</button>
+</div>
+
+<div class="row" id="trip-delete">
+<button id="delete-trip" class="btn btn-danger x-pull-right">Delete this trip</button>
 </div>
 
 <script type="text/javascript">
