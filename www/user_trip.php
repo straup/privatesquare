@@ -73,7 +73,6 @@
 		);
 
 		$ch_rsp2 = privatesquare_checkins_venues_for_user($user, $ch_more);
-		dumper($ch_rsp2);
 		$GLOBALS['smarty']->assign_by_ref("checkins", $ch_rsp2['rows']);
 		$GLOBALS['smarty']->assign_by_ref("checkins_pagination", $ch_rsp2['pagination']);
 	}

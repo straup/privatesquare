@@ -21,7 +21,8 @@ function privatesquare_trips_datepicker_init(){
     var dpt = $("#departure").datepicker({
 	'language':'en',
 	'onRender': function(date) {
-	    return date.valueOf() <= arr.date.valueOf() ? 'disabled' : '';
+	    // make this work with not-today...
+	    //return date.valueOf() <= arr.date.valueOf() ? 'disabled' : '';
 	}
     }).on('changeDate', function(e){
 	dpt.hide();

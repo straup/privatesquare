@@ -46,10 +46,44 @@
 </div>
 
 
-<div class="row" id="trip-related">
+<div class="row col-md-6" id="trip-checkins">
 
-<div id="trip-checkins">
-<h4>Checkins</h4>
+{if $trip.arrival_past or $trip.departure_past}
+
+{if $trip.departure_past}
+<h4>Places you checked in to during this trip</h4>
+{else}
+<h4>Places you've checked in to during this trip</h4>
+{/if}
+
+{if !checkins|@count}
+{if $trip.departure_past}
+<p>You <span class="hey-look">didn't check in</span> to any places while you were in {$trip.locality.woe_name|escape}.</p>
+{else}
+<p>You <span class="hey-look">haven't checked in</span> to any places in {$trip.locality.woe_name|escape} yet.</p>
+{/if}
+{else}
+<ul>
+{foreach from=$checkins item="row"}
+<li><a href="">{$row.name}</a>{if $row.count >= 2} &#8212; {if $row.count==2}you were here <span class="hey-look">twice</span>{else}you were here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}{/if}</li>
+{/foreach}
+{if $checkins_pagination.page_count>1}
+{assign var="checkins_count" value=$checkins|@count}
+{assign var="checkins_remaining" value=$checkins_pagination.total_count-$venues_count}
+<li><a href="">See <span class="hey-look">all the places</span></a> you checked in to during this trip</li>
+{/if}
+</ul>
+{/if}
+
+{else}
+<h4>Something...</h4>
+{/if}
+
+</div>
+
+<div id="trip-venues" class="row col-md-6">
+
+<h4>Places you've been to in {$trip.locality.woe_name|escape}</h4>
 
 {if !$venues|@count}
 <p>You <span class="hey-look">haven't checked in</span> to any places in {$trip.locality.woe_name|escape} yet.</p>
@@ -68,11 +102,15 @@
 
 </div>
 
-<div id="trip-other-trips">
+<div id="trip-other-trips" class="row">
 <h4>Other visits</h4>
 
 {if !$other_trips|@count}
+{if $trip.departure_past}
+<p>This was your <span class="hey-look">first trip</span> to {$trip.locality.woe_name|escape}.</p>
+{else}
 <p>This is your <span class="hey-look">first trip</span> to {$trip.locality.woe_name|escape}.</p>
+{/if}
 {else}
 
 {if $other_trips|@count == 1}
@@ -87,8 +125,6 @@
 {/foreach}
 </ul>
 {/if}
-
-</div>
 
 </div>
 
