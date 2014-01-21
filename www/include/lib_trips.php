@@ -190,6 +190,7 @@
 			'when' => 'upcoming',
 			'where' => null,
 			'woeid' => null,
+			'exclude_trip' => null,
 			'year' => null,
 			'month' => null,
 		);
@@ -215,6 +216,13 @@
 			$enc_id = AddSlashes($more['woeid']);
 
 			$sql[] = "AND `{$enc_col}`='{$enc_id}'";
+
+			# IN (trip ids) ?
+
+			if ($more['exclude_trip']){
+				$enc_trip = AddSlashes($more['exclude_trip']);
+				$sql[] = " AND id != '{$enc_trip}'";			
+			}
 		}
 
 		else if (($more['year']) && ($more['month'])){

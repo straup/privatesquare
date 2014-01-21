@@ -73,10 +73,14 @@
 
 {if !$other_trips|@count}
 <p>This is your <span class="hey-look">first trip</span> to {$trip.locality.woe_name|escape}.</p>
-{elseif $other_trips|@count == 1}
+{else}
+
+{if $other_trips|@count == 1}
 <p>You've added <span class="hey-look">one other trip</span> to <span class="woe-name">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
 <p>You've added <span class="hey-look">{$other_trips|@count} other trips</span> to <span class="woe-name">{$trip.locality.woe_name|escape}</span>.</p>
+{/if}
+
 <ul>
 {foreach from=$other_trips item="row"}
 <li><a href="{$row|@urls_trip}">{include file="inc_user_trip_dates.txt" trip=$row}</a></li>

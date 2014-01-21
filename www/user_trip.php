@@ -41,6 +41,7 @@
 
         $tr_more['where'] = $loc['place_type'];
         $tr_more['woeid'] = $loc['woeid'];
+	$tr_more['exclude_trip'] = $trip['id'];
 
         $tr_rsp = trips_get_for_user($user, $tr_more);
         $other_trips = array();
