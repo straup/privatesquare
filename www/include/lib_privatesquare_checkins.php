@@ -430,6 +430,16 @@
 			$sql .= " AND locality='{$enc_loc}'";
 		}
 
+		# TO DO: indexes!!
+		
+		if (isset($more['between'])){
+
+			$enc_start = AddSlashes($more['between']['start']);
+			$enc_end = AddSlashes($more['between']['end']);
+
+			$sql .= " AND ymd BETWEEN '{$enc_start}' AND '{$enc_end}'";
+		}
+
 		$sql .= " GROUP BY venue_id";
 
 		$rsp = db_fetch_users($cluster_id, $sql);

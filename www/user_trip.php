@@ -63,6 +63,21 @@
 	$GLOBALS['smarty']->assign_by_ref("venues", $ch_rsp['rows']);
 	$GLOBALS['smarty']->assign_by_ref("venues_pagination", $ch_rsp['pagination']);
 
+	# Check to see if there are any checkins during this trip
+
+	if (count($ch_rsp['rows'])){
+
+		$ch_more['between'] = array(
+			'start' => $trip['arrival'],
+			'end' => $trip['departure'],
+		);
+
+		$ch_rsp2 = privatesquare_checkins_venues_for_user($user, $ch_more);
+		dumper($ch_rsp2);
+		$GLOBALS['smarty']->assign_by_ref("checkins", $ch_rsp2['rows']);
+		$GLOBALS['smarty']->assign_by_ref("checkins_pagination", $ch_rsp2['pagination']);
+	}
+
 	# TO DO: sort out pagination nonsense... (20140120/straup)
 
 	$travel_map = trips_travel_type_map();
