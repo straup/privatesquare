@@ -15,4 +15,6 @@
 
 {include file="inc_user_trips.txt" trips=$trips}
 
+<small><a href="{$cfg.user|@urls_user}trips/past/">Past trips</a></small>
+
 {include file="inc_foot.txt"}

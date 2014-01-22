@@ -45,7 +45,17 @@
 
 </div>
 
+{if !$trip.departure_past}
+<div class="container">
+<h4>Your atlas of desire in {$trip.locality.woe_name|escape}</h4>
 
+{include file="inc_user_trip_atlas.txt" atlas=$atlas statuses=$atlas_yes}
+{include file="inc_user_trip_atlas.txt" atlas=$atlas statuses=$atlas_no}
+
+</div>
+{/if}
+
+<div class="container">
 <div class="row col-md-6" id="trip-checkins">
 
 {if $trip.arrival_past or $trip.departure_past}
@@ -76,7 +86,7 @@
 {/if}
 
 {else}
-<h4>Something...</h4>
+{* Something? *}
 {/if}
 
 </div>
@@ -101,7 +111,9 @@
 {/if}
 
 </div>
+</div>
 
+<div class="container">
 <div id="trip-other-trips" class="row">
 <h4>Other visits</h4>
 
@@ -126,6 +138,7 @@
 </ul>
 {/if}
 
+</div>
 </div>
 
 <div class="row" id="trip-delete">

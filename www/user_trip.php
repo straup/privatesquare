@@ -33,8 +33,6 @@
 
  	$GLOBALS['smarty']->assign_by_ref("trip", $trip);
 
-	# TO DO: other trips to this locality
-
 	$loc = $trip['locality'];
 
       	$tr_more = array();
@@ -52,8 +50,6 @@
         }
 
  	$GLOBALS['smarty']->assign_by_ref("other_trips", $other_trips);
-
-	# TO DO: get checkins and atlas (want to go here) for locality
 
 	$ch_more = array(
 		'locality' => $loc['woeid'],
@@ -75,6 +71,38 @@
 		$ch_rsp2 = privatesquare_checkins_venues_for_user($user, $ch_more);
 		$GLOBALS['smarty']->assign_by_ref("checkins", $ch_rsp2['rows']);
 		$GLOBALS['smarty']->assign_by_ref("checkins_pagination", $ch_rsp2['pagination']);
+	}
+
+	if ((count($ch_rsp['rows'])) && (! $trip['departure_past'])){
+
+		$atlas = array();
+
+		$yes = array("i want to go there", "again again", "again");
+		$no = array("again maybe", "again never", "meh");
+
+		$status_map = privatesquare_checkins_status_map('string keys');
+
+		foreach (array_merge($yes, $no) as $status){
+
+			$status_id = $status_map[$status];
+
+			$at_more = array(
+				'locality' => $trip['locality_id'],
+			);
+
+			$at_rsp = privatesquare_checkins_venues_for_user_and_status($user, $status_id, $at_more);
+
+			foreach ($at_rsp['rows'] as &$row){
+				$venue = json_decode($row['venue']['data'], 'as hash');
+				$row['venue']['address'] = $venue['location']['address'];
+			}
+
+			$atlas[$status] = $at_rsp;
+		}
+
+		$GLOBALS['smarty']->assign_by_ref("atlas_yes", $yes);
+		$GLOBALS['smarty']->assign_by_ref("atlas_no", $no);
+		$GLOBALS['smarty']->assign_by_ref("atlas", $atlas);
 	}
 
 	# TO DO: sort out pagination nonsense... (20140120/straup)
