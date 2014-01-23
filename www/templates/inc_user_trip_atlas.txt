@@ -5,7 +5,7 @@
 <h5>{$status|escape}</h5>
 <ul class="list-inline">
 {foreach from=$atlas.$status.rows item="row"}
-<li><a href="{$row.venue|@urls_venue}">{$row.venue.name|@escape} <small>{$row.created|@date_format:"%b '%y"|escape}</small></a> <small>{$row.venue.address|escape}</small></li>
+<li><a href="{$row.venue|@urls_venue}">{$row.venue.name|@escape}</a> <small>{$row.venue.address|escape}</small> <small class="hey-look-x" style="color:#ccc !important;">{$row.created|@date_format:"%b '%y"|escape}</small></li>
 {/foreach}
 {assign var="total" value=$atlas.$status.pagination.total_count}
 {assign var="last" value=$atlas.$status.pagination.last}

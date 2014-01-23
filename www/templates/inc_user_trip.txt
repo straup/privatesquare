@@ -1,9 +1,9 @@
 <div class="row" class="checkins">
 {assign var="status" value=$trip.status_id}
 	<h4>
-		<a href="{$cfg.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.woe_name|escape}</a>
+		<a href="{$trip|@urls_trip}">{$trip.locality.woe_name|escape}</a>
 		<small>
-		&#8212; {$trip.locality.name|escape}.
+		&#8212; <a href="{$cfg.user|@urls_user}trips/places/{$trip.locality_id|escape}/">{$trip.locality.name|escape}</a>.
 		</small>
 		<small>
 		{include file="inc_user_trip_dates.txt" trip=$trip}		
