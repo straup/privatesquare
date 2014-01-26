@@ -73,7 +73,6 @@
 		$ch_more['between'] = array(
 			'start' => $trip['arrival'],
 			'end' => $trip['departure'],
-			'per_page' => 3
 		);
 
 		$ch_rsp2 = privatesquare_checkins_venues_for_user($user, $ch_more);
