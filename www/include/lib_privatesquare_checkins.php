@@ -35,6 +35,19 @@
 
  	#################################################################
 
+	function privatesquare_checkins_status_id_to_uri($id){
+		$label = privatesquare_checkins_status_id_to_label($id);
+		return privatesquare_checkins_status_label_to_uri($label);
+	}
+
+ 	#################################################################
+
+	function privatesquare_checkins_status_label_to_uri($label){
+		return str_replace(" ", "", $label);
+	}
+
+ 	#################################################################
+
 	# Dunno... might move in to a separate library (20120705/straup)
 
 	function privatesquare_checkins_list_map($string_keys=0){

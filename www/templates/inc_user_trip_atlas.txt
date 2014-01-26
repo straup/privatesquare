@@ -12,9 +12,9 @@
 {if $total>$last}
 {assign var="remaining" value=$total-$last}
 {if $remaining==1}
-<li>and <a href="{$owner|@urls_user}atlas/{$status|escape}/{$locality.woeid|escape}/"><span class="hey-look">one other</span> places</a></li>
+<li>and <a href="{$owner|@urls_user}atlas/{$status|@privatesquare_checkins_status_label_to_uri|escape}/{$locality.woeid|escape}/"><span class="hey-look">one other</span> places</a></li>
 {else}
-<li>and <a href="{$owner|@urls_user}atlas/{$status|escape}/{$locality.woeid|escape}/"><span class="hey-look">{$remaining|escape} other</span> places</a></li>
+<li>and <a href="{$owner|@urls_user}atlas/{$status|@privatesquare_checkins_status_label_to_uri|escape}/{$locality.woeid|escape}/"><span class="hey-look">{$remaining|escape} other</span> places</a></li>
 {/if}
 {/if}
 </ul>
