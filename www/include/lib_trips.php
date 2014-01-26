@@ -314,6 +314,8 @@
 		$locality = $rsp['data'];
 
 		$trip['locality'] = $locality;
+		$trip['latitude'] = $locality['latitude'];
+		$trip['longitude'] = $locality['longitude'];
 
 		$arrival_ts = strtotime($trip['arrival']);
 		$departure_ts = strtotime($trip['departure']);

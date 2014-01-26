@@ -1,5 +1,5 @@
 {foreach from=$markers item="row"}
-	 {if $row.latitude and $row.longitude}
+ {if $row.latitude and $row.longitude}
 
 	 {* 2 == i want to go there *}
 	 {if $use_test=='has_visited' and !$row.has_visited}
@@ -24,6 +24,7 @@
 
 	{/foreach}
 	{else}
-	{/if}
 
+
+	{/if}
 {/foreach}

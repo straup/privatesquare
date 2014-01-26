@@ -26,13 +26,7 @@
 
 	$GLOBALS['smarty']->assign_by_ref("trips", $trips);
 
-	foreach ($rsp['rows'] as &$row){
-		$loc = whereonearth_fetch_woeid($row['locality_id']);
-		$row['latitude'] = $loc['data']['latitude'];
-		$row['longitude'] = $loc['data']['longitude'];
-	}
-
-	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+	$geo_stats = privatesquare_checkins_utils_geo_stats($trips);
 	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 	$status_map = trips_travel_status_map();

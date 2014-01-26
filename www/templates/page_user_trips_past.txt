@@ -7,7 +7,7 @@
 
 <div class="row">
 <div id="displaymap" class="map"  data-extent="{$geo_stats.bounding_box|@join:","|escape}" data-hash="false" data-interactive="false" data-provider="toner">
-{include file="inc_map_header_markers.txt markers=$checkins}
+{include file="inc_map_header_markers.txt markers=$trips}
 </div>
 </div>
 
