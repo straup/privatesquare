@@ -55,10 +55,10 @@
 </div>
 {/if}
 
-<div class="container">
-<div class="row col-md-6" id="trip-checkins">
+<div class="container" id="trip-meta">
 
 {if $trip.arrival_past or $trip.departure_past}
+<div class="row col-md-6" id="trip-checkins">
 
 {if $trip.departure_past}
 <h4>Places you checked in to during this trip</h4>
@@ -85,11 +85,8 @@
 </ul>
 {/if}
 
-{else}
-{* Something? *}
-{/if}
-
 </div>
+{/if}
 
 <div id="trip-venues" class="row col-md-6">
 
@@ -111,10 +108,8 @@
 {/if}
 
 </div>
-</div>
 
-<div class="container">
-<div id="trip-other-trips" class="row">
+<div id="trip-previous" class="row col-md-6">
 <h4>Other visits</h4>
 
 {if !$other_trips|@count}
@@ -139,10 +134,18 @@
 {/if}
 
 </div>
+
+<div id="trip-misc" class="row col-md-6">
 </div>
 
+</div>
+
+<div class="container">
+
 <div class="row" id="trip-delete">
-<button id="delete-trip" class="btn btn-danger x-pull-right">Delete this trip</button>
+<button id="delete-trip" class="btn btn-danger pull-right">Delete this trip</button>
+</div>
+
 </div>
 
 <script type="text/javascript">

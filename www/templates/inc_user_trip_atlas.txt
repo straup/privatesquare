@@ -3,7 +3,7 @@
 {foreach from=$statuses item="status"}
 {if $atlas.$status.rows|@count}
 <h5>{$status|escape}</h5>
-<ul class="list-inline">
+<ul class="list-inline list-trip-atlas">
 {foreach from=$atlas.$status.rows item="row"}
 <li><a href="{$row.venue|@urls_venue}">{$row.venue.name|@escape}</a> <small>{$row.venue.address|escape}</small> <small class="hey-look-x" style="color:#ccc !important;">{$row.created|@date_format:"%b '%y"|escape}</small></li>
 {/foreach}

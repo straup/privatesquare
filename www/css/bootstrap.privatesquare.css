@@ -328,6 +328,20 @@ h3[contenteditable="true"]:active,
     /* background-color: #adadad; */
 }
 
+.list-trip-atlas li {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#trip-meta ul {
+    margin: 0;
+    padding: 0;
+}
+
+#trip-meta li {
+    list-style-type: none;
+}
+
 /* end trips */
 
 @media (max-width: 320px) {
