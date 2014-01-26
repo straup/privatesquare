@@ -28,6 +28,13 @@
 
  	#################################################################
 
+	function privatesquare_checkins_status_id_to_label($id){
+		$map = privatesquare_checkins_status_map();
+		return (isset($map[$id])) ? $map[$id] : null;
+	}
+
+ 	#################################################################
+
 	# Dunno... might move in to a separate library (20120705/straup)
 
 	function privatesquare_checkins_list_map($string_keys=0){

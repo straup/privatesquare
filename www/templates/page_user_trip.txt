@@ -66,22 +66,46 @@
 <h4>Places you've checked in to during this trip</h4>
 {/if}
 
-{if !checkins|@count}
+{if !$checkins_pagination.total_count}
 {if $trip.departure_past}
 <p>You <span class="hey-look">didn't check in</span> to any places while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
 <p>You <span class="hey-look">haven't checked in</span> to any places in <span class="locality-woename">{$trip.locality.woe_name|escape}</span> yet.</p>
 {/if}
 {else}
+
+{if $checkins_pagination.total_count==1}
+{if $trip.departure_past}
+<p>You checked in to <span class="hey-look">one place</span> while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+{else}
+<p>You've checked in to <span class="hey-look">one place</span> so far while you've been in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+{/if}
+{else}
+{if $trip.departure_past}
+<p>You checked in to <span class="hey-look">{$checkins_pagination.total_count|@number_format|escape} places</span> while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+{else}
+<p>You've checked in to <span class="hey-look">{$checkins_pagination.total_count|@number_format|escape} places</span> so far while you've been in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+{/if}
+
+{/if}
+
 <ul>
 {foreach from=$checkins item="row"}
-<li><a href="">{$row.name}</a>{if $row.count >= 2} &#8212; {if $row.count==2}you were here <span class="hey-look">twice</span>{else}you were here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}{/if}</li>
+{capture assign="status_id"}{$row.checkins.0.status_id}{/capture}
+<li><a href="{$row|@urls_venue}">{$row.name}</a>{if $status_id}<small> &#8212; you said <span class="hey-look">{$status_id|@privatesquare_checkins_status_id_to_label|escape}</span></small>{/if}</li>
 {/foreach}
-{if $checkins_pagination.page_count>1}
-{assign var="checkins_count" value=$checkins|@count}
-{assign var="checkins_remaining" value=$checkins_pagination.total_count-$venues_count}
-<li><a href="">See <span class="hey-look">all the places</span></a> you checked in to during this trip</li>
+
+{assign var="total" value=$checkins_pagination.total_count}
+{assign var="last" value=$checkins_pagination.per_page}
+{if $total>$last}
+{assign var="remaining" value=$total-$last}
+{if $remaining==1}
+<a href="{$trip|@urls_trip}checkins/">And <span class="hey-look">one other</span> place</a>
+{else}
+<a href="{$trip|@urls_trip}checkins/">And <span class="hey-look">{$remaining|@number_format|escape} other</span> places</a>
 {/if}
+{/if}
+
 </ul>
 {/if}
 
@@ -100,7 +124,7 @@
 
 <ul>
 {foreach from=$venues item="row"}
-<li><a href="">{$row.name}</a> &#8212; {if $row.count==1}you've been here <span class="hey-look">once</span>{elseif $row.count==2}you've been <span class="hey-look">twice</span>{else}you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}</li>
+<li><a href="{$row|@urls_venue}">{$row.name}</a> &#8212; {if $row.count==1}you've been here <span class="hey-look">once</span>{elseif $row.count==2}you've been <span class="hey-look">twice</span>{else}you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}</li>
 {/foreach}
 
 {assign var="total" value=$venues_pagination.total_count}
