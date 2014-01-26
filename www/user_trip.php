@@ -70,6 +70,13 @@
 
 	if (count($ch_rsp['rows'])){
 
+		$when = implode(";", array(
+			$trip['arrival'],
+			$trip['departure'],
+		));
+
+		$ch_more['when'] = $when;
+
 		$ch_more['between'] = array(
 			'start' => $trip['arrival'],
 			'end' => $trip['departure'],

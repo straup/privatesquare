@@ -91,8 +91,32 @@
 
 <ul>
 {foreach from=$checkins item="row"}
-{capture assign="status_id"}{$row.checkins.0.status_id}{/capture}
-<li><a href="{$row|@urls_venue}">{$row.name}</a>{if $status_id}<small> &#8212; you said <span class="hey-look">{$status_id|@privatesquare_checkins_status_id_to_label|escape}</span></small>{/if}</li>
+
+<li><a href="{$row|@urls_venue}">{$row.name}</a>
+<small>
+{if $trip.departure_past}
+{if $row.count==1}
+{* you were here <span class="hey-look">once</span> *}
+{elseif $row.count==2}
+&#8212; you were here <span class="hey-look">twice</span>
+{else}
+&#8212; you were here <span class="hey-look">{$row.count|@number_format|escape} times</span>
+{/if}
+{else}
+{if $row.count==1}
+{* you were here <span class="hey-look">once</span> *}
+{elseif $row.count==2}
+&#8212; you've been here <span class="hey-look">twice</span> so far
+{else}
+&#8212; you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>
+{/if}
+{/if}
+{foreach from=$row.checkins item="ch_row" name="state"}
+{capture assign="status_id"}{$ch_row.status_id}{/capture}
+{if $status_id}<span class="x-hey-look" style="font-style:italic;">{$status_id|@privatesquare_checkins_status_id_to_label|escape}</span>{/if}
+{/foreach}
+</small>
+</li>
 {/foreach}
 
 {assign var="total" value=$checkins_pagination.total_count}
@@ -124,7 +148,7 @@
 
 <ul>
 {foreach from=$venues item="row"}
-<li><a href="{$row|@urls_venue}">{$row.name}</a> &#8212; {if $row.count==1}you've been here <span class="hey-look">once</span>{elseif $row.count==2}you've been <span class="hey-look">twice</span>{else}you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}</li>
+<li><a href="{$row|@urls_venue}">{$row.name}</a><small>{if $row.count==1}{* you've been here <span class="hey-look">once</span> *}{elseif $row.count==2} &#8212; you've been <span class="hey-look">twice</span>{else} &#8212; you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>{/if}</small></li>
 {/foreach}
 
 {assign var="total" value=$venues_pagination.total_count}

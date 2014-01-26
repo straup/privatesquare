@@ -133,7 +133,7 @@
 
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 
-		# TO DO: indexes
+		# TO DO: OMG DB INDEXES...
 
 		if (isset($more['when'])){
 
@@ -147,24 +147,14 @@
 
 				list($start, $stop) = datetime_when_parse($more['when']);
 
-				# Assuming all dates are stored in GMT goose the numbers
-				# enough to try and account for all the other places you
-				# might have been when you checked in. Un-comfident with
-				# this approach... (20131208/straup)
-
-				$offset = 3600 * 12;
-
-				$start = strtotime($start) - $offset;
-				$stop = strtotime($stop) + $offset;
-
 				$enc_start = AddSlashes($start);
 				$enc_stop = AddSlashes($stop);
 
-				$sql .= " AND created BETWEEN '{$enc_start}' AND '{$enc_stop}'";
+				$sql .= " AND ymd BETWEEN '{$enc_start}' AND '{$enc_stop}'";
 			}
 		}
 
-		else if (isset($more['venue_id'])){
+		if (isset($more['venue_id'])){
 			$enc_venue = AddSlashes($more['venue_id']);
 			$sql .= " AND venue_id='{$enc_venue}'";
 		}
@@ -175,7 +165,6 @@
 		}
 
 		$sql .= " ORDER BY created DESC";
-
 		return $sql;
 	}
 
@@ -441,13 +430,24 @@
 		}
 
 		# TO DO: indexes!!
-		
-		if (isset($more['between'])){
 
-			$enc_start = AddSlashes($more['between']['start']);
-			$enc_end = AddSlashes($more['between']['end']);
+		if (isset($more['when'])){
 
-			$sql .= " AND ymd BETWEEN '{$enc_start}' AND '{$enc_end}'";
+			if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $more['when'])){
+
+				$enc_when = AddSlashes($more['when']);
+				$sql .= " AND ymd = '{$enc_when}'";
+			}
+
+			else {
+
+				list($start, $stop) = datetime_when_parse($more['when']);
+
+				$enc_start = AddSlashes($start);
+				$enc_stop = AddSlashes($stop);
+
+				$sql .= " AND ymd BETWEEN '{$enc_start}' AND '{$enc_stop}'";
+			}
 		}
 
 		$sql .= " GROUP BY venue_id";
@@ -519,6 +519,10 @@
 				'inflate_venue' => 0,
 				'inflate_weather' => 0,
 			);
+
+			if (isset($more['when'])){
+				$checkins_more['when'] = $more['when'];
+			}
 
 			$checkins = privatesquare_checkins_for_user($user, $checkins_more);
 			$venue['checkins'] = $checkins['rows'];
