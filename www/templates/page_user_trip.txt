@@ -18,7 +18,7 @@
 
 <h3>
 	<a href="{$trip.user|@urls_user}trips/places/{$trip.locality_id|escape}/"><span class="locality-woename">{$trip.locality.woe_name|escape}</span></a>
-	<small>trip ID {$trip.id|escape}</small>
+	<small>trip ID <span class="hey-look">{$trip.id|escape}</span></small>
 </h3>
 
 <p>
@@ -76,15 +76,15 @@
 
 {if $checkins_pagination.total_count==1}
 {if $trip.departure_past}
-<p>You checked in to <span class="hey-look">one place</span> while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You checked in to <span class="hey-look"><a href="{$trip|@urls_trip}checkins/">one place</a></span> while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
-<p>You've checked in to <span class="hey-look">one place</span> so far while you've been in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've checked in to <span class="hey-look"><a href="{$trip|@urls_trip}checkins/">one place</a></span> so far while you've been in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {/if}
 {else}
 {if $trip.departure_past}
-<p>You checked in to <span class="hey-look">{$checkins_pagination.total_count|@number_format|escape} places</span> while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You checked in to <span class="hey-look"><a href="{$trip|@urls_trip}checkins/">{$checkins_pagination.total_count|@number_format|escape} places</a></span> while you were in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
-<p>You've checked in to <span class="hey-look">{$checkins_pagination.total_count|@number_format|escape} places</span> so far while you've been in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've checked in to <span class="hey-look"><a href="{$trip|@urls_trip}checkins/">{$checkins_pagination.total_count|@number_format|escape} places</a></span> so far while you've been in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {/if}
 
 {/if}
@@ -124,9 +124,9 @@
 {if $total>$last}
 {assign var="remaining" value=$total-$last}
 {if $remaining==1}
-<a href="{$trip|@urls_trip}checkins/">And <span class="hey-look">one other</span> place</a>
+<li><a href="{$trip|@urls_trip}checkins/">And <span class="hey-look">one other</span> place</a></li>
 {else}
-<a href="{$trip|@urls_trip}checkins/">And <span class="hey-look">{$remaining|@number_format|escape} other</span> places</a>
+<li><a href="{$trip|@urls_trip}checkins/">And <span class="hey-look">{$remaining|@number_format|escape} other</span> places</a></li>
 {/if}
 {/if}
 
@@ -144,7 +144,7 @@
 <p>You <span class="hey-look">haven't checked in</span> to any places in <span class="locality-woename">{$trip.locality.woe_name|escape}</span> yet.</p>
 {else}
 
-<p>You've checked in to <span class="hey-look">{$venues_pagination.total_count|@number_format|escape}</span> places in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've checked in to <span class="hey-look"><a href="{$owner|@urls_user}places/{$locality.woeid|escape}/">{$venues_pagination.total_count|@number_format|escape} places</a></span> in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 
 <ul>
 {foreach from=$venues item="row"}
@@ -156,9 +156,9 @@
 {if $total>$last}
 {assign var="remaining" value=$total-$last}
 {if $remaining==1}
-<a href="{$owner|@urls_user}places/{$locality.woeid|escape}/">And <span class="hey-look">one other</span> place</a>
+<li><a href="{$owner|@urls_user}places/{$locality.woeid|escape}/">And <span class="hey-look">one other</span> place</a></li>
 {else}
-<a href="{$owner|@urls_user}places/{$locality.woeid|escape}/">And <span class="hey-look">{$remaining|@number_format|escape} other</span> places</a>
+<li><a href="{$owner|@urls_user}places/{$locality.woeid|escape}/">And <span class="hey-look">{$remaining|@number_format|escape} other</span> places</a></li>
 {/if}
 {/if}
 </ul>
@@ -171,16 +171,16 @@
 
 {if !$other_trips_pagination.total_count}
 {if $trip.departure_past}
-<p>This was your <span class="hey-look">first trip</span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>This was your <span class="hey-look"><a href="{$owner|@urls_user}trips/places/{$locality.woeid|escape}/">first trip</a></span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
-<p>This is your <span class="hey-look">first trip</span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>This is your <span class="hey-look"><a href="{$owner|@urls_user}trips/places/{$locality.woeid|escape}/">first trip</a></span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {/if}
 {else}
 
 {if $other_trips_pagination.total_count == 1}
-<p>You've added <span class="hey-look">one other trip</span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've added <span class="hey-look"><a href="{$owner|@urls_user}trips/places/{$locality.woeid|escape}/">one other trip</a></span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {else}
-<p>You've added <span class="hey-look">{$other_trips_pagination.total_count|@number_format|escape} other trips</span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+<p>You've added <span class="hey-look"><a href="{$owner|@urls_user}trips/places/{$locality.woeid|escape}/">{$other_trips_pagination.total_count|@number_format|escape} other trips</a></span> to <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
 {/if}
 
 <ul>

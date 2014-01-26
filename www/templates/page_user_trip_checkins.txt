@@ -1,6 +1,8 @@
 {capture assign="page_title"}trips | {$trip.locality.name} | {if $trip.arrival==$trip.departure}{$trip.arrival}{else}{$trip.arrival} | {$trip.departure}{/if} | checkins{/capture}
 {include file="inc_head.txt"}
 
+<div class="row"><h3>{$trip.locality.name|escape} <small>{if $trip.arrival==$trip.departure}checkins on <span class="hey-look"><a href="{$trip|@urls_trip}">{$trip.arrival}</a></span>{else}checkins between <a href="{$trip|@urls_trip}"><span class="hey-look">{$trip.arrival}</span> and <span class="hey-look">{$trip.departure}</span></a>{/if}</small></h3></div>
+
 {include file="inc_checkins_history.txt"}
 
 <script type="text/javascript">

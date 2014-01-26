@@ -3,6 +3,8 @@
 	include("include/init.php");
 	loadlib("trips");
 
+	loadlib("privatesquare_checkins_utils");
+
 	features_ensure_enabled("trips");
 
 	login_ensure_loggedin();
@@ -57,6 +59,9 @@
 	$rsp = privatesquare_checkins_for_user($user, $more);
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);
 	$GLOBALS['smarty']->assign_by_ref("pagination", $rsp['pagination']);
+
+	$geo_stats = privatesquare_checkins_utils_geo_stats($rsp['rows']);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
 
 	$GLOBALS['smarty']->display("page_user_trip_checkins.txt");
 	exit();
