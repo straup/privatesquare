@@ -7,7 +7,11 @@
 
 	login_ensure_loggedin();
 
+	# in advance of a proper fix... (20140125/straup)
+	$GLOBALS['cfg']['pagination_assign_smarty_variable'] = 0;
+
 	$user = $GLOBALS['cfg']['user'];
+	$GLOBALS['smarty']->assign_by_ref("owner", $user);
 
 	if ($id = get_int64("trip_id")){
 		$trip = trips_get_by_id($id);
@@ -34,12 +38,14 @@
  	$GLOBALS['smarty']->assign_by_ref("trip", $trip);
 
 	$loc = $trip['locality'];
+	$GLOBALS['smarty']->assign_by_ref("locality", $loc);
 
       	$tr_more = array();
 
         $tr_more['where'] = $loc['place_type'];
         $tr_more['woeid'] = $loc['woeid'];
 	$tr_more['exclude_trip'] = $trip['id'];
+	# $tr_more['per_page'] = 5;
 
         $tr_rsp = trips_get_for_user($user, $tr_more);
         $other_trips = array();
@@ -50,6 +56,7 @@
         }
 
  	$GLOBALS['smarty']->assign_by_ref("other_trips", $other_trips);
+ 	$GLOBALS['smarty']->assign_by_ref("other_trips_pagination", $tr_rsp['pagination']);
 
 	$ch_more = array(
 		'locality' => $loc['woeid'],
@@ -59,6 +66,7 @@
 	$GLOBALS['smarty']->assign_by_ref("venues", $ch_rsp['rows']);
 	$GLOBALS['smarty']->assign_by_ref("venues_pagination", $ch_rsp['pagination']);
 
+dumper($ch_rsp['pagination']);
 	# Check to see if there are any checkins during this trip
 
 	if (count($ch_rsp['rows'])){
