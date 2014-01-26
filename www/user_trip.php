@@ -90,6 +90,7 @@
 	if ((count($ch_rsp['rows'])) && (! $trip['departure_past'])){
 
 		$atlas = array();
+		$count = 0;
 
 		$yes = array("i want to go there", "again again", "again");
 		$no = array("again maybe", "again never", "meh");
@@ -112,8 +113,10 @@
 			}
 
 			$atlas[$status] = $at_rsp;
+			$count += $at_rsp['pagination']['total_count'];
 		}
 
+		$GLOBALS['smarty']->assign_by_ref("atlas_count", $count);
 		$GLOBALS['smarty']->assign_by_ref("atlas_yes", $yes);
 		$GLOBALS['smarty']->assign_by_ref("atlas_no", $no);
 		$GLOBALS['smarty']->assign_by_ref("atlas", $atlas);

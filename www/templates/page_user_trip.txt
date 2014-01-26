@@ -18,7 +18,7 @@
 
 <h3>
 	<a href="{$trip.user|@urls_user}trips/places/{$trip.locality_id|escape}/"><span class="locality-woename">{$trip.locality.woe_name|escape}</span></a>
-	<small>trip ID <span class="hey-look">{$trip.id|escape}</span></small>
+	<small>trip ID <a href="{$trip|@urls_trip}">{$trip.id|escape}</a>{capture assign="status_id"}{$trip.status_id}{/capture} &#8212; <span class="hey-look">{$status_map.$status_id|escape}</span></small>
 </h3>
 
 <p>
@@ -45,12 +45,16 @@
 
 </div>
 
-{if !$trip.departure_past}
+{if $atlas and !$trip.departure_past}
 <div class="container">
 <h4>Your atlas of desire in <span class="locality-woename">{$trip.locality.woe_name|escape}</span></h4>
 
+{if $atlas_count}
 {include file="inc_user_trip_atlas.txt" atlas=$atlas statuses=$atlas_yes}
 {include file="inc_user_trip_atlas.txt" atlas=$atlas statuses=$atlas_no}
+{else}
+<p>You <span class="hey-look">have not expressed any opinions</span> about the places you've been to in <span class="locality-woename">{$trip.locality.woe_name|escape}</span>.</p>
+{/if}
 
 </div>
 {/if}
@@ -111,10 +115,12 @@
 &#8212; you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>
 {/if}
 {/if}
+{if 0}
 {foreach from=$row.checkins item="ch_row" name="state"}
 {capture assign="status_id"}{$ch_row.status_id}{/capture}
 {if $status_id}<span class="x-hey-look" style="font-style:italic;">{$status_id|@privatesquare_checkins_status_id_to_label|escape}</span>{/if}
 {/foreach}
+{/if}
 </small>
 </li>
 {/foreach}
