@@ -30,6 +30,7 @@
 	$more = array(
 		'year' => $year,
 		'month' => $month,
+		'per_page' => 40
 	);
 
 	if ($page = get_int32("page")){
@@ -46,9 +47,11 @@
 
 	$GLOBALS['smarty']->assign_by_ref("trips", $trips);
 
+	$geo_stats = privatesquare_checkins_utils_geo_stats($trips);
+	$GLOBALS['smarty']->assign_by_ref("geo_stats", $geo_stats);
+
 	$status_map = trips_travel_status_map();
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
-
 	
 	$GLOBALS['smarty']->assign("year", $year);
 	$GLOBALS['smarty']->assign("month", $month);
