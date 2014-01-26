@@ -133,6 +133,8 @@
 
 		$sql = "SELECT * FROM PrivatesquareCheckins WHERE user_id='{$enc_user}'";
 
+		# TO DO: indexes
+
 		if (isset($more['when'])){
 
 			if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $more['when'])){
@@ -167,12 +169,13 @@
 			$sql .= " AND venue_id='{$enc_venue}'";
 		}
 
-		else if (isset($more['locality'])){
+		if (isset($more['locality'])){
 			$enc_locality = AddSlashes($more['locality']);
 			$sql .= " AND locality='{$enc_locality}'";
 		}
 
 		$sql .= " ORDER BY created DESC";
+
 		return $sql;
 	}
 

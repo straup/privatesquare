@@ -40,19 +40,21 @@
 	$loc = $trip['locality'];
 	$GLOBALS['smarty']->assign_by_ref("locality", $loc);
 
+	$when = implode(";", array(
+		$trip['arrival'],
+		$trip['departure'],
+	));
+
 	$more = array(
 		'locality' => $loc['woeid'],
-		'between' => array(
-			'start' => $trip['arrival'],
-			'end' => $trip['departure'],
-		)
+		'when' => $when,
 	);
 
 	if ($page = get_int32("page")){
 		$more['page'] = $page;
 	}
 
-	$rsp = privatesquare_checkins_venues_for_user($user, $more);
+	$rsp = privatesquare_checkins_for_user($user, $more);
 	$GLOBALS['smarty']->assign_by_ref("checkins", $rsp['rows']);
 	$GLOBALS['smarty']->assign_by_ref("pagination", $rsp['pagination']);
 

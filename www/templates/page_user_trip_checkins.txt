@@ -1,6 +1,12 @@
 {capture assign="page_title"}trips | {$trip.locality.name} | {if $trip.arrival==$trip.departure}{$trip.arrival}{else}{$trip.arrival} | {$trip.departure}{/if} | checkins{/capture}
 {include file="inc_head.txt"}
 
-{include file="inc_pagination.txt"}
+{include file="inc_checkins_history.txt"}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	privatesquare_htmapl();
+{literal}}{/literal});
+</script>
 
 {include file="inc_foot.txt"}
