@@ -342,6 +342,11 @@ h3[contenteditable="true"]:active,
     list-style-type: none;
 }
 
+.trips-archives-year ul li {
+    margin: 0;
+    padding: 0;
+}
+
 /* end trips */
 
 @media (max-width: 320px) {

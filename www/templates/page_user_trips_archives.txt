@@ -3,7 +3,7 @@
 
 <div class="container">
 {foreach from=$stats item="details" key="year"}
-<div class="row col-md-12">
+<div class="row col-md-12 trips-archives-year">
 
 <h4><a href="">{$year|escape}</a>
 {if $year==$current_year}
