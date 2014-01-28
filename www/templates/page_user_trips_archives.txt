@@ -1,6 +1,32 @@
 {capture assign="page_title"}trips | archives{/capture}
 {include file="inc_head.txt"}
 
-...
+<div class="container">
+{foreach from=$stats item="details" key="year"}
+<div class="row col-md-12">
+
+<h4><a href="">{$year|escape}</a>
+{if $year==$current_year}
+<small>{if $details.trips==1}you've been on <span class="hey-look">one trip</span> so far in {$year|escape}{else}you've been on or scheduled <span class="hey-look">{$details.trips|@number_format|escape} trips</span> so far{/if}</small>
+{else}
+{capture assign="count_cities"}{$details.cities|@array_keys|@count}{/capture}
+{if $count_cities==1}
+<small>{if $details.trips==1}you went on <span class="hey-look">one trip</span> in {$year|escape}{else}you went on <span class="hey-look">{$details.trips|@number_format|escape} trips</span> to <span class="hey-look">one city</span>{/if}</small>
+{else}
+<small>{if $details.trips==1}you went on <span class="hey-look">one trip</span> in {$year|escape}{else}you went on <span class="hey-look">{$details.trips|@number_format|escape} trips</span> to <span class="hey-look">{$count_cities|escape} cities</span></span>{/if}</small>
+{/if}
+
+{/if}
+</h4>
+
+<ul class="list-inline">
+{foreach from=$details.cities item="count" key="woeid" name="cities"}
+<li><a href="">{$localities.$woeid.woe_name|escape}</a> <small>{if $count ==1}{elseif $count==2}you were here <span class="hey-look">twice</span>{else}you were here <span class="hey-look">{$count|@number_format|escape} times</span>{/if}{if !$smarty.foreach.cities.last} and {/if}</small></li>
+{/foreach}
+</ul>
+
+</div>
+{/foreach}
+</div>
 
 {include file="inc_foot.txt"}

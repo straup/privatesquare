@@ -308,6 +308,39 @@
 
 	########################################################################
 
+	function trips_stats_for_user(&$user){
+
+		$stats = array();
+
+		$enc_user = AddSlashes($user['id']);
+		$cluster = $user['cluster_id'];
+
+		$sql = "SELECT YEAR(arrival) AS year, COUNT(id) AS trips FROM Trips WHERE user_id='{$enc_user}' GROUP BY year ORDER BY year";
+		$rsp = db_fetch_users($cluster, $sql);
+
+		foreach ($rsp['rows'] as $row){
+			$stats[$row['year']] = array('trips' => $row['trips']);
+		}
+
+		foreach ($stats as $year => $details){
+
+			$stats[$year]['cities'] = array();
+
+			$enc_year = AddSlashes($year);
+			$sql = "SELECT locality_id, COUNT(id) AS count_trips FROM Trips WHERE user_id='{$enc_user}' AND YEAR(arrival) = '{$enc_year}' GROUP BY locality_id ORDER BY count_trips DESC";
+
+			$rsp = db_fetch_users($cluster, $sql);
+
+			foreach ($rsp['rows'] as $row){
+				$stats[$year]['cities'][$row['locality_id']] = $row['count_trips'];
+			}
+		}
+
+		return array('ok' => 1, 'stats' => $stats);
+	}
+
+	########################################################################
+
 	function trips_inflate_trip(&$trip){
 
 		$rsp = whereonearth_fetch_woeid($trip['locality_id']);
