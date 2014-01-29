@@ -187,7 +187,7 @@
 	function trips_get_for_user(&$user, $more=array()){
 
 		$defaults = array(
-			'when' => 'upcoming',
+			'when' => null,
 			'where' => null,
 			'woeid' => null,
 			'exclude_trip' => null,

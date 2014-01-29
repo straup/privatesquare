@@ -7,7 +7,10 @@
 	login_ensure_loggedin();
 
 	$user = $GLOBALS['cfg']['user'];
-	$more = array();
+
+	$more = array(
+		'when' => 'upcoming',
+	);
 
 	if ($page = get_int32("page")){
 		$more['page'] = $page;
