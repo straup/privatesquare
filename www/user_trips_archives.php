@@ -7,6 +7,7 @@
 	login_ensure_loggedin();
 
 	$user = $GLOBALS['cfg']['user'];
+	$GLOBALS['smarty']->assign_by_ref("owner", $user);
 
 	$rsp = trips_stats_for_user($user);
 	$stats = $rsp['stats'];

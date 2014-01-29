@@ -208,7 +208,7 @@
 			$sql[] = "AND `departure` <= NOW()";
 		}
 
-		else if (($more['where']) && ($more['woeid'])){
+		if (($more['where']) && ($more['woeid'])){
 
 			$col = $more['where'] . '_id';
 
@@ -225,7 +225,7 @@
 			}
 		}
 
-		else if (($more['year']) && ($more['month'])){
+		if (($more['year']) && ($more['month'])){
 
 			$days = cal_days_in_month(CAL_GREGORIAN, $more['month'], $more['year']);
 
@@ -245,7 +245,7 @@
 			$sql[] = "AND ({$conditions})";
 		}
 
-		else if ($more['year']){
+		if ($more['year']){
 
 			$start = "{$more['year']}-01-01";
 			$end = "{$more['year']}-12-31";
@@ -263,7 +263,7 @@
 			$sql[] = "AND ({$conditions})";
 		}
 
-		else {
+		if ($more['when'] == 'upcoming'){
 			$sql[] = "AND `departure` >= NOW()";
 		}
 

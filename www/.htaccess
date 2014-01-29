@@ -145,6 +145,8 @@ RewriteRule ^user/([0-9]+)/trips/archives/?$					user_trips_archives.php?foursqu
 RewriteRule ^user/([0-9]+)/trips/archives/([0-9]+)(/page([0-9]+))?/?$		user_trips_archive.php?foursquare_id=$1&year=$2&page=$4&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/trips/archives/([0-9]+)/([0-9]+)(/page([0-9]+))?/?$	user_trips_archive.php?foursquare_id=$1&year=$2&month=$3&page=$5&%{QUERY_STRING}	[L]
 
+RewriteRule ^user/([0-9]+)/trips/archives/([0-9]+)/places/([0-9]+)(/page([0-9]+))?/?$	user_trips_archive_place.php?foursquare_id=$1&year=$2&woeid=$3&page=$5&%{QUERY_STRING}	[L]
+
 RewriteRule ^user/([0-9]+)/trips/places(/page([0-9]+))?/?$			user_trips_places.php?foursquare_id=$1&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/trips/places/([0-9]+)(/page([0-9]+))?/?$		user_trips_place.php?foursquare_id=$1&woeid=$2&page=$4&%{QUERY_STRING}	[L]
 

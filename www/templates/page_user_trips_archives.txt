@@ -3,13 +3,21 @@
 
 <div class="container">
 {foreach from=$stats item="details" key="year"}
+{capture assign="count_cities"}{$details.cities|@array_keys|@count}{/capture}
+
 <div class="row col-md-12 trips-archives-year">
 
-<h4><a href="">{$year|escape}</a>
+<h4><a href="{$owner|@urls_user}trips/archives/{$year|escape}/">{$year|escape}</a>
 {if $year==$current_year}
-<small>{if $details.trips==1}you've been on <span class="hey-look">one trip</span> so far in {$year|escape}{else}you've been on or scheduled <span class="hey-look">{$details.trips|@number_format|escape} trips</span> so far{/if}</small>
+
+{if $count_cities==1}
+<small>{if $details.trips==1}you've been on <span class="hey-look">one trip</span> so far in {$year|escape}{else}you've been on or scheduled <span class="hey-look">{$details.trips|@number_format|escape} trips</span> to <span class="hey-look">{$count_cities|@number_format|@escape} cities</span> so far this year{/if}</small>
 {else}
-{capture assign="count_cities"}{$details.cities|@array_keys|@count}{/capture}
+<small>{if $details.trips==1}you've been on <span class="hey-look">one trip</span> so far in {$year|escape}{else}you've been on or scheduled <span class="hey-look">{$details.trips|@number_format|escape} trips</span> to <span class="hey-look">{$count_cities|@number_format|@escape} cities</span> so far this year{/if}</small>
+{/if}
+
+{else}
+
 {if $count_cities==1}
 <small>{if $details.trips==1}you went on <span class="hey-look">one trip</span> in {$year|escape}{else}you went on <span class="hey-look">{$details.trips|@number_format|escape} trips</span> to <span class="hey-look">one city</span>{/if}</small>
 {else}
@@ -21,8 +29,18 @@
 
 <ul class="list-inline">
 {foreach from=$details.cities item="count" key="woeid" name="cities"}
-<li><a href="">{$localities.$woeid.woe_name|escape}</a> <small>{if $count ==1}{elseif $count==2}you were here <span class="hey-look">twice</span>{else}you were here <span class="hey-look">{$count|@number_format|escape} times</span>{/if}{if !$smarty.foreach.cities.last} and {/if}</small></li>
+{if $year==$current_year}
+
+<li><a href="{$owner|@urls_user}trips/archives/{$year|escape}/places/{$woeid|escape}/">{$localities.$woeid.woe_name|escape}</a> <small>{if $count ==1}{elseif $count==2}you will have crossed paths <span class="hey-look">twice</span>{else}you will have crossed paths <span class="hey-look">{$count|@number_format|escape} times</span>{/if}{if !$smarty.foreach.cities.last} and {/if}</small></li>
+
+{else}
+
+<li><a href="{$owner|@urls_user}trips/archives/{$year|escape}/places/{$woeid|escape}/">{$localities.$woeid.woe_name|escape}</a> <small>{if $count ==1}{elseif $count==2}you were here <span class="hey-look">twice</span>{else}you were here <span class="hey-look">{$count|@number_format|escape} times</span>{/if}{if !$smarty.foreach.cities.last} and {/if}</small></li>
+
+{/if}
+
 {/foreach}
+
 </ul>
 
 </div>
