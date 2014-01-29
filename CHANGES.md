@@ -26,17 +26,25 @@ Add the following to your `config.php` file:
 	# Trips
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 
+# 2.1.2
+
+Merged in to `master` 2014-01-29
+
+## In broad strokes
+
+Added `stateofmind` venue for "on a bus".
+
 # 2.1.1
 
 Merged in to `master` 2014-01-16
 
 ## In broad strokes
 
-Addes `stateofmind` venues for "on a highway" and "at an intersection".
+Added `stateofmind` venues for "on a highway" and "at an intersection".
 
 # 2.1
 
-Merged in to `master` 20140107.
+Merged in to `master` 2014-01-07.
 
 ## In broad strokes
 
@@ -56,7 +64,7 @@ Run `bin/backfill_set_privatesquare_checkins_timezones.php`
 
 # 2.03
 
-Merged in to `master` 20140105.
+Merged in to `master` 2014-01-05.
 
 The `backfill-two-dot-oh` which fixed the `bin/sync-foursquare.php` script to
 work with all the changes introduced in version 2.0.
@@ -71,7 +79,7 @@ work with all the changes introduced in version 2.0.
 
 # 2.0
 
-Merged in to `master` 20131207.
+Merged in to `master` 2013-12-07.
 
 ## In broad strokes
 
