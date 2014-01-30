@@ -115,12 +115,12 @@
 &#8212; you've been here <span class="hey-look">{$row.count|@number_format|escape} times</span>
 {/if}
 {/if}
-{if 0}
+
 {foreach from=$row.checkins item="ch_row" name="state"}
 {capture assign="status_id"}{$ch_row.status_id}{/capture}
-{if $status_id}<span class="x-hey-look" style="font-style:italic;">{$status_id|@privatesquare_checkins_status_id_to_label|escape}</span>{/if}
+{if $status_id and $status_id != 1}<span class="x-hey-look" style="font-style:italic;">{$status_id|@privatesquare_checkins_status_id_to_label|escape}</span>{/if}
 {/foreach}
-{/if}
+
 </small>
 </li>
 {/foreach}

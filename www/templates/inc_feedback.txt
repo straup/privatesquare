@@ -1,0 +1,4 @@
+<div class="row text-center alert alert-info" id="feedback">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+{$feedback|escape}
+</div>

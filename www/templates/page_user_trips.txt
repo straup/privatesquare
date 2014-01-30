@@ -1,6 +1,10 @@
 {capture assign="page_title"}trips{/capture}
 {include file="inc_head.txt"}
 
+{if $smarty.get.deleted}
+{include file="inc_feedback.txt" feedback="Okay, you trip has been deleted"}
+{/if}
+
 <div class="row">
      <h3>Current or upcoming trips <small><a href="{$cfg.user|@urls_user}trips/add/">Add a trip</a></small></h3>
 </div>

@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS `TripsCalendars`;
+
+CREATE TABLE `TripsCalendars` (
+  `id` BIGINT(20) UNSIGNED NOT NULL,
+  `hash` CHAR(32) NOT NULL,
+  `user_id` INT(11) UNSIGNED NOT NULL,
+  `locality_id` INT(11) UNSIGNED NOT NULL,
+  `created` INT(11) UNSIGNED NOT NULL,
+  `expires` INT(11) UNSIGNED NOT NULL,
+  `deleted` INT(11) UNSIGNED NOT NULL,
+  `lastmodified` INT(11) UNSIGNED NOT NULL,
+  `note` TEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `by_hash` (`hash`),
+  KEY `by_user_created` (`user_id`, `created`),
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
