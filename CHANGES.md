@@ -26,6 +26,14 @@ Add the following to your `config.php` file:
 	# Trips
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 
+# 2.1.3
+
+Merged in to `master` 2014-02-01
+
+## In broad strokes
+
+Added `stateofmind` venue for "on a zeppelin".
+
 # 2.1.2
 
 Merged in to `master` 2014-01-29
