@@ -5,6 +5,8 @@ CREATE TABLE `TripsCalendars` (
   `hash` CHAR(32) NOT NULL,
   `user_id` INT(11) UNSIGNED NOT NULL,
   `locality_id` INT(11) UNSIGNED NOT NULL,
+  `include_notes` TINYINT(3) UNSIGNED NOT NULL,
+  `include_past` TINYINT(3) UNSIGNED NOT NULL,
   `created` INT(11) UNSIGNED NOT NULL,
   `expires` INT(11) UNSIGNED NOT NULL,
   `deleted` INT(11) UNSIGNED NOT NULL,
@@ -12,5 +14,5 @@ CREATE TABLE `TripsCalendars` (
   `note` TEXT NOT NULL,
   PRIMARY KEY (`id`),
   KEY `by_hash` (`hash`),
-  KEY `by_user_created` (`user_id`, `created`),
+  KEY `by_user_created` (`user_id`, `created`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;
