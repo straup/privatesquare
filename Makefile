@@ -30,3 +30,6 @@ php-ini:
 	/usr/bin/env grep php_value ./www/.htaccess | sed 's/^php_value \([a-z_]*\) \([a-z]*\)/\1 = \2/' >> www/php.ini
 	echo "; php_flag settings" >> www/php.ini
 	/usr/bin/env grep php_flag ./www/.htaccess | sed 's/^php_flag \([a-z_]*\) \([a-z]*\)/\1 = \2/' >> www/php.ini
+
+prune:
+	git gc --aggressive --prune
