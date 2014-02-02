@@ -24,7 +24,9 @@ basis by running
 Add the following to your `config.php` file:
 
 	# Trips
+
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
+	$GLOBALS['cfg']['enable_feature_calendars'] = 1;
 
 # 2.1.3
 

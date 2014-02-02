@@ -91,6 +91,11 @@
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
+	# Trips
+
+	$GLOBALS['cfg']['enable_feature_trips'] = 1;
+	$GLOBALS['cfg']['enable_feature_trips_calendars'] = 1;
+
 	# See also: 'Configuring fancy stuff – sending check-ins to Little Printer'
 	# in the README.md file for details
 
