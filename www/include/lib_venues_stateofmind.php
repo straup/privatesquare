@@ -19,6 +19,7 @@
 			array('id' => '51866911', 'name' => 'in transit'),
 			array('id' => '68234601', 'name' => 'in a meeting'),
 			array('id' => '68234603', 'name' => 'on a telco'),
+			array('id' => '68247671', 'name' => 'watching sportsball'),
 			array('id' => '68247553', 'name' => 'hotel coffee'),
 			array('id' => '52204033', 'name' => 'wish you were here'),
 			array('id' => '52204035', 'name' => 'kill me now'),
