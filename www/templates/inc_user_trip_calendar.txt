@@ -1,5 +1,5 @@
-<div id="calendar">
-<form class="form" role="role" id="add-calendar" data-add-calendar-crumb="{$add_calendar_crumb|escape}">
+<div>
+<form class="form" role="role" id="calendar" data-calendar-crumb="{$add_calendar_crumb|escape}"{if $calendar} data-calendar-id="{$calendar.id|escape}"{/if}>
 
 {if $calendar}
 <div>
@@ -29,20 +29,20 @@
 </div>
 
 <div class="form-group">
-<label for="add-calendar-include-notes">Include trip notes
-<input type="checkbox" name="add-calendar-include-notes" id="add-calendar-include-notes" {if $calendar and $calendar.include_notes} checked="true"{/if}/>
+<label for="calendar-include-notes">Include trip notes
+<input type="checkbox" name="calendar-include-notes" id="calendar-include-notes" {if $calendar and $calendar.include_notes} checked="true"{/if}/>
 </label>
 </div>
 
 <div class="form-group">
-<label for="add-calendar-past-trips">Include past trips
-<input type="checkbox" name="add-calendar-past-trips" id="add-calendar-past-trips" {if $calendar and $calendar.include_past} checked="true"{/if}/>
+<label for="calendar-past-trips">Include past trips
+<input type="checkbox" name="calendar-past-trips" id="calendar-past-trips" {if $calendar and $calendar.include_past} checked="true"{/if}/>
 </label>
 </div>
 
 <div class="form-group">
-<label for="add-calendar-notes">Notes</label>
-<textarea id="add-calendar-notes" name="add-calendar-notes">{if $calendar}{$calendar.note|@escape}{/if}</textarea>
+<label for="calendar-notes">Notes</label>
+<textarea id="calendar-notes" name="calendar-notes">{if $calendar}{$calendar.note|@escape}{/if}</textarea>
 </div>
 
 <div class="form-group">

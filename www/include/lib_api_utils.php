@@ -40,4 +40,14 @@
 	}
 	
 	##############################################################################
-?>
+
+	function api_utils_ensure_is_enabled($features){
+
+		if (! features_is_enabled($features)){
+			api_output_error(502, "This feature is currently disabled");
+		}
+	}
+
+	##############################################################################
+
+	# the end

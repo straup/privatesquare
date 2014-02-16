@@ -70,6 +70,15 @@
 			"library": "api_privatesquare_trips_calendars"
 		},
 
+		"privatesquare.trips.calendars.deleteCalendar": {
+			"documented": 0,
+			"enabled": 1,
+			"requires_auth": 1,
+			"requires_crumb": 1,
+			"crumb_ttl": 600,
+			"library": "api_privatesquare_trips_calendars"
+		},
+
 		"privatesquare.venues.create": {
 			"documented": 0,
 			"enabled": 1,
