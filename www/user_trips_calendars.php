@@ -23,6 +23,12 @@
 		$calendars[] = $row;
 	}
 
+	$status_map = trips_travel_status_map();
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
+	$add_crumb = crumb_generate("api", "privatesquare.trips.calendars.addCalendar");
+	$GLOBALS['smarty']->assign("add_calendar_crumb", $add_crumb);
+
 	$GLOBALS['smarty']->display("page_user_trips_calendars.txt");
 	exit();
 

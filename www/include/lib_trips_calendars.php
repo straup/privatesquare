@@ -1,5 +1,7 @@
 <?php
 
+	loadlib("random");
+
 	# See all of this? I'm still sorting out federating the user-y bits...
 	# (20140130/straup)
 
