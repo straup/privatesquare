@@ -1,6 +1,17 @@
 <div id="calendar">
 <form class="form" role="role" id="add-calendar" data-add-calendar-crumb="{$add_calendar_crumb|escape}">
 
+{if $calendar}
+<div>
+{$calendar.created|@date_format|escape}
+</div>
+
+<div>
+<a href="{$cfg.abs_root_url}fix/me/{$calendar.hash|escape}/">{$calendar.hash|escape}</a>
+</div>
+
+{/if}
+
 <div class="form-group">
 <label for="locality">For a specific city</label>
 
@@ -19,23 +30,28 @@
 
 <div class="form-group">
 <label for="add-calendar-include-notes">Include trip notes
-<input type="checkbox" name="add-calendar-include-notes" id="add-calendar-include-notes" />
+<input type="checkbox" name="add-calendar-include-notes" id="add-calendar-include-notes" {if $calendar and $calendar.include_notes} checked="true"{/if}/>
 </label>
 </div>
 
 <div class="form-group">
 <label for="add-calendar-past-trips">Include past trips
-<input type="checkbox" name="add-calendar-past-trips" id="add-calendar-past-trips" />
+<input type="checkbox" name="add-calendar-past-trips" id="add-calendar-past-trips" {if $calendar and $calendar.include_past} checked="true"{/if}/>
 </label>
 </div>
 
 <div class="form-group">
 <label for="add-calendar-notes">Notes</label>
-<textarea id="add-calendar-notes" name="add-calendar-notes"></textarea>
+<textarea id="add-calendar-notes" name="add-calendar-notes">{if $calendar}{$calendar.note|@escape}{/if}</textarea>
 </div>
 
 <div class="form-group">
+{if $calendar}
+<button type="submit" class="btn btn-sm">Edit this calendar</button>
+<button type="submit" class="btn btn-sm pull-right">Delete this calendar</button>
+{else}
 <button type="submit" class="btn btn-sm">Add this calendar</button>
+{/if}
 </div>
 
 </form>

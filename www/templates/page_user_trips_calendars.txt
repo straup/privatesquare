@@ -13,7 +13,7 @@
 </tr>
 {foreach from=$calendars item="row"}
 <tr>
-<td><a href="{$cfg.abs_root_url}me/calendars/{$row.id|escape}/">{$row.id|escape}</a></td>
+<td><a href="{$cfg.abs_root_url}me/trips/calendars/{$row.id|escape}/">{$row.id|escape}</a></td>
 <td><a href="{$cfg.abs_root_url}fix/me/{$row.hash|escape}/">{$row.hash|escape}</a></td>
 <td>{if $row.locality_id}FIX ME{else}&#8212;{/if}</td>
 <td>{if $row.include_notes}yes{else}no{/if}</td>

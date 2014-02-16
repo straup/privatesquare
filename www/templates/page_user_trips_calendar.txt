@@ -1,3 +1,10 @@
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
+{/capture}
 {include file="inc_head.txt"}
+
+{$calendar|@dumper}
+{include file="inc_user_trip_calendar.txt"}
 
 {include file="inc_foot.txt"}
