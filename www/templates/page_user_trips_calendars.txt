@@ -1,62 +1,28 @@
-{capture assign="extra_head"}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
-{/capture}
 {include file="inc_head.txt"}
 
-<ul>
-<li><a href="{$cfg.abs_root_url}me/trips/calendars/add/">Add a new calendar</a></li>
-</ul>
-
-<div>
-<form class="form" role="role" id="add-calendar" data-add-calendar-crumb="{$add_calendar_crumb|escape}">
-
-<div class="form-group">
-<label for="locality">For a specific city</label>
-
-</div>
-
-<div class="form-group">
-
-<label for="trip_status">What kinds of trip</label>
-<select id="trip_status" name="trip_status">
-<option value="-1">any type of trip</option>
-{foreach from=$status_map item="label" key="id"}
-<option value="{$id|escape}">{$label|escape}</option>
+{if $calendars|@count}
+<table class="table">
+<tr>
+<th>ID</th>
+<th>URL</th>
+<th>City</th>
+<th>Include trip notes</th>
+<th>Created</th>
+<th>Expires</th>
+<th>Note</th>
+</tr>
+{foreach from=$calendars item="row"}
+<tr>
+<td><a href="{$cfg.abs_root_url}me/calendars/{$row.id|escape}/">{$row.id|escape}</a></td>
+<td><a href="{$cfg.abs_root_url}fix/me/{$row.hash|escape}/">{$row.hash|escape}</a></td>
+<td>{if $row.locality_id}FIX ME{else}&#8212;{/if}</td>
+<td>{if $row.include_notes}yes{else}no{/if}</td>
+<td>{$row.created|@date_format|escape}</td>
+<td>{if $row.expires}{$row.expires|@date_format|escape}{else}&#8212;{/if}</td>
+<td>{if $row.note}{$row.note|escape}{else}&#8212;{/if}</td>
+</tr>
 {/foreach}
-</select>
-</div>
-
-<div class="form-group">
-<label for="add-calendar-include-notes">Include trip notes
-<input type="checkbox" name="add-calendar-include-notes" id="add-calendar-include-notes" />
-</label>
-</div>
-
-<div class="form-group">
-<label for="add-calendar-past-trips">Include past trips
-<input type="checkbox" name="add-calendar-past-trips" id="add-calendar-past-trips" />
-</label>
-</div>
-
-<div class="form-group">
-<label for="add-calendar-notes">Notes</label>
-<textarea id="add-calendar-notes" name="add-calendar-notes"></textarea>
-</div>
-
-<div class="form-group">
-<button type="submit" class="btn btn-sm">Add this calendar</button>
-</div>
-
-</form>
-</div>
-
-<script type="text/javascript">
-{literal}
-$(document).ready(function(){
-	privatesquare_trips_calendars_add_init();
-});
-{/literal}
-</script>
+</table>
+{/if}
 
 {include file="inc_foot.txt"}

@@ -13,22 +13,13 @@
 	$user = $GLOBALS['cfg']['user'];
 	$GLOBALS['smarty']->assign_by_ref("owner", $user);
 
-	$more = array();
-
-	$rsp = trips_calendars_get_for_user($user, $more);	
-	$calendars = array();
-
-	foreach ($rsp['rows'] as $row){
-		trips_calendars_inflate_calendar($row);
-		$calendars[] = $row;
-	}
-
-	$GLOBALS['smarty']->assign_by_ref("calendars", $calendars);
-
 	$status_map = trips_travel_status_map();
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 
-	$GLOBALS['smarty']->display("page_user_trips_calendars.txt");
+	$add_crumb = crumb_generate("api", "privatesquare.trips.calendars.addCalendar");
+	$GLOBALS['smarty']->assign("add_calendar_crumb", $add_crumb);
+
+	$GLOBALS['smarty']->display("page_user_trips_calendars_add.txt");
 	exit();
 
 ?>
