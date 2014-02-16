@@ -36,7 +36,7 @@
 	function trips_calendars_get_for_user(&$user, $more=array()){
 
 		$enc_user = AddSlashes($user['id']);
-		$sql = "SELECT * FROM TripsCalendars WHERE user_id='{$enc_user}' ORDER BY created DESC";
+		$sql = "SELECT * FROM TripsCalendars WHERE user_id='{$enc_user}' AND deleted=0 ORDER BY created DESC";
 
 		$rsp = db_fetch($sql, $more);
 		return $rsp;

@@ -7,7 +7,7 @@ js:
 
 	java -Xmx64m -jar lib/google-compiler/compiler-20100616.jar --js www/javascript/privatesquare.deferred.js > www/javascript/privatesquare.deferred.min.js
 
-	java -Xmx64m -jar lib/google-compiler/compiler-20100616.jar --js www/javascript/privatesquare.trips.js > www/javascript/privatesquare.trips.min.js
+	java -Xmx64m -jar lib/google-compiler/compiler-20100616.jar --js www/javascript/privatesquare.trips.js --js www/javascript/privatesquare.trips.calendars.js > www/javascript/privatesquare.trips.min.js
 
 	# Need to sort out warnings in both select2.js and bootstrap.datepicker.js (20140118/straup)	
 	# java -Xmx64m -jar lib/google-compiler/compiler-20100616.jar --js www/javascript/select2.js > www/javascript/select2.min.js

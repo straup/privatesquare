@@ -27,6 +27,12 @@
 
 	$GLOBALS['smarty']->assign_by_ref("calendar", $calendar);
 
+	$edit_crumb = crumb_generate("api", "privatesquare.trips.calendars.editCalendar");
+	$GLOBALS['smarty']->assign("edit_crumb", $edit_crumb);
+
+	$delete_crumb = crumb_generate("api", "privatesquare.trips.calendars.deleteCalendar");
+	$GLOBALS['smarty']->assign("delete_crumb", $delete_crumb);
+
 	$GLOBALS['smarty']->display("page_user_trips_calendar.txt");
 	exit();
 ?>

@@ -39,6 +39,26 @@ function privatesquare_trips_calendars_edit_init(){
 	return false;
     });
 
+    $("#calendar-delete").click(function(){
+
+	var btn = $(this);
+	var id = btn.attr("data-calendar-id");
+	var crumb = btn.attr("data-calendar-delete-crumb");
+
+	var args = {
+	    'id': id,
+	    'crumb': crumb
+	};
+
+	console.log(args);
+
+	var method = 'privatesquare.trips.calendars.deleteCalendar';
+
+	privatesquare_api_call(method, args, _privatesquare_trips_calendars_delete_onsuccess);
+
+	privatesquare_set_status("Deleting this calendar...");
+	return false;
+    });
 }
 
 function privatesquare_trips_calendars_gather_args(){
@@ -57,7 +77,7 @@ function privatesquare_trips_calendars_gather_args(){
 	var args = {
 	    'note': note,
 	    'include_notes': include_notes,
-	    'past_trips': past_trips,
+	    'past_trips': past_trips
 	};
 
 	return args;
@@ -65,4 +85,19 @@ function privatesquare_trips_calendars_gather_args(){
 
 function _privatesquare_trips_calendars_add_onsuccess(rsp){
     console.log(rsp);
+}
+
+function _privatesquare_trips_calendars_edit_onsuccess(rsp){
+    console.log(rsp);
+}
+
+function _privatesquare_trips_calendars_delete_onsuccess(rsp){
+
+    if (rsp['stat'] != 'ok'){
+	privatesquare_api_error(rsp);
+	return false;
+    }
+
+    var loc = privatesquare_abs_root_url() + 'me/trips/calendars/?deleted=1';
+    location.href = loc;
 }

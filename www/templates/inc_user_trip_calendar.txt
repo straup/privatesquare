@@ -48,7 +48,6 @@
 <div class="form-group">
 {if $calendar}
 <button type="submit" class="btn btn-sm">Edit this calendar</button>
-<button type="submit" class="btn btn-sm pull-right">Delete this calendar</button>
 {else}
 <button type="submit" class="btn btn-sm">Add this calendar</button>
 {/if}
