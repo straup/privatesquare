@@ -50,13 +50,10 @@ function privatesquare_trips_calendars_edit_init(){
 	    'crumb': crumb
 	};
 
-	console.log(args);
-
 	var method = 'privatesquare.trips.calendars.deleteCalendar';
-
 	privatesquare_api_call(method, args, _privatesquare_trips_calendars_delete_onsuccess);
 
-	privatesquare_set_status("Deleting this calendar...");
+	privatesquare_set_status("Deleting your calendar now.");
 	return false;
     });
 }
