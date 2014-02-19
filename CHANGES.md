@@ -28,6 +28,22 @@ Add the following to your `config.php` file:
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 	$GLOBALS['cfg']['enable_feature_calendars'] = 1;
 
+# 2.1.5
+
+Merged in to `master` 2014-02-15
+
+## In broad strokes
+
+Added `stateofmind` venue for "watching sportsball".
+
+# 2.1.4
+
+## In broad strokes
+
+Merged in to `master` 2014-02-10
+
+Added `stateofmind` venue for "hotel coffee".
+
 # 2.1.3
 
 Merged in to `master` 2014-02-01
