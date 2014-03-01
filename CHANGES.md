@@ -1,3 +1,13 @@
+# 2.1.6
+
+Merged in to `master` 2014-03-01
+
+## In broad strokes
+
+* Removed appcache/manifest Apache configs
+* Upgrade to latest version of lib_filter.php
+* Upgrade Smarty 2.6.28
+
 # 2.1.5
 
 Merged in to `master` 2014-02-15
