@@ -42,7 +42,9 @@
 		$user = users_get_by_id($user_id);
 	}
 
-	# token swap stuff - use with care and paranoia
+	# Token swap stuff - use with care and paranoia
+	# See comments in config.php.example for details.
+	# (20140302/straup)
 
 	else if (features_is_enabled("oauth_token_swap")){
 
@@ -59,7 +61,6 @@
 		}
 
 		$foursquare_id = $rsp['rsp']['user']['id'];
-		$username = $rsp['rsp']['user']['firstName'];
 		$email = $rsp['rsp']['user']['contact']['email'];
 
 		if (! $email){
@@ -79,6 +80,14 @@
 		$foursquare_user = foursquare_users_get_by_user_id($user['id']);
 
 		if (! $foursquare_user){
+			$GLOBALS['error']['token_swap'] = 1;
+			$GLOBALS['smarty']->display("page_auth_callback_foursquare_oauth.txt");
+			exit();
+		}
+
+		# No really, let's be strict about things.
+
+		if ($foursquare_user['foursquare_id'] != $foursquare_id){
 			$GLOBALS['error']['token_swap'] = 1;
 			$GLOBALS['smarty']->display("page_auth_callback_foursquare_oauth.txt");
 			exit();
