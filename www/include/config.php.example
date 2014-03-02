@@ -221,6 +221,18 @@
 	$GLOBALS['cfg']['enable_feature_account_delete'] = 1;
 	$GLOBALS['cfg']['enable_feature_password_retrieval'] = 1;
 
+	# OAuth token swapping - use this with extreme caution and paranoia.
+	# This allows a user to login in and update an mismatched oauth token
+	# that comes back from foursquare by using the token to lookup a user
+	# via the foursquare api and to then check for a corresponding local
+	# user by the email address (included in the foursquare response). If
+	# a match is found then the oauth token associated with the local user
+	# (and foursquare_user) will be updated. You might want to do this if
+	# you need to migrate your privatesquare instance from one domain to
+	# another and you need to create a new foursquare application.
+	# (20140302/straup)
+
+	$GLOBALS['cfg']['enable_feature_oauth_token_swap'] = 0;
 
 	#
 	# enable this flag to show a full call chain (instead of just the
