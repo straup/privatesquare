@@ -6,6 +6,8 @@ function privatesquare_trips_calendars_add_init(){
 	var crumb = form.attr("data-calendar-crumb");
 
 	var args = privatesquare_trips_calendars_gather_args();
+	args['crumb'] = crumb;
+
 	console.log(args);
 
 	var method = 'privatesquare.trips.calendars.addCalendar';
