@@ -2,16 +2,18 @@
 BEGIN:VEVENT
 BEGIN:VVENUE
 {* timezone *}
-CREATED:{$checkin.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
-UID:{$checkin.id|escape}
-NAME:{$checkin.venue_name|escape}
-DTSTAMP:{$checkin.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
-{* TO DO: inflate locality *}
-{if $checkin.venue.locality}LOCATION:{$checkin.venue.locality.name|escape}{/if}
-GEO:{$checkin.latitude|escape};{$checkin.longitude|escape}
-X-PRIVATESQUARE-PROVIDER-VENUE-ID:{$checkin.provider_venue_id|escape}
-X-PRIVATESQUARE-PROVIDER-ID:{$checkin.provider_id|escape}
-X-PRIVATESQUARE-STATUS:{$checkin.status_name|escape}
+CREATED:{$vevent.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
+UID:{$vevent.id|escape}
+NAME:{$vevent.name|escape}
+DTSTAMP:{$vevent.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
+{if $vevent.location}LOCATION:{$vevent.location|escape}
+{/if}{* note the newline *}
+GEO:{$vevent.latitude|escape};{$vevent.longitude|escape}
+{if 0}
+X-PRIVATESQUARE-PROVIDER-VENUE-ID:{$vevent.provider_venue_id|escape}
+X-PRIVATESQUARE-PROVIDER-ID:{$vevent.provider_id|escape}
+X-PRIVATESQUARE-STATUS:{$vevent.status_name|escape}
+{/if}
 END:VVENUE
 END:VEVENT
 

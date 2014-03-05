@@ -152,6 +152,8 @@ RewriteRule ^user/([0-9]+)/trips/([0-9]+)/checkins(/page([0-9]+))?/?$		user_trip
 RewriteRule ^user/([0-9]+)/trips/calendars(/page([0-9]+))?/?$			user_trips_calendars.php?foursquare_id=$1&page=$3&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/trips/calendars/add/?$				user_trips_calendars_add.php?foursquare_id=$1&%{QUERY_STRING}	[L]
 RewriteRule ^user/([0-9]+)/trips/calendars/([0-9]+)/?$				user_trips_calendar.php?foursquare_id=$1&id=$2&%{QUERY_STRING}	[L]
+
+# Include user ID at all? (20140305/straup)
 RewriteRule ^user/([0-9]+)/trips/calendars/([a-f0-9]+).ics$			user_trips_calendar_ics.php?foursquare_id=$1&hash=$2&%{QUERY_STRING}	[L]
 
 # See this. It's the *last* rule because it basically catches everything

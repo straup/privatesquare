@@ -48,7 +48,22 @@
 
 		$user = users_get_by_id($calendar['user_id']);
 
-		# get trips here...
+		$more = array(
+			'when' => 'upcoming',
+			'per_page' => 100,
+		);
+
+		if ($woeid = $calendar['locality']){
+			$more['where'] = $locality;
+			$more['woeid'] = $woeid;
+		}
+
+		if ($calendar['include_past']){
+			# FIX ME
+		}
+
+		$rsp = trips_get_for_user($user, $more);
+		return $rsp;
 	}
 
 	########################################################################

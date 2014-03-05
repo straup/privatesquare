@@ -11,7 +11,10 @@
 	login_ensure_loggedin();
 
 	$user = $GLOBALS['cfg']['user'];
+	$foursquare_user = foursquare_users_get_by_user_id($user['id']);
+
 	$GLOBALS['smarty']->assign_by_ref("owner", $user);
+	$GLOBALS['smarty']->assign_by_ref("foursquare_user", $foursquare_user);
 
 	$more = array();
 

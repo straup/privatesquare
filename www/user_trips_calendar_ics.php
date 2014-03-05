@@ -10,8 +10,8 @@
 		"trips", "trips_calendars"
 	));
 
-	$id = get_str("calendar_id");
-	$calendar = trips_calendars_get_by_id($id);
+	$hash = get_str("hash");
+	$calendar = trips_calendars_get_by_hash($hash);
 
 	if (! $calendar){
 		error_404();
@@ -25,6 +25,8 @@
 		error_403();
 	}
 
+	# TO DO: check user ID here?
+
 	$rsp = trips_calendars_get_trips($calendar);
 	$trips = array();
 
@@ -35,7 +37,7 @@
 
 	# set correct ICS headers here
 
-	$fh = "fix me";
+	$fh = fopen('php://output', 'w');
 
 	trips_ics_export($trips, $fh);
 	exit();
