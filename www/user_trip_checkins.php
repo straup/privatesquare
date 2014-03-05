@@ -50,6 +50,7 @@
 	$more = array(
 		'locality' => $loc['woeid'],
 		'when' => $when,
+		'inflate_locality' => 1,
 	);
 
 	if ($page = get_int32("page")){
