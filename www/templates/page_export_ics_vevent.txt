@@ -8,6 +8,12 @@ UID:{$vevent.id|escape}
 {/if}
 {if $vevent.end}DTEND{if $vevent.tzid};TZID={$vevent.tzid|escape}{/if}:{$vevent.end|escape}
 {/if}
+{if 0}
+{if $vevent.start}DTSTART;VALUE=DATE:{$vevent.start|escape}
+{/if}
+{if $vevent.end}DTEND;VALUE=DATE:{$vevent.end|escape}
+{/if}
+{/if}
 {if $vevent.location}LOCATION:{$vevent.location|escape}
 {/if}{* note the newline *}
 GEO:{$vevent.latitude|escape};{$vevent.longitude|escape}

@@ -38,6 +38,7 @@
 	header("Content-type: text/calendar");
 	$fh = fopen('php://output', 'w');
 
+	# TO DO: calendar name?
 	# TO DO: reconcile with the other ICS export library...
 
 	trips_ics_export($trips, $fh);

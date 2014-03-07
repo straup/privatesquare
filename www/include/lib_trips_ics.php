@@ -40,8 +40,13 @@
 		$arrival = str_replace("-", "", $trip['arrival']);
 		$departure = str_replace("-", "", $trip['departure']);
 
-		# departure seems to need to be +1 day in order for
-		# ical to do the right thing - that or including time
+		# Yup. We're really doing this. Apparently it's required
+		# in the spec... (20140306/straup)
+
+		$dt = new DateTime($departure);
+		$dt->add(new DateInterval('P1D'));
+
+		$departure = $dt->format('Ymd');
 
 		$status_map = trips_travel_status_map();
 		$travel_map = trips_travel_type_map();
