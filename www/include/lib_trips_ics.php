@@ -1,5 +1,8 @@
 <?php
 
+	# https://tools.ietf.org/html/rfc5545
+	# http://www.kanzaki.com/docs/ical/vevent.html
+
 	########################################################################
 
 	function trips_ics_export(&$trips, $fh, $more=array()){
@@ -34,42 +37,55 @@
 	function trips_ics_to_vevent(&$trip){
 
 		$tz = timezones_get_by_woeid($trip['timezone_id']);
-		$tz = new DateTimeZone($tz['tzid']);
+		$tzid = $tz['tzid'];
 
-		$fmt = "Ymd\THis";
+		$arrival = str_replace("-", "", $trip['arrival']);
+		$departure = str_replace("-", "", $trip['departure']);
 
-		$start = str_replace("-", "", $trip['arrival']);
-		$start .= 'T00:00:00Z';
+		$status_map = trips_travel_status_map();
+		$travel_map = trips_travel_type_map();
 
-		$ts = strtotime($start);
-		$dt = new DateTime("@$ts");
-		$dt->setTimezone($tz);
+		$status = $status_map[$trip['status_id']];
 
-		$start = $dt->format($fmt);
-
-		$end = str_replace("-", "", $trip['departure']);
-		$end .= 'T23:59:59Z';
-
-		$ts = strtotime($end);
-		$dt = new DateTime("@$ts");
-		$dt->setTimezone($tz);
-
-		$end = $dt->format($fmt);
+		$status = str_replace(" ", "", $status);
+		$status = strtoupper($status);
 
 		$event = array(
 			'id' => "x-urn:privatesquare:trip:{$trip['id']}",
 			'created' => $trip['created'],
-			'name' => 'trip',
+			'summary' => "trip #{$trip['id']}",
 			'latitude' => $trip['latitude'],
 			'longitude' => $trip['longitude'],
-			'start' => $start,
-			'end' => $end,
+			'start' => $arrival,
+			'end' => $departure,
+			'tzid' => $tzid,
+			'status' => $status,
 		);
 
 		if ($trip['locality']){
-			$event['name'] = $trip['locality']['woe_name'];
+			$event['summary'] = $trip['locality']['woe_name'];
 			$event['location'] = $trip['locality']['name'];
 		}
+
+		$description = array(
+			$status_map[$trip['status_id']],
+		);
+
+		if ($trip['note']){
+			$description[] = $trip['note'];
+		}
+
+		/*
+		if ($id = $trip['arrive_by_id']){
+			$description[] = "arriving by {$travel_map[$id]}";
+		}
+
+		if ($id = $trip['depart_by_id']){
+			$description[] = "departing by {$travel_map[$id]}";
+		}
+		*/
+
+		$event['description'] = implode("\\n\\n", $description);
 
 		# dumper($trip);
 		# dumper($event);

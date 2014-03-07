@@ -10,7 +10,7 @@
 		"trips", "trips_calendars"
 	));
 
-	$hash = get_str("hash");
+	$hash = get_str("c");
 	$calendar = trips_calendars_get_by_hash($hash);
 
 	if (! $calendar){
@@ -35,9 +35,10 @@
 		$trips[] = $row;
 	}
 
-	# set correct ICS headers here
-
+	header("Content-type: text/calendar");
 	$fh = fopen('php://output', 'w');
+
+	# TO DO: reconcile with the other ICS export library...
 
 	trips_ics_export($trips, $fh);
 	exit();
