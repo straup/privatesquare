@@ -26,18 +26,19 @@ function privatesquare_trips_calendars_edit_init(){
 
     $("#calendar").submit(function(){
 
-	console.log("hi");
-	return false;
-
 	var form = $("#calendar");
 	var crumb = form.attr("data-calendar-crumb");
 
 	var args = privatesquare_trips_calendars_gather_args();
+	args['crumb'] = crumb;
+
 	console.log(args);
+	console.log('do edit here...');
+	return false;
 
-	var method = 'privatesquare.trips.calendars.deleteCalendar';
+	var method = 'privatesquare.trips.calendars.editCalendar';
 
-	privatesquare_api_call(method, args, _privatesquare_trips_calendars_delete_onsuccess);
+	privatesquare_api_call(method, args, _privatesquare_trips_calendars_edit_onsuccess);
 	return false;
     });
 

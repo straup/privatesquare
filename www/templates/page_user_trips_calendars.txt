@@ -7,6 +7,9 @@
 <div class="row">
 {if $calendars|@count}
 
+{* TO DO: mobile... *}
+
+<div class="table-responsive">
 <table class="table">
 <tr>
 <th>ID</th>
@@ -33,6 +36,7 @@
 </tr>
 {/foreach}
 </table>
+</div>
 
 {else}
 <p>You haven't created any calendars yet.</p>
