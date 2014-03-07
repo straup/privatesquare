@@ -32,8 +32,6 @@
 
 	########################################################################
 
-	# This is probably still wrong (20140305/straup)
-
 	function trips_ics_to_vevent(&$trip){
 
 		$tz = timezones_get_by_woeid($trip['timezone_id']);
@@ -41,6 +39,9 @@
 
 		$arrival = str_replace("-", "", $trip['arrival']);
 		$departure = str_replace("-", "", $trip['departure']);
+
+		# departure seems to need to be +1 day in order for
+		# ical to do the right thing - that or including time
 
 		$status_map = trips_travel_status_map();
 		$travel_map = trips_travel_type_map();
