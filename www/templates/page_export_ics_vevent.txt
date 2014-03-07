@@ -1,11 +1,14 @@
 {* https://code.google.com/p/calagator/wiki/IcalLocation#iCal_GEO_property *}
 BEGIN:VEVENT
-BEGIN:VVENUE
 {* timezone *}
-CREATED:{$vevent.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
+CREATED:{$vevent.created|date_format:"%Y%m%dT%H%M%S"|escape}
 UID:{$vevent.id|escape}
 NAME:{$vevent.name|escape}
-DTSTAMP:{$vevent.created|date_format:"%Y%m%dT%H%M%S %Z"|escape}
+{if 0}DTSTAMP:{$vevent.created|date_format:"%Y%m%dT%H%M%S"|escape}{/if}
+{if $vevent.start}DTSTART:{$vevent.start|escape}
+{/if}
+{if $vevent.end}DTEND:{$vevent.end|escape}
+{/if}
 {if $vevent.location}LOCATION:{$vevent.location|escape}
 {/if}{* note the newline *}
 GEO:{$vevent.latitude|escape};{$vevent.longitude|escape}
@@ -14,7 +17,6 @@ X-PRIVATESQUARE-PROVIDER-VENUE-ID:{$vevent.provider_venue_id|escape}
 X-PRIVATESQUARE-PROVIDER-ID:{$vevent.provider_id|escape}
 X-PRIVATESQUARE-STATUS:{$vevent.status_name|escape}
 {/if}
-END:VVENUE
 END:VEVENT
 
 {* note the extra newline *}

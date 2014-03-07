@@ -4,3 +4,5 @@ VERSION:2.0
 X-WR-CALNAME:privatesquare
 PRODID:-//privatesquare//EN
 X-WR-TIMEZONE:{$timezone|escape}
+
+{* note the extra newline *}
