@@ -1,25 +1,23 @@
 {* https://code.google.com/p/calagator/wiki/IcalLocation#iCal_GEO_property *}
 BEGIN:VEVENT
+UID:{$vevent.id|escape}
 SUMMARY:{$vevent.summary|escape}
 DESCRIPTION:{$vevent.description|escape}
 CREATED:{$vevent.created|date_format:"%Y%m%dT%H%M%S"|escape}
-UID:{$vevent.id|escape}
+{if 0}
 {if $vevent.start}DTSTART{if $vevent.tzid};TZID={$vevent.tzid|escape}{/if}:{$vevent.start|escape}
 {/if}
 {if $vevent.end}DTEND{if $vevent.tzid};TZID={$vevent.tzid|escape}{/if}:{$vevent.end|escape}
 {/if}
-{if 0}
+{/if}
 {if $vevent.start}DTSTART;VALUE=DATE:{$vevent.start|escape}
 {/if}
 {if $vevent.end}DTEND;VALUE=DATE:{$vevent.end|escape}
 {/if}
-{/if}
 {if $vevent.location}LOCATION:{$vevent.location|escape}
-{/if}{* note the newline *}
-GEO:{$vevent.latitude|escape};{$vevent.longitude|escape}
-{if $vevent.status}
-STATUS:{$vevent.status|escape}
 {/if}
+GEO:{$vevent.latitude|escape};{$vevent.longitude|escape}
+STATUS:{$vevent.status|escape}
 END:VEVENT
 
 {* note the extra newline *}

@@ -35,11 +35,17 @@
 		$trips[] = $row;
 	}
 
-	header("Content-type: text/calendar");
+	$type = "text/calendar";
+
+	if (get_isset("inline")){
+		$type = "text/plain";
+	}
+
+	header("Content-Type: {$type}");
+
 	$fh = fopen('php://output', 'w');
 
 	# TO DO: calendar name?
-	# TO DO: reconcile with the other ICS export library...
 
 	trips_ics_export($trips, $fh);
 	exit();

@@ -72,6 +72,9 @@
 		<li><a href="{$cfg.abs_root_url}me/trips/add/">add a new trip</a></li>
 		<li><a href="{$cfg.abs_root_url}me/trips/">upcoming trips</a></li>
 		<li><a href="{$cfg.abs_root_url}me/trips/past/">past trips</a></li>
+		{if "trips_calendars"|@features_is_enabled}
+		<li><a href="{$cfg.abs_root_url}me/trips/calendars/">trip calendars</a></li>
+		{/if}
 		{/if}
 
 		<li class="divider"></li>

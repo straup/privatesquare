@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `TripsCalendars`;
 
 CREATE TABLE `TripsCalendars` (
   `id` BIGINT(20) UNSIGNED NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `hash` CHAR(32) NOT NULL,
   `user_id` INT(11) UNSIGNED NOT NULL,
   `locality_id` INT(11) UNSIGNED NOT NULL,

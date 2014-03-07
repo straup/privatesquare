@@ -7,14 +7,22 @@
 
 	function trips_ics_export(&$trips, $fh, $more=array()){
 
-		$begin = $GLOBALS['smarty']->fetch("page_export_ics_vcalendar_begin.txt");
+		$defaults = array(
+			'calname' => 'privatesquare',
+		);
+
+		$more = array_merge($defaults, $more);
+
+		$GLOBALS['smarty']->assign("calname", $more['calname']);
+
+		$begin = $GLOBALS['smarty']->fetch("inc_ics_vcalendar_begin.txt");
 		fwrite($fh, $begin);
 
 		foreach ($trips as $row){
 			trips_ics_export_row($row, $fh, $more);
 		}
 
-		$end = $GLOBALS['smarty']->fetch("page_export_ics_vcalendar_end.txt");
+		$end = $GLOBALS['smarty']->fetch("inc_ics_vcalendar_end.txt");
 		fwrite($fh, $end);
 	}
 
@@ -25,7 +33,7 @@
 		$vevent = trips_ics_to_vevent($row);
 
 		$GLOBALS['smarty']->assign_by_ref("vevent", $vevent);
-		$ics = $GLOBALS['smarty']->fetch("page_export_ics_vevent.txt");
+		$ics = $GLOBALS['smarty']->fetch("inc_ics_vevent.txt");
 
 		fwrite($fh, $ics);
 	}
@@ -78,7 +86,7 @@
 		);
 
 		if ($trip['note']){
-			$description[] = $trip['note'];
+			$description[] = str_replace("\n", "\\n", $trip['note']);
 		}
 
 		/*
@@ -92,9 +100,6 @@
 		*/
 
 		$event['description'] = implode("\\n\\n", $description);
-
-		# dumper($trip);
-		# dumper($event);
 
 		return $event;
 	}

@@ -1,28 +1,42 @@
 {include file="inc_head.txt"}
 
+<div class="row">
+     <h3>Calendars for your trips <small><a href="{$cfg.user|@urls_user}trips/calendars/add/">Add a calendar</a></small></h3>
+</div>
+
+<div class="row">
 {if $calendars|@count}
+
 <table class="table">
 <tr>
 <th>ID</th>
+<th>Name</th>
 <th>URL</th>
 <th>City</th>
-<th>Include trip notes</th>
 <th>Created</th>
 <th>Expires</th>
-<th>Note</th>
+{if 0}<th>Note</th>{/if}
+<th>Include notes</th>
+<th>Include past trips</th>
 </tr>
 {foreach from=$calendars item="row"}
 <tr>
 <td><a href="{$cfg.abs_root_url}me/trips/calendars/{$row.id|escape}/">{$row.id|escape}</a></td>
+<td>{$row.name|escape}</td>
 <td><a href="{$cfg.abs_root_url}user/{$foursquare_user.foursquare_id|escape}/trips/calendars.ics?c={$row.hash|escape}">{$row.hash|escape}</a></td>
 <td>{if $row.locality_id}FIX ME{else}&#8212;{/if}</td>
-<td>{if $row.include_notes}yes{else}no{/if}</td>
 <td>{$row.created|@date_format|escape}</td>
 <td>{if $row.expires}{$row.expires|@date_format|escape}{else}&#8212;{/if}</td>
-<td>{if $row.note}{$row.note|escape}{else}&#8212;{/if}</td>
+{if 0}<td>{if $row.note}{$row.note|escape}{else}&#8212;{/if}</td>{/if}
+<td>{if $row.include_notes}yes{else}no{/if}</td>
+<td>{if $row.include_past}yes{else}no{/if}</td>
 </tr>
 {/foreach}
 </table>
+
+{else}
+<p>You haven't created any calendars yet.</p>
 {/if}
+</div>
 
 {include file="inc_foot.txt"}

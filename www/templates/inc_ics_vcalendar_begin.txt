@@ -1,7 +1,7 @@
 BEGIN:VCALENDAR
 METHOD:PUBLISH
 VERSION:2.0
-X-WR-CALNAME:privatesquare
+X-WR-CALNAME:{$calname|escape}
 PRODID:-//privatesquare//EN
 
 {* note the extra newline *}
