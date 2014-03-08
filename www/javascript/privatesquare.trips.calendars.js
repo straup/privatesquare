@@ -1,4 +1,34 @@
+function privatesquare_trips_calendars_write_init(){
+
+    $("#calendar-expires").focus(function(){
+	$("#x-calendar-wrapper").show();
+    });
+
+    $("#calendar-expires").focusout(function(){
+	$("#x-calendar-wrapper").hide();
+    });
+
+    /* not jquery */
+
+    // Not doing this because I don't know what jquery is doing to 'e'
+    // such that e.detail throws an error (20140308/straup)
+    //$("x-calendar").bind("datetap", function(e){
+
+    var eventsStage = document.getElementById("x-calendar-wrapper");
+    var eventsCal = eventsStage.querySelector("x-calendar");
+
+    eventsCal.addEventListener("datetap", function(e){
+	var date = e.detail.date;
+	var dateStr = e.detail.iso;
+	$("#calendar-expires").val(dateStr);
+    });
+
+    /* we now return you to your regurlary scheduled jquery */
+}
+
 function privatesquare_trips_calendars_add_init(){
+
+    privatesquare_trips_calendars_write_init();
 
     $("#calendar").submit(function(){
 
@@ -8,7 +38,7 @@ function privatesquare_trips_calendars_add_init(){
 	var args = privatesquare_trips_calendars_gather_args();
 	args['crumb'] = crumb;
 
-	console.log(args);
+	// console.log(args);
 
 	var method = 'privatesquare.trips.calendars.addCalendar';
 
@@ -23,6 +53,8 @@ function privatesquare_trips_calendars_add_init(){
 }
 
 function privatesquare_trips_calendars_edit_init(){
+
+    privatesquare_trips_calendars_write_init();
 
     $("#calendar").submit(function(){
 

@@ -51,9 +51,11 @@
 {* http://mozilla.github.io/brick/demos/x-tag-calendar/index.html *}
 <div class="form-group">
 <label for="calendar-expires">Expire this calendar on</label>
-<div>
-<x-calendar id="calendar-expires" controls></x-calendar>
+<input type="text" name="calendar-expires" id="calendar-expires" value="{if $calendar.expires}{$calendar.expires|escape}{/if}" class="form-control" />
 </div>
+
+<div class="form-group" id="x-calendar-wrapper" style="display:none;">
+<x-calendar id="x-calendar-expires" controls {if $calendar.expires}view="{$calendar.expires|escape}"{/if}></x-calendar>
 </div>
 
 <div class="form-group">
