@@ -4,8 +4,11 @@ function privatesquare_trips_calendars_write_init(){
 	$("#x-calendar-wrapper").show();
     });
 
+    // this does not account for the month thingy on
+    // the calendar (20140308/straup)
+
     $("#calendar-expires").focusout(function(){
-	$("#x-calendar-wrapper").hide();
+	// $("#x-calendar-wrapper").hide();
     });
 
     /* not jquery */
@@ -69,9 +72,7 @@ function privatesquare_trips_calendars_edit_init(){
 	args['id'] = id;
 	args['crumb'] = crumb;
 
-	console.log(args);
-	console.log('do edit here...');
-	return false;
+	// console.log(args);
 
 	var method = 'privatesquare.trips.calendars.editCalendar';
 
