@@ -114,13 +114,11 @@ function privatesquare_trips_calendars_gather_args(){
     var status = $("#calendar-trip-status");
     args['status_id'] = status.val();
 
-    // THESE ARE WRONG (20140215/straup)
-
     var include_notes = $("#calendar-include-notes");
-    args['include_notes'] = include_notes.val();
+    args['include_notes'] = (include_notes.attr("checked")) ? 1 : 0;
     
     var past_trips = $("#calendar-past-trips");
-    args['past_trips'] = past_trips.val();
+    args['past_trips'] = (past_trips.attr("checked")) ? 1 : 0;
     
     return args;
 }
