@@ -59,9 +59,14 @@ function privatesquare_trips_calendars_edit_init(){
     $("#calendar").submit(function(){
 
 	var form = $("#calendar");
-	var crumb = form.attr("data-calendar-crumb");
+	var crumb = form.attr("data-calendar-edit-crumb");
+
+	var btn = $(this);
+	var id = btn.attr("data-calendar-id");
 
 	var args = privatesquare_trips_calendars_gather_args();
+
+	args['id'] = id;
 	args['crumb'] = crumb;
 
 	console.log(args);
@@ -95,24 +100,29 @@ function privatesquare_trips_calendars_edit_init(){
 
 function privatesquare_trips_calendars_gather_args(){
 
-	var note = $("#calendar-notes");
-	note = note.val();
+    var args = {}
 
-	// THESE ARE WRONG (20140215/straup)
+    var name = $("#calendar-name");
+    args['name'] = name.val();
 
-	var include_notes = $("#calendar-include-notes");
-	include_notes = include_notes.val();
+    var note = $("#calendar-notes");
+    args['note'] = note.val();
 
-	var past_trips = $("#calendar-past-trips");
-	past_trips = past_trips.val();
+    var expires = $("#calendar-expires");
+    args['expires'] = expires.val();
 
-	var args = {
-	    'note': note,
-	    'include_notes': include_notes,
-	    'past_trips': past_trips
-	};
+    var status = $("#calendar-trip-status");
+    args['status_id'] = status.val();
 
-	return args;
+    // THESE ARE WRONG (20140215/straup)
+
+    var include_notes = $("#calendar-include-notes");
+    args['include_notes'] = include_notes.val();
+    
+    var past_trips = $("#calendar-past-trips");
+    args['past_trips'] = past_trips.val();
+    
+    return args;
 }
 
 function _privatesquare_trips_calendars_add_onsuccess(rsp){

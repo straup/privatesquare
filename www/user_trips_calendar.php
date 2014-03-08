@@ -27,6 +27,9 @@
 
 	$GLOBALS['smarty']->assign_by_ref("calendar", $calendar);
 
+	$status_map = trips_travel_status_map();
+	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
+
 	$edit_crumb = crumb_generate("api", "privatesquare.trips.calendars.editCalendar");
 	$GLOBALS['smarty']->assign("edit_crumb", $edit_crumb);
 
