@@ -135,6 +135,9 @@ function privatesquare_trips_calendars_gather_args(){
     var name = $("#calendar-name");
     args['name'] = name.val();
 
+    var where = $("#calendar-where");
+    args['woeid']= where.val();
+
     var note = $("#calendar-notes");
     args['note'] = note.val();
 

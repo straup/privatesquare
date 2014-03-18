@@ -150,6 +150,12 @@
 
 	function trips_calendars_inflate_calendar(&$calendar){
 
+		if ($woeid = $calendar['locality_id']){
+
+			$rsp = whereonearth_fetch_woeid($woeid);
+			$locality = $rsp['data'];
+			$calendar['locality'] = $locality;
+		}
 	}
 
 	########################################################################

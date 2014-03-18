@@ -1,6 +1,11 @@
 {capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/brick-1.0.0.byob.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-1.0.0.byob.min.css" />
 {/capture}
 {include file="inc_head.txt"}
 
