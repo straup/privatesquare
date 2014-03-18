@@ -25,6 +25,7 @@
 		error_404();
 	}
 
+	trips_calendars_inflate_calendar($calendar);
 	$GLOBALS['smarty']->assign_by_ref("calendar", $calendar);
 
 	$status_map = trips_travel_status_map();
