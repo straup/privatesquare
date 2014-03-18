@@ -40,6 +40,10 @@ function privatesquare_trips_calendars_write_init(){
 	// $("#x-calendar-wrapper").hide();
     });
 
+    $("#x-calendar-button").click(function(){
+	$("#x-calendar-wrapper").hide();
+    });
+
     /* not jquery */
 
     // Not doing this because I don't know what jquery is doing to 'e'
