@@ -3,11 +3,11 @@
 {* see also: http://www.eyecon.ro/bootstrap-datepicker *}
 {* see also: https://github.com/ivaynberg/select2 *}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
-<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
 {/capture}
 {include file="inc_head.txt"}
 

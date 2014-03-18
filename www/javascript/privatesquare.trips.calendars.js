@@ -1,4 +1,33 @@
+function privatesquare_trips_calendars_select2_init(){
+
+    // http://ivaynberg.github.io/select2/
+
+    // TO DO: sort out FQ URL for this (20140119/straup)	 
+    var geocoder = privatesquare_abs_root_url() + "user_trips_add_geocode.php";
+	 
+    var s = $("#calendar-where").select2({
+        minimumInputLength: 3,
+	ajax: {
+	    url: geocoder,
+	    dataType: 'json',
+	    data: function (term, page){
+       		return {
+		    q: term
+		};
+	    },
+	    results: function(data, page){
+		return {
+		    results: data.results
+		};
+	    }
+	}
+    });
+
+}
+
 function privatesquare_trips_calendars_write_init(){
+
+    privatesquare_trips_calendars_select2_init();
 
     $("#calendar-expires").focus(function(){
 	$("#x-calendar-wrapper").show();

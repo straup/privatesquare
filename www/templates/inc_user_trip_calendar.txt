@@ -21,9 +21,21 @@
 </div>
 
 <div class="form-group">
-<label for="locality">For a specific city</label>
 
+<label for="calendar-where">Trips to a particular city</label>
+{if $calendar and $calendar.locality}
+<button id="change-city" class="btn btn-sm pull-right">change city</button>
+<h4 id="calendar-locality"><a href="{$cfg.user|@urls_user}calendars/places/{$calendar.locality.woeid|escape}" id="short-name">{$calendar.locality.woe_name|escape}</a> <small id="long-name">{$calendar.locality.name|escape}</small> </h4>
+{/if}
+
+<input type="hidden" id="calendar-where" value="{if $calendar}{$calendar.locality_id|escape}{/if}" class="select2-offscreen form-control" data-placeholder="Where are you going?" />
 </div>
+
+{if 0}
+<div class="form-group">
+<label for="locality">For a specific city</label>
+</div>
+{/if}
 
 <div class="form-group">
 
