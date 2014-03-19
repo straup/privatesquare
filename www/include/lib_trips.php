@@ -343,6 +343,10 @@
 
 	function trips_inflate_trip(&$trip){
 
+		$rsp = whereonearth_fetch_woeid($trip['locality_id']);
+		$locality = $rsp['data'];
+		$trip['locality'] = $locality;
+
 		$trip['latitude'] = $locality['latitude'];
 		$trip['longitude'] = $locality['longitude'];
 
