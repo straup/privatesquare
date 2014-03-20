@@ -59,7 +59,13 @@
 		}
 
 		if ($calendar['include_past']){
-			# FIX ME
+			$more['when'] = 'all';
+		}
+
+		# kind of trip (status_id)
+
+		if (0){
+			$more['status'] = 'what';
 		}
 
 		$rsp = trips_get_for_user($user, $more);

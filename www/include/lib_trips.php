@@ -182,8 +182,6 @@
 
 	########################################################################
 
-	# TO DO: database indexes (20140118/straup)
-
 	function trips_get_for_user(&$user, $more=array()){
 
 		$defaults = array(
@@ -193,6 +191,7 @@
 			'exclude_trip' => null,
 			'year' => null,
 			'month' => null,
+			'status' => null,
 		);
 
 		$more = array_merge($defaults, $more);
@@ -202,11 +201,11 @@
 
 		$sql = array();
 
+		# TO DO: indexes (20140320/straup)
+
 		$sql[] = "SELECT * FROM Trips WHERE user_id='{$enc_id}'";
 
-		if ($more['when'] == 'past'){
-			$sql[] = "AND `departure` <= NOW()";
-		}
+		# Geo
 
 		if (($more['where']) && ($more['woeid'])){
 
@@ -223,6 +222,12 @@
 				$enc_trip = AddSlashes($more['exclude_trip']);
 				$sql[] = " AND id != '{$enc_trip}'";			
 			}
+		}
+
+		# Dates
+
+		if ($more['when'] == 'past'){
+			$sql[] = "AND `departure` <= NOW()";
 		}
 
 		if (($more['year']) && ($more['month'])){
@@ -266,6 +271,15 @@
 		if ($more['when'] == 'upcoming'){
 			$sql[] = "AND `departure` >= NOW()";
 		}
+
+		# State (mostly for calendars)
+
+		if (isset($more['status'])){
+			$enc_status = AddSlashes($more['status']);
+			$sql[] = "status_id='{$enc_status}'";
+		}
+
+		# Sorting
 
 		if ($more['when'] == 'past'){
 			$sql[] = "ORDER BY arrival DESC, departure DESC";
