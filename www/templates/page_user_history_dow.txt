@@ -1,0 +1,41 @@
+{capture assign="page_title"}history | {$str_dow}{/capture}
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+{/capture}
+{include file="inc_head.txt"}
+
+{if $deleted_checkin}
+<script type="text/javascript">
+
+var msg = '{if $deleted_checkin_venue}Pow! Your checkin at <a href="{$deleted_checkin_venue|@urls_venue}">{$deleted_checkin_venue.name|escape}</a> has been deleted.{else}Okee dookee, your checkin has been deleted.{/if}';
+
+{if $mock_checkin and $mock_checkin.checkin_id}
+msg += 'Keep in mind that this checkin <em>it is still sitting somewhere on the foursquare servers</em>. That's because there is no way to delete checkins using the foursquare API. You will need to <a href="{$mock_checkin|@foursquare_urls_checkin}" target="_foursquare">log in to the foursquare website</a> and delete the checkin by hand. Awesome, yeah?';
+{/if}
+
+{literal}
+$(document).ready(function(){
+	privatesquare_set_status(msg);
+
+	setTimeout(function(){
+		privatesquare_unset_status();
+	}, 15000);
+});
+{/literal}
+
+</script>
+{/if}
+
+<div class="row"><h3>{$when|escape}</h3></div>
+
+{include file="inc_checkins_history.txt" checkins=$checkins}
+
+{include file="inc_export_links.txt"}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	privatesquare_htmapl();
+{literal}}{/literal});
+</script>
+
+{include file="inc_foot.txt"}
