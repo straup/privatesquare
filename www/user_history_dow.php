@@ -13,8 +13,7 @@
 		error_404();
 	}
 
-	$history_url = "user/{$fsq_id}/history/";
-	login_ensure_loggedin($history_url);
+	login_ensure_loggedin();
 
 	$fsq_user = foursquare_users_get_by_foursquare_id($fsq_id);
 
@@ -70,7 +69,9 @@
 	$status_map = privatesquare_checkins_status_map();
 	$GLOBALS['smarty']->assign_by_ref("status_map", $status_map);
 
-	$GLOBALS['smarty']->assign("pagination_url", $GLOBALS['cfg']['abs_root_url'] . );
+	$enc_dow = urlencode(strtolower($str_dow));
+	$pagination_url = "{$GLOBALS['cfg']['abs_root_url']}user/{$fsq_id}/history/{$enc_dow}/";
+	$GLOBALS['smarty']->assign("pagination_url", $pagination_url);
 
 	$GLOBALS['smarty']->assign_by_ref("owner", $owner);
 	$GLOBALS['smarty']->assign_by_ref("is_own", $is_own);
