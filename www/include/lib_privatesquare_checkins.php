@@ -100,6 +100,9 @@
 			$checkin['created'] = time();
 		}
 
+		$dow = privatesquare_checkins_dates_format($checkin, 'w');
+		$checkin['dow'] = $dow;
+
 		$insert = array();
 
 		foreach ($checkin as $k => $v){
@@ -165,6 +168,11 @@
 
 				$sql .= " AND ymd BETWEEN '{$enc_start}' AND '{$enc_stop}'";
 			}
+		}
+
+		if (isset($more['dow'])){
+			$enc_dow = AddSlashes($more['dow']);
+			$sql .= " AND dow='{$enc_dow}'";
 		}
 
 		if (isset($more['venue_id'])){

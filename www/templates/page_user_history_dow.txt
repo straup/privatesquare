@@ -1,0 +1,19 @@
+{capture assign="page_title"}history | {$dow|@strtolower}{/capture}
+{capture assign="extra_head"}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+{/capture}
+{include file="inc_head.txt"}
+
+<div class="row"><h3>Places you've checked in to on a {$dow|@ucfirst|@escape}</h3></div>
+
+{include file="inc_checkins_history.txt" checkins=$checkins}
+
+{include file="inc_export_links.txt"}
+
+<script type="text/javascript">
+$(document).ready(function(){literal}{{/literal}
+	privatesquare_htmapl();
+{literal}}{/literal});
+</script>
+
+{include file="inc_foot.txt"}
