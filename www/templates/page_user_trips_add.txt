@@ -1,13 +1,19 @@
 {capture assign="page_title"}trips | add a new trip{/capture}
 {capture assign="extra_head"}
-{* see also: http://www.eyecon.ro/bootstrap-datepicker *}
+{* geocoder menu stuff *}
 {* see also: https://github.com/ivaynberg/select2 *}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
-<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
+{* calendar stuff *}
+{* see also: http://www.eyecon.ro/bootstrap-datepicker *}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/bootstrap.datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.datepicker.css" />
+{* if this works it will replace the datepicker stuff *}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/brick-1.0.0.byob.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-1.0.0.byob.min.css" />
+{* privatesquare stuff *}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
 {/capture}
 {include file="inc_head.txt"}
 

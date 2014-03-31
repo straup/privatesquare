@@ -7,12 +7,6 @@
 <a href="{$cfg.abs_root_url}fix/me/trips/calendar.ics?c={$calendar.hash|escape}">ical</a>
 </div>
 
-{if 0}
-<div>
-{$calendar.created|@date_format|escape}
-</div>
-{/if}
-
 {/if}
 
 <div class="form-group">
