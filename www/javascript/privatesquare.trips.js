@@ -3,6 +3,8 @@ function privatesquare_trips_datepicker_init(){
     // http://www.eyecon.ro/bootstrap-datepicker/
     // Yay... method chaining o_O (20140119/straup)
 
+    /*
+
     var arr = $("#arrival").datepicker({
 	'language':'en'
     }).on('changeDate', function(e){
@@ -27,6 +29,56 @@ function privatesquare_trips_datepicker_init(){
     }).on('changeDate', function(e){
 	dpt.hide();
     }).data('datepicker');
+
+    */
+
+    // x-calendar stuff
+
+    $("#arrival").focus(function(){
+	$("#x-calendar-departure-wrapper").hide();
+	$("#x-calendar-arrival-wrapper").show();
+    });
+
+    $("#departure").focus(function(){
+	$("#x-calendar-arrival-wrapper").hide();
+	$("#x-calendar-departure-wrapper").show();
+    });
+
+    $("#x-calendar-arrival-button").click(function(){
+	$("#x-calendar-arrival-wrapper").hide();
+	return false;
+    });
+
+    $("#x-calendar-departure-button").click(function(){
+	$("#x-calendar-departure-wrapper").hide();
+	return false;
+    });
+
+    /* not jquery */
+
+    // Not doing this because I don't know what jquery is doing to 'e'
+    // such that e.detail throws an error (20140308/straup)
+    //$("x-calendar").bind("datetap", function(e){
+
+    var arrival_stage = document.getElementById("x-calendar-arrival-wrapper");
+    var arrival_cal = arrival_stage.querySelector("x-calendar");
+
+    arrival_cal.addEventListener("datetap", function(e){
+	var date = e.detail.date;
+	var dateStr = e.detail.iso;
+	$("#arrival").val(dateStr);
+    });
+
+    var departure_stage = document.getElementById("x-calendar-departure-wrapper");
+    var departure_cal = departure_stage.querySelector("x-calendar");
+
+    departure_cal.addEventListener("datetap", function(e){
+	var date = e.detail.date;
+	var dateStr = e.detail.iso;
+	$("#departure").val(dateStr);
+    });
+
+    /* we now return you to your regurlary scheduled jquery */
 
 }
 

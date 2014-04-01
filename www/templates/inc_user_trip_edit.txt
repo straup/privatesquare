@@ -13,7 +13,7 @@
 </div>
 
 {* x-calendar *}
-{if 0}
+{if 1}
 <div class="form-group">
 <label for="arrival">Arriving on</label>
 <input type="text" name="arrival" id="arrival" value="{if $trip}{$trip.arrival|@escape}{/if}" class="form-control" />
@@ -37,6 +37,7 @@
 {* /x-calendar *}
 
 {* datepicker *}
+{if 0}
 
 <div class="form-group">
 
@@ -51,6 +52,7 @@
 <input class="form-control span2" size="16" type="text" value="{if $trip}{$trip.departure|escape}{/if}" name="departure" id="departure" placeholder="date of departure" data-date-format="yyyy-mm-dd" data-date="{$today|escape}" />
 </div>
 
+{/if}
 {* /datepicker *}
 
 <div class="form-group">
