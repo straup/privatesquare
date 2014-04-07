@@ -1,37 +1,5 @@
 function privatesquare_trips_datepicker_init(){
 
-    // http://www.eyecon.ro/bootstrap-datepicker/
-    // Yay... method chaining o_O (20140119/straup)
-
-    /*
-
-    var arr = $("#arrival").datepicker({
-	'language':'en'
-    }).on('changeDate', function(e){
-	var next_day = new Date(e.date);
-	next_day.setDate(next_day.getDate() + 1);
-
-	if (dpt.date.valueOf() <= next_day.valueOf()){
-	    dpt.setValue(next_day);
-	}
-
-	arr.hide();
-	 $('#departure')[0].focus();
-
-    }).data('datepicker');
-
-    var dpt = $("#departure").datepicker({
-	'language':'en',
-	'onRender': function(date) {
-	    // make this work with not-today...
-	    //return date.valueOf() <= arr.date.valueOf() ? 'disabled' : '';
-	}
-    }).on('changeDate', function(e){
-	dpt.hide();
-    }).data('datepicker');
-
-    */
-
     // x-calendar stuff
 
     $(".form-control").focus(function(){
