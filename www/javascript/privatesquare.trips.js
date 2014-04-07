@@ -34,26 +34,32 @@ function privatesquare_trips_datepicker_init(){
 
     // x-calendar stuff
 
-    $("#arrival").focus(function(){
-	$("#x-calendar-departure-wrapper").hide();
-	$("#x-calendar-arrival-wrapper").show();
+    $(".form-control").focus(function(){
+
+	var el = $(this);
+	var id = el.attr("id");
+
+	if (id == 'arrival'){
+	    $("#x-calendar-arrival-wrapper").show();
+	    $("#x-calendar-departure-wrapper").hide();
+	}
+
+	else if (id == 'departure'){
+	    $("#x-calendar-arrival-wrapper").hide();
+	    $("#x-calendar-departure-wrapper").show();
+	}
+
+	else {
+	    $("#x-calendar-arrival-wrapper").hide();
+	    $("#x-calendar-departure-wrapper").hide();
+	}
+
+	// Note that we handle the select2 menu (for geocoding)
+	// below in _select2_init()
+
     });
 
-    $("#departure").focus(function(){
-	$("#x-calendar-arrival-wrapper").hide();
-	$("#x-calendar-departure-wrapper").show();
-    });
-
-    $("#x-calendar-arrival-button").click(function(){
-	$("#x-calendar-arrival-wrapper").hide();
-	return false;
-    });
-
-    $("#x-calendar-departure-button").click(function(){
-	$("#x-calendar-departure-wrapper").hide();
-	return false;
-    });
-
+    
     /* not jquery */
 
     // Not doing this because I don't know what jquery is doing to 'e'
@@ -107,6 +113,10 @@ function privatesquare_trips_select2_init(){
 	}
     });
 
+    s.on('select2-opening', function(){
+	$("#x-calendar-arrival-wrapper").hide();
+	$("#x-calendar-departure-wrapper").hide();
+    });
 }
 
 function privatesquare_trips_gather_trip_info(){
