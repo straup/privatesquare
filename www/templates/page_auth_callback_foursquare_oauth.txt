@@ -16,6 +16,9 @@ There was a database-related problem creating your account. Sad face.
 {elseif $error.dberr_foursquareuser}
 There was a database-related problem creating your account, specifically associating it with your foursquare account. Curses!
 
+{elseif $error.token_swap}
+There was a problem identifying your account, specifically with your foursquare auth token. Argh!
+
 {else}
 Ack! The INVISIBLE ERROR CAT hisses at you...
 {/if}

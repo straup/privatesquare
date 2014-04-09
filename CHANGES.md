@@ -28,6 +28,14 @@ Add the following to your `config.php` file:
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 	$GLOBALS['cfg']['enable_feature_calendars'] = 1;
 
+# 2.1.8
+
+Merged in to `master` 2014-04-10
+
+## In broad strokes
+
+* Add the ability to swap an OAuth access token if no match is found but email matches.
+
 # 2.1.7
 
 Merged in to `master` 2014-03-05

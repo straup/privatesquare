@@ -89,6 +89,7 @@
 		if ($rsp['ok']){
 
 			$foursquare_user = array_merge($foursquare_user, $update);
+			$rsp['foursquare_user'] = $foursquare_user;
 
 			# $cache_key = "foursquare_user_{$foursquare_user['foursquare_id']}";
 			# cache_unset($cache_key);
