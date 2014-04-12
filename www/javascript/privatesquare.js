@@ -43,7 +43,8 @@ function privatesquare_init(provider){
 	};
 
 	var _privatesquare_geolocation_onerror = function(rsp){
-		privatesquare_set_status("Huh. I have no idea where you are...");
+	    console.log(rsp);
+	    privatesquare_set_status("Huh. I have no idea where you are...");
 	};
 
 	privatesquare_whereami(_privatesquare_geolocation_onsuccess, _privatesquare_geolocation_onerror);

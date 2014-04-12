@@ -108,7 +108,7 @@
 	# If we don't ensure that new users are allowed to create
 	# an account (locally).
 
-	else if (! $GLOBALS['cfg']['enable_feature_signup']){
+	else if (! features_is_enabled("signup")){
 		$GLOBALS['smarty']->display("page_signup_disabled.txt");
 		exit();
 	}
