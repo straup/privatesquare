@@ -81,12 +81,7 @@
 			api_output_ok($out);
 		}
 
-		# This doesn't really work very well if you need to
-		# reset all your secrets / tokens and people haven't
-		# re-logged-in yet. See also, Heartbleed. 
-		# (20140412/straup)
-
-		# $random_user = foursquare_users_random_user();
+		$random_user = foursquare_users_random_user();
 
 		if (! $random_user){
 			$random_user = $fsq_user;

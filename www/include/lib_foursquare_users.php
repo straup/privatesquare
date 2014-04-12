@@ -33,14 +33,14 @@
 	#################################################################
 
 	function foursquare_users_random_user(){
-
-		$sql = "SELECT COUNT(user_id) AS count FROM FoursquareUsers";
+		
+		$sql = "SELECT COUNT(user_id) AS count FROM FoursquareUsers WHERE oauth_token != ''";
 		$rsp = db_single(db_fetch($sql));
 
 		$count = $rsp['count'];
 		$offset = ($count == 1) ? 0 : rand(1, $count - 1);
 
-		$sql = "SELECT * FROM FoursquareUsers LIMIT 1 OFFSET {$offset}";
+		$sql = "SELECT * FROM FoursquareUsers WHERE oauth_token != '' LIMIT 1 OFFSET {$offset}";
 		$rsp = db_single(db_fetch($sql));
 
 		return $rsp;

@@ -323,7 +323,19 @@
 	db_init();
 
 	if ($this_is_webpage){
+
 		login_check_login();
+
+		/*
+		if (login_check_login()){
+
+			$foursquare_user = foursquare_users_get_by_user_id($GLOBALS['cfg']['user']);
+
+			if ((! $foursquare_user) || (! $foursquare_user['oauth_token'])){
+				login_do_logout();
+			}
+		}
+		*/
 	}
 
 	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
