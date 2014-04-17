@@ -174,7 +174,15 @@ function _privatesquare_trips_calendars_add_onsuccess(rsp){
 	return false;
     }
 
-    privatesquare_set_status("Boom! Your calendar has been created.");
+    var calendar = rsp['calendar'];
+    var id = calendar['id'];
+
+    var enc_id = htmlspecialchars(id);
+
+    var loc = privatesquare_abs_root_url() + 'me/trips/calendars/' + id + '?created=1';
+    location.href = loc;
+
+    return false;
 }
 
 function _privatesquare_trips_calendars_edit_onsuccess(rsp){

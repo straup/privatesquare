@@ -1,5 +1,6 @@
 <?php
 
+	loadlib("trips");
 	loadlib("trips_calendars");
 
 	########################################################################
@@ -10,16 +11,25 @@
 			"trips", "trips_calendars"
 		));
 
-		# $status_id = post_int32("status_id");
-
-		$include_notes = post_int32("include_notes");
-		$include_past = post_int32("past_trips");
+		$include_notes = (post_int32("include_notes")) ? 1 : 0;
+		$include_past = (post_int32("past_trips")) ? 1 : 0;
 
 		$calendar = array(
 			'user_id' => $GLOBALS['cfg']['user']['id'],
 			'include_notes' => $include_notes,
 			'include_past' => $include_past,
 		);
+
+		if (post_isset("status_id")){
+
+			$status_id = post_int32("status_id");
+
+			if (! trips_is_valid_status_id($status_id)){
+				api_outout_error(999, "Invalid status ID");
+			}
+
+			$calendar['status_id'] = $status_id;
+		}
 
 		if ($woeid = post_int32("woeid")){
 			$calendar['locality_id'] = $woeid;
@@ -76,7 +86,16 @@
 		$calendar = _api_privatesquare_trips_calendars_get_calendar();
 		$update = array();
 
-		# $status_id = post_int32("status_id");
+		if (post_isset("status_id")){
+
+			$status_id = post_int32("status_id");
+
+			if (! trips_is_valid_status_id($status_id)){
+				api_outout_error(999, "Invalid status ID");
+			}
+
+			$update['status_id'] = $status_id;
+		}
 
 		$include_notes = post_int32("include_notes");
 

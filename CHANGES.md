@@ -2,7 +2,8 @@
 
 ## In broad strokes
 
-Trips! Dopplr!!
+* Trips! Dopplr!!
+* Add the ability to check in to `lifestyle porn` as a state of mind.
 
 ## Database alters (db_main)
 
