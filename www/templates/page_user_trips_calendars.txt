@@ -19,7 +19,6 @@
 <th>City</th>
 <th>Created</th>
 <th>Expires</th>
-{if 0}<th>Note</th>{/if}
 <th>Include notes</th>
 <th>Include past trips</th>
 </tr>
@@ -31,7 +30,6 @@
 <td>{if $row.locality_id}{$row.locality.woe_name|escape}{else}&#8212;{/if}</td>
 <td>{$row.created|@date_format|escape}</td>
 <td>{if $row.expires}{$row.expires|@date_format|escape}{else}&#8212;{/if}</td>
-{if 0}<td>{if $row.note}{$row.note|escape}{else}&#8212;{/if}</td>{/if}
 <td>{if $row.include_notes}yes{else}no{/if}</td>
 <td>{if $row.include_past}yes{else}no{/if}</td>
 </tr>
