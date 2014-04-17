@@ -29,19 +29,19 @@ function privatesquare_trips_calendars_write_init(){
 
     privatesquare_trips_calendars_select2_init();
 
-    $("#calendar-expires").focus(function(){
-	$("#x-calendar-wrapper").show();
-    });
+    $(".form-control").focus(function(){
 
-    // this does not account for the month thingy on
-    // the calendar (20140308/straup)
+	var el = $(this);
+	var id = el.attr("id");
 
-    $("#calendar-expires").focusout(function(){
-	// $("#x-calendar-wrapper").hide();
-    });
+	if (id == 'calendar-expires'){
+		$("#x-calendar-wrapper").show();
+	}
 
-    $("#x-calendar-button").click(function(){
-	$("#x-calendar-wrapper").hide();
+	else {
+		$("#x-calendar-wrapper").hide();
+	}
+
     });
 
     /* not jquery */

@@ -62,7 +62,7 @@
 
 <div class="form-group" id="x-calendar-wrapper" style="display:none;">
 <x-calendar id="x-calendar-expires" controls {if $calendar.expires}view="{$calendar.expires|date_format:"%Y-%m-%d":escape}"{/if}></x-calendar>
-<button class="btn btn-sm" id="x-calendar-button" style="display:block;">close</button>
+{if 0}<button class="btn btn-sm" id="x-calendar-button" style="display:block;">close</button>{/if}
 </div>
 
 <div class="form-group">

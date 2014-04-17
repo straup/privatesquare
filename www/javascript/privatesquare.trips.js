@@ -26,7 +26,6 @@ function privatesquare_trips_datepicker_init(){
 	// below in _select2_init()
 
     });
-
     
     /* not jquery */
 
