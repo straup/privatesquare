@@ -82,7 +82,7 @@
 		$rsp = privatesquare_utils_generate_id();
 
 		if (! $rsp['ok']){
-			return array('ok' => 0, 'error' => 'Failed to generate trip ID');
+			return array('ok' => 0, 'error' => 'Failed to generate calendar ID');
 		}
 
 		$calendar['id'] = $rsp['id'];

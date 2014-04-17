@@ -116,6 +116,12 @@ function privatesquare_trips_calendars_edit_init(){
 
     $("#calendar-delete").click(function(){
 
+	var prompt = "Are you sure want to delete this calendar? There is no UNDO.";
+	
+	if (! confirm(prompt)){
+	    return false;
+	}
+
 	var btn = $(this);
 	var id = btn.attr("data-calendar-id");
 	var crumb = btn.attr("data-calendar-delete-crumb");
