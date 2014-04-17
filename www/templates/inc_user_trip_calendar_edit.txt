@@ -17,7 +17,6 @@
 <div class="form-group">
 
 {if $calendar and $calendar.locality}
-{if 0}<button id="change-city" class="btn btn-sm pull-right">change city</button>{/if}
 <label id="calendar-where-label" for="calendar-where">{$calendar.locality.name|escape}</label>
 {else}
 <label for="calendar-where">Trips to a particular city</label>
@@ -74,6 +73,9 @@
 <div class="form-group">
 {if $calendar}
 <button type="submit" class="btn btn-sm">Edit this calendar</button>
+
+<button type="submit" class="btn btn-danger btn-sm pull-right" id="calendar-delete" data-calendar-id="{$calendar.id|escape}" data-calendar-delete-crumb="{$delete_crumb|escape}">Delete this calendar</button>
+
 {else}
 <button type="submit" class="btn btn-sm">Add this calendar</button>
 {/if}

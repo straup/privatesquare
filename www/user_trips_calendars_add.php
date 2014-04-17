@@ -19,7 +19,7 @@
 	$add_crumb = crumb_generate("api", "privatesquare.trips.calendars.addCalendar");
 	$GLOBALS['smarty']->assign("add_calendar_crumb", $add_crumb);
 
-	$GLOBALS['smarty']->display("page_user_trips_calendars_add.txt");
+	$GLOBALS['smarty']->display("page_user_trips_calendar.txt");
 	exit();
 
 ?>

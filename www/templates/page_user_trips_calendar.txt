@@ -1,19 +1,22 @@
+{capture assign="page_title"}trips | calendars{if $calendar} | {$calendar.name}{/if}{/capture}
 {capture assign="extra_head"}
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
 <script type="text/javascript" src="{$cfg.abs_root_url}javascript/brick-1.0.0.byob.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-1.0.0.byob.min.css" />
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
 {/capture}
 {include file="inc_head.txt"}
 
-{include file="inc_user_trip_calendar.txt"}
-
-<div>
-<button type="submit" class="btn btn-sm pull-right" id="calendar-delete" data-calendar-id="{$calendar.id|escape}" data-calendar-delete-crumb="{$delete_crumb|escape}">Delete this calendar</button>
+<div class="row">
+     <h3>{if $calendar}{$calendar.name|escape}{else}Add a calendar{/if} <small><a href="{$cfg.user|@urls_user}trips/calendars/">All your calendars</a></small></h3>
 </div>
+
+{include file="inc_user_trip_calendar_edit.txt"}
+
+{if $calendar}
 
 <script type="text/javascript">
 {literal}
@@ -22,5 +25,17 @@ $(document).ready(function(){
 });
 {/literal}
 </script>
+
+{else}
+
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	privatesquare_trips_calendars_add_init();
+});
+{/literal}
+</script>
+
+{/if}
 
 {include file="inc_foot.txt"}
