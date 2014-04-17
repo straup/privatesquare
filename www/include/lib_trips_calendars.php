@@ -162,6 +162,11 @@
 			$locality = $rsp['data'];
 			$calendar['locality'] = $locality;
 		}
+
+		$now = time();
+
+		$expired = (($calendar['expires']) && ($calendar['expires'] < $now)) ? 1 : 0;
+		$calendar['is_expired'] = $expired;
 	}
 
 	########################################################################
