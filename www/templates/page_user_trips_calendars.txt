@@ -42,4 +42,17 @@
 {/if}
 </div>
 
+{* becase it's 8AM and I can't be bothered to remember (again) how to deal with query parameters in JS... *}
+{* (20140417/straup) *}
+
+{if $smarty.get.deleted}
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	privatesquare_set_status("Okay. That calendar has been deleted.");
+});
+{/literal}
+</script>
+{/if}
+
 {include file="inc_foot.txt"}
