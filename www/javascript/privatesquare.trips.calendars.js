@@ -108,8 +108,9 @@ function privatesquare_trips_calendars_edit_init(){
 	// console.log(args);
 
 	var method = 'privatesquare.trips.calendars.editCalendar';
-
 	privatesquare_api_call(method, args, _privatesquare_trips_calendars_edit_onsuccess);
+
+	privatesquare_set_status("Updating your calendar...");
 	return false;
     });
 
@@ -127,7 +128,7 @@ function privatesquare_trips_calendars_edit_init(){
 	var method = 'privatesquare.trips.calendars.deleteCalendar';
 	privatesquare_api_call(method, args, _privatesquare_trips_calendars_delete_onsuccess);
 
-	privatesquare_set_status("Deleting your calendar now.");
+	privatesquare_set_status("Deleting your calendar now...");
 	return false;
     });
 }
@@ -161,11 +162,23 @@ function privatesquare_trips_calendars_gather_args(){
 }
 
 function _privatesquare_trips_calendars_add_onsuccess(rsp){
-    console.log(rsp);
+
+    if (rsp['stat'] != 'ok'){
+	privatesquare_api_error(rsp);
+	return false;
+    }
+
+    privatesquare_set_status("Boom! Your calendar has been created.");
 }
 
 function _privatesquare_trips_calendars_edit_onsuccess(rsp){
-    console.log(rsp);
+
+    if (rsp['stat'] != 'ok'){
+	privatesquare_api_error(rsp);
+	return false;
+    }
+
+    privatesquare_set_status("Okay! Your calendar has been updated.");
 }
 
 function _privatesquare_trips_calendars_delete_onsuccess(rsp){
