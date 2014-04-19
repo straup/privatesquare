@@ -36,7 +36,7 @@
 
 		$diff = date_diff(date_create($arrival), date_create($departure));
 
-		if (($diff->days) && ($diff->interval)){
+		if (($diff->days) && ($diff->invert)){
 			api_output_error(999, "How can you depart before you arrive? Are you a time lord?");
 		}
 
@@ -145,7 +145,7 @@
 
 		$diff = date_diff(date_create($arrival), date_create($departure));
 
-		if (($diff->days) && ($diff->interval)){
+		if (($diff->days) && ($diff->invert)){
 			api_output_error(999, "How can you depart before you arrive? Are you a time lord?");
 		}
 

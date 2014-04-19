@@ -144,11 +144,12 @@ function privatesquare_trips_add_init(){
 
 function _privatesquare_trips_add_trip_onsuccess(rsp){
 
+    // console.log(rsp);
+
     if (rsp['stat'] != 'ok'){
 	privatesquare_set_status(rsp['error']['error'], "danger");
 
 	$("#add-trip").removeAttr("disabled");
-
 	return false;
     }
 
