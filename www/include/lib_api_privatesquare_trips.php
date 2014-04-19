@@ -209,6 +209,10 @@
 		}
 
 		$trip = $rsp['trip'];
+
+		$map = trips_travel_status_map();
+		$trip['status'] = $map[$trip['status_id']];
+
 		_api_privatesquare_trips_inflate_trip_rsp($trip);
 
 		$out = array(

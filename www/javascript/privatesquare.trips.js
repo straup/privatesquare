@@ -238,6 +238,7 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
     }
 
     var trip = rsp['trip'];
+    // console.log(trip);
 
     var short_name = $("#short-name");
     short_name.html(trip['locality']['woe_name']);
@@ -246,6 +247,12 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
     var long_name = $("#long-name");
     long_name.html(trip['locality']['name']);
 
+    var status_str = $("#trip-status-str");
+
+    if (status_str.html() != trip['status']){
+	status_str.html(trip['status']);
+    }
+	
     $("#where").select2("destroy");
     $("#change-city").show();
 
