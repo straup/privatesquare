@@ -31,7 +31,7 @@
 <select id="calendar-trip-status" name="calendar-trip-status" class="form-control">
 <option value="-1">any type of trip</option>
 {foreach from=$status_map item="label" key="id"}
-<option value="{$id|escape}">{$label|escape}</option>
+<option value="{$id|escape}"{if $id==$calendar.status_id} selected="selected"{/if}>{$label|escape}</option>
 {/foreach}
 </select>
 </div>

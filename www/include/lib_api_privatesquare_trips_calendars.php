@@ -32,6 +32,13 @@
 		}
 
 		if ($woeid = post_int32("woeid")){
+
+			$rsp = whereonearth_fetch_woeid($woeid);
+
+			if (! $rsp['ok']){
+				api_output_error(999, "Invalid WOE ID");
+			}
+
 			$calendar['locality_id'] = $woeid;
 		}
 
@@ -109,11 +116,16 @@
 			$update['include_past'] = $include_past;
 		}
 
-		# TO DO: sanity check woeid
-
 		$woeid = post_int32("woeid");
 
 		if ($woeid != $calendar['locality_id']){
+
+			$rsp = whereonearth_fetch_woeid($woeid);
+
+			if (! $rsp['ok']){
+				api_output_error(999, "Invalid WOE ID");
+			}
+
 			$update['locality_id'] = $woeid;
 		}
 
