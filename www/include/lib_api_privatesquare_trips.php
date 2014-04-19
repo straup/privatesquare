@@ -213,6 +213,14 @@
 		$map = trips_travel_status_map();
 		$trip['status'] = $map[$trip['status_id']];
 
+		$arrival_ts = strtotime($trip['arrival']);
+		$departure_ts = strtotime($trip['departure']);
+
+		$fmt = "F j, Y";
+
+		$trip['arrival_str'] = date($fmt, $arrival_ts);
+		$trip['departure_str'] = date($fmt, $departure_ts);
+		
 		_api_privatesquare_trips_inflate_trip_rsp($trip);
 
 		$out = array(

@@ -247,12 +247,30 @@ function _privatesquare_trips_edit_trip_onsuccess(rsp){
     var long_name = $("#long-name");
     long_name.html(trip['locality']['name']);
 
-    var status_str = $("#trip-status-str");
+    var note = $("#trip-note");
+
+    if (note.html() != trip['note']){
+	note.html(trip['note']);
+    }
+    
+    var status_str = $(".trip-status-str");
 
     if (status_str.html() != trip['status']){
 	status_str.html(trip['status']);
     }
 	
+    var arrival_str = $(".trip-arrival-str");
+
+    if (arrival_str.html() != trip['arrival_str']){
+	arrival_str.html(trip['arrival_str']);
+    }
+
+    var departure_str = $(".trip-departure-str");
+
+    if (departure_str.html() != trip['departure_str']){
+	departure_str.html(trip['departure_str']);
+    }
+
     $("#where").select2("destroy");
     $("#change-city").show();
 
