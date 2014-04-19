@@ -289,14 +289,20 @@
 			$sql[] = "ORDER BY arrival DESC, departure DESC";
 		}
 
+		else if ($more['all']){
+			$sql[] = "ORDER BY arrival DESC, departure DESC";
+		}
+
 		else {
 			$sql[] = "ORDER BY arrival, departure";
 		}
 
 		$sql = implode(" ", $sql);
-		# dumper($sql);
 
 		$rsp = db_fetch_paginated_users($cluster_id, $sql, $more);
+
+		# dumper($sql);
+		# dumper($rsp);
 
 		return $rsp;
 	}
