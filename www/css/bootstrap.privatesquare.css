@@ -333,6 +333,13 @@ h3[contenteditable="true"]:active,
     padding-left: 0;
 }
 
+.trip-col {
+    padding:0 !important;
+}
+
+#trip-atlas {
+}
+
 #trip-meta ul {
     margin: 0;
     padding: 0;

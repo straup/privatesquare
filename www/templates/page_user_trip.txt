@@ -44,7 +44,7 @@
 </div>
 
 {if $atlas and !$trip.departure_past}
-<div class="container">
+<div class="container" id="trip-atlas">
 <h4>Your atlas of desire in <span class="locality-woename">{$trip.locality.woe_name|escape}</span></h4>
 
 {if $atlas_count}
@@ -60,7 +60,7 @@
 <div class="container" id="trip-meta">
 
 {if $trip.arrival_past or $trip.departure_past}
-<div class="row col-md-6" id="trip-checkins">
+<div class="row col-md-6 trip-col" id="trip-checkins">
 
 {if $trip.departure_past}
 <h4>Places you checked in to during this trip</h4>
@@ -140,7 +140,7 @@
 </div>
 {/if}
 
-<div id="trip-venues" class="row col-md-6">
+<div id="trip-venues" class="row col-md-6 trip-col">
 
 <h4>Places you've been to in <span class="locality-woename">{$trip.locality.woe_name|escape}</span></h4>
 
@@ -170,7 +170,7 @@
 
 </div>
 
-<div id="trip-previous" class="row col-md-6">
+<div id="trip-previous" class="row col-md-6 trip-col">
 <h4>Other visits</h4>
 
 {if !$other_trips_pagination.total_count}
