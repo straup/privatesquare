@@ -202,6 +202,18 @@
 
 	########################################################################
 
+	function trips_calendars_share_url(&$calendar){
+
+		$fsq_user = foursquare_users_get_by_user_id($calendar['user_id']);
+
+		$enc_user = urlencode($fsq_user['foursquare_id']);
+		$enc_calendar = urlencode($calendar['id']);
+
+		return "{$GLOBALS['cfg']['abs_root_url']}user/{$enc_user}/trips/calendars/{$enc_calendar}/share/";
+	}
+
+	########################################################################
+
 	function trips_calendars_ics_url(&$calendar){
 
 		$fsq_user = foursquare_users_get_by_user_id($calendar['user_id']);

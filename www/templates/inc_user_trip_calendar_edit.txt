@@ -4,7 +4,7 @@
 {if $calendar}
 
 <div class="pull-right">
-{if $calendar.is_expired}this calendar has <span class="hey-look">expired</span>{else}this calendar has an <a href="{$calendar|@trips_calendars_ics_url}" class="hey-look">ical file</a>{/if}
+{if $calendar.is_expired}this calendar has <span class="hey-look">expired</span>{else}this calendar can be <a href="{$calendar|@trips_calendars_share_url}" class="hey-look">shared</a>{/if}
 </div>
 
 {/if}

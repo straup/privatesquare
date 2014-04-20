@@ -1,0 +1,8 @@
+{capture assign="page_title"}trips | calendars{if $calendar} | {$calendar.name}{/if} | share{/capture}
+{include file="inc_head.txt"}
+
+<p class="lead text-center">
+   <a href="{$calendar|@trips_calendars_ics_url}">{$calendar|@trips_calendars_ics_url}</a>
+</p>
+
+{include file="inc_foot.txt"}
