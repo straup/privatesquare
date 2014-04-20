@@ -36,19 +36,29 @@ function privatesquare_trips_datepicker_init(){
     var arrival_stage = document.getElementById("x-calendar-arrival-wrapper");
     var arrival_cal = arrival_stage.querySelector("x-calendar");
 
+    var departure_stage = document.getElementById("x-calendar-departure-wrapper");
+    var departure_cal = departure_stage.querySelector("x-calendar");
+
     arrival_cal.addEventListener("datetap", function(e){
 	var date = e.detail.date;
 	var dateStr = e.detail.iso;
 	$("#arrival").val(dateStr);
-    });
 
-    var departure_stage = document.getElementById("x-calendar-departure-wrapper");
-    var departure_cal = departure_stage.querySelector("x-calendar");
+	arrival_cal.chosen = date;
+
+	var tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+	departure_cal.view = tomorrow;
+	departure_cal.chosen = tomorrow;
+    });
 
     departure_cal.addEventListener("datetap", function(e){
 	var date = e.detail.date;
 	var dateStr = e.detail.iso;
 	$("#departure").val(dateStr);
+
+	var yesterday = new Date();
+	yesterday.setDate(date.getDate() - 1);
+
     });
 
     /* we now return you to your regurlary scheduled jquery */

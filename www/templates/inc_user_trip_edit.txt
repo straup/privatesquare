@@ -21,7 +21,6 @@
 
 <div class="form-group" id="x-calendar-arrival-wrapper" style="display:none;">
 <x-calendar id="x-calendar-arrival" controls {if $trip.arrival}view="{$trip.arrival|escape}"{/if}></x-calendar>
-{if 0}<button class="btn btn-sm" id="x-calendar-arrival-button" style="display:block;">close</button>{/if}
 </div>
 
 <div class="form-group">
