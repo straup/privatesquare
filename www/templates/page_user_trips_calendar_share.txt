@@ -1,8 +1,38 @@
 {capture assign="page_title"}trips | calendars{if $calendar} | {$calendar.name}{/if} | share{/capture}
 {include file="inc_head.txt"}
 
+<div class="row">
+     <h3>{if $calendar}{$calendar.name|escape}{else}Add a calendar{/if} <small><a href="{$cfg.user|@urls_user}trips/calendars/{$calendar.id|escape}">Edit this calendar</a></small></h3>
+</div>
+
+{if $calendar.is_expired}
+
+<div class="row">
+<p class="lead text-center">This calendar has expired.</p>
+</div>
+
+{else}
+
+<div class="row">
+<p>Words.</p>
+</div>
+
+<div class="row">
 <p class="lead text-center">
    <a href="{$calendar|@trips_calendars_ics_url}">{$calendar|@trips_calendars_ics_url}</a>
 </p>
+</div>
+
+<div class="row">
+<ul>
+{if $calendar.locality_id}<li>This calendar will only include trips to <span class="hey-look">{$calendar.locality.woe_name|escape}</span>.</li>{/if}
+<li>{if $calendar.status_id}{assign var="status_id" value=$calendar.status_id}This calendar only includes trips marked as <span class="hey-look">{$status_map.$status_id|escape}</span>.{else}This calendar does include <span class="hey-look">any kind of trip</span>.{/if}</li>
+<li>{if $calendar.include_notes}This calendar includes <span class="hey-look">trip notes</span>.{else}This calendar does <span class="hey-look">not include</span> trip notes.{/if}</li>
+{if $calendar.include_past}<li>This calendar includes trips <span class="hey-look">from the past</span>.<li>{/if}
+{if $calendar.expires}<li>This calendar expires on <span class="hey-look">{$calendar.expires|@date_format|escape}</span>.</li>{/if}
+</ul>
+</div>
+
+{/if}
 
 {include file="inc_foot.txt"}
