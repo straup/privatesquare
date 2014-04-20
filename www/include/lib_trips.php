@@ -276,7 +276,7 @@
 
 		if (isset($more['status'])){
 			$enc_status = AddSlashes($more['status']);
-			$sql[] = "status_id='{$enc_status}'";
+			$sql[] = "AND status_id='{$enc_status}'";
 		}
 
 		# Sorting
