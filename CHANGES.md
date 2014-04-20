@@ -28,6 +28,7 @@ Add the following to your `config.php` file:
 
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 	$GLOBALS['cfg']['enable_feature_calendars'] = 1;
+	$GLOBALS['cfg']['enable_feature_calendars_include_past'] = 1;
 
 # 2.1.8
 

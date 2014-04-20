@@ -162,7 +162,7 @@ function privatesquare_trips_calendars_gather_args(){
     args['include_notes'] = (include_notes.attr("checked")) ? 1 : 0;
     
     var past_trips = $("#calendar-past-trips");
-    args['past_trips'] = (past_trips.attr("checked")) ? 1 : 0;
+    args['past_trips'] = ((past_trips) && (past_trips.attr("checked"))) ? 1 : 0;
     
     return args;
 }

@@ -58,15 +58,35 @@
 			$more['woeid'] = $woeid;
 		}
 
-		if ($calendar['include_past']){
+		if (($calendar['include_past']) && (features_is_enabled("trips_calendars_include_past"))){
 			$more['when'] = 'all';
 		}
 
 		# kind of trip (status_id)
 
-		if (0){
-			$more['status'] = 'what';
+		if ($id = $calendar['status_id']){
+			$more['status'] = $id;
 		}
+
+		# See what's going on here? Potentially someone might have 10K+ 
+		# trips in a single calendar at which point fetching them all in
+		# a single query would be bad but I am going to wait until that
+		# actually happens before worrying about it. (20140420/straup)
+
+		if (($calendar['include_past']) && (features_is_enabled("trips_calendars_include_past"))){
+
+			$more['per_page'] = 1;
+
+			$rsp = trips_get_for_user($user, $more);
+
+			if (! $rsp['ok']){
+				return $rsp;
+			}
+
+			$total = $rsp['pagination']['total_count'];
+			$more['per_page'] = $total;
+		}
+
 
 		$rsp = trips_get_for_user($user, $more);
 		return $rsp;

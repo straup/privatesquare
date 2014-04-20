@@ -42,11 +42,13 @@
 </label>
 </div>
 
+{if "trips_calendars_include_past"|@features_is_enabled}
 <div class="form-group">
 <label for="calendar-past-trips">Include past trips
 <input type="checkbox" name="calendar-past-trips" id="calendar-past-trips" {if $calendar and $calendar.include_past} checked="true"{/if}/>
 </label>
 </div>
+{/if}
 
 {* http://mozilla.github.io/brick/demos/x-tag-calendar/index.html *}
 <div class="form-group">

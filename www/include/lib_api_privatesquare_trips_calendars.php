@@ -14,6 +14,10 @@
 		$include_notes = (post_int32("include_notes")) ? 1 : 0;
 		$include_past = (post_int32("past_trips")) ? 1 : 0;
 
+		if (($include_past) && (! features_is_enabled("trips_calendars_include_past"))){
+			api_output_error(999, "Past trips are currently disabled");
+		}
+
 		$calendar = array(
 			'user_id' => $GLOBALS['cfg']['user']['id'],
 			'include_notes' => $include_notes,
@@ -111,6 +115,10 @@
 		}
 
 		$include_past = post_int32("past_trips");
+
+		if (($include_past) && (! features_is_enabled("trips_calendars_include_past"))){
+			api_output_error(999, "Past trips are currently disabled");
+		}
 
 		if ($include_past != $calendar['include_past']){
 			$update['include_past'] = $include_past;
