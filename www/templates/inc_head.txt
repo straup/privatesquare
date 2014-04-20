@@ -62,7 +62,7 @@
 	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-calendar.min.css" />
 
 	{if $cfg.environment=='prod'}
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.min.js"></script>
 	{else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
