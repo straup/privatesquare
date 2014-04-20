@@ -41,7 +41,6 @@
 {if "deferred_checkins"|@features_is_enabled}
 {if $cfg.environment=='prod'}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.min.js"></script>
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.min.js"></script>
 {else}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.js"></script>
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.js"></script>
