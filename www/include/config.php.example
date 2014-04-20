@@ -95,7 +95,7 @@
 
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 	$GLOBALS['cfg']['enable_feature_trips_calendars'] = 1;
-	$GLOBALS['cfg']['enable_feature_trips_calendars_include_past'] = 1;
+	$GLOBALS['cfg']['enable_feature_trips_calendars_include_past'] = 0;
 
 	# See also: 'Configuring fancy stuff – sending check-ins to Little Printer'
 	# in the README.md file for details
