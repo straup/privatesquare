@@ -257,7 +257,8 @@
 			api_output_error(999, "Missing trip ID");
 		}
 
-		$trip = trips_get_by_id($trip_id);
+		$owner = $GLOBALS['cfg']['user'];
+		$trip = trips_get_by_id($owner, $trip_id);
 
 		if (! $trip){
 			api_output_error(999, "Invalid trip ID");
