@@ -33,9 +33,9 @@
 	function trips_travel_status_map($string_keys=0){
 
 		$map = array(
-			0 => 'tentative',
-			1 => 'confirmed',
-			2 => 'wishful thinking',
+			1 => 'tentative',
+			2 => 'confirmed',
+			3 => 'wishful thinking',
 		);
 
 		if ($string_keys){
