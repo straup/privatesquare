@@ -152,14 +152,17 @@
 
 	########################################################################
 
-	# SEE THIS: IT MEANS WE NEED TO FIGURE OUT WHERE WE STORE Trips...
+	# See this: Not ideal but we're going to punt on it until we bother
+	# sorting out the details around sharing things with (not-you) in
+	# privatesquare (20140420/straup)
 
-	function trips_get_by_id($id){
+	function trips_get_by_id(&$owner, $id){
 
+		$cluster = $owner['cluster_id'];
 		$enc_id = AddSlashes($id);
 
 		$sql = "SELECT * FROM Trips WHERE id='{$enc_id}'";
-		$rsp = db_fetch($sql);
+		$rsp = db_fetch_users($cluster, $sql);
 		$row = db_single($rsp);
 
 		return $row;
@@ -167,14 +170,17 @@
 
 	########################################################################
 
-	# SEE THIS: IT MEANS WE NEED TO FIGURE OUT WHERE WE STORE Trips...
+	# See this: Not ideal but we're going to punt on it until we bother
+	# sorting out the details around sharing things with (not-you) in
+	# privatesquare (20140420/straup)
 
-	function trips_get_by_dopplr_id($id){
+	function trips_get_by_dopplr_id(&$owner, $id){
 
+		$cluster = $owner['cluster_id'];
 		$enc_id = AddSlashes($id);
 
 		$sql = "SELECT * FROM Trips WHERE dopplr_id='{$enc_id}'";
-		$rsp = db_fetch($sql);
+		$rsp = db_fetch_users($cluster, $sql);
 		$row = db_single($rsp);
 
 		return $row;

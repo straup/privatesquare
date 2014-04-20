@@ -14,11 +14,11 @@
 	$GLOBALS['smarty']->assign_by_ref("owner", $user);
 
 	if ($id = get_int64("trip_id")){
-		$trip = trips_get_by_id($id);
+		$trip = trips_get_by_id($user, $id);
 	}
 
 	elseif ($id = get_int32("dopplr_id")){
-		$trip = trips_get_by_dopplr_id($id);
+		$trip = trips_get_by_dopplr_id($user, $id);
 	}
 
 	else {
