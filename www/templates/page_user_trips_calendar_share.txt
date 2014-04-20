@@ -14,23 +14,38 @@
 {else}
 
 <div class="row">
-<p>Words.</p>
+<p>The link below will allow you to share this calendar with other people. It contains all the trips that you've chose for this calendar formatted as an <code>iCal</code> file, which means it can be read and displayed by most calendar applications. This calendar includes the following information:</p>
+
+<ul>
+{if $calendar.locality_id}<li>This calendar will only include trips to <span class="hey-look">{$calendar.locality.woe_name|escape}</span>.</li>{/if}
+
+<li>{if $calendar.status_id}{assign var="status_id" value=$calendar.status_id}This calendar only includes trips marked as <span class="hey-look">{$status_map.$status_id|escape}</span>.{else}This calendar includes <span class="hey-look">any kind of trip</span>, regardless of its status (pending, confirmed, etc.){/if}</li>
+
+<li>{if $calendar.include_notes}This calendar includes <span class="hey-look">trip notes</span>.{else}This calendar does <span class="hey-look">not include</span> trip notes.{/if}</li>
+
+{if $calendar.include_past}<li>This calendar includes trips <span class="hey-look">from the past</span>.</li>{/if}
+
+{if $calendar.expires}<li>This calendar expires on <span class="hey-look">{$calendar.expires|@date_format|escape}</span>.</li>{/if}
+</ul>
+
+<p>Sharing calendars works by using a technique called &#8220;casual privacy&#8221; which requires creating a secret code long enough as to be effectively unguessable and allows a person who is not logged in to privatesquare as you to see this calendar. That's the <code>?c=GIBBERISH</code> stuff in the link. It also relies on the link being accessed over an encrypted connection. That's the <code>https://</code> stuff in the link.</p>
+
+<p>If you're using a version of privatesquare that does not use encrypted connections then you might want to reconsider using shared calendars at all. Without encryption anyone who happens to be listening on the same network and sees that URL will be able to see the trips associated with a given calendar. It is worth noting that if you're not using a version of privatesquare with encrypted connections then someone might have already seen your secret URL since it is included in the content of this page...</p>
+
+<p>On some levels the same thing applies to sharing that URL, whether or not it is encrypted, via email or some other broadcast mechanism. <em>If someone can see the secret code they can see the trips for that calendar.</em> If all of this sounds a bit paranoid and like a trip tin-foil hat territory that's because it is. It's mostly a question of degree and awareness. If you're worried about the modern security state knowing about your trips then you shouldn't be using privatesquare to hide from people in the first place. Also, chances are good that they already know where you're going by a number of other means.</p>
+
+<p>The same is probably true of entities like Google but understand that even if <em>you</em> don't use those services when you send this link to someone with a GMail account you should expect that sooner or later a robot will follow the URL and no one really has any idea what sort of freakish stew these companies are brewing with all the information they collect.</p>
+
+<p>Casual privacy is not a perfect solution. It is meant to be a kind of acceptible middle ground to account for the fact that most calendaring software doesn't have any way to prompt people for login credentials and privatesquare doesn't have any concept of relationships (or permissions) between users. Calendars can be deleted at any time. You can also configure a calendar to stop including updates after a certain dates. In both cases though if someone has already subscribed to a calendar then you should assume they have access to any trips already included. In the end few of us lead lives with the kind of intrigue that warrant anything more than casual privacy but better to understand what's going on than not.</p>
+
+<p>Right?</p>
+
 </div>
 
 <div class="row">
 <p class="lead text-center">
    <a href="{$calendar|@trips_calendars_ics_url}">{$calendar|@trips_calendars_ics_url}</a>
 </p>
-</div>
-
-<div class="row">
-<ul>
-{if $calendar.locality_id}<li>This calendar will only include trips to <span class="hey-look">{$calendar.locality.woe_name|escape}</span>.</li>{/if}
-<li>{if $calendar.status_id}{assign var="status_id" value=$calendar.status_id}This calendar only includes trips marked as <span class="hey-look">{$status_map.$status_id|escape}</span>.{else}This calendar does include <span class="hey-look">any kind of trip</span>.{/if}</li>
-<li>{if $calendar.include_notes}This calendar includes <span class="hey-look">trip notes</span>.{else}This calendar does <span class="hey-look">not include</span> trip notes.{/if}</li>
-{if $calendar.include_past}<li>This calendar includes trips <span class="hey-look">from the past</span>.<li>{/if}
-{if $calendar.expires}<li>This calendar expires on <span class="hey-look">{$calendar.expires|@date_format|escape}</span>.</li>{/if}
-</ul>
 </div>
 
 {/if}
