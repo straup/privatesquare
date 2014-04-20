@@ -46,9 +46,15 @@ function privatesquare_trips_datepicker_init(){
 
 	arrival_cal.chosen = date;
 
-	var tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
-	departure_cal.view = tomorrow;
-	departure_cal.chosen = tomorrow;
+	var dateStr = date.toISOString();
+	var parts = dateStr.split('T');
+	var ymd = parts[0];
+
+	//var tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+
+	departure_cal.view = date;
+	departure_cal.chosen = date;
+	$("#departure").val(ymd);
     });
 
     departure_cal.addEventListener("datetap", function(e){
@@ -56,8 +62,22 @@ function privatesquare_trips_datepicker_init(){
 	var dateStr = e.detail.iso;
 	$("#departure").val(dateStr);
 
-	var yesterday = new Date();
-	yesterday.setDate(date.getDate() - 1);
+	departure_cal.chosen = date;
+
+	if (arrival_cal.chosen > date){
+
+	    // var yesterday = new Date();
+	    // yesterday.setDate(date.getDate() - 1);
+	    
+	    arrival_cal.view = date;
+	    arrival_cal.chosen = date;
+
+	    var dateStr = date.toISOString();
+	    var parts = dateStr.split('T');
+	    var ymd = parts[0];
+
+	    $("#arrival").val(ymd);
+	}
 
     });
 
