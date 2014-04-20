@@ -29,7 +29,7 @@
 			$status_id = post_int32("status_id");
 
 			if (! trips_is_valid_status_id($status_id)){
-				api_outout_error(999, "Invalid status ID");
+				api_output_error(999, "Invalid status ID");
 			}
 
 			$calendar['status_id'] = $status_id;
@@ -102,7 +102,7 @@
 			$status_id = post_int32("status_id");
 
 			if (! trips_is_valid_status_id($status_id)){
-				api_outout_error(999, "Invalid status ID");
+				api_output_error(999, "Invalid status ID: '{$status_id}'");
 			}
 
 			$update['status_id'] = $status_id;
