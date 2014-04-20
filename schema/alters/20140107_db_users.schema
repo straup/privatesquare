@@ -21,5 +21,9 @@ CREATE TABLE `Trips` (
   KEY `by_user_created` (`user_id`, `created`),
   KEY `by_user_locality` (`user_id`, `locality_id`, `arrival`, `departure`),
   KEY `by_user_region` (`user_id`, `region_id`, `arrival`, `departure`),
-  KEY `by_user_country` (`user_id`, `country_id`, `arrival`, `departure`)
+  KEY `by_user_country` (`user_id`, `country_id`, `arrival`, `departure`),
+  KEY `by_user_trip` (`user_id`, `arrival`, `departure`),
+  KEY `by_user_trip_locality` (`user_id`, `locality_id`, `arrival`, `departure`),
+  KEY `by_user_trip_status` (`user_id`, `status_id`, `arrival`, `departure`),
+  KEY `by_user_trip_locality_status` (`user_id`, `locality_id`, `status_id`, `arrival`, `departure`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8;

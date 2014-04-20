@@ -207,11 +207,18 @@
 
 		$sql = array();
 
-		# TO DO: indexes (20140320/straup)
+		# We should have indexes for most of the possibilities but
+		# there may be some that have not been accounted for yet...
+		# (20140420/straup)
 
 		$sql[] = "SELECT * FROM Trips WHERE user_id='{$enc_id}'";
 
 		# Geo
+
+		# On the subject of indexes, we don't have all the compound
+		# indexes for 'region_id' or 'country_id' because you can't
+		# create trip calendars for those place types.
+		# (20140420/straup)
 
 		if (($more['where']) && ($more['woeid'])){
 
@@ -228,6 +235,13 @@
 				$enc_trip = AddSlashes($more['exclude_trip']);
 				$sql[] = " AND id != '{$enc_trip}'";			
 			}
+		}
+
+		# State (mostly for calendars)
+
+		if (isset($more['status'])){
+			$enc_status = AddSlashes($more['status']);
+			$sql[] = "AND status_id='{$enc_status}'";
 		}
 
 		# Dates
@@ -276,13 +290,6 @@
 
 		if ($more['when'] == 'upcoming'){
 			$sql[] = "AND `departure` >= NOW()";
-		}
-
-		# State (mostly for calendars)
-
-		if (isset($more['status'])){
-			$enc_status = AddSlashes($more['status']);
-			$sql[] = "AND status_id='{$enc_status}'";
 		}
 
 		# Sorting
