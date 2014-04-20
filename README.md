@@ -234,6 +234,14 @@ If you want to run `<root>/bin/sync-foursquare.php` you'll need to make your you
 	PATH=/Applications/MAMP/Library/bin:/Applications/MAMP/bin/php/php5.3.6/bin:$PATH
 	export $PATH
 
+## Configuring fancy stuff – Trips (and calendars)
+
+TBW
+
+	$GLOBALS['cfg']['enable_feature_trips'] = 1;
+	$GLOBALS['cfg']['enable_feature_trips_calendars'] = 1;
+	$GLOBALS['cfg']['enable_feature_trips_calendars_include_past'] = 0;
+
 ## Configuring fancy stuff – Artisanal Integers
 
 By default privatesquare generates its own internal check in IDs using a local ticket server. One side effect of this approach is that it makes it difficult to reliably merge two (or more) separate instances of privatesquare because its likely that each instance will have issued the same ID for different check ins.
