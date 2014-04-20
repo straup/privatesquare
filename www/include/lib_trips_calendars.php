@@ -218,8 +218,10 @@
 		$enc_user = urlencode($fsq_user['foursquare_id']);
 		$enc_hash = urlencode($calendar['hash']);
 
-		return "{$GLOBALS['cfg']['abs_root_url']}user/{$enc_user}/trips/calendars.ics?c={$enc_hash}";
+		# See also: Github issue #42 (20140420/straup)
+		# return "{$GLOBALS['cfg']['abs_root_url']}user/{$enc_user}/trips/calendars.ics?c={$enc_hash}";
 
+		return "{$GLOBALS['cfg']['abs_root_url']}calendars/?c={$enc_hash}";
 	}
 
 	########################################################################

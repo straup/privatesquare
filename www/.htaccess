@@ -157,7 +157,9 @@ RewriteRule ^user/([0-9]+)/trips/calendars/([0-9]+)/?$				user_trips_calendar.ph
 RewriteRule ^user/([0-9]+)/trips/calendars/([0-9]+)/share/?$			user_trips_calendar_share.php?foursquare_id=$1&id=$2&%{QUERY_STRING}	[L]
 
 # Include user ID at all? (20140305/straup)
-RewriteRule ^user/([0-9]+)/trips/calendars\.ics$					user_trips_calendar_ics.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+# See also: Github issue #42 (20140420/straup)
+RewriteRule ^user/([0-9]+)/trips/calendars\.ics$				user_trips_calendar_ics.php?foursquare_id=$1&%{QUERY_STRING}	[L]
+RewriteRule ^calendars/?$							user_trips_calendar_ics.php?%{QUERY_STRING}	[L]
 
 # See this. It's the *last* rule because it basically catches everything
 
