@@ -10,7 +10,7 @@
 {include file="inc_head.txt"}
 
 <div class="row">
-<h3>Add a new trip</h3>
+<h3>Add a new trip <small><a href="{$cfg.abs_root_url}me/trips/">All your trips</a></small></h3>
 </div>
 
 <div class="row">
