@@ -26,7 +26,7 @@
 <tr{if $row.is_expired} class="danger"{/if}>
 <td><a href="{$cfg.abs_root_url}me/trips/calendars/{$row.id|escape}/">{$row.id|escape}</a></td>
 <td>{$row.name|escape}</td>
-<td>{if $row.is_expired}&#8212;{else}<a href="{$cfg.abs_root_url}user/{$foursquare_user.foursquare_id|escape}/trips/calendars.ics?c={$row.hash|escape}">{$row.hash|escape}</a>{/if}</td>
+<td>{if $row.is_expired}&#8212;{else}<a href="{$row|@trips_calendars_ics_url}">{$row.hash|escape}</a>{/if}</td>
 <td>{if $row.locality_id}{$row.locality.woe_name|escape}{else}&#8212;{/if}</td>
 <td>{$row.created|@date_format|escape}</td>
 <td>{if $row.expires}{$row.expires|@date_format|escape}{else}&#8212;{/if}</td>
