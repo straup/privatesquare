@@ -52,6 +52,24 @@
 
 {/if}
 
+	{if $include_trip_dependencies}
+
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
+
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/brick-calendar.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-calendar.min.css" />
+
+	{if $cfg.environment=='prod'}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.min.js"></script>
+	{else}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
+	{/if}
+
+	{/if}
+
 	{$extra_head}
   </head>
 

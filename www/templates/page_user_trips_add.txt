@@ -1,13 +1,5 @@
 {capture assign="page_title"}trips | add a new trip{/capture}
-{capture assign="extra_head"}
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
-<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
-<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/brick-1.0.0.byob.min.js"></script>
-<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-1.0.0.byob.min.css" />
-<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
-{/capture}
-{include file="inc_head.txt"}
+{include file="inc_head.txt" include_trip_dependencies=1}
 
 <div class="row">
 <h3>Add a new trip <small><a href="{$cfg.abs_root_url}me/trips/">All your trips</a></small></h3>
