@@ -8,7 +8,7 @@
      {else}
      Your trips in {$year|escape}
      {/if}
-     <small><a href="{$cfg.abs_root_url}user/trips/add/">Add a trip</a></small>
+     <small><a href="{$cfg.abs_root_url}me/trips/add/">Add a trip</a></small>
      </h3>
 </div>
 
