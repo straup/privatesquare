@@ -43,6 +43,15 @@
 			"library": "api_privatesquare_trips"
 		},
 
+		"privatesquare.geo.geocode": {
+			"documented": 0,
+			"enabled": 1,
+			"requires_auth": 1,
+			"requires_crumb": 0,
+			"crumb_ttl": 600,
+			"library": "api_privatesquare_geo"
+		},
+
 		"privatesquare.trips.deleteTrip": {
 			"documented": 0,
 			"enabled": 1,
