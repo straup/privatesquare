@@ -1,5 +1,5 @@
-{capture assign="page_title"}trips | calendars{if $calendar} | {$calendar.name}{/if}{/capture
-}
+{capture assign="page_title"}trips | calendars{if $calendar} | {$calendar.name}{/if}{/capture}
+{include file="inc_head.txt" include_trip_dependencies=1}
 
 <div class="row">
      <h3>{if $calendar}{$calendar.name|escape}{else}Add a calendar{/if} <small><a href="{$cfg.user|@urls_user}trips/calendars/">All your calendars</a></small></h3>
