@@ -1,3 +1,5 @@
+		{assign var="status" value=$trip.status_id}
+
 		{if $trip.arrival_past and $trip.departure_past}
 
 		{if $status_map.$status=='tentative'}
