@@ -1,5 +1,7 @@
 # 2.2
 
+Merged in to `master` 2014-04-23
+
 ## In broad strokes
 
 * Trips! Dopplr!!

@@ -236,7 +236,9 @@ If you want to run `<root>/bin/sync-foursquare.php` you'll need to make your you
 
 ## Configuring fancy stuff – Trips (and calendars)
 
-TBW
+Trips allow you to record a visit to a given city. All the database and code-y bits are included by default so you just need to enable them in your config file, like this. Once enabled a "trips" section will appear in the menu bar on the right.
+
+The trips feature also has the concept of shared calendar which allows you to publish trips matching a set of criteria as an ".ics" file. This functionality can be disabled independent of trips, proper. There is also a config flag to prevent users from being able to include past trips (at all) in their shared calendars. The reasons for wanting or needing to do that are left as an exercise to the reader.
 
 	$GLOBALS['cfg']['enable_feature_trips'] = 1;
 	$GLOBALS['cfg']['enable_feature_trips_calendars'] = 1;
@@ -304,6 +306,18 @@ To enable deferred check-ins make sure the following flags are enabled in your
 _Note: Offline checkins used to be part of privatesquare prior to version "2"
 but were removed because it never seemed to work very well and HTML5's offline
 cache is still a giant pool of pain and confusion._
+
+## Configuring fancy stuff - (Foursquare) OAuth2 token swapping
+
+This allows a user to login in and update an mismatched OAuth2 token that comes
+back from foursquare by using the token to lookup a user via the Foursquare API
+and to then check for a corresponding local user by the email address (included
+in the foursquare response). If a match is found then the OAuth2 token associated
+with the local user (and foursquare_user) will be updated. You might want to do
+this if you need to migrate your privatesquare instance from one domain to
+another and you need to create a new Foursquare application. Use with caution.
+
+	$GLOBALS['cfg']['enable_feature_oauth_token_swap'] = 1;
 
 ## Configuring fancy stuff - sending check-ins to Little Printer
 
