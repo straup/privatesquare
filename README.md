@@ -13,7 +13,12 @@ Check-ins can be sent on to Foursquare (and again re-broadcast to Twitter, etc,
 or to your followers or just *"off the grid"*) but the important part is: *They
 don't have to be.*
 
-Meanwhile, [here's a blog post](http://nearfuturelaboratory.com/2012/01/22/privatesquare/).
+## The Long Version(s)
+
+* [Announcing privatesquare](http://nearfuturelaboratory.com/2012/01/22/privatesquare/)
+* [The Atlas of Desire](http://nearfuturelaboratory.com/2012/09/04/the-atlas-of-desire/)
+* [privatesquare two dot oh](http://www.aaronland.info/weblog/2013/12/07/history/#privatesquare)
+* [Trips - aka "parallel-dopplr"](http://www.aaronland.info/weblog/2014/04/21/mirrors/#trips)
 
 ## Installation - The Short Version
 
