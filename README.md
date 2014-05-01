@@ -15,10 +15,10 @@ don't have to be.*
 
 ## The Long Version(s)
 
-* [Announcing privatesquare](http://nearfuturelaboratory.com/2012/01/22/privatesquare/)
-* [The Atlas of Desire](http://nearfuturelaboratory.com/2012/09/04/the-atlas-of-desire/)
-* [privatesquare two dot oh](http://www.aaronland.info/weblog/2013/12/07/history/#privatesquare)
-* [Trips - aka "parallel-dopplr"](http://www.aaronland.info/weblog/2014/04/21/mirrors/#trips)
+* [Announcing privatesquare](http://nearfuturelaboratory.com/2012/01/22/privatesquare/), January 2012
+* [The Atlas of Desire](http://nearfuturelaboratory.com/2012/09/04/the-atlas-of-desire/), September 2012
+* [privatesquare two dot oh](http://www.aaronland.info/weblog/2013/12/07/history/#privatesquare), December 2013
+* [Trips - aka "parallel-dopplr"](http://www.aaronland.info/weblog/2014/04/21/mirrors/#trips), April 2014
 
 ## Installation - The Short Version
 
