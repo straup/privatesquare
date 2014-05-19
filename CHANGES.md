@@ -1,3 +1,11 @@
+# 2.2.1
+
+Merged in to `master` 2014-05-19
+
+## In broad strokes
+
+Added `stateofmind` venue for "waiting for the toilet".
+
 # 2.2
 
 Merged in to `master` 2014-04-23
