@@ -8,8 +8,8 @@
 
 	#################################################################
 
-	$GLOBALS['cfg']['flickr_api_endpoint'] = 'http://api.flickr.com/services/rest/';
-	$GLOBALS['cfg']['flickr_auth_endpoint'] = 'http://api.flickr.com/services/auth/';
+	$GLOBALS['cfg']['flickr_api_endpoint'] = 'https://api.flickr.com/services/rest/';
+	$GLOBALS['cfg']['flickr_auth_endpoint'] = 'https://api.flickr.com/services/auth/';
 
 	#################################################################
 

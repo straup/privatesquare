@@ -1,3 +1,11 @@
+# 2.2.2
+
+Merged in to `master` 2014-06-29
+
+## In broad strokes
+
+Updated Flickr API endpoint to use HTTPS.
+
 # 2.2.1
 
 Merged in to `master` 2014-05-19
