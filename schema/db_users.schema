@@ -14,7 +14,6 @@ CREATE TABLE `PrivatesquareCheckins` (
   `region` INT(11) UNSIGNED NOT NULL,
   `country` INT(11) UNSIGNED NOT NULL,
   `checkin_id` VARCHAR(64),
-  `timezone` INT(11) UNSIGNED NOT NULL,
   `ymd` DATE,
   `year` SMALLINT UNSIGNED NOT NULL,
   `month` TINYINT UNSIGNED NOT NULL,
