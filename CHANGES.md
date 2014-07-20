@@ -1,18 +1,27 @@
-# 2.2.2
+# 2.2.21
 
-Merged in to `master` 2014-06-29
+Merged in to `master` 2014-07-20
 
 ## In broad strokes
 
-Updated Flickr API endpoint to use HTTPS.
+* Fixed error in `db_users` schema per pull request #44 (thanks @lostfocus)
+* Fixed NYPL building endpoint per pull request #43 (thanks @riordan)
+
+# 2.2.2
+
+* Merged in to `master` 2014-06-29
+
+## In broad strokes
+
+* Updated Flickr API endpoint to use HTTPS.
 
 # 2.2.1
 
-Merged in to `master` 2014-05-19
+* Merged in to `master` 2014-05-19
 
 ## In broad strokes
 
-Added `stateofmind` venue for "waiting for the toilet".
+* Added `stateofmind` venue for "waiting for the toilet".
 
 # 2.2
 
