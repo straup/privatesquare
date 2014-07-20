@@ -2,7 +2,7 @@
 
 	loadlib("http");
 
-	$GLOBALS['nypl_gazetteer_endpoint'] = 'http://dev.nypl.gazetteer.in/1.0/';
+	$GLOBALS['nypl_gazetteer_endpoint'] = 'http://dev.gazetteer.us/1.0/';
 
 	########################################################################
 
