@@ -1,6 +1,8 @@
 {assign var="page_title" value="account"}
 {include file="inc_head.txt"}
 
+<p class="alert alert-info">You are signed in with your <strong>{$cfg.user.email_obfuscated|escape}</strong> email address.</p>
+
 {if "signin_email"|@features_is_enabled}
 <div class="row">
 <h3>Account</h3>
