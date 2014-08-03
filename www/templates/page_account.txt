@@ -1,6 +1,17 @@
 {assign var="page_title" value="account"}
 {include file="inc_head.txt"}
 
+{if "signin_email"|@features_is_enabled}
+<div class="row">
+<h3>Account</h3>
+
+<ul>
+	<li><a href="{$cfg.abs_root_url}account/password/">Change your password</a></li>
+</ul>
+
+</div>
+{/if}
+
 <div class="row">
 <h3>Export</h3>
 

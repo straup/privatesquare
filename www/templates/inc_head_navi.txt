@@ -84,6 +84,9 @@
 		</li>
 
 		{else}
+		{if "signin_email"|@features_is_enabled}
+		<li id="signin"><a href="{$cfg.abs_root_url}signin/email/">sign in</a></li>
+		{/if}
 		<li id="signin"><a href="{$cfg.abs_root_url}signin/">sign in w/ 4sq</a></li>
 		{/if}
 		{/if}
