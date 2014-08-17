@@ -1,6 +1,14 @@
+# 2.2.22
+
+ Merged in to `master` 2014-08-17
+
+## In broad strokes
+
+* Updated 4sq OAuth URLS per pull request #46 (thanks @edent)
+
 # 2.2.21
 
-Merged in to `master` 2014-07-20
+ Merged in to `master` 2014-07-20
 
 ## In broad strokes
 

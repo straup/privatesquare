@@ -343,6 +343,13 @@ their [Direct Print API
 code](http://remote.bergcloud.com/developers/direct_print_codes) and enable
 check-ins to be sent to their printer. The output looks something [like this](http://www.flickr.com/photos/straup/8475131836/).
 
+## Contributors
+
+* @vicchi
+* @lostfocus
+* @riordan
+* @edent
+
 ## See also
 
 * [flamework](https://github.com/exflickr/flamework)
