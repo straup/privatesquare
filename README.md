@@ -33,7 +33,7 @@ file and name it `config.php`. You will need to update this new file and add the
 various specifics for databases and third-party APIs.
 
 	# You will need valid foursquare OAuth credentials
-	# See also: https://foursquare.com/oauth/register
+	# See also: https://foursquare.com/developers/apps
 
 	$GLOBALS['cfg']['foursquare_oauth_key'] = '';
 	$GLOBALS['cfg']['foursquare_oauth_secret'] = '';
@@ -105,7 +105,7 @@ This rest of this section will assume the following:
 * That `<root>` is the path on your webserver where your web server has been configured to find the sub-domain.
 * That you have shell access (probably via SSH) to your web server.
 
-Register with Foursquare - go to https://foursquare.com/oauth/register
+Register with Foursquare - go to https://foursquare.com/developers/apps
 
 * Set the *Application name* to `privatesquare` (or something that means something to you)
 * Set the *Application web site* to `http://privatesquare.example.com`
