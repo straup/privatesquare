@@ -1,12 +1,9 @@
 <?php
-	#
-	# $Id$
-	#
-
 	include("include/init.php");
 
+	features_ensure_enabled("signin");
+	
 	login_ensure_loggedin();
-
 
 	#
 	# crumb key
@@ -14,7 +11,6 @@
 
 	$crumb_key = 'logout';
 	$smarty->assign("crumb_key", $crumb_key);
-
 
 	#
 	# sign out?
@@ -34,4 +30,3 @@
 	#
 
 	$smarty->display("page_signout.txt");
-?>

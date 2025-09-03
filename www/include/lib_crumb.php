@@ -1,9 +1,5 @@
 <?php
 
-	#
-	# $Id$
-	#
-
 	#################################################################
 
 	function crumb_generate($key, $target=''){
@@ -33,6 +29,8 @@
 		return '<input type="hidden" name="crumb" value="'.$crumb.'" />';
 	}
 
+	$GLOBALS["smarty"]->registerPlugin("modifier", "crumb_input", "crumb_input");
+	
 	#################################################################
 
 	function crumb_qs($key, $target=''){
@@ -66,6 +64,11 @@
 		$hash_test = str_split($hash_test);
 
 		$len_hash = count($hash);
+		$len_test = count($hash_test);
+
+		if ($len_hash != $len_test){
+			return 0;
+		}
 
 		for ($i=0; $i < $len_hash; $i++){
 
@@ -94,15 +97,24 @@
 			$key,
 			$GLOBALS['_SERVER']['HTTP_USER_AGENT'],
 			$target,
-			$GLOBALS['_SERVER']['REMOTE_ADDR'],	# check if mobile?
 		);
 
 		# if they're signed in, use their account
 
-		if ($GLOBALS['cfg']['user']['id']){
+		if (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user']['id'])){
 
 			$data[] = $GLOBALS['cfg']['user']['id'];
 			$data[] = md5($GLOBALS['cfg']['user']['conf_code']);
+
+		}
+		
+		# if not use the remote address - we don't use the remote
+		# address if a person is logged in in case we are running
+		# everything behind an AWS ALB which doesn't do consistent
+		# hashing between hosts (20200826/thisisaaronland)
+
+		else {
+			$data[] = remote_addr();
 		}
 
 		# this is a nice idea but likely to cause more pain than it's
@@ -111,6 +123,8 @@
 		# $data[] = php_uname();
 
 		$base = implode(':', $data);
+		# error_log("crumb base '{$base}'");
+
 		return $base;
 	}
 
@@ -122,4 +136,3 @@
 	}
 
 	#################################################################
-?>

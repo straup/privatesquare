@@ -1,12 +1,15 @@
 <?php
-	#
-	# $Id$
-	#
-
 	include("include/init.php");
+
+	if ($GLOBALS['cfg']['users_use_module'] != "flamework"){
+		error_404();
+	}
 
 	login_ensure_loggedin();
 
+	if ($GLOBALS['cfg']['users_use_module'] != "flamework"){
+		error_404();
+	}
 
 	#
 	# generate a crumb
@@ -49,5 +52,3 @@
 	#
 
 	$smarty->display("page_account_delete.txt");
-	exit;
-?>

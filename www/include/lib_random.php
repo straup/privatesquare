@@ -1,9 +1,5 @@
 <?php
 
-	#
-	# $Id$
-	#
-
 	function random_string($length=52){
 
 		$parts = array();
@@ -29,4 +25,3 @@
 		return implode("", $parts);
 	}
 
-?>

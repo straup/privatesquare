@@ -1,7 +1,7 @@
 <?php
 
 	#################################################################
-
+	
 	function features_is_enabled($flags){
 
 		if (! is_array($flags)){
@@ -21,11 +21,22 @@
 			if (! $GLOBALS['cfg'][$flag]){
 				return 0;
 			}
+
+			// should this be "user" or... ?
+			// should this be a list of roles or... ?
+			// (20200825/thisisaaronland)
+			
+			if ($GLOBALS['cfg'][$flag] == "user"){
+
+				if (! login_check_login()){
+					return 0;
+				}
+			}
 		}
 
 		return 1;
 	}
-
+	
 	#################################################################
 
 	function features_ensure_enabled($flags){
@@ -38,5 +49,5 @@
 	}
 
 	#################################################################
-
+	
 	# the end

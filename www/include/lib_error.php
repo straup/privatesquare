@@ -10,22 +10,36 @@
 
 	function error_404($msg=null){
 
-		$url  = $_SERVER['REQUEST_URI'];
-		$orig = $_SERVER['REDIRECT_URL'];
-
+		$url  = (array_key_exists("REQUEST_URI", $_SERVER)) ? $_SERVER['REQUEST_URI'] : "";
+		$orig = (array_key_exists("REQUEST_URL", $_SERVER)) ? $_SERVER['REDIRECT_URL'] : "";
 
 		#
-		# try adding a slash at the end if:
+		# try removing a slash at the end if:
 		# 1) we've not already mapped it through a RewriteRule
-		# 2) it doesn't look like a filename
-		# 3) it doesn't already have a slash at the end
+		# 2) it currently has a slash at the end
 		#
 
-		if ($url == $orig){
-			$last_part = array_pop((explode('/', $url)));
-			if (preg_match('!^[^\.]+$!', $last_part)){
+		$url_path = null;
+		$url_qs = null;
 
-				header("location: $url/");
+		$url_parts = explode('?', $url, 2);
+
+		switch (count($url_parts)){
+		case 2:
+			$url_path = $url_parts[0];
+			$url_qs = $url_parts[1];
+			break;
+		case 1;		   
+			$url_path = $url_parts[0];
+			break;
+		default:
+			// pass
+		}
+		
+		if ($url_path == $orig){
+			if (substr($url_path, -1) == '/'){
+				if (strlen($url_qs)) $url_qs = '?'.$url_qs;
+				header("location: ".substr($url_path, 0, -1).$url_qs);
 				exit;
 			}
 		}
@@ -35,17 +49,19 @@
 		# static redirect map. add things here if you know you moved them.
 		#
 
-		if ($redir = $GLOBALS['cfg']['rewrite_static_urls'][$url]){
-			header("location: {$redir}");
-			exit;
+		if (array_key_exists($url, $GLOBALS['cfg']['rewrite_static_urls'])){
+		
+			if ($redir = $GLOBALS['cfg']['rewrite_static_urls'][$url]){
+				header("location: {$redir}");
+				exit;
+			}
 		}
-
 
 		#
 		# give up
 		#
 
-		$GLOBALS['no_cache'] = 1;
+		$GLOBALS['cfg']['no_cache'] = 1;
 
 
 		#
@@ -60,8 +76,8 @@
 
 		$debug_block .= "Args:\n";
 		$args = array(
-			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'],
-			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'],
+			'SERVER_REQUEST_URI'	=> (array_key_exists('REQUEST_URI', $_SERVER)) ? $_SERVER['REQUEST_URI'] : "",
+			'SERVER_REDIRECT_URL'	=> (array_key_exists('REDIRECT_URL', $_SERVER)) ? $_SERVER['REDIRECT_URL'] : "",
 		);
 		$debug_block .= error_format_hash($args)."\n\n";
 
@@ -83,7 +99,7 @@
 
 	function error_403($msg=null){
 
-		$GLOBALS['no_cache'] = 1;
+		$GLOBALS['cfg']['no_cache'] = 1;
 
 
 		#
@@ -119,9 +135,18 @@
 
 	###############################################################################
 
+	function error_410($msg=''){
+
+		$GLOBALS['smarty']->assign("message", $msg);
+		$GLOBALS['smarty']->display('page_error_410.txt');
+		exit;
+	}
+
+	###############################################################################
+
 	function error_500($msg=null){
 
-		$GLOBALS['no_cache'] = 1;
+		$GLOBALS['cfg']['no_cache'] = 1;
 
 
 		#
@@ -137,8 +162,12 @@
 		$debug_block .= "Args:\n";
 		$args = array(
 			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'],
-			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'],
 		);
+
+		if (isset($_SERVER['REDIRECT_URL'])){
+			$args['SERVER_REDIRECT_URL'] = $_SERVER['REDIRECT_URL'];
+		}
+		
 		$debug_block .= error_format_hash($args)."\n\n";
 
 		$debug_block .= "Backtrace:\n";
@@ -182,25 +211,27 @@
 
 		foreach ($trace as $item){
 
-			$function = "$item[function]($args)";
+			$args = array();
+			foreach ($item['args'] as $arg){
+				if (is_object($arg)){
+					$args[] = "Object()";
+				}else{
+					# this will just string-ify the arg.
+					# var_export() would be great here if it didn't crash on
+					# circular references :(
+					$args[] = "$arg";
+				}
+			}
+			$args = implode(', ', $args);
+
+			$function = "{$item['function']}($args)";
 
 			if (preg_match('!^error_!', $item['function'])){
 				$pairs = array();
 				$function = "ERROR";
 			}
 
-
 			$file = str_replace($root_path, '', $item['file']);
-
-			$args = array();
-			foreach ($item['args'] as $arg){
-				if (is_object($arg)){
-					$args[] = "Object()";
-				}else{
-					$args[] = "$arg"; # this will just string-ify the arg
-				}
-			}
-			$args = implode(', ', $args);
 
 			$pairs[] = array(
 				$function,
@@ -242,7 +273,8 @@
 		$lengths = array();
 		foreach ($pairs as $pair){
 			foreach ($pair as $k => $str){
-				$lengths[$k] = max(intval($lengths[$k]), strlen($str));
+				$len_k = (array_key_exists($k, $lengths)) ? intval($lengths[$k]) : 0;
+				$lengths[$k] = max($len_k, strlen($str));
 			}
 		}
 
@@ -275,4 +307,3 @@
 	}
 
 	###############################################################################
-?>

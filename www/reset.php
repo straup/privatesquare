@@ -1,12 +1,9 @@
 <?php
-	#
-	# $Id$
-	#
-
 	include("include/init.php");
 
-	login_ensure_loggedout();
+	loadlib("passwords_reset");
 
+	login_ensure_loggedout();
 
 	if (! $GLOBALS['cfg']['enable_feature_password_retrieval']){
 		error_404();
@@ -22,11 +19,11 @@
 		exit();
 	}
 
-	$user = users_get_by_password_reset_code($reset_code);
+	$user = passwords_reset_get_user_with_code($reset_code);
 
 	if (! $user){
 
-		$GLOBALS['error']['nouser'] = 1;
+		$smarty->assign('error_nouser', 1);
 		$smarty->display('page_reset.txt');
 		exit();	
 	}
@@ -40,30 +37,30 @@
 
 		if ((! $new_password1) || (! $new_password2)){
 
-			$GLOBALS['error']['missing_password'] = 1;
+			$smarty->assign('error_missing_password', 1);
 			$smarty->display('page_reset.txt');
 			exit();	
 		}
 
 		if ($new_password1 !== $new_password2){
 
-			$GLOBALS['error']['password_mismatch'] = 1;
+			$smarty->assign('error_password_mismatch', 1);
 			$smarty->display('page_reset.txt');
 			exit();	
 		}
 
 		if (! users_update_password($user, $new_password1)){
 
-			$GLOBALS['error']['update_failed'] = 1;
+			$smarty->assign('error_update_failed', 1);
 			$smarty->display('page_reset.txt');
 			exit();	
 		}
 
-		users_purge_password_reset_codes($user);
+		passwords_reset_purge_codes_for_user($user);
 
 		$user = users_get_by_id($user['id']);
 
-		login_do_login($user, "/account/?password=1");
+		login_do_login($user, "/account?password=1");
 		exit();	
 	}
 
@@ -73,4 +70,4 @@
 	#
 
 	$smarty->display('page_reset.txt');
-?>
+	exit();

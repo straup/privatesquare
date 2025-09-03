@@ -20,8 +20,9 @@
 	#################################################################
 
 	function api_test_error(){
-		api_output_error(500, 'This is the network of our disconnect');
+		api_output_error(450);
 	}
 
 	#################################################################
-?>
+
+	# the end

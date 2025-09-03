@@ -1,7 +1,4 @@
 <?php
-	#
-	# $Id$
-	#
 
 	#########################################################################################
 
@@ -9,8 +6,7 @@
 
 		$headers = array();
 
-		if (is_array($args['headers'])){
-
+		if ((array_key_exists('headers', $args)) && (is_array($args['headers']))){
 			$headers = $args['headers'];
 		}
 
@@ -19,17 +15,17 @@
 		# set up the from address
 		#
 
-		if ($args['from_name'] && $args['from_email']){
+		if (array_key_exists('from_name', $args) && $args['from_name'] && array_key_exists('from_email', $args) && $args['from_email']){
 
 			$from_email = $args['from_email'];
 			$from_name = $args['from_name'];
 
-		}else if ($args['from_email']){
+		}else if (array_key_exists('from_email', $args) && $args['from_email']){
 
 			$from_email = $args[from_email];
 			$from_name = $args[from_email];
 
-		}else if ($args['from_name']){
+		}else if (array_key_exists('from_name', $args) && $args['from_name']){
 
 			$from_email = $GLOBALS['cfg']['email_from_email'];
 			$from_name = $args['from_name'];
@@ -46,16 +42,15 @@
 		# other headers
 		#
 
-		if (!$headers['To']){
+		if (! array_key_exists('To', $headers) || !!$headers['To']){
 			$headers['To'] = $args['to_email'];
 		}
 
-		if (!$headers['Reply-To']){
+		if (! array_key_exists('Reply-To', $headers) || !$headers['Reply-To']){
 			$headers['Reply-To'] = $from_email;
 		}
 
-		if (!$headers['Content-Type']){
-
+		if (! array_key_exists('Content-Type', $headers) || !$headers['Content-Type']){
 			$headers['Content-Type'] = 'text/plain; charset=utf-8';
 		}
 
@@ -65,8 +60,14 @@
 		#
 
 		$message = trim($GLOBALS['smarty']->fetch($args['template']));
-		$subject = trim($GLOBALS['smarty']->get_template_vars('email_subject'));
+		$subject = $GLOBALS['smarty']->getTemplateVars('email_subject');
 
+		if (($subject) && (strlen($subject))){
+			$subject = trim($subject);
+		} else {
+			$subject = "";
+		}
+		
 		$message = email_format_body($message);
 		$subject = email_quoted_printable($subject);
 
@@ -94,7 +95,7 @@
 
 	function email_quoted_printable($subject){
 
-		if (preg_match('/[^a-z: ]/i', $subject)){
+		if (($subject) && (preg_match('/[^a-z: ]/i', $subject))){
 			$subject = preg_replace_callback('/([^a-z ])/i', 'email_quoted_printable_encode', $subject);
 			$subject = str_replace(' ', '_', $subject);
 			return "=?utf-8?Q?$subject?=";
@@ -123,4 +124,3 @@
 
 	#########################################################################################
 
-?>

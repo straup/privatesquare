@@ -1,30 +1,25 @@
 <?php
 	#
-	# $Id$
+	# This module is designed to flexible, with pluggable handlers for different levels.
+	# By default, 3 levels are defined:
 	#
-
-
+	# * fatal - Give up now and show an error page
+	# * error - Log an error and move on
+	# * notice - Some action has happened that's useful for debugging
 	#
-	# the log module is designed to be as flexible as possible. the application can log message at
-	# multiple levels: fatal, error & notice. these messages can have an attached type (e.g. 'db'),
-	# but this is only used for notices right now. for each level, we can define zero or more
-	# handlers, including html/display and writing to the error log.
+	# By default, errors and fatals are always shown, but notices are only shown when
+	# `debug=1` is passed in the querystring or `$cfg['admin_flags_show_notices']` is
+	# set. Messages are only shown (on webpages) for callers with appropriate auth
+	# (see lib_auth.php for more details).
 	#
-	# right now the html display only shows notice messages when 'debug=1' is specified as a URL
-	# flag and always shows errors/fatals. it should ideally also check for admin auth/SSO, so that
-	# regular users don't see notices at all. another approach is to remove the html handlers and
-	# then add them back in during init for admin authed users. for fatal errors, you will probably
-	# want to add a handler which displays an error page to your users.
-	#
-	# you will also want to disable html handlers when outputing things that aren't webpages, like
-	# api results.
+	# The 'html' and 'plain' handlers are smart and will only show output where appropriate - the
+	# html version for web pages and the plain version for CLI scripts.
 	#
 
 	$GLOBALS['log_handlers'] = array(
-		'notice'	=> array('html'),
-		'error'		=> array('html', 'error_log'),
-		'fatal'		=> array('html', 'error_log'),
-		'debug'		=> array(),
+		'notice'	=> array('html', 'plain'),
+		'error'		=> array('html', 'plain', 'error_log'),
+		'fatal'		=> array('html', 'plain', 'error_log'),
 	);
 
 	$GLOBALS['log_html_colors'] = array(
@@ -35,7 +30,6 @@
 		'_error'	=> '#fcc,#000',
 		'_fatal'	=> '#800,#fff',
 	);
-
 
 
 	#
@@ -56,7 +50,6 @@
 		exit;
 	}
 
-
 	function log_error($msg){
 		_log_dispatch('error', $msg);
 	}
@@ -64,23 +57,6 @@
 
 	function log_notice($type, $msg, $time=-1){
 		_log_dispatch('notice', $msg, array('type' => $type, 'time' => $time));
-	}
-	
-	function log_debug($type, $msg, $time=-1){
-		_log_dispatch('debug', $msg, array('type' => $type, 'time' => $time));
-	}
-	
-	function log_reset_handlers(){
-		$GLOBALS['log_handlers'] = array();
-	}
-	
-	function log_add_handler($level, $handler){
-		if ($GLOBALS['log_handlers'][$level]){
-			array_push($GLOBALS['log_handlers'][$level], $handler);
-		}
-		else{
-			$GLOBALS['log_handlers'][$level] = array($handler);
-		}
 	}
 
 	###################################################################################################################
@@ -104,6 +80,12 @@
 	#
 
 	function _log_handler_error_log($level, $msg, $more = array()){
+
+		# if this is a CLI request, don't try and write to the error
+		# log, since that's just STDERR
+
+		if ($GLOBALS['this_is_shell']) return;
+
 		$page = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
 
 		if ($more['type']){
@@ -112,7 +94,7 @@
 
 		$msg = str_replace("\n", ' ', $msg);
 
-		error_log("[$level] $msg ($page)");
+		error_log("[$level] $msg");
 	}
 
 
@@ -121,6 +103,12 @@
 	#
 
 	function _log_handler_html($level, $msg, $more = array()){
+
+		# only show in-browser messages to staff
+		if (!auth_has_role('staff')) return;
+
+		# if this isn't a webpage, the `plain` handler will display the error
+		if (!$GLOBALS['this_is_webpage']) return;
 
 		# only shows notices if we asked to see them
 		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
@@ -151,19 +139,28 @@
 
 	function _log_handler_plain($level, $msg, $more = array()){
 
+		# if this isn't the shell, the `html` handler will take care of this
+		if (!$GLOBALS['this_is_shell']) return;
+
 		# only shows notices if we asked to see them
 		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
 
-		$type = $more['type'] ? $more['type'] : '';
+		$type = array_key_exists('type', $more) ? $more['type'] : $level;
 
-		if ($type) echo "[$type] ";
+		$out = "";
 
-		echo $msg;
+		if ($type) $out .= "![$type] ";
 
-		if ($more['time'] > -1) echo " ($more[time] ms)";
+		$out .= $msg;
 
-		echo "\n";
+		if ((array_key_exists('time', $more) && ($more['time'] > -1))){
+			$out .= " ($more[time] ms)";
+		}
+		
+		$out .= "\n";
+
+		$stderr = fopen('php://stderr', 'w');
+		fwrite($stderr, $out);
 	}
 
 	###################################################################################################################
-?>

@@ -17,8 +17,8 @@
 
 	function db_init(){
 
-		if (!function_exists('mysql_connect')){
-			die("lib_db requires the mysql PHP extension\n");
+		if (!function_exists('mysqli_connect')){
+			die("lib_db requires the mysqli PHP extension\n");
 		}
 
 		#
@@ -47,25 +47,39 @@
 	#
 
 	function db_insert($tbl, $hash){			return _db_insert($tbl, $hash, 'main', null); }
+	function db_insert_api($tbl, $hash){			return _db_insert($tbl, $hash, 'api', null); }
+	function db_insert_accounts($tbl, $hash){		return _db_insert($tbl, $hash, 'accounts', null); }	
 	function db_insert_users($k, $tbl, $hash){		return _db_insert($tbl, $hash, 'users', $k); }
 
 	function db_insert_bulk($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'main', null); }
+	function db_insert_bulk_api($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'api', null); }
+	function db_insert_bulk_accounts($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'accounts', null); }	
 	function db_insert_bulk_users($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'users', $k); }
 
 	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main', null); }
+	function db_insert_dupe_api($tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'api', null); }
+	function db_insert_dupe_accounts($tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'accounts', null); }	
 	function db_insert_dupe_users($k, $tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k); }
 
 	function db_update($tbl, $hash, $where){		return _db_update($tbl, $hash, $where, 'main', null); }
+	function db_update_api($tbl, $hash, $where){		return _db_update($tbl, $hash, $where, 'api', null); }
+	function db_update_accounts($tbl, $hash, $where){	return _db_update($tbl, $hash, $where, 'accounts', null); }	
 	function db_update_users($k, $tbl, $hash, $where){	return _db_update($tbl, $hash, $where, 'users', $k); }
 
-	function db_fetch($sql){				return _db_fetch($sql, 'main', null); }
-	function db_fetch_slave($sql){				return _db_fetch_slave($sql, 'main_slaves'); }
+	function db_fetch($sql){				return _db_fetch($sql, 'main', null); }	
+	function db_fetch_replica($sql){			return _db_fetch_replica($sql, 'main_replicas'); }
+	function db_fetch_api($sql){				return _db_fetch($sql, 'api', null); }
+	function db_fetch_accounts($sql){			return _db_fetch($sql, 'accounts', null); }	
 	function db_fetch_users($k, $sql){			return _db_fetch($sql, 'users', $k); }
 
 	function db_fetch_paginated($sql, $args){		return _db_fetch_paginated($sql, $args, 'main', null); }
-	function db_fetch_paginated_users($k, $sql, $args){	return _db_fetch_paginated($sql, $args, 'users', $k); }
+	function db_fetch_paginated_api($sql, $args){		return _db_fetch_paginated($sql, $args, 'api', null); }	
+	function db_fetch_paginated_accounts($sql, $args){	return _db_fetch_paginated($sql, $args, 'accounts', null); }
+	function db_fetch_paginated_users($k, $sql, $args){	return _db_fetch_paginated($sql, $args, 'users', $k); }	
 
 	function db_write($sql){				return _db_write($sql, 'main', null); }
+	function db_write_api($sql){				return _db_write($sql, 'api', null); }
+	function db_write_accounts($sql){			return _db_write($sql, 'accounts', null); }	
 	function db_write_users($k, $sql){			return _db_write($sql, 'users', $k); }
 
 	function db_tickets_write($sql){			return _db_write($sql, 'tickets', null); }
@@ -81,6 +95,10 @@
 		$pass = $GLOBALS['cfg']["db_{$cluster}"]["pass"];
 		$name = $GLOBALS['cfg']["db_{$cluster}"]["name"];
 
+		$port = (array_key_exists("port", $GLOBALS['cfg']["db_{$cluster}"])) ? $GLOBALS['cfg']["db_{$cluster}"]["port"] : 3306;
+		$ssl_enable = (array_key_exists("ssl_enable", $GLOBALS['cfg']["db_{$cluster}"])) ? $GLOBALS['cfg']["db_{$cluster}"]["ssl_enable"] : 0;
+		$ssl_ca_path = (array_key_exists("ssl_enable", $GLOBALS['cfg']["db_{$cluster}"])) ? $GLOBALS['cfg']["db_{$cluster}"]["ssl_ca_path"] : "";		
+		
 		if ($shard){
 			$host = $host[$shard];
 			$name = $name[$shard];
@@ -97,13 +115,49 @@
 
 		$start = microtime_ms();
 
-		$GLOBALS['db_conns'][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
-
-		if ($GLOBALS['db_conns'][$cluster_key]){
-
-			@mysql_select_db($name, $GLOBALS['db_conns'][$cluster_key]);
-			@mysql_query("SET character_set_results='utf8', character_set_client='utf8', character_set_connection='utf8', character_set_database='utf8', character_set_server='utf8'", $GLOBALS['db_conns'][$cluster_key]);
+		$conn = @mysqli_init();
+		if (!$conn){
+			log_fatal("DB-{$cluster_key}: mysqli_init failed");
 		}
+
+		if (!@mysqli_options($conn, MYSQLI_OPT_CONNECT_TIMEOUT, $GLOBALS['cfg']['db_connect_timeout'])){
+			log_fatal("DB-{$cluster_key}: MYSQLI_OPT_CONNECT_TIMEOUT failed");
+		}
+
+		try{
+
+			# https://www.php.net/manual/en/mysqli.ssl-set.php
+			
+			if ($ssl_enable){
+
+				$conn->ssl_set(NULL, NULL, $ssl_ca_path, NULL, NULL);
+				
+				if (!@mysqli_real_connect($conn, $host, $user, $pass, $name, $port, NULL, MYSQLI_CLIENT_SSL)){
+					log_fatal("Connection to database cluster '{$cluster_key}' failed ({$user}@{$host}/{$name}) - ".mysqli_connect_error()." - ".error_smart_trace());
+				}
+
+			} else {
+				if (!@mysqli_real_connect($conn, $host, $user, $pass, $name)){
+					log_fatal("Connection to database cluster '{$cluster_key}' failed ({$user}@{$host}/{$name}) - ".mysqli_connect_error()." - ".error_smart_trace());
+				}
+			}
+			
+		}catch (mysqli_sql_exception $e){
+			log_fatal("Connection to database cluster '{$cluster_key}' failed ({$user}@{$host}/{$name}) - ".$e->getMessage()." - ".error_smart_trace());
+		}
+
+		$GLOBALS['db_conns'][$cluster_key] = $conn;
+
+		if (!mysqli_set_charset($GLOBALS['db_conns'][$cluster_key], 'utf8mb4')){
+			log_fatal("DB-{$cluster_key}: Could not set character set to 'utf8mb4' - " . mysqli_error($GLOBALS['db_conns'][$cluster_key]) . " - ".error_smart_trace());
+		}
+
+		# TODO: Some of our tests expect that you can do an ORDER BY on a column not in the SELECT, which modern mysql doesn't support
+		# This command allows the queries through, but we should make sure that we don't need that support anywhere else and remove it
+		@mysqli_query($GLOBALS['db_conns'][$cluster_key], "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
+
+		# TODO: Similar as above, our schema currently doesn't define DEFAULT values for all columns, and modern mysql doesn't like that
+		@mysqli_query($GLOBALS['db_conns'][$cluster_key], "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'STRICT_TRANS_TABLES',''));");
 
 		$end = microtime_ms();
 
@@ -127,7 +181,7 @@
 		#
 
 		if ($GLOBALS['cfg']['db_profiling']){
-			@mysql_query("SET profiling = 1;", $GLOBALS['db_conns'][$cluster_key]);
+			@mysqli_query($GLOBALS['db_conns'][$cluster_key], "SET profiling = 1;");
 		}
 	}
 
@@ -137,7 +191,7 @@
 
 		$cluster_key = _db_cluster_key($cluster, $shard);
 
-		if (!$GLOBALS['db_conns'][$cluster_key]){
+		if (!isset($GLOBALS['db_conns'][$cluster_key])){
 			_db_connect($cluster, $shard);
 		}
 
@@ -145,7 +199,7 @@
 		$use_sql = _db_comment_query($sql, $trace);
 
 		$start = microtime_ms();
-		$result = @mysql_query($use_sql, $GLOBALS['db_conns'][$cluster_key]);
+		$result = @mysqli_query($GLOBALS['db_conns'][$cluster_key], $use_sql);
 		$end = microtime_ms();
 
 		$GLOBALS['timings']['db_queries_count']++;
@@ -162,8 +216,8 @@
 
 		if ($GLOBALS['cfg']['db_profiling']){
 			$profile = array();
-			$p_result = @mysql_query("SHOW PROFILE ALL", $GLOBALS['db_conns'][$cluster_key]);
-			while ($p_row = mysql_fetch_array($p_result, MYSQL_ASSOC)){
+			$p_result = @mysqli_query($GLOBALS['db_conns'][$cluster_key], "SHOW PROFILE ALL");
+			while ($p_row = mysqli_fetch_array($p_result, MYSQLI_ASSOC)){
 				$profile[] = $p_row;
 			}
 		}
@@ -174,10 +228,10 @@
 		#
 
 		if (!$result){
-			$error_msg	= mysql_error($GLOBALS['db_conns'][$cluster_key]);
-			$error_code	= mysql_errno($GLOBALS['db_conns'][$cluster_key]);
+			$error_msg	= mysqli_error($GLOBALS['db_conns'][$cluster_key]);
+			$error_code	= mysqli_errno($GLOBALS['db_conns'][$cluster_key]);
 
-			log_error("DB-$cluster_key: $error_code ".HtmlSpecialChars($error_msg));
+			log_error("DB-$cluster_key: $error_code ".HtmlSpecialChars($error_msg)." ".HtmlSpecialChars($use_sql));
 
 			$ret = array(
 				'ok'		=> 0,
@@ -235,7 +289,7 @@
 		$first_row = $hashes[$a];
 		$fields = array_keys($first_row);
 
-		$flags = $GLOBALS['db_flags']['insert_ignore'] ? ' IGNORE' : '';
+		$flags = ($GLOBALS['db_flags']['insert_ignore'] ?? false) ? ' IGNORE' : '';
 
 		$acc_rows = 0;
 
@@ -291,16 +345,16 @@
 
 	#################################################################
 
-	function _db_fetch_slave($sql, $cluster){
+	function _db_fetch_replica($sql, $cluster){
 
 		$cluster_key = _db_cluster_key($cluster, null);
 
-		$slaves = array_keys($GLOBALS['cfg'][$cluster_key]['host']);
+		$replicas = array_keys($GLOBALS['cfg'][$cluster_key]['host']);
 
-		shuffle($slaves);
-		shuffle($slaves);
+		shuffle($replicas);
+		shuffle($replicas);
 
-		return _db_fetch($sql, $cluster, $slaves[0]);
+		return _db_fetch($sql, $cluster, $replicas[0]);
 	}
 
 	#################################################################
@@ -318,7 +372,7 @@
 
 		$start = microtime_ms();
 		$count = 0;
-		while ($row = mysql_fetch_array($ret['result'], MYSQL_ASSOC)){
+		while ($row = mysqli_fetch_array($ret['result'], MYSQLI_ASSOC)){
 			$out['rows'][] = $row;
 			$count++;
 		}
@@ -348,7 +402,9 @@
 		# If we're using the 2-query method, get the count first
 		#
 
-		$calc_found_rows = !!$args['calc_found_rows'];
+		# $calc_found_rows = !!$args['calc_found_rows'];
+
+		$calc_found_rows = isset($args['calc_found_rows']) ? $args['calc_found_rows'] : null;
 
 		if (!$calc_found_rows){
 
@@ -356,7 +412,7 @@
 			$ret = _db_fetch($count_sql, $cluster, $shard);
 			if (!$ret['ok']) return $ret;
 
-			$total_count = intval(array_pop($ret['rows'][0]));
+			$total_count = intval(@array_pop($ret['rows'][0]));
 			$page_count = ceil($total_count / $per_page);
 		}
 
@@ -441,7 +497,7 @@
 			'total_count'	=> $total_count,
 			'page'		=> $page,
 			'per_page'	=> $per_page,
-			'page_count'	=> $page_count,
+			'page_count'	=> intval($page_count),
 			'first'		=> $start+1,
 			'last'		=> $start+count($ret['rows']),
 		);
@@ -450,7 +506,7 @@
 			$ret['pagination']['first'] = 0;
 			$ret['pagination']['last'] = 0;
 		}
-		
+
 		if ($GLOBALS['cfg']['pagination_assign_smarty_variable']){
 			$GLOBALS['smarty']->assign('pagination', $ret['pagination']);
 		}
@@ -494,8 +550,8 @@
 
 		return array(
 			'ok'		=> 1,
-			'affected_rows'	=> mysql_affected_rows($GLOBALS['db_conns'][$cluster_key]),
-			'insert_id'	=> mysql_insert_id($GLOBALS['db_conns'][$cluster_key]),
+			'affected_rows'	=> mysqli_affected_rows($GLOBALS['db_conns'][$cluster_key]),
+			'insert_id'	=> mysqli_insert_id($GLOBALS['db_conns'][$cluster_key]),
 		);
 	}
 
@@ -519,7 +575,7 @@
 
 		$trace = debug_backtrace();
 
-		while (substr($trace[0]['function'], 0, 3) == 'db_' || substr($trace[0]['function'], 0, 4) == '_db_'){
+		while (isset($trace[0]) && (substr($trace[0]['function'], 0, 3) == 'db_' || substr($trace[0]['function'], 0, 4) == '_db_')){
 			array_shift($trace);
 		}
 
@@ -546,7 +602,7 @@
 		# single
 		#
 
-		return $trace[0]['function'] ? $trace[0]['function'].'()' : '_global_';
+		return (isset($trace[0]) && $trace[0]['function']) ? $trace[0]['function'].'()' : '_global_';
 	}
 
 	#################################################################
@@ -566,7 +622,7 @@
 		$cluster_key = _db_cluster_key($cluster, $shard);
 
 		if (is_resource($GLOBALS['db_conns'][$cluster_key])){
-			@mysql_close($GLOBALS['db_conns'][$cluster_key]);
+			@mysqli_close($GLOBALS['db_conns'][$cluster_key]);
 		}
 
 		unset($GLOBALS['db_conns'][$cluster_key]);
@@ -578,7 +634,7 @@
 		foreach ($GLOBALS['db_conns'] as $cluster_key => $conn){
 
 			if (is_resource($conn)){
-				@mysql_close($conn);
+				@mysqli_close($conn);
 			}
 
 			unset($GLOBALS['db_conns'][$cluster_key]);
@@ -601,7 +657,7 @@
 		if (is_resource($GLOBALS['db_conns'][$cluster_key])){
 
 			$start = microtime_ms();
-			$ret = @mysql_ping($GLOBALS['db_conns'][$cluster_key]);
+			$ret = @mysqli_ping($GLOBALS['db_conns'][$cluster_key]);
 			$end = microtime_ms();
 
 			log_notice('db', "DB-$cluster_key: Ping", $end-$start);

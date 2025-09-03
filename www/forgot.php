@@ -1,9 +1,7 @@
 <?php
-	#
-	# $Id$
-	#
-
 	include("include/init.php");
+
+	loadlib("passwords_reset");
 
 	if (! $GLOBALS['cfg']['enable_feature_password_retrieval']){
 		error_404();
@@ -11,12 +9,14 @@
 
 	login_ensure_loggedout();
 
+	$crumb_key = 'forgot';
+	$smarty->assign("crumb_key", $crumb_key);
 
 	#
 	# send the reminder?
 	#
 
-	if (post_str('remind')){
+	if (post_str('remind') && crumb_check($crumb_key)){
 
 		$email	= post_str('email');
 		$user	= users_get_by_email($email);
@@ -35,7 +35,7 @@
 			$ok = 0;
 		}
 
-		if ($ok && !users_send_password_reset_code($user)){
+		if ($ok && !passwords_reset_send_code_to_user($user)){
 
 			$smarty->assign('error_notsent', 1);
 			$ok = 0;
@@ -55,4 +55,3 @@
 	#
 
 	$smarty->display('page_forgot.txt');
-?>

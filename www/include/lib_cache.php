@@ -1,112 +1,113 @@
 <?php
-
 	#
-	# $Id$
+	# this library provides local (in-process) caching and allows
+	# for a remote cache (like memcache) to be easily plugged in.
+	#
+	# see lib_cache_memcache for details of remote caching.
 	#
 
-	$GLOBALS['cache_local'] = array();
-	$GLOBALS['cache_remote_conns'] = array();
+
+	$GLOBALS['_cache_local'] = array();
+
+	$GLOBALS['_cache_hooks'] = array(
+		'get'	=> null,
+		'set'	=> null,
+		'unset'	=> null,
+	);
 
 	#################################################################
 
-	function cache_get($cache_key){
+	function cache_get($key, $more=array()){
 
-		if ($GLOBALS['cfg']['cache_force_refresh']){
+		$key = _cache_prepare_key($key);
+
+		#
+		# try and fetch from local cache first
+		#
+
+		if (isset($GLOBALS['_cache_local'][$key])){
+
+			log_notice("cache", "get {$key} - local hit");
 
 			return array(
-				'ok' => 0,
-				'error' => 'force refresh'
+				'ok'		=> 1,
+				'source'	=> 'local',
+				'data'		=> $GLOBALS['_cache_local'][$key],
 			);
 		}
 
-		$cache_key = _cache_prepare_cache_key($cache_key);
-		log_notice("cache", "fetch cache key {$cache_key}");
 
-		if (isset($GLOBALS['cache_local'][$cache_key])){
+		#
+		# try the remote cache?
+		#
 
-			return array(
-				'ok' => 1,
-				'cache' => 'local',
-				'cache_key' => $cache_key,
-				'data' => $GLOBALS['cache_local'][$cache_key],
-			);
+		if ($GLOBALS['_cache_hooks']['get']){
+			$rsp = call_user_func($GLOBALS['_cache_hooks']['get'], $key);
+			return $rsp;
 		}
 
-		$remote_rsp = _cache_do_remote('get', $cache_key);
-
-		return $remote_rsp;
-	}
-
-	#################################################################
-
-	function cache_set($cache_key, $data, $more=array()){
-
-		$cache_key = _cache_prepare_cache_key($cache_key);
-		log_notice("cache", "set cache key {$cache_key}");
-
-		if (isset($more['store_locally'])){
-			$GLOBALS['cache_local'][$cache_key] = $data;
-		}
-
-		$remote_rsp = _cache_do_remote('set', $cache_key, $data);
+		log_notice("cache", "get {$key} - local miss");
 
 		return array(
-			'ok' => 1
+			'error' => 'cache hook not defined',
+			'ok' => 0,
 		);
 	}
 
 	#################################################################
 
-	function cache_unset($cache_key){
+	function cache_set($key, $data, $more=array()){
 
-		$cache_key = _cache_prepare_cache_key($cache_key);
-		log_notice("cache", "unset cache key {$cache_key}");
+		$key = _cache_prepare_key($key, $more);
 
-		if (isset($GLOBALS['cache_local'][$cache_key])){
-			unset($GLOBALS['cache_local'][$cache_key]);
+		$GLOBALS['_cache_local'][$key] = $data;
+
+		if ($GLOBALS['_cache_hooks']['set']){
+
+			return call_user_func($GLOBALS['_cache_hooks']['set'], $key, $data);
 		}
 
-		$remote_rsp = _cache_do_remote('unset', $cache_key);
+		log_notice("cache", "set {$key}");
 
 		return array(
-			'ok' => 1
+			'ok'	=> 1,
+			'local'	=> 1,
 		);
 	}
 
 	#################################################################
 
-	function _cache_prepare_cache_key($key){
+	function cache_unset($key, $more=array()){
 
-		if (! $GLOBALS['cfg']['cache_prefix']){
-			return $key;
+		$key = _cache_prepare_key($key, $more);
+
+		unset($GLOBALS['_cache_local'][$key]);
+
+		if ($GLOBALS['_cache_hooks']['unset']){
+
+			return call_user_func($GLOBALS['_cache_hooks']['unset'], $key);
 		}
 
-		return "{$GLOBALS['cfg']['cache_prefix']}_{$key}";
+		log_notice("cache", "unset {$key}");
+
+		return array(
+			'ok'	=> 1,
+			'local'	=> 1,
+		);
 	}
 
 	#################################################################
 
-	function _cache_do_remote($method, $key, $data=null){
+	function _cache_prepare_key($key, $more=array()){
 
-		$engine = trim($GLOBALS['cfg']['cache_remote_engine']);
+		if (features_is_enabled("cache_prefixes")){
 
-		if (! $engine){
-			return array( 'ok' => 0, 'error' => 'Remote caching is not enabled' );
+			if ($prefix = $GLOBALS['cfg']['cache_prefix']){
+				$key = "{$prefix}_{$key}";
+			}
 		}
 
-		$remote_lib = "cache_{$engine}";
-		$remote_func = "cache_{$engine}_{$method}";
-
-		$args = ($data) ? array($key, $data) : array($key);
-
-		loadlib($remote_lib);
-		$rsp = call_user_func_array($remote_func, $args);
-
-		$rsp['cache_key'] = $key;
-		$rsp['cache'] = $engine;
-
-		return $rsp;
+		return $key;
 	}
 
 	#################################################################
-?>

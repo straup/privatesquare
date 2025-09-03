@@ -1,0 +1,161 @@
+{
+
+	# https://caddyserver.com/docs/caddyfile/options
+	
+	# https://frankenphp.dev/docs/config/
+	frankenphp
+
+	# Uncomment this if you want to run without TLS
+	# http_port 8080
+	# auto_https off
+}
+
+# Uncomment this (and comment out plain-vanilla "localhost") if you want to run without TLS
+# localhost:8080 {
+
+localhost {
+	
+	# https://caddyserver.com/docs/caddyfile/directives/root  
+	root www
+	
+	# https://caddyserver.com/docs/caddyfile/directives/encode
+	encode zstd br gzip
+	
+	# Execute PHP files in the current directory and serve assets
+	php_server
+
+	# https://caddyserver.com/docs/caddyfile/directives/log
+	log {
+	    	level INFO
+		output stderr
+	}
+	
+	# https://caddyserver.com/docs/caddyfile/directives/error
+	handle_errors {
+        	rewrite * /500.php
+        }
+
+	# https://caddyserver.com/docs/caddyfile/directives/rewrite
+	# https://caddyserver.com/docs/caddyfile/directives/uri
+	# https://caddyserver.com/docs/caddyfile/matchers#named-matchers
+
+	# These three (especially) the first one are important. They are
+	# the rules which prevent library code and the secrets file from
+	# being viewable.
+	uri path_regexp /include/.*		/404.php
+	uri path_regexp /templates/.*		/404.php
+	uri path_regexp /templates_c/.*		/404.php	
+	
+	rewrite /.htaccess			/404.php
+	rewrite /.user.ini			/404.php	
+
+	uri path_regexp /ping/?$     		/ping.php	
+	uri path_regexp /about/?$     		/about.php
+	uri path_regexp /contact/?$    		/contact.php	
+
+	uri path_regexp /account/?$		/account.php
+	uri path_regexp /account/password/?$	/account_password.php	
+	uri path_regexp /account/delete/?$	/account_delete.php
+
+	uri path_regexp /contact/?$	     	/contact.php
+	uri path_regexp /checkcookie/?$     	/checkcookie.php	
+	
+	uri path_regexp /signup/?$ 		/signup.php
+	uri path_regexp /signin/?$ 		/signin.php	
+	uri path_regexp /signout/?$ 		/signout.php
+
+	uri path_regexp /forgot/?$ 		/forgot.php	
+
+	@reset_password {
+             path_regexp /reset/([a-zA-Z0-9]+)/?$
+	}
+
+	handle @reset_password {
+               rewrite * /reset.php?{query}&reset=(re.1}
+	}
+
+        uri path_regexp /api/?$				/api.php
+        uri path_regexp /api/methods/?$			/api_methods.php
+        uri path_regexp /api/methods/explore/?$		/api_methods.php
+	
+	@api_methods_print {
+             path_regexp /api/methods/print/?$
+	}
+
+	handle @api_methods_print {
+               rewrite * /api_methods.php?{query}&print=1
+	}
+
+	@api_method_explore {
+             path_regexp /api/methods/(.*)/explore/?$
+	}
+
+	handle @api_method_explore {
+               rewrite * /api_method_explore.php?{query}&method={re.1}
+	}
+
+	@api_method {
+	    path_regexp /api/methods/(.*)/?$
+	}
+
+	handle @api_method {
+    	       rewrite * /api_method.php?{query}&method={re.1}
+        }
+
+        uri path_regexp /api/errors/?$			/api_errors.php
+        uri path_regexp /api/pagination/?$		/api_pagination.php	
+        uri path_regexp /api/formats/?$			/api_formats.php
+
+	@api_format {
+	    path_regexp /api/formats/(.*)/?$
+	}
+
+	handle @api_format {
+    	       rewrite * /api_format.php?{query}&format={re.1}
+        }
+	
+        uri path_regexp /api/oauth2/applications/?$			/api_oauth2_applications.php
+        uri path_regexp /api/oauth2/applications/register/?$		/api_oauth2_application_register.php
+
+	@api_application {
+	        path_regexp /api/oauth2/applications/([a-zA-Z0-9]+)/?$
+	}
+
+	handle @api_application {
+	       rewrite * /api_oauth2_application.php?{query}&api_key={re.1}
+	}
+
+	@api_application_tokens {
+        	path_regexp /api/oauth2/applications/([a-zA-Z0-9]+)/tokens(/page([0-9]+))?/?$
+	}
+
+	handle @api_application_tokens {
+	       rewrite * /api_oauth2_application_tokens.php?{query}&api_key={re.1}&page={re.2}
+	}
+
+        uri path_regexp /api/oauth2/?$							/api_oauth2.php
+        uri path_regexp /api/oauth2/howto/?$						/api_oauth2_howto.php
+        uri path_regexp /api/oauth2/authenticate/?$					/api_oauth2_authenticate.php
+        uri path_regexp /api/oauth2/authenticate/like-magic/?$				/api_oauth2_authenticate_like_magic.php
+        uri path_regexp /api/oauth2/access_token/?$					/api_oauth2_access_token.php
+        uri path_regexp /api/oauth2/access_token/refresh/?$				/api_oauth2_refresh_token.php
+
+	@api_access_tokens {
+	     path_regexp /api/oauth2/tokens(/page([0-9]+))?/?$
+	}
+
+	handle @api_access_tokens {
+	       rewrite * /api_oauth2_tokens.php?{query}&page={re.1}
+	}
+
+	@api_access_token {
+        	path_regexp /api/oauth2/tokens/([a-zA-Z0-9]+)/?$
+	}
+
+	handle @api_access_token {
+		rewrite * /api_oauth2_token.php?{query}&api_key={re.1}
+	}
+
+        uri path_regexp /api/rest/?$							/api_rest.php
+
+}

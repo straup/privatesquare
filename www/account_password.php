@@ -1,12 +1,11 @@
 <?php
-	#
-	# $Id$
-	#
-
 	include("include/init.php");
 
-	login_ensure_loggedin();
+	if ($GLOBALS['cfg']['users_use_module'] != "flamework"){
+		error_404();
+	}
 
+	login_ensure_loggedin();
 
 	#
 	# crumb key
@@ -29,8 +28,7 @@
 
 		$ok = 1;
 
-		if (login_encrypt_password($old_pass) !== $GLOBALS['cfg']['user']['password']){
-
+		if (! passwords_utils_validate_password_for_user($old_pass, $GLOBALS['cfg']['user'])){
 			$smarty->assign('error_oldpass_mismatch', 1);
 			$ok = 0;
 		}
@@ -48,7 +46,7 @@
 		}
 
 		if ($ok){
-			if (!users_update_password($GLOBALS['cfg']['user'], $new_pass1)){
+			if (! users_update_password($GLOBALS['cfg']['user'], $new_pass1)){
 
 				$smarty->assign('error_fail', 1);
 				$ok = 0;
@@ -76,4 +74,3 @@
 	#
 
 	$smarty->display("page_account_password.txt");
-?>
