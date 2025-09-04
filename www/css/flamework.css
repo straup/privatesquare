@@ -1,0 +1,70 @@
+/* Tags */
+
+details-menu {
+    z-index: 5000 !important;
+    position: fixed !important;
+    background-color: #f8f9fa;
+    padding-top: 1.25rem;
+    padding-right: .75rem;
+    padding-bottom: 2rem;
+}
+
+details-menu ul {
+    padding-left: .75rem !important;
+    line-height: 1.7rem;
+}
+
+details-menu ul li {
+    list-style-type: none;
+}
+
+main {
+    margin-top:1rem;
+}
+
+/* Classes */
+
+.hey-look {
+    font-weight: 700;
+}
+
+.navbar {
+    padding: 1rem !important;
+}
+
+.navi-right {
+    display:inline-block !important;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+/* These are here for debugging CSS/layout issues */
+
+/*
+
+div {
+     border: 1px dotted #ccc;
+}
+
+main {
+    border: 3px solid red;
+}
+
+nav {
+    border: 3px solid orange;
+}
+
+footer {
+    border: 1px solid green;
+}
+
+.row {
+    border: 3px solid violet;
+}
+
+.container {
+    border: 6px solid yellow;
+}
+
+*/

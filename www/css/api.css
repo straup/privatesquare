@@ -1,0 +1,14 @@
+.api-param {
+    margin-bottom: .5rem;
+}
+
+.api-param-example {
+    color: #999;
+    font-style:italic;
+    font-size:small;
+    margin-top:.3rem;
+}
+
+.api-param-example:before {
+    content: "example: ";
+}
