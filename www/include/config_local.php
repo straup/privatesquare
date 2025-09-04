@@ -22,13 +22,34 @@
 
 	$GLOBALS['cfg']['site_disabled_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
 
-	$GLOBALS['cfg']['site_name'] = 'Brooklyn Integers';
+	$GLOBALS['cfg']['site_name'] = 'Privatesquare';
 
-	#
+	# Privatesquare configs
 
-	$GLOBALS['cfg']['brooklynts_sequence_increment'] = 2;
-	$GLOBALS['cfg']['brooklynts_sequence_offset'] = 1;
-	
+	$GLOBALS['cfg']['privatesquare_venues_providers'] = array(
+		0 => 'privatesquare',
+		1 => 'foursquare',
+		2 => 'stateofmind',
+		3 => 'nypl',
+	);
+
+	$GLOBALS['cfg']['enable_feature_trips'] = 1;
+	$GLOBALS['cfg']['enable_feature_trips_calendars'] = 1;
+	$GLOBALS['cfg']['enable_feature_trips_calendars_include_past'] = 0;
+
+	$GLOBALS['cfg']['enable_feature_deferred_checkins'] = 1;
+	$GLOBALS['cfg']['enable_feature_delete_checkins'] = 1;
+
+	$GLOBALS['cfg']['enable_feature_export'] = 1;
+	$GLOBALS['cfg']['enable_feature_export_static'] = 1;
+	$GLOBALS['cfg']['export_static_path'] = '';
+
+	$GLOBALS['cfg']['enable_feature_weather_tracking'] = 1;
+	$GLOBALS['cfg']['weather_tracking_measure'] = 'Metric';		# change to 'US' for degrees Farenheit
+
+	$GLOBALS['cfg']['enable_feature_artisanal_integers'] = 1;
+	$GLOBALS['cfg']['artisanal_integers_provider'] = 'brooklyn';
+
 	#
 
 	$GLOBALS['cfg']['abs_root_url'] = "/";
@@ -40,14 +61,14 @@
 	
 	$GLOBALS['cfg']['elasticsearch_host'] = 'http://localhost';
 	$GLOBALS['cfg']['elasticsearch_port'] = '9200';
-	$GLOBALS['cfg']['elasticsearch_index'] = 'flamework';	
+	$GLOBALS['cfg']['elasticsearch_index'] = 'privatesquare';	
 
 	# MySQL
 
 	$GLOBALS['cfg']['db_main'] = array(
 		'host'	=> 'localhost',
-		'name'	=> 'brooklynts',
-		'user'	=> 'brooklynts',
+		'name'	=> 'privatesquare',
+		'user'	=> 'privatesquare',
 		'auto_connect' => 0,
 		'ssl_enable' => 0,
 		'ssl_ca_path' => "",

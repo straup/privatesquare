@@ -1,0 +1,50 @@
+<div class="card">
+
+<h3 class="card-header">login</h3>
+
+<div class="card-body">
+
+<ul>
+    <li>Validate your account, which just means an application could use your {$cfg.site_name|escape} account as a single-sign-on provider (kind of like Facebook Connect).</li>
+</ul>
+
+<p><em>It will not be able to perform any other functions (or call API methods) that require permissions.</em></p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 class="card-header">read</h3>
+
+<div class="card-body">
+<ul>
+    <li>Validate your account.</li>
+    <li>Access things that you've marked as private (to own account).</li>
+</ul>
+
+<p><em>It will not be able to perform any other functions (or call API methods) that require <q>write</q> permissions.</em></p>
+
+</div>
+</div>
+
+<div class="card">
+
+<h3 class="card-header">write</h3>
+
+<div class="card-body">
+<ul>
+    <li>Validate your account.</li>
+    <li>Access things that you've marked as private (to own account).</li>
+    <li>Update things that you've marked as private (to own account).</li>
+</ul>
+
+</div>
+</div>
+
+<div class="card">
+
+<p class="card-body">When you authorize an access token you may also give it a <q>time to live</q> (one hour, one day and so on). By default access tokens <strong>do not</strong> have an expiry date. If you choose to authenticate an application don't forget that you can <a href="{$cfg.api_abs_root_url}oauth2/tokens/">change (or revoke) its permissions at any time</a>.</p>
+
+</div>

@@ -1,6 +1,8 @@
 {assign var="page_title" value="Forgot your password?"}
-{include file="inc_head.txt"}
+{include file="inc_head.txt" nav_tab='signin'}
 
-<p class="message">A password reminder has been sent to {$sent_to|escape}.</p>
+<div class="container">
+	<p class="message">A password reminder has been sent to <span class="hey-look">{$sent_to|escape}</span>.</p>
+</div>
 
 {include file="inc_foot.txt"}

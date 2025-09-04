@@ -1,0 +1,25 @@
+{capture assign="page_title"}Response formats | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+<style type="text/css">{literal}
+pre { font-size:small; background-color: #ededed; }
+h4 { margin-top: 3rem; }
+{/literal}</style>
+
+{include file="inc_api_header.txt" title="API response formats" subtitle=$subtitle subtitle_isescaped=1}
+
+<div class="card">
+<p class="card-body">The default API response format is <span class="hey-look"><a href="{$cfg.api_abs_root_url}formats/{$default|escape}/">{$default|escape}</a>.</p>
+</div>
+
+{foreach from=$formats item="details" key="format"}
+{if $details.enabled and $details.documented}
+
+{include file="inc_api_format_description.txt" format=$format}
+
+{/if}
+{/foreach}
+
+</div>
+{include file="inc_foot.txt"}

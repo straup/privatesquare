@@ -1,0 +1,54 @@
+{capture assign="page_title"}Revoke access for the {$token.app.app_title} application | Applications | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{include file="inc_api_header.txt" title="Revoke access for this token"}
+
+{if $delete_rsp}
+<div class="card"><div class="card-body">
+{if $delete_rsp.ok}
+<p class="alert alert-success">Okay! That authentication token has been deleted. {$token.app.app_title|escape} will no longer be able to act on your behalf.</p>
+{else}
+<p class="alert alert-error">Hrmph! There was a problem deleting that auth token. This is what the robots know so far: {$delete_rsp.error|escape}</p>
+{/if}
+</div></div>
+
+{else}
+
+<div class="card">
+
+	<h2 class="card-header">Are you sure you want to <span class="hey-look">delete</span> this authentication token?</h2>
+
+<div class="card-body">
+
+<form method="POST" action="{$cfg.api_abs_root_url}oauth2/tokens/{$token.app.api_key|escape}/" class="form" role="form">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="delete" value="1" />
+
+<table class="api-key-or-token table">
+       <tr>
+       	<td><label>Application</label></td>
+	       <td>{$token.app.app_title|escape} <span class="thisisyou"> ⇽ this will <em>not</em> be deleted</span></td>
+       </tr>
+       <tr>
+       	<td><label>Access token</label></td>
+	<td class="api-credential">{$token.access_token|escape} <span class="thisisyou"> ⇽ this <em>will</em> be deleted</span></td></tr>
+       <tr class="api-admin">
+       		<td><label for="confirm">Yes, I would like to make this token go away.</label></td>
+		<td><input type="checkbox" name="confirm" value="1" /></td>
+	</tr>
+       <tr class="api-admin"><td>&nbsp;</td><td><input type="submit" value="MAKE IT SO" class="btn btn-primary btn-lg" /></td></tr>
+
+</table>
+</form>
+	</div>
+
+	<div class="card-footer">
+	<p class="text-center">Actually, no <a href="{$cfg.api_abs_root_url}oauth2/tokens/{$token.app.api_key|escape}/">I don't want to do that</a>.</p>
+	</div>
+
+	</div>
+{/if}
+
+</div>
+{include file="inc_foot.txt"}

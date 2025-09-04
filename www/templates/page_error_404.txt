@@ -1,13 +1,8 @@
-{"HTTP/1.1 404 Not Found"|header}{include file='inc_head.txt' page_title='Page Not Found'}
+{"HTTP/1.1 404 Not Found"|header}{include file='inc_head.txt' page_title="404"}
 
-<div class="row">
-<p class="lead">We can't find the page you requested. Sorry :(</p>
-</div>
+<div class="container">
 
-{if 0}
-<div class="admin-section">
-	<pre class="admin-debug">{$debug_block}</pre>
+	<p>We're not sure what you're looking for but this isn't it.</p>
 </div>
-{/if}
 
 {include file='inc_foot.txt'}

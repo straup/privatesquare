@@ -1,16 +1,61 @@
-{assign var="page_title" value="API methods"}
+{* why does using a capture block to do this make Smarty sad...? *}
+{assign var="page_title" value="API methods | API"}
 {include file="inc_head.txt"}
+<div class="container">
 
-{foreach from=$method_classes item="methods" key="class"}
+{include file="inc_api_header.txt" title="API methods"}
 
-<h2>{$class|escape}</h2>
+{capture assign="count_classes"}{$method_classes|@array_keys|@count}{/capture}
+{capture assign="count_split"}{$count_classes/2|@floor}{/capture}
 
-<ul>
-{foreach from=$methods item="method_name}
-	<li><a href="{$cfg.abs_root_url}api/methods/{$method_name|escape:'uri'}">{$method_name|escape}</a></li>
+<div class="card">
+	<h3 class="card-header">Table of Contents</h3>
+
+	<div class="card-body">
+
+	<ul>
+	{foreach from=$method_classes item="class_details" key="class" name="classes"}
+	<li><a href="#{$class|escape}">{$class|escape}</a></li>
+	{/foreach}
+	</ul>
+	</div>
+	
+	</div>
+</div>
+
+{foreach from=$method_classes item="class_details" key="class" name="classes"}
+<div class="container">
+<div class="api-methods card-group" style="margin-bottom:2rem;">
+
+<a name="{$class|escape}"></a>
+<h3 class="card-header hey-look">{$class|escape}{if 0} {$smarty.foreach.classes.index+1} / {$count_split}{/if}</h3>
+
+{foreach from=$class_details.methods item="method"}
+<div class="card" style="min-width:100%; margin-bottom:1rem;">
+
+	<h4 class="card-header" id="{$method.name|escape}">
+	<a href="{$cfg.api_abs_root_url}methods/{$method.name|escape}">{$method.name|escape}</a>
+	{if "api_explorer"|@features_is_enabled && $method.requires_blessing|isset && !$method.requires_blessing}
+	<a href="{$cfg.api_abs_root_url}methods/{$method.name|escape}/explore/" title="Take this API method for a spin">&#128300;</a>
+	{/if}
+	</h4>
+
+	<div class="card-body">
+
+	<p>{if $method.description}{$method.description|escape}{/if} {if $method.experimental|isset && $method.experimental} <small class="hey-look experimental experimental">experimental</small>{/if}</p>
+
+	</div>
+
+</div>
+
 {/foreach}
 </ul>
 
-{/foreach}
+</div>
+</div>
 
+{/foreach}
+</div>
+
+</div>
 {include file="inc_foot.txt"}

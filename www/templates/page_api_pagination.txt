@@ -1,0 +1,9 @@
+{capture assign="page_title"}Pagination | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+{include file="inc_api_header.txt" title="API Pagination" subtitle=$subtitle subtitle_isescaped=1}
+
+{include file="inc_api_pagination.txt"}
+
+</div>
+{include file="inc_foot.txt"}

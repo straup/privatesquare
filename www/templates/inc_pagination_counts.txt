@@ -1,0 +1,3 @@
+{if $pagination.page_count > 1}
+	{include file="inc_pagination.txt"}
+{/if}

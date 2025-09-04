@@ -1,0 +1,146 @@
+{capture assign="page_title"}{$key.app_title} | Your Applications | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{include file="inc_api_header.txt" title=$key.app_title}
+
+{if $smarty.get.success|isset && $smarty.get.success}
+<div class="card"><div class="card-body">
+<p class="alert alert-success">Hooray! Here is your new API key.</p>
+</div></div>
+{/if}
+
+{if $do_update}
+<div class="card"><div class="card-body">
+{if $update_ok}
+	<p class="alert alert-success">You API key has been updated. Pow!</p>
+{else}
+	<p class="alert alert-danger">There was a problem updating your API key. The robots has reported the following error: {$error|escape}</p>
+{/if}
+
+{elseif $error}
+
+<p class="alert alert-danger">
+{if $error=='no_title'}Your API key must have a name
+{elseif $error=='no_description'}Your API key must have a description
+{else}INVISIBLE ERROR CAT HISSES AT YOU: {$error|escape}
+{/if}
+</p>
+
+</div></div>
+
+{else}{/if}
+
+<div class="card">
+<div class="card-body">
+
+<form method="POST" action="{$cfg.api_abs_root_url}oauth2/applications/{$key.api_key|escape}/" class="form" role="form">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="done" value="1" />
+
+<table class="table api-key-or-token">
+	<tr>
+		<td>Client ID</label></td>
+		<td class="api-credential"><strong>{$key.api_key|escape}</strong></td>
+	</tr>
+
+	<tr>
+		<td>Client Secret</label></td>
+		<td>{$key.app_secret|escape}</td>
+	</tr>
+
+	<tr>
+		<td><label>Authentication Tokens</label></td>
+		<td>
+		{if !$token_count}
+		There are no authenticated users for this API key
+		{else}
+
+		{if $token_count==1}
+
+		    {if $has_self_token}
+		    	<a href="{$cfg.api_abs_root_url}oauth2/tokens/{$key.api_key|escape}/">You have auth-ed this API key</a>
+		    {else}
+			<a href="{$cfg.api_abs_root_url}oauth2/applications/{$key.api_key|escape}/tokens/">One person has auth-ed this API key</a>
+		    {/if}
+
+		{else}
+			<a href="{$cfg.api_abs_root_url}oauth2/applications/{$key.api_key|escape}/tokens/">{$token_count|escape} people have auth-ed this API key</a>
+
+		{if $has_self_token}
+		<div style="margin-top: 20px; font-size:small;">
+		    	<a href="{$cfg.api_abs_root_url}oauth2/tokens/{$key.api_key|escape}/">You have auth-ed this API key</a>
+		</div>
+		{/if}
+
+		{/if}
+
+		{/if}
+
+		{if !$has_self_token}
+		<div style="margin-top: 20px; font-size:small;">
+		<a href="{$cfg.api_abs_root_url}oauth2/authenticate?api_key={$key.api_key|escape}&self=1">Create an access token for yourself using this API key</a>
+		</div>
+		{/if}
+
+		</td>
+	</tr>
+
+	<tr>
+		<td><label>Created</label></td>
+		<td>{$key.created|date_format} at {$key.last_modified|date_format:"%H:%M"}</td>
+	</tr>
+
+	{if $key.created != $key.last_modified}
+
+	<tr>
+		<td><label>Last Modified</label></td>
+		<td>{$key.last_modified|date_format} at {$key.last_modified|date_format:"%H:%M"}</td>
+	</tr>
+
+	{/if}
+
+	{if $key.disabled}
+
+	<tr style="font-weight:700; color:red;"><td>Disabled</td><td>{$key.disabled|date_format}</td></tr>
+
+	<tr><td><label>Title</label></td><td>{$key.app_title|escape}</td></tr>
+	<tr><td><label>Description</label></td><td>{$key.app_description|escape}</td></tr>
+
+	{else}
+
+	<tr>
+		<td><label for="title">Title</label></td><td><input type="text" size="28" name="title" value="{$key.app_title|escape}" class="form-control" /></td>
+	</tr>
+
+	<tr>
+		<td><label for="description">Description</label></td>
+		<td><textarea rows="10" cols="40" name="description" class="form-control">{$key.app_description|escape}</textarea></td>
+	</tr>
+
+	<tr>
+		<td><label for="description">Callback URL</label></td>
+		<td><input type="text" size="28" name="callback" value="{$key.app_callback|escape}" class="form-control" /></td>
+	</tr>
+
+	<tr class="api-admin">
+		<td>&nbsp;</td>
+		<td class="api-delete"><input type="checkbox" name="delete" /> <label for="delete">Actually, I'd like to delete this application</label></td>
+	</tr>
+
+	<tr class="api-admin">
+		<td>&nbsp;</td>
+		<td><input type="submit" value="UPDATE" class="btn btn-primary btn-lg" />
+	</tr>
+
+	{/if}
+
+</table>
+
+</form>
+
+</div>
+</div>
+
+</div>
+{include file="inc_foot.txt"}

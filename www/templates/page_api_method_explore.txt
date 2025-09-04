@@ -1,0 +1,158 @@
+{capture assign="page_title"}{$method} | Explorer | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{include file="inc_api_header.txt" title=$method}
+
+<div style="margin-top:2em;text-align:right;"><a href="{$cfg.api_abs_root_url}methods/{$method|escape}">return to method documentation</a></div>
+
+<div id="query">
+<form class="form" id="explore-form" x-data-method="{$method|escape}" x-http-method="{if $cfg.api_auth_type=='oauth2' and !$cfg.api_oauth2_allow_get_parameters}POST{elseif $details.request_method|isset && $details.request_method}{$details.request_method|escape}{else}GET{/if}">
+
+<div class="card">
+<h3 class="card-header">Parameters</h3>
+
+<div class="card-body">
+
+{if ($details.parameters|isset && $details.parameters|@count) or ($details.paginated|isset && $details.paginated) or ($details.extras|isset && $details.extras)}
+{foreach from=$details.parameters item="param"}
+{if $param.documented}
+
+<div class="form-group api-param">
+<label for="{$param.name|escape}" title="{$param.description|escape}">
+{$param.name|escape} (<code>{$param.type|@escape}</code>) {if $param.required} <span class="text-danger">required</span>{/if}
+</label>
+<input type="text" name="{$param.name|escape}" class="form-control" placeholder="{$param.description|truncate:100:"..."|escape}" id="q-{$param.name|escape}"/>
+{if $param.example}<div class="api-param-example"><span class="example" title="click to add {$param.example|escape} to your query" data-q="{$param.name|escape}">{$param.example|escape}</span></div>{/if}
+</div>
+
+{/if}
+{/foreach}
+
+{if "api_extras"|@features_is_enabled && $details.extras}
+
+<div class="form-group api-param">
+<label for="page">extras (<code>string</code>)</label>
+<input type="text" name="extras" class="form-control" value="" placeholder="{$cfg.api.extras.notes.0|escape}" id="q-extras"/>
+{if $cfg.api_extras.example}<div class="api-param-example"><span class="example" title="click to add {$param.example|escape} to your query" data-q="extras">{$cfg.api_extras.example|escape}</span></div>{/if}
+</div>
+
+{/if}
+
+{if $details.paginated}
+{if $details.pagination == "cursor"}
+
+<div class="form-group api-param">
+<label for="page">cursor (<code>string</code>)</label>
+<input type="text" name="cursor" class="form-control" value="" placeholder="This method uses cursor-based pagination so this argument is the pointer returned by the last API response." />
+</div>
+
+<div class="form-group api-param">
+<label for="per_page">per page</label>
+<input type="text" name="per_page" class="form-control" value="100" />
+</div>
+
+{elseif $details.pagination == "mixed"}
+
+<div class="form-group api-param">
+<label for="page">cursor (<code>string</code>)</label>
+<input type="text" name="cursor" class="form-control" value="" placeholder="This method sometimes uses cursor-based pagination so this argument is the pointer returned by the last API response." />
+</div>
+
+<div class="form-group api-param">
+<label for="page">page (<code>int</code>)</label>
+<input type="text" name="page" class="form-control" value="1" />
+</div>
+
+<div class="form-group api-param">
+<label for="per_page">per page (<code>int</code>)</label>
+<input type="text" name="per_page" class="form-control" value="100" />
+</div>
+
+{else}
+
+<div class="form-group api-param">
+<label for="page">page (<code>int</code>)</label>
+<input type="text" name="page" class="form-control" value="1" />
+</div>
+
+<div class="form-group api-param">
+<label for="per_page">per page (<code>int</code>)</label>
+<input type="text" name="per_page" class="form-control" value="{$cfg.api_per_page_default|escape}" />
+</div>
+
+{/if}
+
+{/if}
+
+{else}
+<p>This method does not take any parameters.</p>
+{/if}
+
+</div>
+</div>
+
+{if $details.notes|isset && $details.notes|@count}
+<div class="card">
+<h3 class="card-header">Notes</h3>
+<div class="card-body">
+{foreach from=$details.notes item="note"}
+<p>{$note|escape}</p>
+{/foreach}
+</div>
+</div>
+{/if}
+
+<div class="card">
+<h3 class="card-header">Authentication</h3>
+
+<div class="card-body">
+<div class="form-group api-param">
+<select class="form-select" name="access_token"{if $details.requires_blessing|isset && $details.requires_blessing} disabled="disabled"{/if}>
+<option x-data-perms="0" value="{$logged_out_token.access_token|escape}"{if !$cfg.user or !$details.requires_perms|isset or !$details.requires_perms} selected="selected"{/if}>Logged out</option>
+{if $cfg.user}
+<option x-data-perms="1" value="{$api_explorer_access_token|escape}"{if $cfg.user and $details.requires_perm|isset && $details.requires_perms==1} selected="selected"{/if}>As you, with read permissions</option>
+<option x-data-perms="2" value="{$api_explorer_access_token|escape}"{if $cfg.user and $details.requires_perm|isset && $details.requires_perms>1} selected="selected"{/if}>As you, with write permissions</option>
+
+{/if}
+</select>
+</div>
+
+</div></div>
+
+<div class="card">
+<div class="card-body">
+	<button id="explore" type="submit" class="btn btn-primary"{if $details.requires_blessing|isset && $details.requires_blessing} disabled="disabled"{/if}>Make it so {if $details.experimental|isset && $details.experimental} &#8212; but remember this method is experimental{/if}</button>
+
+	{if $details.requires_blessing|isset && $details.requires_blessing} <small>This API method requires extra-special permissions and so it is easiest to imagine that it won't work in the API explorer</small>{/if}
+</div>
+</div>
+
+</form>
+
+</div>	<!-- #query -->
+
+<div id="results" style="margin-top:2em;display:none;">
+
+<div class="card">
+
+<h3 class="card-header">Request <button class="btn pull-right" id="do-it-again">Modify this request</button></h3>
+<pre id="api-req" class="card-body" style="font-size:small;background-color:#ededed;"></pre>
+</div>
+
+<div class="card">
+<h3 class="card-header">Response</h3>
+<pre id="api-res" class="card-body" style="font-size:small;background-color:#ededed;max-height:600px; y-overflow:scroll;"></pre>
+
+<div class="card-footer">
+<span class="caveat" id="caveat-code" style="display:none;">See the <code>access token</code> in the request above? It is a time-sensitive token for the purposes of the API Explorer and for copy-pasting example requests <em>in the moment</em> but be aware that it will expire.</span>
+</small>
+</div>
+
+<div>
+
+</div> <!-- #results -->
+
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/api.explore.method.init.js"></script>
+
+{include file="inc_foot.txt"}

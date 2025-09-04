@@ -1,0 +1,78 @@
+{capture assign="page_title"}Create a new API key | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{include file="inc_api_header.txt" title="Create a new API key"}
+
+<div class="card">
+<div class="card-body">
+
+{if $error}
+<p class="alert alert-danger">{$error|escape}</p>
+{/if}
+
+{if $step==3}
+
+{if $key_rsp=='ok'}
+<p class="alert alert-success">Hooray! We've created your new API key. <a href="{$cfg.api_abs_root_url}oauth2/applications/{$key_rsp.key.api_key|escape}/i">Details are over here.</a></p>
+{else}
+<p class="alert alert-danger">Argh! There was a problem creating your API key. This is what we know so far: {$key_rsp.error|escape}</p>
+{/if}
+
+{elseif $step==2}
+
+<form method="POST" action="{$cfg.api_abs_root_url}oauth2/applications/register/" accept-encoding="UTF-8" class="form" role="form">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="done" value="1" />
+	<input type="hidden" name="title" value="{$title|escape}" />
+	<input type="hidden" name="description" value="{$description|escape}" />
+	<input type="hidden" name="callback" value="{$callback|escape}" />
+
+<table class="table api-key-or-token">
+       <tr><td><label>Name</label></td><td>{$title|escape}</td></tr>
+       <tr><td><label>Description</label></td><td>{$description|escape}</td></tr>
+       <tr><td><label>Callback URL</label></td><td>{if $callback}{$callback|escape}{else}&#8212;{/if}</td></tr>
+       <tr class="api-admin"><td><label>Terms of Service</label></td><td><div class="api-tos">{include file="inc_api_tos.txt"}</td></tr>
+       <tr class="api-admin"><td><label for="confirm">I agree!</label></td><td><input type="checkbox" name="confirm" /></td></tr>
+       <tr class="api-admin"><td>&nbsp;</td><td><input type="submit" value="MAKE IT SO (PLEASE)" class="btn btn-primary btn-lg" /></td></tr>
+</table>
+
+</form>
+
+{else}
+
+<form method="POST" action="{$cfg.api_abs_root_url}oauth2/applications/register/" accept-encoding="UTF-8" class="form" role="form">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="done" value="1" />
+
+<table class="table api-key-or-token">
+       <tr>
+	       <td><label for="title">Name</label></td>
+	       <td><input type="text" value="{$title|escape}" name="title" placeholder="Your application's name" class="form-control" /></td>
+       </tr>
+       <tr>
+       		<td><label for="description">Description</label></td>
+		<td><textarea rows="10" cols="40" name="description" placeholder="What does your application do?" class="form-control">{$desc|escape}</textarea></td>
+	</tr>
+
+       <tr>
+	       <td><label for="callback">Callback URL</label></td>
+	       <td><input type="text" value="{$callback|escape}" name="callback" placeholder="Where to send users who want to auth your application" class="form-control" /></td>
+       </tr>
+
+	<tr class="api-admin">
+		<td>&nbsp;</td>
+		<td><input type="submit" value="REGISTER" class="btn btn-lg btn-primary" /></td>
+	</tr>
+
+</table>
+</form>
+
+
+{/if}
+
+</div>
+</div>
+
+</div>
+{include file="inc_foot.txt"}

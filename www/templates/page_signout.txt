@@ -1,12 +1,17 @@
 {assign var='page_title' value='Sign out'}
-{include file='inc_head.txt'}
+{include file='inc_head.txt' nav_tab='account'}
 
-<p>This is an intermediate page so that we can generate and check a crumb. We will inline this into the URL shortly.</p>
+<div class="container">
 
-<form action="{$cfg.abs_root_url}signout/" method="post" accept-encoding="UTF-8">
-	{$crumb_key|crumb_input}
-	<input type="hidden" name="done" value="1" />
-	<input type="submit" value="SIGN OUT" />
-</form>
+     <p>Are you sure you want to sign out?</p>
+
+	<form action="{$cfg.abs_root_url}signout" method="post" accept-encoding="UTF-8" class="form">
+		{$crumb_key|@crumb_input}
+		<input type="hidden" name="done" value="1" />
+		<div class="form-group text-center">
+		<input type="submit" class="btn btn-primary" value="SIGN OUT" />
+		</div>
+	</form>
+</div>
 
 {include file='inc_foot.txt'}

@@ -1,0 +1,13 @@
+{capture assign="page_title"}{$format} | Response formats | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+{include file="inc_api_header.txt" title="API response formats" subtitle=$subtitle subtitle_isescaped=1}
+
+<style type="text/css">{literal}
+pre { font-size:small; background-color: #ededed; }
+h4 { margin-top: 3rem; }
+{/literal}</style>
+
+{include file="inc_api_format_description.txt" format=$format}
+
+{include file="inc_foot.txt"}

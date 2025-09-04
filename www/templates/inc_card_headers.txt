@@ -1,0 +1,5 @@
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="{$cfg.site_name|escape}" />
+<meta property="og:title" content="{if $card_title}{$card_title|strip|ucfirst|escape}{elseif $page_title}{$page_title|strip|escape}{else}{/if}" />
+<meta property="og:description" content="{if $card_description}{$card_description|strip|ucfirst|escape}{/if}" />
+{if $card_image}<meta property="og:image" content="{$card_image|strip}" />{/if}

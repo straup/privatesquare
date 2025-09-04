@@ -1,0 +1,178 @@
+<div class="card" id="history">
+
+<style type="text/css">{literal}
+pre { font-size:small; background-color: #ededed; }
+{/literal}</style>
+
+<h3 class="card-header">A short miserable history (of pagination)</h3>
+
+<div class="card-body">
+<p>Pagination shouldn't be complicated. But it is. Because databases, after all these years, are still complicated beasts.</p>
+
+<p>Databases have always been about trade-offs. No two databases are the same and so no two sets of trade-offs are the same either. The really short version is that some databases can't tell you exactly how many results there are for a given query. Some databases can tell you how many results there are but can't or won't return results past a certain limit. Other databases can do both but only if you use something called a <code>cursor</code> for pagination rather than the traditional <code>offset</code> and <code>limit</code> model (as in "return the next 5 of 50 results starting from postion 20").</p>
+
+<p>Since there isn't an all-purpose database, the <span class="hey-look">{$cfg.site_name|escape}</span> accounts for multiple different pagination models. We've identified four overlapping models (<a href="#plain">plain</a>, <a href="#cursor">cursor</a>, <a href="#mixed">mixed</a> and <a href="#next-query">next-query</a>) each of which are described in detail below.</p>
+
+<p>If you don't really care and just want to get started <a href="#next-query">you should skip ahead to the documentation for next-query pagination</a>.</p>
+
+</div></div>
+
+<div class="card" id="plain">
+<h3 class="card-header">Plain pagination</h3>
+
+<div class="card-body">
+<p>Plain pagination assumes that we know how many results a query yields and that we can fetch any set of results at any given offset.</p>
+
+<p>For example, let's say you wanted to use the API to fetch all the places with a variant name containing the word <code>Paris</code> in sets of five. The API will respond with something like this:</p>
+
+<pre>{literal}
+{
+	"results": [ ... ],
+	"next_query": "method=whosonfirst.places.search&alt=Paris&per_page=5&page=2",
+	<strong>"total": 7</strong>,
+	<strong>"page": 1</strong>,
+	<strong>"per_page": 5</strong>,
+	<strong>"pages": 2</strong>,
+	"cursor": null,
+	"stat": "ok"
+}
+{/literal}</pre>
+
+<p>It's pretty straightforward. There are seven results (<code>total</code>) and this is the first of two pages worth of results (<code>page</code> and <code>pages</code>, respectively). You might already be wondering about the <code>next_query</code> property but <a href="#next-query">we'll get to that shortly</a>.</p>
+
+</div>
+</div>
+
+<div class="card" id="cursor">
+<h3 class="card-header">Cursor-based pagination</h3>
+
+<div class="card-body">
+<p>Cursor-based pagination is necessary when a database can't or won't tell you how many results there are for a query. This means you will need to pass the same query to the database over and over again for as long as the database returns a <code>cursor</code> which is like a secret hint that <em>only the database understands</em> indicating where the next set of results live.</p>
+
+<p>For example, let's say you wanted to use the API to fetch all of the venues near the <a href="https://whosonfirst.mapzen.com/spelunker/id/420571601/">Smithsonian Cooper Hewitt Design Museum</a> in sets of ten. The API will respond with something like this:</p>
+
+<pre>{literal}
+{
+	"results": [ ... ],
+	"next_query": "method=whosonfirst.places.getNearby&latitude=40.784165&longitude=-73.958110&placetype=venue&per_page=10&cursor={CURSOR}",
+	"per_page": 10,
+	<strong>"cursor": {CURSOR}</strong>,
+	"stat": "ok"
+}
+{/literal}</pre>
+
+<p>In order to fetch the next set of results you would include a <code>cursor={literal}{CURSOR}{/literal}</code> parameter in your request, rather than a <code>page={literal}{PAGE_NUMBER}{/literal}</code> parameter like you would with plain pagination. Some databases yield time-sensitive cursors that expire after a number of seconds or minutes so the easiest way to think about cursors is that they are <em>all</em> time sensitive.</p>
+
+<p style="font-style:italic;">Databases, amirite?</p>
+
+</div>
+</div>
+
+<div class="card" id="mixed">
+<h3 class="card-header">Mixed pagination</h3>
+
+<div class="card-body">
+<p>This is where it gets fun. Sometimes an API method might use <em>both</em> plain and cursor-based pagination. That can happen when an underlying database is able to calculate the total number of results but only be able to fetch a fraction of them using plain pagination after which it needs to switch to cursor-based pagination. Which doesn't really make any sense when you think about it because cursors are magic database pixie-dust so there's no way to determine or calculate a corresponding cursor for a traditional page number. So in the end the API itself needs to perform an initial query just to see how many results there are and then adjust whether it is going to use plain or cursor-based pagination on the fly.</p>
+
+<p>For example, let's say you wanted to use the API to fetch all the <code>microhoods</code> in sets of five. The API will respond with something like this:</p>
+
+<pre>{literal}
+{
+	"results": [ ... ],
+	"next_query": "method=whosonfirst.places.search&placetype=microhood&page=2&per_page=5",
+	<strong>"total": 186</strong>,
+	<strong>"page": 1</strong>,
+	"per_page": 5,
+	<strong>"pages": 38</strong>,
+	<strong>"cursor": null</strong>,
+	"stat": "ok"
+}
+{/literal}</pre>
+
+<p>But if you then asked the API to fetch all of the <code>neighbourhoods</code>, again in sets of five, the API will respond with something like this:</p>
+
+<pre>{literal}
+{
+	"results": [ ... ],
+	"next_query": "method=whosonfirst.places.search&placetype=neighbourhood&per_page=5&cursor={CURSOR}",
+	<strong>"total": 81065</strong>,
+	<strong>"page": null</strong>,
+	<strong>"pages": 16213</strong>,
+	"per_page": 5,
+	<strong>"cursor": "{CURSOR}"</strong>,
+	"stat": "ok"
+}
+{/literal}</pre>
+
+<p>In both examples we know how many results there will be. In the first example we are able to use plain pagination so we know that this is page one of thirty-eight and thus the value of the <code>cursor</code> property is null. In the second example the API has returned a cursor so even though we know the total number of results and can calculate the number of "pages" we set the value of the <code>page</code> property to be null since the requirement on cursor-based pagination makes it moot.</p>
+
+<p>If you look carefully at the value of the <code>next_query</code> property in both examples you can probably figure out where this is going, next.</p>
+
+</div></div>
+
+<div class="card" id="next-query">
+<h3 class="card-header">Next-query-based pagination</h3>
+
+<div class="card-body">
+<p>Next-query based pagination is an attempt to hide most of the implentation details from API consumers and provide a simple "here-do-this-next" style pagination interface, instead.</p>
+
+<p>For example, let's say you wanted to use the API to fetch all the localities (there are over 200, 000 of them) in sets of five. That will require more than 41, 000 API requests but that's your business. The API will respond with a <code>next_query</code> parameter, something like this:</p>
+
+<pre>{literal}
+{
+	"results": [ ... ],
+	<strong>"next_query": "method=whosonfirst.places.search&placetype=locality&per_page=5&cursor={CURSOR}"</strong>,
+	"total": 208214,
+	"page": null,
+	"pages": 41643,
+	"per_page": 5,
+	"cursor": "{CURSOR}",
+	"stat": "ok"
+}
+{/literal}</pre>
+
+<p>There are a few things to note about the <code>next_query</code> property:</p>
+
+<ul>
+	<li>It contains a URL-encoded query string with the parameters to pass to the API retrieve the <em>next</em> set of results for your query.</li>
+	<li>When it is empty (or <code>null</code>) that means there are no more results.</li>
+	<li>It <em>does not</em> contain any user-specific access tokens or API keys &#8212; you will need to add those yourself.</li>
+	<li>It <em>does not</em> contain any host or endpoint specific information  &#8212; you will need to add that yourself.</li>
+	<li>You may want or need to decode the query string in order to append additional parameters (like authentication) and to handle how those parameters are sent along to the API. For example, whether the method is invoked using HTTP's <code>GET</code> or <code>POST</code> method or whether parameters should be <code>multipart/mime</code> encoded or not. And so on.</li>
+</ul>
+
+<p>This type of pagination is not ideal but strives to be a reasonable middle-ground that is not too onerous to implement and easy to use.</p>
+
+</div></div>
+
+<div class="card" id="headers">
+<h3 class="card-header">Pagination and HTTP headers</h3>
+
+<div class="card-body">
+<p>Pagination properties are also returned as HTTP response headers. This is useful for any output format and necessary for output formats like plain old <a href="{$cfg.api_abs_root_url}formats#csv">CSV</a> or Who's On First's <a href="{$cfg.api_abs_root_url}formats#meta">meta</a> format. All of the pagination properties you've come to know and love in the examples above are also returned as HTTP response header prefixed by <code>X-api-pagination-</code>.</p>
+
+<p>For example: </p>
+
+<pre>{literal}
+$> curl -s -v -X GET 'https://whosonfirst-api.mapzen.com/?method=whosonfirst.places.search&api_key={API_KEY}&q=poutine&extras=geom:bbox&page=1&<strong>format=csv</strong>&per_page=1'
+
+&lt; HTTP/1.1 200 OK
+&lt; Access-Control-Allow-Origin: *
+&lt; Content-Type: text/csv
+&lt; Date: Tue, 28 Feb 2017 21:13:37 GMT
+&lt; Status: 200 OK
+<strong>&lt; X-api-pagination-cursor: 
+&lt; X-api-pagination-next-query: method=whosonfirst.places.search&amp;q=poutine&amp;extras=geom%3Abbox&amp;per_page=1&amp;page=2&amp;format=csv
+&lt; X-api-pagination-page: 1
+&lt; X-api-pagination-pages: 13
+&lt; X-api-pagination-per-page: 1
+&lt; X-api-pagination-total: 13</strong>
+&lt; X-whosonfirst-csv-header: geom_bbox,wof_country,wof_id,wof_name,wof_parent_id,wof_placetype,wof_repo
+&lt; Content-Length: 208
+&lt; Connection: keep-alive
+&lt; 
+geom_bbox,wof_country,wof_id,wof_name,wof_parent_id,wof_placetype,wof_repo
+"-71.9399642944,46.0665283203,-71.9399642944,46.0665283203",CA,975139507,"Poutine Restau-Bar Enr",-1,venue,whosonfirst-data-venue-ca
+{/literal}</pre>
+
+</div></div>

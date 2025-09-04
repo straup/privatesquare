@@ -1,13 +1,26 @@
 {assign var='page_title' value="Delete your account"}
-{include file="inc_head.txt"}
+{include file="inc_head.txt" nav_tab='account'}
 
-<p>Are you <strong>really sure</strong> you want to delete your account?</p>
+<div class="container">
+	<p>Are you <strong>really sure</strong> you want to delete your account?</p>
 
-<form action="/account/delete/" method="post">
-	<input type="checkbox" name="confirm" /><label for="confirm">Yes, I want to delete my account.</label><br />
-	<input type="hidden" name="delete" value="1" />
-	{$crumb_key|crumb_input}
-	<input type="SUBMIT" value="DELETE MY ACCOUNT" />
-</form>
+	<form action="{$cfg.abs_root_url}account/delete/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="delete" value="1" />
+		{$crumb_key|crumb_input}
+	    
+		<div class="form-group">
+		  <div class="checkbox">
+		    <label>
+			<input type="checkbox" name="confirm" id="confirm"> Yes, I want to delete my account.
+		    </label>
+		   </div>
+		 </div>
+		 
+		 <div class="form-group">
+			<button type="submit" class="btn btn-danger">Delete my account</button>
+		</div>
+
+	</form>
+</div>
 
 {include file="inc_foot.txt"}

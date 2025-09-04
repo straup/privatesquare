@@ -1,0 +1,36 @@
+{include file='inc_head.txt' nav_tab='contact'}
+
+<div class="container">
+	<h1>Contact</h1>
+
+	{if $error_missing}		<p class="alert alert-danger">Please fill out all the fields</p>{/if}
+	{if $smarty.get.sent}	<p class="alert alert-success">Your message has been sent. Thanks!</p>{/if}
+
+	<p>Here is a form that sends an email when it is submitted.</p>
+
+	<form action="{$cfg.abs_root_url}contact/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="contact" value="1" />
+
+	        <div class="form-group{if $error_missing && !$name} error{/if}">
+			<label for="name">your name</label>
+			<input type="text" name="name" size="40" value="{$name|escape}" class="form-control" />
+		</div>
+			
+	        <div class="form-group{if $error_missing && !$email} error{/if}">
+			<label for="email">your email</label>
+			<input type="email" name="email" size="40" value="{$email|escape}" class="form-control" />
+		</div>
+			
+	        <div class="form-group{if $error_missing && !$message} error{/if}">
+			<label for="message">your message</label>
+			<textarea name="message" rows="6" class="input-xxlarge form-control"></textarea>
+		</div>
+
+	        <div class="form-actions">
+			<button type="submit" class="btn btn-primary">Send</button>
+		</div>
+
+	</form>
+</div>
+
+{include file='inc_foot.txt'}

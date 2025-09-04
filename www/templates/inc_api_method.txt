@@ -1,0 +1,180 @@
+{capture assign="api_request_method"}{if $cfg.api_auth_type=='oauth2' and !$cfg.api_oauth2_allow_get_parameters}POST{elseif $details.request_method|isset && $details.request_method}{$details.request_method|escape}{else}GET{/if}{/capture}
+
+{if $details.disallow_formats|isset}{assign var="disallow_formats" value=$details.disallow_formats|@api_formats_ensure_enabled}{/if}
+
+<a name="{$method|escape}"></a>
+
+<div class="card" id="description">
+
+	<h3 class="card-header">Description</h3>
+
+	<div class="card-body">
+	<p>{$details.description|escape}
+
+	{if "api_explorer"|@features_is_enabled}
+	<span>
+	{if $details.requires_blessing|isset && $details.requires_blessing} This method requires extra-special permissions so it's easiest just to image that it will work with the API explorer{else} <a href="{$cfg.api_abs_root_url}methods/{$method|escape}/explore/" style="color:#FF5700">Try this method in the API Explorer.</a>{/if}
+	</span>
+	{/if}
+
+	</p>
+
+	{if ($details.requires_auth|isset && $details.requires_auth) || ($details.requires_blessing|isset && $details.requires_blessing) || !$details.documented || !$details.enabled}
+	<ul class="api-method-details">
+	{if $details.requires_auth|isset && $details.requires_auth}<li>This method requires <strong>authentication</strong>.</li>{/if}
+	{if $details.requires_blessing|isset && $details.requires_blessing}<li>This method requires additional <strong>authorization</strong>.</li>{/if}
+	{if !$details.documented}<li>This method is <strong>undocumented</strong>.</li>{/if}
+	{if !$details.enabled}<li>This method is <strong>disabled</strong>.</li>{/if}
+	</ul>
+	{/if}
+
+	</div>
+</div>
+
+<div class="card">
+	<h3 class="card-header">Method</h3>
+	<p class="card-body">{$api_request_method|escape}</p>
+</div>
+
+<div class="card api-sect" id="arguments">
+	<h3 class="card-header">Arguments</h3>
+
+	<div class="card-body">
+	{if $details.parameters|isset && $details.parameters && $details.parameters|@count or $cfg.api_auth_type=='oauth2' or $details.paginated}
+	<ul>
+	<li><strong>access_token</strong> (<code>string</code>) &#8212; A valid <a href="{$cfg.api_abs_root_url}oauth2/">OAuth2 access token</a> <span class="text-danger">(required)</span></li>
+
+	{if $disallow_formats|@count}
+	<li><strong>format</strong> (<code>string</code>) &#8212; The format in which to return the data. Normally supported formats are {foreach from=$response_formats item="fmt" name="formats"}<a href="{$cfg.api_abs_root_url}formats/{$fmt|escape}/">{$fmt|escape}</a>{if !$smarty.foreach.formats.last}, {/if}{/foreach} however the following output formats are <span class="hey-look">disallowed</span> for this API method: {foreach from=$disallow_formats item="fmt" name="formats"}<a href="{$cfg.api_abs_root_url}formats/{$fmt|escape}/">{$fmt|escape}</a>{if !$smarty.foreach.formats.last}, {/if}{/foreach}. The default format is <a href="{$cfg.api_abs_root_url}formats/{$default_format|escape}">{$default_format|escape}</a>.</li>
+	{else}	
+	<li><strong>format</strong> (<code>string</code>) &#8212; The format in which to return the data. Supported formats are {foreach from=$response_formats item="fmt" name="formats"}<a href="{$cfg.api_abs_root_url}formats/{$fmt|escape}/">{$fmt|escape}</a>{if !$smarty.foreach.formats.last}, {/if}{/foreach}. The default format is <a href="{$cfg.api_abs_root_url}formats/{$default_format|escape}">{$default_format|escape}</a>.</li>
+	{/if}
+
+	{if $details.parameters|isset && $details.parameters && $details.parameters|@count}
+	{foreach from=$details.parameters item="param"}
+	{if $param.documented || 'admin'|@auth_has_role}
+	<li><strong>{$param.name|escape}</strong> (<code>{$param.type|@escape}</code>) &#8212; {$param.description|escape} <span class="text-danger">{if $param.required}(required){/if}{if !$param.documented} (undocumented){/if}</span></li>
+	{/if}
+	{/foreach}
+	{/if}
+
+	{if "api_extras"|@features_is_enabled and $details.extras|isset && $details.extras}
+	<li><strong>extras</strong> &#8212; {" "|@implode:$cfg.api_extras.notes|escape}</li>
+	{/if}
+
+	{if $details.paginated|isset && $details.paginated}
+	{if $details.pagination=="cursor"}
+	<li><strong>cursor</strong> (<code>string</code>) &#8212; This method uses cursor-based pagination so this argument is the pointer returned by the last API response, in the <code>cursor</code> property. Please consult the <a href="{$cfg.api_abs_root_url}pagination/">pagination documentation</a> for details.</li>
+	<li><strong>per_page</strong> (<code>int</code>) &#8212; The default is {$cfg.api_per_page_default|escape} and the maximum is {$cfg.api_per_page_max|escape}.</li>
+	{elseif $details.pagination=="mixed"}
+	<li><strong>cursor</strong> (<code>string</code>) &#8212; This method sometimes uses cursor-based pagination so this argument is the pointer returned by the last API response, in the <code>cursor</code> property.</li>
+	<li><strong>page</strong> (<code>int</code>) &#8212; The default is 1. If this API method returns a non-empty <code>cursor</code> property as part of its response that means you should switch to using cursor-based pagination for all subsequent queries. Alternately you can simply rely on the <code>next_query</code> property to determine which parameters to include with your next request. Unfortunately it's complicated because databases are, after all these years, still complicated. Please consult the <a href="{$cfg.api_abs_root_url}pagination/">pagination documentation</a> for details.</li>
+	{if $details.pagination_per_page_max}
+	<li><strong>per_page</strong> (<code>int</code>) &#8212; The default is {$cfg.api_per_page_default|escape} and the maximum is {$details.pagination_per_page_max|escape}.</li>
+	{else}
+	<li><strong>per_page</strong> (<code>int</code>) &#8212; The default is {$cfg.api_per_page_default|escape} and the maximum is {$cfg.api_per_page_max|escape}.</li>
+	{/if}
+	{else}
+	<li><strong>page</strong> (<code>int</code>) &#8212; The default is 1.</li>
+	{if $details.pagination_per_page_max}
+	<li><strong>per_page</strong> (<code>int</code>) &#8212; The default is {$cfg.api_per_page_default|escape} and the maximum is {$details.pagination_per_page_max|escape}.</li>
+	{else}
+	<li><strong>per_page</strong> (<code>int</code>) &#8212; The default is {$cfg.api_per_page_default|escape} and the maximum is {$cfg.api_per_page_max|escape}.</li>
+	{/if}
+	{/if}
+	{/if}
+
+	</ul>
+	{else}
+	<p>None</p>
+	{/if}
+
+	</div>
+</div>
+
+<div class="card api-sect" id="errors">
+<h3 class="card-header">Errors</h3>
+
+<div class="card-body">
+{if $details.errors|isset && $details.errors && $details.errors|@count}
+
+<p>In addition to <a href="{$cfg.api_abs_root_url}errors/">default error codes</a> common to all methods this API method defines the following additional error codes:</p>
+
+<ul class="api-list-o-things">
+{foreach from=$details.errors item="row" key="code"}
+<li><strong><code>{$code|escape}</code></strong> &#8212; {$row.message|escape}</li>
+{/foreach}
+</ul>
+
+{else}
+<p>This API method does not define any custom error codes. For the list of error codes common to all API methods please consult the <a href="{$cfg.api_abs_root_url}errors/">default error codes</a> documentation.</p>
+{/if}
+</div>
+</div>
+
+{if $details.note|isset && $details.notes|@count or ($details.paginated|isset && $details.paginated) or ($details.experimental|isset && $details.experimental) or $disallow_formats|@count}
+<div class="card api-sect" id="notes">
+<h3 class="card-header">Notes</h3>
+
+<div class="card-body">
+<ul class="api-list-o-things">
+{foreach from=$details.notes item="note"}
+<li>{$note|escape}</li>
+{/foreach}
+
+{if $disallow_formats|@count}
+<li>The following output formats are <span class="hey-look">disallowed</span> for this API method:
+{foreach from=$disallow_formats item="fmt" name="formats"}
+<a href="{$cfg.api_abs_root_url}formats/{$fmt|escape}/">{$fmt|escape}</a>{if !$smarty.foreach.formats.last}, {/if}
+{/foreach}
+</li>
+{/if}
+
+{if $details.paginated}
+{if $details.pagination=="cursor"}
+<li>This API method uses <span class="hey-look">cursor-based</span> pagination. Please consult the <a href="{$cfg.api_abs_root_url}pagination/">pagination documentation</a> for details.</li>
+{elseif $details.pagination=="mixed"}
+<li>This API method uses <span class="hey-look">mixed</span> pagination. Please consult the <a href="{$cfg.api_abs_root_url}pagination/">pagination documentation</a> for details.</li>
+{else}
+<li>This API method uses <span class="hey-look">plain</span> pagination. Please consult the <a href="{$cfg.api_abs_root_url}pagination/">pagination documentation</a> for details.</li>
+{/if}
+{/if}
+
+{if $details.experimental}
+<li>This API method is <span class="hey-look">experimental</span>. Both its inputs and outputs <em>may</em> change without warning. We'll try not to introduce any backwards incompatible changes but you should approach this API method defensively.</li>
+{/if}
+
+</ul>
+</div>
+{/if}
+</div>
+
+<div class="container">
+<div class="card api-sect" id="example">
+
+<h3 class="card-header">Example request {if "api_explorer"|@features_is_enabled}<small style="display:inline !important;"> {if $details.requires_blessing|isset && $details.requires_blessing} This method requires extra-special permissions so it's easiest just to image that it will work with the API explorer{else}&#8212; <a href="{$cfg.api_abs_root_url}methods/{$method|escape}/explore/" style="color:#FF5700">or take this API method for a spin</a>{/if}</small>{/if}</h3>
+
+<div class="card-body">
+{if $api_request_method=='GET' and ($cfg.api_auth_type!='oauth2' or $cfg.api_oauth2_allow_get_parameters)}
+<pre style="font-size:small;background-color:#ededed;">curl -X <strong>{$api_request_method|escape}</strong> '{$cfg.api_abs_root_url}<strong>{$cfg.api_endpoint}</strong>?method=<strong class="api-param-required">{$method|escape}</strong>{if $cfg.api_auth_type=='oauth2'}&access_token=<strong class="api-param-required">&lt;TOKEN&gt;</strong>{/if}{if $details.parameters|isset && $details.parameters|@count}{foreach from=$details.parameters item="param" name="params"}{if $param.documented}&{$param.name|escape}=<strong{if $param.required} class="api-param-required"{/if}>&lt;{$param.name|strtoupper|escape}&gt;</strong>{if !$smarty.foreach.params.last}{/if}{/if}{/foreach}{/if}'</pre>
+{else}
+<pre style="font-size:small;background-color:#ededed;">curl -X <strong>{$api_request_method|escape}</strong> {$cfg.api_abs_root_url}<strong>{$cfg.api_endpoint}</strong> -F "method=<strong class="api-param-required">{$method|escape}</strong>"{if $cfg.api_auth_type=='oauth2'} -F "access_token=<strong class="api-param-required">&lt;TOKEN&gt;</strong>" {/if}{if $details.parameters|isset && $details.parameters|@count}{foreach from=$details.parameters item="param" name="params"}{if $param.documented} -F "{$param.name|escape}=<strong{if $param.required} class="api-param-required"{/if}>&lt;{$param.name|strtoupper|escape}&gt;</strong>"{if !$smarty.foreach.params.last} {/if}{/if}{/foreach}{/if}</pre>
+{/if}
+
+</div>
+</div>
+
+{if $details.example_response|isset && $details.example_response}
+
+<div class="card">
+<h3 class="card-header">Example response</h3>
+<pre class="card-body" style="font-size:small;background-color:#ededed;">{$details.example_response|escape}</pre>
+</div>
+
+{/if}
+</div>
+
+</div>
+
+
+

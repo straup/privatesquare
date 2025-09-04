@@ -1,0 +1,5 @@
+<p>JSON (JavaScript Object Notation) is a data-interchange format based on JavaScript. For more details, consult <a href="http://json.org/">http://json.org/</a>.</p>
+
+<h4>Notes</h4>
+
+<p>JSON output is supported for all API methods.</p>

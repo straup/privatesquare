@@ -1,0 +1,37 @@
+{capture assign="page_title"}Your Applications | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{capture assign="key_count"}{if $pagination|isset}{$pagination.total_count}{else}0{/if}{/capture}
+
+{capture assign="subtitle"}
+{if $key_count}
+{if $key_count > 1}You've created {$key_count} API applications{else}You've created one application{/if}
+ /
+<a href="{$cfg.api_abs_root_url}oauth2/applications/register/">Create a new application</a>
+{/if}
+{/capture}
+
+{include file="inc_api_header.txt" title="Your Applications"}
+
+<div class="card">
+
+<div class="card-body">
+<ul class="api-list-o-things">
+{foreach from=$keys item="row"}
+<li>
+	<a href="{$cfg.api_abs_root_url}oauth2/applications/{$row.api_key|escape}/">{$row.app_title|escape}</a>
+	&#8212; created on {$row.created|date_format} 
+</li>
+{/foreach}
+
+	<li><a href="{$cfg.api_abs_root_url}oauth2/applications/register/">Create a new application</a></li>
+</ul>
+
+</div>
+
+<div class="card-footer">{include file="inc_pagination.txt"}</div>
+</div>
+
+</div>
+{include file="inc_foot.txt"}

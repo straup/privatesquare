@@ -1,0 +1,6 @@
+{capture assign="page_title"}About{/capture}
+{include file='inc_head.txt'}
+<div class="container">
+     <p>This is the about page.</p>
+</div>
+{include file='inc_foot.txt'}

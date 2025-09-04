@@ -1,0 +1,9 @@
+<a name="{$format|escape}"></a>
+<div class="card">
+
+<h2 class="card-header" id="data-format-{$format|escape}"><a href="{$cfg.api_abs_root_url}formats/{$format|escape}/">{$format|escape}</a>{if $format==$default} <small>this is the <span class="hey-look">default</span> response format</small>{/if}</h2>
+
+{capture assign="template"}inc_api_format_description_{$format|escape}.txt{/capture}
+<div class="card-body">{include file=$template}</div>
+
+</div>

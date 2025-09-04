@@ -1,0 +1,10 @@
+{capture assign="page_title"}Error codes | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{include file="inc_api_header.txt" title="API error codes" subtitle=$subtitle subtitle_isescaped=1}
+
+{include file="inc_api_errors.txt"}
+
+</div>
+{include file="inc_foot.txt"}

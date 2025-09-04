@@ -1,0 +1,1 @@
+<p>JSONP (JSON with Padding) is a technique for passing the results of a server request back to the client as a JavaScript function containing JSON data. To use JSONP with the {$cfg.site_name|escape} API, you must pass a <code>callback</code> paramater that refers to a function in the <code>window</code> scope of the calling page.</p>

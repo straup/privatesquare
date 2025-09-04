@@ -1,0 +1,118 @@
+{capture assign="page_title"}Authorize your {$key.app_title} API key | API{/capture}
+{include file="inc_head.txt"}
+<div class="container">
+
+{include file="inc_api_header.txt" title="Register ... for yourself"}
+
+<div class="card">
+<div class="card-body">
+
+{if $has_token}
+
+<p class="alert alert-info">Hey, guess what? You've already created <a href="{$cfg.api_abs_root_url}oauth2/tokens/{$key.api_key|escape}/">an authentication token</a> for yourself and this API key!</p>
+
+<table class="api-key-or-token table">
+
+	<tr>
+		<td><label>Authentication Token</label></td>
+		<td class="api-credential"><a href="{$cfg.api_abs_root_url}oauth2/tokens/{$key.api_key|escape}/">{$token_row.access_token|escape}</a></td>
+	</tr>
+
+	<tr>
+		{assign var="perms" value=$token_row.perms}
+		<td><label>Permissions</label></td>
+		<td>{$permissions.$perms|escape}</td>
+	</tr>
+</table>
+
+{else}
+
+{if $token_rsp}
+
+{if $token_rsp.ok}
+<p class="alert alert-success">Hooray! A new authentication token has been created for you on behalf the <strong>{$key.app_title|escape}</strong> application.</p>
+
+<table class="api-key-or-token table">
+
+	<tr>
+		<td><label>Access Token</label></td><td class="api-credential"><a href="{$cfg.api_abs_root_url}oauth2/tokens/{$key.api_key|escape}/">{$token_rsp.token.access_token|escape}</a></td>
+	</tr>
+
+	<tr>
+		{assign var="perms" value=$token_rsp.token.perms}
+		<td><label>Permissions</label></td><td>{$permissions.$perms|escape}</td>
+	</tr>
+</table>
+
+{else}
+<p class="alert alert-danger">
+{if $error=='bad_perms'}
+Hey. That's not a valid permission for authentication tokens.
+{else}
+Hrmph. There was a problem creating your auth token. The robots know this so far: INVISIBLE ERROR CAT!
+{/if}
+</p>
+{/if}
+
+{else}
+
+{if $error}
+<p class="alert alert-danger">{$error|escape}</p>
+{/if}
+
+<p>Create a new authentication token for your <a href="{$cfg.api_abs_root_url}oauth2/applications/{$key.api_key|escape}/">{$key.app_title|escape} API key</a>?</p>
+
+<form method="POST" action="{$cfg.api_abs_root_url}oauth2/authenticate/" class="form" role="form">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="api_key" value="{$key.api_key|escape}" />
+	<input type="hidden" name="self" value="1" />
+
+<table class="table api-key-or-token">
+
+       <tr>
+       <td><label for="perms">Permissions</label></td>
+       <td>
+	<select name="perms" class="form-control">
+		<option />
+	{foreach from=$permissions item="label" key="id"}
+		<option value="{$id|escape}">{$label|escape}</option>
+	{/foreach}
+	</select>
+	</td>
+	</tr>
+
+	<tr>
+		<td><label for="ttl">Make this token valid</label></td>
+		<td>
+	<select name="ttl" class="form-control">
+	{foreach from=$ttl_map item="label" key="ttl"}
+		<option value="{$ttl|escape}">{$label|escape}</option>
+	{/foreach}
+	</select>
+		</td>
+	</tr>
+
+	<tr class="api-admin">
+	<td><label for="confirm">Yup. I'm sure I want to do this!</label></td>
+	<td>
+	<input type="checkbox" name="confirm" />
+	</td>
+	</tr>
+
+	<tr class="api-admin">
+	<td>&nbsp;</td>
+	<td><input type="submit" value="CREATE" class="btn btn-lg btn-primary" /></td>
+	</tr>
+
+</table>
+</form>
+
+{/if}
+
+{/if}
+
+</div>
+</div>
+
+</div>
+{include file="inc_foot.txt"}

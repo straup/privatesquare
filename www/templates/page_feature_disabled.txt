@@ -1,7 +1,7 @@
 {include file="inc_head.txt"}
 
-<div class="row">
-<p class="lead">This part of the site is currently disabled. Sad face.</p>
+<div class="container">
+	<p>This part of the site is currently disabled.</p>
 </div>
 
 {include file="inc_foot.txt"}

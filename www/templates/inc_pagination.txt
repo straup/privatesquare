@@ -1,105 +1,165 @@
-{if $pagination.page_count > 1}
+{if $pagination && $pagination.page_count > 1}
+<nav aria-label="Pagination" id="pagination">
 
-<div class="container" style="text-align:center;">
+<ul class="pagination justify-content-center">
 
-<ul class="pagination">
-
-    {* previous button *}
-    {if $pagination.page > 1}
-		<li>{if $pagination_page_as_queryarg}</li>
-		<li><a href="{$pagination_url}&page={$pagination.page-1}">Previous page</a></li>
+	{* previous button *}
+	{if $pagination.page > 1}
+		{if $pagination_page_as_queryarg}
+			{if $pagination_url|strpos:"?" === false}
+				<li class="page-item"><a href="{$pagination_url}?page={$pagination.page-1}" class="page-link" id="pagination-previous-page">⇠</a></li>
+			{else}
+				<li class="page-item"><a href="{$pagination_url}&amp;page={$pagination.page-1}" class="page-link" id="pagination-previous-page">⇠</a></li>
+			{/if}
 		{else}
-		<li><a href="{$pagination_url}page{$pagination.page-1}">Previous page</a></li>
+		<li class="page-item"><a href="{$pagination_url}page{$pagination.page-1}" class="page-link" id="pagination-previous-page">⇠</a></li>
 		{/if}
 	{else}
-	     <li class="disabled"><a href="#">This is the first page</a></li>
+		{if $pagination.cursor}
+		{if $pagination_url|strpos:"?" === false}
+		<li class="page-item"><a href="{$pagination_url}?cursor={$pagination.cursor|escape}" class="page-link">⇢</a></li>
+		{else}
+		<li class="page-item"><a href="{$pagination_url}&cursor={$pagination.cursor|escape}" class="page-link">⇢</a></li>
+		{/if}
+
+		{else}
+		<li class="page-item disabled"><a href="#" class="page-link">⇢</a></li>
+		{/if}
 	{/if}
 
 	{* middle *}
 
+	{if $pagination.cursor}
+		<li class="page-item disabled pagination-numbered"><a href="#" class="page-link">1</a></li>
+		<li class="page-item disabled pagination-numbered"><a href="#" class="page-link">...</a></li>
+		<li class="page-item disabled pagination-numbered"><a href="#" class="page-link">{$pagination.page_count|escape}</a></li>
+	{else}
 	{if $pagination.page_count > 10}
-	    {assign var=range_mid value=7}
-	    {assign var=rfloor value=$range_mid/2|@floor}
-	    
-	    {assign var=range_min value=$pagination.page-$rfloor}
-	    {assign var=range_max value=$pagination.page+$rfloor}
-    	    	
-    	{if $range_min <= 0}
-    	    {assign var=adjmin value=$range_min|@abs}
-    	    {assign var=range_max value=$range_max+$adjmin+1}
-    	    {assign var=range_min value=1}
-    	{/if}
-    	
-    	{if $range_max > $pagination.page_count}
-    	    {assign var=adjmax value=$range_max-$pagination.page_count}
-    	    {assign var=range_min value=$range_min-$adjmax}
-    	    {assign var=range_max value=$pagination.page_count}
-    	{/if}
-    	
-    	{assign var=range value=$range_min|range:$range_max}
-        {assign var=rlen value=$range|@count}
-        {assign var=rlen value=$rlen-1}
+		{assign var=range_mid value=7}
+		{assign var=rfloor value=$range_mid/2|@floor}
 
-    	{section name=paglp start=1 loop=$pagination.page_count+1}
-    	    {assign var=i value=$smarty.section.paglp.index}
-   
-    	    {if $range.0 > 2 && $i == $range.0}
-    	        <li class="disabled pagination-numbered"><a href="#">...</a></li>
-    	    {/if}
-    	    
-    	    {if $i == 1 || $i == $pagination.page_count || $i|in_array:$range}
-   	        {if $i == $pagination.page}
-    	                <li class="active pagination-numbered"><a href="#">{$i}</a></li>
-    	        {elseif $pagination_page_as_queryarg}
-        		<li class="pagination-numbered"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
-       		{else}
-        		<li class="pagination-numbered"><a href="{$pagination_url}page{$i}">{$i}</a></li>
-       		{/if}
-    	    {/if}
-    	    
-    	    {if $range.$rlen < $pagination.page_count-1 && $i == $range.$rlen}
-    	    <li class="disabled pagination-numbered"><a href="#">...</a></li>
-    	    {/if}
-    	    
-    	{/section}
+		{assign var=range_min value=$pagination.page-$rfloor}
+		{assign var=range_max value=$pagination.page+$rfloor}
+
+		{if $range_min <= 0}
+			{assign var=adjmin value=$range_min|@abs}
+			{assign var=range_max value=$range_max+$adjmin+1}
+			{assign var=range_min value=1}
+		{/if}
+
+		{if $range_max > $pagination.page_count}
+			{assign var=adjmax value=$range_max-$pagination.page_count}
+			{assign var=range_min value=$range_min-$adjmax}
+			{assign var=range_max value=$pagination.page_count}
+		{/if}
+
+		{assign var=range value=$range_min|range:$range_max}
+		{assign var=rlen value=$range|@count}
+		{assign var=rlen value=$rlen-1}
+
+		{section name=paglp start=1 loop=$pagination.page_count+1}
+			{assign var=i value=$smarty.section.paglp.index}
+
+			{if $range.0 > 2 && $i == $range.0}
+				<li class="page-item disabled pagination-numbered"><a href="#" class="page-link">...</a></li>
+			{/if}
+
+			{if $i == 1 || $i == $pagination.page_count || $i|in_array:$range}
+				{if $i == $pagination.page}
+					{if $pagination.cursor}
+					<li class="page-item active pagination-numbered disabled"><a href="#" class="page-link">{$i}</a></li>
+					{else}
+					<li class="page-item active pagination-numbered"><a href="#" class="page-link">{$i}</a></li>
+					{/if}
+				{elseif $pagination_page_as_queryarg}
+					{if $pagination_url|strpos:"?" === false}
+						<li class="page-item pagination-numbered"><a href="{$pagination_url}?page={$i}" class="page-link">{$i}</a></li>
+					{else}
+						<li class="page-item pagination-numbered"><a href="{$pagination_url}&amp;page={$i}" class="page-link">{$i}</a></li>
+					{/if}
+				{else}
+					{* if $pagination.cursor && $i >= $max_page *}
+					{if $pagination.cursor}
+					<li class="page-item disabled pagination-numbered"><a href="#" class="page-link">{$i}</a></li>
+					{else}
+					<li class="page-item pagination-numbered"><a href="{$pagination_url}page{$i}" class="page-link">{$i}</a></li>
+					{/if}
+				{/if}
+			{/if}
+
+			{if $range.$rlen < $pagination.page_count-1 && $i == $range.$rlen}
+			<li class="page-item disabled pagination-numbered"><a href="#" class="page-link">...</a></li>
+			{/if}
+
+		{/section}
 
 	{else}
-	
-    	{section name=paglp start=1 loop=$pagination.page_count+1}
-    	    {assign var=i value=$smarty.section.paglp.index}
 
-    	    {if $i == $pagination.page}
-    	        <li class="active pagination-numbered"><a href="#">{$i}</a></li>
-    	    {else}
-    	        {if $pagination_page_as_queryarg}
-        		<li class="pagination-numbered"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
-        		{else}
-        		<li class="pagination-numbered"><a href="{$pagination_url}page{$i}">{$i}</a></li>
-        		{/if}
-    	    {/if}
-    	    
-    	{/section}
-	
+		{section name=paglp start=1 loop=$pagination.page_count+1}
+			{assign var=i value=$smarty.section.paglp.index}
+
+			{if $i == $pagination.page}
+				<li class="page-item pagination-numbered disabled"><a href="#" class="page-link">{$i}</a></li>
+			{else}
+				{if $pagination_page_as_queryarg}
+					{if $pagination_url|strpos:"?" === false}
+						<li class="page-item pagination-numbered"><a href="{$pagination_url}?page={$i}" class="page-link">{$i}</a></li>
+					{else}
+						<li class="page-item pagination-numbered"><a href="{$pagination_url}&amp;page={$i}" class="page-link">{$i}</a></li>
+					{/if}
+				{else}
+					<li class="page-item pagination-numbered"><a href="{$pagination_url}page{$i}" class="page-link">{$i}</a></li>
+				{/if}
+			{/if}
+
+		{/section}
+
+	{/if}
 	{/if}
 
-    {* next button *}
-    {if $pagination.page < $pagination.page_count}
-		{if $pagination_page_as_queryarg}
-		<li><a href="{$pagination_url}&page={$pagination.page+1}">Next page</a></li>
+	{* next button *}
+
+	{* if $pagination.cursor && $pagination.page+1 >= $max_page *}
+	{if $pagination.cursor}
+
+		{if $pagination_url|strpos:"?" === false}
+		<li class="page-item"><a href="{$pagination_url}?cursor={$pagination.cursor|escape}" class="page-link">⇢</a></li>
 		{else}
-		<li><a href="{$pagination_url}page{$pagination.page+1}">Next page</a></li>
+		<li class="page-item"><a href="{$pagination_url}&cursor={$pagination.cursor|escape}" class="page-link">⇢</a></li>
+		{/if}
+
+	{else}
+
+	{if $pagination.page < $pagination.page_count}
+
+		{if $pagination_page_as_queryarg}
+			{if $pagination_url|strpos:"?" === false}
+				<li class="page-item"><a href="{$pagination_url}?page={$pagination.page+1}" class="page-link" id="pagination-next-page">⇢</a></li>
+			{else}
+				<li class="page-item"><a href="{$pagination_url}&amp;page={$pagination.page+1}" class="page-link" id="pagination-next-page">⇢</a></li>
+			{/if}
+		{else}
+			<li><a href="{$pagination_url}page{$pagination.page+1}" class="page-link" id="pagination-next-page">⇢</a></li>
 		{/if}
 	{else}
-	    <li class="disabled"><a href="#">This is the last page</a></li>
+		<li class="page-item disabled"><a href="#" class="page-link">⇠</a></li>
 	{/if}
-    
+
+	{/if}
 </ul>
 
-{if 0}<p class="lead"><small>Page {$pagination.page|number_format|escape} of {$pagination.page_count|number_format|escape}</small></p>{/if}
+{if $pagination && $pagination.cursor}
 
-{include file="inc_pagination_shortcuts.txt"}
-
+<div class="center" style="font-size:small; margin-top:1.5rem;">
+There are so many results (<span class="hey-look">{$pagination.total_count|@number_format|escape}</span> of them, in fact) that it's not possible to do <code>page1, page2, and so on...</code> style pagination. Every page is the <code>next</code> page because...computers, I guess. Also, you shouldn't try to bookmark the URLs for these results since are they are time-sensitive and will expire.
 </div>
 
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/collection/pagination.shortcuts.init.js"></script>
+
+{else}
+<script type="text/javascript" src="{$cfg.abs_root_url}javascript/collection/pagination.shortcuts.init.js"></script>
 {/if}
 
+</nav>
+
+{/if}
