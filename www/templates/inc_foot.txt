@@ -8,47 +8,74 @@
       </footer>
     </div>
 
-  </body>
-
 <script type="text/javascript">
-{literal}
+{if $cfg.environment=='prod'}
+    <script src="{$cfg.abs_root_url}javascript/privatesquare.dependencies.core.min.js"></script>
+{else}
+    <script src="{$cfg.abs_root_url}javascript/jquery-3.7.1.slim.min.js"></script>
+    <script src="{$cfg.abs_root_url}javascript/bootstrap.bundle.5.3.6.min.js"></script>
+    <script src="{$cfg.abs_root_url}javascript/htmlspecialchars.min.js"></script>
+{/if}
 
-$(document).ready(function(){
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="{$cfg.abs_root}javascript/html5.js"></script>
+    <![endif]-->
 
-	var set_current = function(){
-		var dt = new Date();
+    {* Note: be sure to update the various "js" commands in the Makefile when you add/remove stuff here *}
 
-		var h = dt.getHours();
-		var m = dt.getMinutes();
-		var s = dt.getSeconds();
+{if $cfg.user}
+{if $cfg.environment=='prod'}
+    <script src="{$cfg.abs_root_url}javascript/privatesquare.dependencies.app.js"></script>
+{else}
+	{if 0}<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery.touchwipe.min.js"></script>{/if}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/htmapl-standalone.min.js"></script> 
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/store.min.js"></script>
+{/if}
 
-		if (h < 10){ h = '0' + h; }
-		if (m < 10){ m = '0' + m; }
-		if (s < 10){ s = '0' + s; }
+{if $cfg.environment=='prod'}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.core.min.js"></script>
+{else}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.venues.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.foursquare.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.stateofmind.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.nypl.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.api.js"></script>
+{/if}
 
-		var time = h + ':' + m + ':' + s;
-		$("#time").html(time);
-	};
+{if "deferred_checkins"|@features_is_enabled}
+{if $cfg.environment=='prod'}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.min.js"></script>
+{else}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.deferred.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.pending.js"></script>
+{/if}
 
-	/*
-	setInterval(function(){
-		set_current();
-	}, 1000);
-	*/
+	<script type="text/javascript">$(document).ready(privatesquare_deferred_indicator);</script>
+{/if}
 
-});
+{/if}
 
-/* From http://stackoverflow.com/a/2899099 */
-var links = document.getElementsByTagName('a');
+	{if $include_trip_dependencies}
 
-for (var i = 0; i < links.length; i++){
-    links[i].onclick = function(){
-        window.location = this.getAttribute('href');
-        return false;
-    }
-}
+	{if $cfg.environment=='prod'}
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/privatesquare.trips.min.css" />
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.dependencies.trips.min.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.min.js"></script>
+	{else}
 
-{/literal}
-</script>
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/select2.css" />
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/bootstrap.select2.css" />
+	<link rel="stylesheet" type="text/css" href="{$cfg.abs_root_url}css/brick-calendar.min.css" />
 
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/select2.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/brick-calendar.min.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/privatesquare.trips.calendars.js"></script>
+	{/if}
+
+	{/if}
+
+  </body>
 </html>
